@@ -141,19 +141,20 @@ const About = () => {
       <div className="inner">
         <StyledText>
           <div>
-            <p>Hello! I'm Anthony, a software engineer based in Hartford, CT.</p>
+            <p>Hello! I'm Anthony, a full stack developer based in Hartford, CT.</p>
 
             <p>
               I enjoy creating things that live on the internet, whether that be websites,
-              applications, or anything in between. My goal is to always build products that provide
-              pixel-perfect, performant experiences.
+              applications, or anything in between. I am focused on solving everyday problems
+              with highly scalable solutions in the cloud. Continuously searching for more open source
+              projects that I can contribute towards.
             </p>
 
             <p>
               Shortly after graduating from{' '}
               <a href="https://www.ccsu.edu">Central Connecticut State University</a>, I joined the
-              engineering team at <a href="https://www.thehartford.com">The Hartford</a> where I
-              work on a wide variety of interesting and meaningful projects on a daily basis.
+              Personal Lines insurance team at <a href="https://www.thehartford.com">The Hartford</a> where I
+              get the opportunity to work on a wide variety of interesting and meaningful projects every day.
             </p>
 
             <p>Here are a few technologies I've been working with recently:</p>
