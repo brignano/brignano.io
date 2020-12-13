@@ -4,11 +4,11 @@ title: 'profile-readme'
 cover: './brignano_readme.png'
 github: 'https://github.com/brignano/brignano'
 tech:
-  - VS Code
+  - VSCode
   - iTerm2
   - Markdown
   - GitHub Actions
 showInProjects: false
 ---
 
-Use [(WakaTime + GitHub Actions) x Open Source] to display weekly coding statistics and other relevant personal information to those visiting my GitHub profile.  
+Use [(WakaTime + GitHub Actions) x Open Source] to display weekly coding statistics and other relevant personal information to those visiting my GitHub profile.

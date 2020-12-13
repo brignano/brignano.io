@@ -114,7 +114,6 @@ const Footer = () => {
               </span>
             </div>
           )}
-
         </a>
       </StyledCredit>
     </StyledFooter>
