@@ -4,6 +4,7 @@ title: 'npx brignano'
 cover: './npx_card.png'
 github: 'https://github.com/brignano/npx_card'
 tech:
+  - npm  
   - VS Code
   - Node.JS
   - iTerm2

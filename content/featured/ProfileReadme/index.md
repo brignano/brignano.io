@@ -7,7 +7,7 @@ tech:
   - VS Code
   - iTerm2
   - Markdown
-  - Fontawesome
+  - GitHub Actions
 showInProjects: false
 ---
 
