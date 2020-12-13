@@ -152,8 +152,8 @@ const About = () => {
 
             <p>
               Shortly after graduating from{' '}
-              <a href="https://www.ccsu.edu">Central Connecticut State University</a>, I joined the
-              Personal Lines insurance team at{' '}
+              <a href="https://www.ccsu.edu">CCSU</a>, I joined the
+              Personal Lines IT team at{' '}
               <a href="https://www.thehartford.com">The Hartford</a> where I get the opportunity to
               work on a wide variety of interesting and meaningful projects every day.
             </p>
