@@ -145,16 +145,17 @@ const About = () => {
 
             <p>
               I enjoy creating things that live on the internet, whether that be websites,
-              applications, or anything in between. I am focused on solving everyday problems
-              with highly scalable solutions in the cloud. Continuously searching for more open source
+              applications, or anything in between. I am focused on solving everyday problems with
+              highly scalable solutions in the cloud. Continuously searching for more open source
               projects that I can contribute towards.
             </p>
 
             <p>
               Shortly after graduating from{' '}
               <a href="https://www.ccsu.edu">Central Connecticut State University</a>, I joined the
-              Personal Lines insurance team at <a href="https://www.thehartford.com">The Hartford</a> where I
-              get the opportunity to work on a wide variety of interesting and meaningful projects every day.
+              Personal Lines insurance team at{' '}
+              <a href="https://www.thehartford.com">The Hartford</a> where I get the opportunity to
+              work on a wide variety of interesting and meaningful projects every day.
             </p>
 
             <p>Here are a few technologies I've been working with recently:</p>

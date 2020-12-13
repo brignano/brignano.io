@@ -69,8 +69,7 @@ const StyledCredit = styled.div`
 
 const Footer = () => {
   const [githubInfo, setGitHubInfo] = useState({
-    stars: null,
-    forks: null,
+    updated_at: null,
   });
 
   useEffect(() => {
@@ -80,10 +79,9 @@ const Footer = () => {
     fetch('https://api.github.com/repos/brignano/brignano.io')
       .then(response => response.json())
       .then(json => {
-        const { stargazers_count, forks_count } = json;
+        const { updated_at } = json;
         setGitHubInfo({
-          stars: stargazers_count,
-          forks: forks_count,
+          updated_at: updated_at,
         });
       })
       .catch(e => console.error(e));
@@ -108,18 +106,15 @@ const Footer = () => {
         <a href="https://github.com/brignano/brignano.io">
           <div>Designed by Brittany Chiang | Customized by Anthony Brignano</div>
 
-          {githubInfo.stars && githubInfo.forks && (
+          {githubInfo.updated_at && (
             <div className="github-stats">
               <span>
-                <Icon name="Star" />
-                <span>{githubInfo.stars.toLocaleString()}</span>
-              </span>
-              <span>
-                <Icon name="Fork" />
-                <span>{githubInfo.forks.toLocaleString()}</span>
+                Last Updated @&nbsp;
+                <span>{githubInfo.updated_at.toLocaleString()}</span>
               </span>
             </div>
           )}
+
         </a>
       </StyledCredit>
     </StyledFooter>
