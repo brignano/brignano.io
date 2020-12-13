@@ -99,7 +99,7 @@ const StyledSidebar = styled.aside`
     height: 100vh;
     outline: 0;
     background-color: var(--light-navy);
-    box-shadow: -10px 0px 30px -15px var(--navy-shadow);
+    box-shadow: -10px 0 30px -15px var(--navy-shadow);
     z-index: 9;
     transform: translateX(${props => (props.menuOpen ? 0 : 100)}vw);
     visibility: ${props => (props.menuOpen ? 'visible' : 'hidden')};
@@ -260,7 +260,7 @@ const Menu = () => {
               </ol>
             )}
 
-            <a href="/resume.pdf" className="resume-link">
+            <a href="/resume" className="resume-link">
               Resume
             </a>
           </nav>

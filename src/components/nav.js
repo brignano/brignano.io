@@ -14,7 +14,7 @@ const StyledHeader = styled.header`
   position: fixed;
   top: 0;
   z-index: 11;
-  padding: 0px 50px;
+  padding: 0 50px;
   width: 100%;
   height: var(--nav-height);
   background-color: var(--navy);
@@ -193,7 +193,7 @@ const Nav = ({ isHome }) => {
                 <div style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
                   <a
                     className="resume-button"
-                    href="/resume.pdf"
+                    href="/resume"
                     target="_blank"
                     rel="noopener noreferrer">
                     Resume
