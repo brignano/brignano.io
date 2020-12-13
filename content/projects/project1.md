@@ -8,5 +8,5 @@ android: ''
 tech:
   - Next.js
 company: ''
-showInProjects: true
+showInProjects: false
 ---
