@@ -5,7 +5,6 @@ company: 'The Hartford'
 location: 'Hartford, CT'
 range: 'September 2018 - Current'
 url: 'https://www.thehartford.com'
-showInProjects: false
 ---
 
 - Developed a customer facing sales application consisting of over 20 micro-services

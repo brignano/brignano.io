@@ -5,7 +5,6 @@ company: 'The Hartford'
 location: 'Windsor, CT'
 range: 'March 2018 - September 2018'
 url: 'https://www.thehartford.com'
-showInProjects: false
 ---
 
 - Efficiently and effectively triage high impact production incidents
