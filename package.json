@@ -20,8 +20,7 @@
     "clean": "gatsby clean"
   },
   "husky": {
-    "hooks": {
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "*.{js,css,json,md}": [
