@@ -1,6 +1,6 @@
 ---
 date: '2020-12-13'
-title: 'Project #1'
+title: 'Coming soon'
 github: ''
 external: ''
 ios: ''
