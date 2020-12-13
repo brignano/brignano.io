@@ -54,7 +54,7 @@ const Hero = () => {
     <p>
       I'm a full stack developer based in Hartford, CT specializing in building exceptional
       websites, applications, and everything in between. I enjoy strong coffee, open source, clean
-      code, and continuous integrations. Please feel free to reach out to me directly with any
+      code, and continuous integration. Please feel free to reach out to me directly with any
       inquires.
     </p>
   );
