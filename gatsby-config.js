@@ -4,7 +4,7 @@ module.exports = {
   siteMetadata: {
     title: '@brignano',
     description:
-      'Full stack developer specializing in building exceptional websites, applications, and everything in between.',
+      'Anthony Brignano is a full stack developer specializing in building exceptional websites, applications, and everything in between.',
     siteUrl: 'https://brignano.io', // No trailing slash allowed!
     image: '/og.png', // Path to your image you placed in the 'static' folder
     twitterUsername: '@brignano_',
