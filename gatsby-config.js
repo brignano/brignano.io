@@ -149,10 +149,9 @@ module.exports = {
       },
     },
     {
-      // todo: remove
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: 'UA-45666519-2',
+        trackingId: 'G-NW53R1H0LY',
       },
     },
   ],
