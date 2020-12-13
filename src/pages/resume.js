@@ -16,7 +16,7 @@ function Resume() {
     <main>
       <Helmet>
         <title>Resume | Anthony Brignano</title>
-        <link rel="canonical" href="https://brignano-io.vercel.app/resume" />
+        <link rel="canonical" href="https://brignano.io/resume" />
       </Helmet>
       <p
         dangerouslySetInnerHTML={{
