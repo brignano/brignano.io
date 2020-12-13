@@ -8,7 +8,6 @@ url: 'https://www.thehartford.com'
 showInProjects: false
 ---
 
-- Developed and shipped highly interactive web applications for Apple Music using Ember.js
-- Built and shipped the Apple Music Extension within Facebook Messenger leveraging third-party and internal APIs
-- Architected and implemented the front-end of Apple Music's embeddable web player widget, which lets users log in and listen to full songs in the browser
-- Contributed extensively to MusicKit.js, a JavaScript framework that allows developers to add an Apple Music player to their web apps
+- Developed a customer facing sales application consisting of over 20 micro-services
+- Designed and implemented a solution to integrate a new policy admin system premium-related data to the general ledger
+- Acted as the technical lead for a large team of agile developers participating in scaled agile framework (SaFE)

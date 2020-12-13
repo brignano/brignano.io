@@ -1,14 +1,13 @@
 ---
-date: '2017-12-27'
-title: 'Halcyon Theme'
-github: 'https://github.com/bchiang7/halcyon-site'
-external: 'https://halcyon-theme.netlify.com/'
+date: '2020-07-27'
+title: 'profile-readme'
+cover: './brignano_readme.png'
+github: 'https://github.com/brignano/brignano'
 tech:
   - VS Code
-  - Sublime Text
-  - Atom
   - iTerm2
-  - Hyper
+  - Markdown
+  - Fontawesome
 showInProjects: false
 ---
 

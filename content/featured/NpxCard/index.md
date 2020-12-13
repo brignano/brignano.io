@@ -1,5 +1,5 @@
 ---
-date: '3'
+date: '2020-12-12'
 title: 'npx brignano'
 cover: './npx_card.png'
 github: 'https://github.com/brignano/npx_card'
@@ -10,4 +10,4 @@ tech:
 showInProjects: false
 ---
 
-A minimal, dark blue theme for VS Code, Sublime Text, Atom, iTerm, and more. Available on [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=brittanychiang.halcyon-vscode), [Package Control](https://packagecontrol.io/packages/Halcyon%20Theme), [Atom Package Manager](https://atom.io/themes/halcyon-syntax), and [npm](https://www.npmjs.com/package/hyper-halcyon-theme).
+An interactive shell experience which allows you to send me an email and/or download my resume directly from the terminal. Try it out with `npm` installed by running `npx brignano`.

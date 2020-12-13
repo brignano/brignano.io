@@ -1,15 +1,17 @@
 ---
 title: waka-readme-stats
-description: fix issue observed during use
+description: fixed issue observed during use
 date: '2020-12-13'
-draft: false
+draft: true
 slug: '/pensieve/docker-error'
+showInProjects: false
+company: 'Home'
+tech:
+  - Python
+  - GitHub Actions
+  - Open Source contribution
 tags:
   - Open Source
   - contribution
   - readme
 ---
-
-## Problem
-
-## Solution

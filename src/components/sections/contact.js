@@ -55,13 +55,13 @@ const Contact = () => {
         Whether you have a question or just want to say hi, I'll try my best to get back to you!
       </p>
       <a className="email-link" href={`mailto:${email}`}>
-        Say Hello
+        npx brignano
       </a>
       <br />
       <br />
       <br />
       <p>
-        <b>Pro tip:</b> if you have <code>npm</code> installed, run <code>npx brignano</code>.
+        <b>Pro tip:</b> if you have <code>npm</code> installed, just run <code>npx brignano</code>.
       </p>
     </StyledContactSection>
   );
