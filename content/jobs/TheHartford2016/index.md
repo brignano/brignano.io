@@ -7,6 +7,6 @@ range: 'June 2016 - March 2017'
 url: 'https://www.thehartford.com'
 ---
 
-- Efficiently and effectively triage high impact production incidents
-- Restore service to application(s) in the event of failure
-- Granted elevated access within the organization to perform required roles and responsibilities
+- Triage production issues reported by application users
+- Led disaster recovery testing to ensure system availability in the event of catastrophic failures
+- Led annual application audit to ensure enterprise compliance
