@@ -15,7 +15,7 @@ function Resume() {
   return (
     <main>
       <Helmet>
-        <title>Resume | Anmol Singh</title>
+        <title>Resume | Anthony Brignano</title>
         <link rel="canonical" href="https://brignano-io.vercel.app/resume" />
       </Helmet>
       <p
