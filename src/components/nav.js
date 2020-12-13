@@ -194,7 +194,6 @@ const Nav = ({ isHome }) => {
                   <a
                     className="resume-button"
                     href="/resume"
-                    target="_blank"
                     rel="noopener noreferrer">
                     Resume
                   </a>
