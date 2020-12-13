@@ -6212,6 +6212,11 @@ github-slugger@^1.2.1:
   dependencies:
     emoji-regex ">=6.0.0 <=6.1.1"
 
+gitsy@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/gitsy/-/gitsy-0.1.7.tgz#ab054e3d85bf40b359b86b0730dc857fc1cf26f0"
+  integrity sha512-ypz7FSRWjUa6s+AZMSd/Gn6cQS3KL35Xy/PNRET8Yb50049NLEAYtKYKEYGH1WFSwXrxhDKtzJxUP685GEfsxQ==
+
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
