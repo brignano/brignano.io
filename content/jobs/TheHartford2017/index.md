@@ -5,7 +5,6 @@ company: 'The Hartford'
 location: 'Windsor, CT'
 range: 'March 2017 - March 2018'
 url: 'https://www.thehartford.com'
-showInProjects: false
 ---
 
 - Functioned as the technical lead on an agile scrum team
