@@ -41,11 +41,11 @@ const StyledSocialLinks = styled.div`
 `;
 
 const StyledCredit = styled.div`
-  color: var(--light-slate);
+  color: #acabab;
   font-family: var(--font-mono);
   font-size: var(--fz-xxs);
   line-height: 1;
-
+  
   a {
     padding: 10px;
   }
@@ -58,6 +58,7 @@ const StyledCredit = styled.div`
       align-items: center;
       margin: 0 7px;
     }
+
     svg {
       display: inline-block;
       margin-right: 5px;
