@@ -22,10 +22,6 @@ const StyledHeroSection = styled.section`
     }
   }
   
-  h2 span {
-    color: var(--green);
-  }
-
   h3 {
     margin-top: 10px;
     color: var(--slate);
@@ -52,7 +48,7 @@ const Hero = () => {
   }, []);
 
   const one = <h1>Hi, my name is</h1>;
-  const two = <h2 className="big-heading">Anthony <span>B</span>rignano.</h2>;
+  const two = <h2 className="big-heading">Anthony Brignano.</h2>;
   const three = <h3 className="big-heading">I solve problems w/ code.</h3>;
   const four = (
     <p>
