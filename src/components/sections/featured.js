@@ -230,6 +230,9 @@ const StyledProject = styled.div`
         z-index: 3;
         transition: var(--transition);
         background-color: var(--slate);
+        @media (max-width: 768px) {
+          background-color: #fff;
+        }
         mix-blend-mode: screen;
       }
     }
