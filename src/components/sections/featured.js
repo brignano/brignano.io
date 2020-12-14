@@ -40,6 +40,7 @@ const StyledProject = styled.div`
         padding: 25px 25px 20px;
       }
     }
+
     .project-tech-list {
       justify-content: flex-end;
 
@@ -51,11 +52,13 @@ const StyledProject = styled.div`
         }
       }
     }
+
     .project-links {
       justify-content: flex-end;
       margin-left: 0;
       margin-right: -10px;
     }
+
     .project-image {
       grid-column: 1 / 8;
 
@@ -107,7 +110,7 @@ const StyledProject = styled.div`
   }
 
   .project-description {
-    ${({ theme }) => theme.mixins.boxShadow};
+    ${({theme}) => theme.mixins.boxShadow};
     position: relative;
     z-index: 2;
     padding: 25px;
@@ -127,7 +130,7 @@ const StyledProject = styled.div`
     }
 
     a {
-      ${({ theme }) => theme.mixins.inlineLink};
+      ${({theme}) => theme.mixins.inlineLink};
     }
   }
 
@@ -167,7 +170,7 @@ const StyledProject = styled.div`
     color: var(--lightest-slate);
 
     a {
-      ${({ theme }) => theme.mixins.flexCenter};
+      ${({theme}) => theme.mixins.flexCenter};
       padding: 10px;
 
       &.external {
@@ -186,7 +189,7 @@ const StyledProject = styled.div`
   }
 
   .project-image {
-    ${({ theme }) => theme.mixins.boxShadow};
+    ${({theme}) => theme.mixins.boxShadow};
     grid-column: 6 / -1;
     grid-row: 1 / -1;
     position: relative;
@@ -226,7 +229,7 @@ const StyledProject = styled.div`
         bottom: 0;
         z-index: 3;
         transition: var(--transition);
-        background-color: var(--navy);
+        background-color: #666666;
         mix-blend-mode: screen;
       }
     }

@@ -7,16 +7,16 @@ const GlobalStyle = createGlobalStyle`
   ${Fonts};
 
   :root {
-    --dark-navy: #020c1b;
-    --navy: #0a192f;
-    --light-navy: #172a45;
+    --dark-navy: #fff;
+    --navy: #fff;
+    --light-navy: #fff;
     --lightest-navy: #303C55;
     --navy-shadow: rgba(2, 12, 27, 0.7);
-    --slate: #8892b0;
-    --light-slate: #a8b2d1;
-    --lightest-slate: #ccd6f6;
+    --slate: #5c5f58;
+    --light-slate: #000;
+    --lightest-slate: #B73225;
     --white: #e6f1ff;
-    --green: #64ffda;
+    --green: #004E7C;
     --green-tint: rgba(100, 255, 218, 0.1);
 
     --font-sans: 'Calibre', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
@@ -303,7 +303,7 @@ const GlobalStyle = createGlobalStyle`
 
     & > code {
       background-color: var(--light-navy);
-      color: var(--white);
+      color: #591c0b;
       font-size: var(--fz-sm);
       border-radius: var(--border-radius);
       padding: 0.3em 0.5em;
@@ -334,8 +334,8 @@ const GlobalStyle = createGlobalStyle`
     border-left-color: var(--green);
     border-left-style: solid;
     border-left-width: 1px;
-    margin-left: 0px;
-    margin-right: 0px;
+    margin-left: 0;
+    margin-right: 0;
     padding-left: 1.5rem;
 
     p {
@@ -347,7 +347,7 @@ const GlobalStyle = createGlobalStyle`
   hr {
     background-color: var(--lightest-navy);
     height: 1px;
-    border-width: 0px;
+    border-width: 0;
     border-style: initial;
     border-color: initial;
     border-image: initial;
