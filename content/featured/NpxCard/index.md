@@ -11,4 +11,4 @@ tech:
 showInProjects: false
 ---
 
-An interactive shell experience which allows you to send me an email and/or download my resume directly from the terminal. Try it out with `npm` installed by running `npx brignano`.
+An interactive shell experience which allows you to email me and/or download my resume directly in your terminal. If you have `npm` installed, run `npx brignano`.
