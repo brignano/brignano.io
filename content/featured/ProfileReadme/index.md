@@ -5,7 +5,6 @@ cover: './brignano_readme.png'
 github: 'https://github.com/brignano/brignano'
 tech:
   - VSCode
-  - iTerm2
   - Markdown
   - GitHub Actions
 showInProjects: false
