@@ -11,4 +11,4 @@ tech:
 showInProjects: false
 ---
 
-An interactive shell experience which allows you to email me and/or download my resume directly in your terminal. If you have `npm` installed, run `npx brignano`.
+An interactive shell experience that renders my business card in your terminal. If you have `npm` installed, just run `npx brignano`.

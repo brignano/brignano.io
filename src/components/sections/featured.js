@@ -229,7 +229,7 @@ const StyledProject = styled.div`
         bottom: 0;
         z-index: 3;
         transition: var(--transition);
-        background-color: #666666;
+        background-color: var(--slate);
         mix-blend-mode: screen;
       }
     }
