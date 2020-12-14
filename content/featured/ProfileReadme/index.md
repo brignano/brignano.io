@@ -11,4 +11,4 @@ tech:
 showInProjects: false
 ---
 
-Use (`WakaTime` + `GitHub Actions` x `Open Source`) to display weekly coding statistics and other relevant personal information to those visiting my GitHub profile.
+Use (`WakaTime` + `GitHub Actions` x [`Open Source`](https://github.com/anmol098/npx_card)) to display weekly coding statistics and other relevant personal information to those visiting my GitHub profile.
