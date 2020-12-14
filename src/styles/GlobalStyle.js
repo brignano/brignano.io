@@ -10,13 +10,13 @@ const GlobalStyle = createGlobalStyle`
     --dark-navy: #fff;
     --navy: #fff;
     --light-navy: #fff;
-    --lightest-navy: #303C55;
+    --lightest-navy: #303c55;
     --navy-shadow: rgba(2, 12, 27, 0.7);
     --slate: #5c5f58;
     --light-slate: #000;
-    --lightest-slate: #B73225;
-    --white: #e6f1ff;
-    --green: #004E7C;
+    --lightest-slate: #b73225;
+    --white: #b73225;
+    --green: #004e7c;
     --green-tint: rgba(100, 255, 218, 0.1);
 
     --font-sans: 'Calibre', 'San Francisco', 'SF Pro Text', -apple-system, system-ui, sans-serif;
