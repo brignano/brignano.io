@@ -8,7 +8,6 @@ import { loaderDelay } from '@utils';
 import { useScrollDirection } from '@hooks';
 import { Menu } from '@components';
 import { IconLogo } from '@components/icons';
-import {OutboundLink} from "gatsby-plugin-google-gtag";
 
 const StyledHeader = styled.header`
   ${({ theme }) => theme.mixins.flexBetween};
@@ -192,9 +191,9 @@ const Nav = ({ isHome }) => {
             {isMounted && (
               <CSSTransition classNames={fadeDownClass} timeout={timeout}>
                 <div style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
-                  <OutboundLink className="resume-button" href="/resume" rel="noopener noreferrer">
+                  <a className="resume-button" href="/resume" rel="noopener noreferrer">
                     Resume
-                  </OutboundLink>
+                  </a>
                 </div>
               </CSSTransition>
             )}
