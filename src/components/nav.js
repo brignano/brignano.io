@@ -151,16 +151,6 @@ const Nav = ({ isHome }) => {
   const fadeClass = isHome ? 'fade' : '';
   const fadeDownClass = isHome ? 'fadedown' : '';
 
-  function gtagResume() {
-    if (typeof window !== 'undefined') {
-      window.gtag('event', 'page_view', {
-        page_location: 'https://brignano.io/resume',
-        page_path: '/resume',
-        page_title: 'Resume'
-      });
-    }
-  }
-
   return (
     <StyledHeader scrollDirection={scrollDirection} scrolledToTop={scrolledToTop}>
       <StyledNav>
@@ -201,7 +191,7 @@ const Nav = ({ isHome }) => {
             {isMounted && (
               <CSSTransition classNames={fadeDownClass} timeout={timeout}>
                 <div style={{ transitionDelay: `${isHome ? navLinks.length * 100 : 0}ms` }}>
-                  <a className="resume-button" href="/resume" rel="noopener noreferrer" onClick={gtagResume}>
+                  <a className="resume-button" href="/resume" rel="noopener noreferrer">
                     Resume
                   </a>
                 </div>
