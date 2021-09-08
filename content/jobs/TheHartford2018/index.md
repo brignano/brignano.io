@@ -1,7 +1,7 @@
 ---
 date: '2018-03-15'
 title: 'Multi-Stack Engineer'
-company: 'The Hartford'
+company: 'The Hartford 2018'
 location: 'Windsor, CT'
 range: 'March 2018 - September 2018'
 url: 'https://www.thehartford.com'
