@@ -1,7 +1,7 @@
 ---
 date: '2016-06-15'
 title: 'Spec App Development'
-company: 'The Hartford'
+company: 'The Hartford 2016'
 location: 'Windsor, CT'
 range: 'June 2016 - March 2017'
 url: 'https://www.thehartford.com'
