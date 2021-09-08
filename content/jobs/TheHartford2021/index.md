@@ -3,7 +3,7 @@ date: '2021-01-15'
 title: 'Staff Software Engineer'
 company: 'The Hartford'
 location: 'Hartford, CT'
-range: 'January 2021 - March Present'
+range: 'January 2021 - Current'
 url: 'https://www.thehartford.com'
 ---
 
