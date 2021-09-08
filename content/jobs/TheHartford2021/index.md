@@ -1,5 +1,5 @@
 ---
-date: '2021-01-15'
+date: '2021-03-16'
 title: 'Staff Software Engineer'
 company: 'The Hartford 2021'
 location: 'Hartford, CT'
