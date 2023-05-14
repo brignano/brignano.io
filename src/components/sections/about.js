@@ -135,7 +135,6 @@ const About = () => {
   const skills = ['GitHub Actions', 'Terraform', 'Ansible', 'NodeJS', 'Python', 'YAML', 'Playwright', 'Protractor'];
 
   return (
-  return (
     <StyledAboutSection id="about" ref={revealContainer}>
       <h2 className="numbered-heading">About Me</h2>
 
