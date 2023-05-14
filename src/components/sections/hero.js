@@ -52,7 +52,7 @@ const Hero = () => {
   const three = <h3 className="big-heading">I solve problems w/ code.</h3>;
   const four = (
     <p>
-      I'm a full stack developer based in Hartford, CT specializing in building exceptional
+      I'm a full-stack developer based in Hartford, CT specializing in building exceptional
       websites, applications, and everything in between. I enjoy strong coffee, open source, clean
       code, and continuous integration. Please feel free to reach out to me directly with any
       inquires.
