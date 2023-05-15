@@ -1,7 +1,7 @@
 ---
 date: '2023-05-16'
 title: 'Sr. Staff Software Engineer'
-company: 'The Hartford 2023'
+company: 'The Hartford'
 location: 'Hartford, CT'
 range: 'May 2023 - Current'
 url: 'https://www.thehartford.com'

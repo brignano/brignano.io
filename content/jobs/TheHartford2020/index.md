@@ -1,7 +1,7 @@
 ---
 date: '2020-01-16'
 title: 'Sr. Software Engineer'
-company: 'The Hartford 2020'
+company: 'The Hartford'
 location: 'Hartford, CT'
 range: 'January 2020 - March 2021'
 url: 'https://www.thehartford.com'
