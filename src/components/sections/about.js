@@ -132,7 +132,7 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['GitHub Actions', 'Terraform', 'Ansible', 'NodeJS', 'Python', 'YAML', 'Playwright', 'Protractor'];
+  const skills = ['GitHub Actions', 'Terraform', 'Ansible', 'YAML', 'NodeJS', 'Python', 'Playwright', 'Protractor'];
 
   return (
     <StyledAboutSection id="about" ref={revealContainer}>
