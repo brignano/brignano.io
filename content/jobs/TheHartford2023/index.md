@@ -7,7 +7,6 @@ range: 'May 2023 - Current'
 url: 'https://www.thehartford.com'
 ---
 
-- Participate in Scaled Agile Framework (SaFE) with many teams (400+ people) throughout multiple program increments.
-- Function as the technical lead for multiple development teams to support the creation of automated solutions for end-to-end regression testing.
-- Setup and maintain contribution standards for GitHub.
-- Design and implement a test data management tool using AWS enterprise solutions.
+- Migrate enterprise CI/CD/CT solution from Jenkins to GitHub Actions
+- Leverage Terraform and Ansible using Infrastructure as Code (IaC)
+- Responsible for all on-prem and AWS CI/CD/CT pipelines
