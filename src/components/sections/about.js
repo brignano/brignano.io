@@ -149,8 +149,7 @@ const About = () => {
             </p>
 
             <p>
-              Shortly after graduating from <a href="https://www.ccsu.edu">CCSU</a>, I joined <a href="https://www.thehartford.com">The Hartford</a>
-              where I get the opportunity to work on a wide variety of interesting and meaningful projects every day.
+              Shortly after graduating from <a href="https://www.ccsu.edu">CCSU</a>, I joined <a href="https://www.thehartford.com">The Hartford</a> where I get the opportunity to work on a wide variety of interesting and meaningful projects every day.
             </p>
 
             <p>Here are a few technologies I've been working with recently:</p>
