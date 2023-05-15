@@ -220,13 +220,13 @@ const Jobs = () => {
 
   return (
     <StyledJobsSection id="jobs" ref={revealContainer}>
-      <h2 className="numbered-heading">Where I’ve Worked</h2>
+      <h2 className="numbered-heading">Relevant Experience</h2>
 
       <div className="inner">
         <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={onKeyDown}>
           {jobsData &&
             jobsData.map(({ node }, i) => {
-              const { company } = node.frontmatter;
+              const { title } = node.frontmatter;
               return (
                 <li key={i}>
                   <StyledTabButton
@@ -235,10 +235,10 @@ const Jobs = () => {
                     ref={el => (tabs.current[i] = el)}
                     id={`tab-${i}`}
                     role="tab"
-                    aria-selected={activeTabId === i ? true : false}
+                    aria-selected={activeTabId === i}
                     aria-controls={`panel-${i}`}
                     tabIndex={activeTabId === i ? '0' : '-1'}>
-                    <span>{company}</span>
+                    <span>{title}</span>
                   </StyledTabButton>
                 </li>
               );
