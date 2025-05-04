@@ -7,6 +7,7 @@ import GitHubCalendar from "react-github-calendar";
 
 export default function Home() {
   const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
+
   const socialLinks = [
     {
       name: "GitHub",
@@ -80,7 +81,7 @@ export default function Home() {
       url: "https://www.thehartford.com/",
       title: "Senior Staff Software Engineer",
       description:
-        "Some example description goes here about what I have done and what I am going to do because I'm so great at this job.",
+        "Function as the Solutions Architect for the Platform Engineering organization. Improve developer experience by driving the migration from multiple CI/CD tools to a consolidated integrated developer platform (IDP). Function as the technical lead for application migrations to the Cloud. Participate in multiple SaaS-platform onboarding and implementations accross the Enterprise. Coordinate the annual Enterprise Hackathon, mentor junior engineers and interns, and drive student relations as a member of the CCSU Computer Science Industrial Advistory Board.",
       startDate: "May 2023",
       endDate: "Present",
     },
@@ -195,7 +196,11 @@ export default function Home() {
             <div>
               <div className="flex xl:flex-row flex-col gap-4">
                 <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-8 rounded-lg max-w-fit max-h-fit">
-                  <GitHubCalendar username="brignano" year={calendarYear} />
+                  <GitHubCalendar
+                    username="brignano"
+                    year={calendarYear}
+                    colorScheme={"light"}
+                  />
                 </div>
                 <div className="flex justify-start xl:flex-col flex-row flex-wrap gap-2">
                   {Array.from(
