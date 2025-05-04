@@ -40,6 +40,7 @@ export default function Footer() {
                       src={tool.logo}
                       width={20}
                       height={20}
+                      className="dark:invert"
                     />
                     {tool.name}
                   </Link>
