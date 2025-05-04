@@ -48,8 +48,8 @@ export default function Header() {
           <span className="sr-only">Anthony Brignano</span>
           <Image
             alt="icon"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="h-8 w-auto"
+            src="favicon.svg"
+            className="h-8 w-auto invert dark:invert-0"
             width={35}
             height={35}
           />

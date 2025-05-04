@@ -227,7 +227,7 @@ export const socialLinks = [
 export const jobs = [
   {
     company: "The Hartford",
-    logo: "the-hartford.jpeg",
+    logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Senior Staff Software Engineer",
     description:
@@ -237,7 +237,7 @@ export const jobs = [
   },
   {
     company: "The Hartford",
-    logo: "the-hartford.jpeg",
+    logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Staff Software Engineer",
     description:
@@ -247,7 +247,7 @@ export const jobs = [
   },
   {
     company: "The Hartford",
-    logo: "the-hartford.jpeg",
+    logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Senior Software Engineer",
     description:
@@ -257,7 +257,7 @@ export const jobs = [
   },
   {
     company: "The Hartford",
-    logo: "the-hartford.jpeg",
+    logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Software Engineer",
     description:
@@ -267,7 +267,7 @@ export const jobs = [
   },
   {
     company: "The Hartford",
-    logo: "the-hartford.jpeg",
+    logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Multi-Stack Engineer",
     description:
@@ -277,7 +277,7 @@ export const jobs = [
   },
   {
     company: "The Hartford",
-    logo: "the-hartford.jpeg",
+    logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Developer",
     description:
@@ -287,7 +287,7 @@ export const jobs = [
   },
   {
     company: "The Hartford",
-    logo: "the-hartford.jpeg",
+    logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Spec App Development",
     description:
