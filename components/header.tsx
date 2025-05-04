@@ -25,11 +25,12 @@ export default function Header() {
   const pages: string[] = [];//['about', 'skills'];
 
   useEffect(() => {
-    const theme = localStorage.getItem('theme');
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      setIsDarkMode(true);
-    }
+    const isDarkDefault =
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
+    document.documentElement.classList.toggle("dark", isDarkDefault);
+    setIsDarkMode(isDarkDefault);
   }, []);
 
   const toggleTheme = () => {
@@ -38,7 +39,7 @@ export default function Header() {
   }
 
   useEffect(() => {
-    localStorage.setItem("theme", isDarkMode ? "light" : "dark");
+    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
   return (
