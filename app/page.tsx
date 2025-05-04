@@ -1,101 +1,283 @@
+"use client";
+
+import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import GitHubCalendar from "react-github-calendar";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
+  const socialLinks = [
+    {
+      name: "GitHub",
+      href: "https://www.github.com/brignano",
+      icon: (
+        <svg
+          stroke="currentColor"
+          fill="currentColor"
+          strokeWidth="0"
+          viewBox="0 0 24 24"
+          className="h-5 w-5 text-zinc-500 group-hover:dark:text-white group-hover:text-zinc-800 duration-300"
+          aria-hidden="true"
+          height="1em"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M12.026 2c-5.509 0-9.974 4.465-9.974 9.974 0 4.406 2.857 8.145 6.821 9.465.499.09.679-.217.679-.481 0-.237-.008-.865-.011-1.696-2.775.602-3.361-1.338-3.361-1.338-.452-1.152-1.107-1.459-1.107-1.459-.905-.619.069-.605.069-.605 1.002.07 1.527 1.028 1.527 1.028.89 1.524 2.336 1.084 2.902.829.091-.645.351-1.085.635-1.334-2.214-.251-4.542-1.107-4.542-4.93 0-1.087.389-1.979 1.024-2.675-.101-.253-.446-1.268.099-2.64 0 0 .837-.269 2.742 1.021a9.582 9.582 0 0 1 2.496-.336 9.554 9.554 0 0 1 2.496.336c1.906-1.291 2.742-1.021 2.742-1.021.545 1.372.203 2.387.099 2.64.64.696 1.024 1.587 1.024 2.675 0 3.833-2.33 4.675-4.552 4.922.355.308.675.916.675 1.846 0 1.334-.012 2.41-.012 2.737 0 .267.178.577.687.479C19.146 20.115 22 16.379 22 11.974 22 6.465 17.535 2 12.026 2z"
+          ></path>
+        </svg>
+      ),
+    },
+    {
+      name: "Linkedin",
+      href: "https://www.linkedin.com/in/brignano",
+      icon: (
+        <svg
+          stroke="currentColor"
+          fill="currentColor"
+          strokeWidth="0"
+          viewBox="0 0 24 24"
+          className="h-5 w-5 text-zinc-500 group-hover:dark:text-white group-hover:text-zinc-800 duration-300"
+          aria-hidden="true"
+          height="1em"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.339 18.337H5.667v-8.59h2.672v8.59zM7.003 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.763h-2.669V14.16c0-.996-.018-2.277-1.388-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248h-2.667v-8.59h2.56v1.174h.037c.355-.675 1.227-1.387 2.524-1.387 2.704 0 3.203 1.778 3.203 4.092v4.71z"></path>
+        </svg>
+      ),
+    },
+    {
+      name: "WakaTime",
+      href: "https://wakatime.com/@brignano",
+      icon: (
+        <svg
+          stroke="currentColor"
+          fill="currentColor"
+          strokeWidth="0"
+          viewBox="0 0 256 256"
+          className="h-5 w-5 text-zinc-500 group-hover:dark:text-white group-hover:text-zinc-800 duration-300"
+          aria-hidden="true"
+          height="1em"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g>
+            <path d="M128,0 C57.308,0 0,57.308 0,128 C0,198.693 57.308,256 128,256 C198.693,256 256,198.693 256,128 C256,57.308 198.693,0 128,0 M128,33.805 C179.939,33.805 222.195,76.061 222.195,128 C222.195,179.94 179.939,222.195 128,222.195 C76.061,222.195 33.805,179.94 33.805,128 C33.805,76.061 76.061,33.805 128,33.805 M115.4993,155.6431 L115.3873,155.6431 C113.4353,155.6081 111.6083,154.6751 110.4343,153.1151 L81.5593,114.7321 C79.4553,111.9351 80.0173,107.9611 82.8143,105.8561 C85.6123,103.7511 89.5853,104.3131 91.6903,107.1111 L115.6833,139.0051 L122.5463,130.5271 C123.7493,129.0411 125.5603,128.1771 127.4723,128.1771 L127.4803,128.1771 C129.3973,128.1791 131.2093,129.0471 132.4103,130.5411 L139.0003,138.7281 L176.6923,90.1341 C178.8353,87.3681 182.8173,86.8651 185.5843,89.0111 C188.3493,91.1561 188.8533,95.1371 186.7073,97.9041 L144.1003,152.8371 C142.9143,154.3681 141.0883,155.2721 139.1503,155.2901 L139.0933,155.2901 C137.1743,155.2901 135.3583,154.4221 134.1553,152.9261 L127.4583,144.6071 L120.4253,153.2931 C119.2213,154.7811 117.4103,155.6431 115.4993,155.6431"></path>
+          </g>
+        </svg>
+      ),
+    },
+  ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const jobs = [
+    {
+      company: "The Hartford",
+      logo: "the-hartford.jpeg",
+      url: "https://www.thehartford.com/",
+      title: "Senior Staff Software Engineer",
+      description:
+        "Some example description goes here about what I have done and what I am going to do because I'm so great at this job.",
+      startDate: "May 2023",
+      endDate: "Present",
+    },
+    {
+      company: "The Hartford",
+      logo: "the-hartford.jpeg",
+      url: "https://www.thehartford.com/",
+      title: "Staff Software Engineer",
+      description: "",
+      startDate: "June 2021",
+      endDate: "May 2023",
+    },
+    {
+      company: "The Hartford",
+      logo: "the-hartford.jpeg",
+      url: "https://www.thehartford.com/",
+      title: "Senior Software Engineer",
+      description: "",
+      startDate: "Mar 2020",
+      endDate: "June 2021",
+    },
+    {
+      company: "The Hartford",
+      logo: "the-hartford.jpeg",
+      url: "https://www.thehartford.com/",
+      title: "Software Engineer",
+      description: "",
+      startDate: "Sept 2018",
+      endDate: "Mar 2020",
+    },
+    {
+      company: "The Hartford",
+      logo: "the-hartford.jpeg",
+      url: "https://www.thehartford.com/",
+      title: "Multi-Stack Engineer",
+      description: "",
+      startDate: "Mar 2018",
+      endDate: "Sept 2018",
+    },
+    {
+      company: "The Hartford",
+      logo: "the-hartford.jpeg",
+      url: "https://www.thehartford.com/",
+      title: "Developer",
+      description: "",
+      startDate: "Mar 2017",
+      endDate: "Mar 2018",
+    },
+    {
+      company: "The Hartford",
+      logo: "the-hartford.jpeg",
+      url: "https://www.thehartford.com/",
+      title: "Spec App Development",
+      description: "",
+      startDate: "June 2016",
+      endDate: "Mar 2017",
+    },
+  ];
+
+  return (
+    <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+      <section className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 mb-16">
+        <div className="lg:max-w-2xl max-w-2xl">
+          <div style={{ opacity: 1, transform: "none" }}>
+            <div>
+              <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
+                Full-stack Developer, DevSecOps Engineer & Cloud Architect
+              </h1>
+              <div className="text-base dark:text-zinc-400 text-zinc-600">
+                <div
+                  className="inline-block"
+                  style={{
+                    animation: "wave 1.25s ease-in-out infinite",
+                  }}
+                >
+                  👋
+                </div>
+                &nbsp;&nbsp;I&apos;m Anthony, a full-stack developer specialized
+                in building exceptional websites, applications, and everything
+                in between. When I&apos;m not writing code and playing video
+                games, you can find me climbing rocks or snowboarding.
+              </div>
+            </div>
+            <div style={{ opacity: 1 }}>
+              <div>
+                <ul className="flex items-center flex-wrap gap-x-5 gap-y-4 my-10">
+                  {socialLinks.map((link) => (
+                    <li key={link.name}>
+                      <Link
+                        href={link.href}
+                        target="_blank"
+                        className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
+                      >
+                        {link.icon} <span className="ml-1">{link.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+      <section>
+        <div style={{ opacity: "1" }}>
+          <div className="mb-8">
+            <h2 className="font-incognito text-4xl font-bold tracking-tight">
+              Contribution Graph
+            </h2>
+          </div>
+          <div style={{ opacity: "1", transform: "none" }}>
+            <div>
+              <div className="flex xl:flex-row flex-col gap-4">
+                <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-8 rounded-lg max-w-fit max-h-fit">
+                  <GitHubCalendar username="brignano" year={calendarYear} />
+                </div>
+                <div className="flex justify-start xl:flex-col flex-row flex-wrap gap-2">
+                  {Array.from(
+                    { length: new Date().getFullYear() - 2021 + 1 },
+                    (_, i) => new Date().getFullYear() - i
+                  ).map((year) => (
+                    <button
+                      className={
+                        "cursor-pointer rounded-lg text-center px-4 py-2 border border-transparent dark:hover:border-zinc-700 hover:border-zinc-200 duration-100 text-sm font-medium" +
+                        " " +
+                        (year === calendarYear
+                          ? "dark:bg-secondary-color bg-secondary-color dark:hover:border-transparent dark:text-zinc-800 text-white hover:border-transparent"
+                          : "dark:bg-primary-bg bg-zinc-50 dark:text-white text-zinc-800")
+                      }
+                      key={year}
+                      title={`View graph for the year ${year}`}
+                      onClick={() => setCalendarYear(year)}
+                    >
+                      {year}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="mt-32">
+        <div style={{ opacity: "1" }}>
+          <div>
+            <div className="mb-16">
+              <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
+                Work Experience
+              </h2>
+            </div>
+          </div>
+        </div>
+        <div style={{ opacity: "1" }}>
+          <div>
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-12 gap-y-10">
+              {jobs.map((job) => (
+                <div
+                  key={job.company + job.title}
+                  className="flex items-start lg:gap-x-6 gap-x-4 max-w-2xl relative before:absolute before:bottom-0 before:top-[5rem] before:left-9 before:w-[1px] before:h-[calc(100%-70px)] dark:before:bg-zinc-800 before:bg-zinc-200"
+                >
+                  <Link
+                    href={job.url}
+                    target="_blank"
+                    className="grid place-items-center dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 min-h-[80px] min-w-[80px] p-2 rounded-md overflow-clip relative"
+                  >
+                    <Image
+                      alt={`${job.company} Logo`}
+                      src={job.logo}
+                      width={50}
+                      height={50}
+                    />
+                  </Link>
+                  <div className="flex flex-col items-start">
+                    <h3 className="text-xl font-semibold">{job.company}</h3>
+                    <p>{job.title}</p>
+                    <time className="text-sm text-zinc-500 mt-2 tracking-widest uppercase">
+                      {job.startDate.toUpperCase()} -{" "}
+                      <span
+                        className={
+                          job.endDate.toLowerCase() === "present"
+                            ? "text-tertiary-color"
+                            : ""
+                        }
+                      >
+                        {job.endDate.toUpperCase()}
+                      </span>
+                    </time>
+                    <p className="tracking-tight dark:text-zinc-400 text-zinc-600 my-4">
+                      {job.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

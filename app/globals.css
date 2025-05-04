@@ -1,19 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(15deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+:is(.dark .dark\:text-primary-color) {
+  color: rgb(51, 224, 146);
+}
+
+.text-tertiary-color {
+    --tw-text-opacity: 1;
+    color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+
+.bg-secondary-color {
+  background-color: rgb(51, 224, 146);
+}
+
+:is(.dark .dark\:bg-primary-bg) {
+  background-color: rgba(39, 39, 43, 0.4);
+}
+
+:is(.dark .dark\:hover\:text-primary-color:hover) {
+  --tw-text-opacity: 1;
+  color: rgb(51 224 146 / var(--tw-text-opacity));
+}
+
+h1 {
+  font-family: var(--font-silkscreen-mono);
 }
