@@ -27,12 +27,11 @@ export default function Home() {
                 >
                   👋
                 </div>
-                &nbsp;&nbsp;I&apos;m Anthony, a full-stack engineer specialized
-                in building exceptional websites, applications, and everything
-                in between. Big fan of automated processes, clean code, and
-                strong coffee. When I&apos;m not writing code or playing video
-                games, you&apos;ll probably find me climbing rocks or
-                snowboarding.
+                &nbsp;&nbsp;Hi, I&apos;m Anthony — a full-stack engineer
+                passionate about building exceptional websites, applications,
+                and everything in between. I live on automation, clean code, and
+                strong coffee. When I&apos;m not coding or gaming, you can find
+                me climbing or snowboarding mountains.
               </div>
             </div>
             <div style={{ opacity: 1 }}>
