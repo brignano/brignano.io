@@ -31,7 +31,7 @@ export default function Home() {
                 in building exceptional websites, applications, and everything
                 in between. Big fan of automated processes, clean code, and
                 strong coffee. When I&apos;m not writing code or playing video
-                games, you can find me climbing rocks and snowboarding.
+                games, you&apos;ll probably find me climbing rocks or snowboarding.
               </div>
             </div>
             <div style={{ opacity: 1 }}>
