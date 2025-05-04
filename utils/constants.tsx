@@ -181,7 +181,6 @@ export const socialLinks = [
       </svg>
     ),
   },
-
   {
     name: "X",
     href: "https://twitter.com/brignano__",
@@ -234,6 +233,7 @@ export const jobs = [
       "Serve as Technical Lead and Solutions Architect for the Platform Engineering organization, driving the rationalization of CI/CD tools, Cloud/SaaS migrations, and enterprise-wide improvements to the developer experience. Lead inner-sourcing initiatives within the Engineering Center of Practice, the annual enterprise Hackathon, and corporate-sponsored engagements with Central Connecticut State University as a member of their Computer Science Industry Advisory Board. Mentor developers and interns to foster professional growth and promote engineering excellence.",
     startDate: "May 16, 2023",
     endDate: "Present",
+    topic: "DevSecOps",
   },
   {
     company: "The Hartford",
@@ -244,6 +244,7 @@ export const jobs = [
       "Functioned as the technical lead for multiple teams to deliver automated solutions for end-to-end quality assurance. Designed and implemented enterprise-grade tools for test data management and forms validation using Playwright and Cucumber. Established and enforced SDLC standards across the organization to ensure scalable and consistent development practices. Improved test performance by over 30% with core automation optimizations and improved test data management strategies.",
     startDate: "Mar 16, 2021",
     endDate: "May 15, 2023",
+    topic: "Quality Assurance",
   },
   {
     company: "The Hartford",
@@ -254,6 +255,7 @@ export const jobs = [
       "Led the technical implementation of a new Policy Administration platform, serving as the technical lead for a large Agile team within the Scaled Agile Framework (SAFe). Designed and delivered a premium data integration solution for the enterprise general ledger. Established DevOps pipelines using Jenkins and uDeploy, and implemented performance monitoring and alerting with Dynatrace, and SumoLogic. Championed engineering best practices through code reviews, CI/CD optimization, and automation. Mentored developers and enforced standards around code quality, versioning, and test coverage to ensure scalable, maintainable solutions.",
     startDate: "Mar 16, 2020",
     endDate: "Mar 15, 2021",
+    topic: "Batch Processing",
   },
   {
     company: "The Hartford",
@@ -264,6 +266,7 @@ export const jobs = [
       "Contributed to the development of a customer-facing application for selling Personal Lines Auto and Home insurance, built on a microservices architecture (20+ services) using Spring Boot and Angular. Collaborated with Agile Product Owners and Scrum Masters on story creation, refinement, and execution. Participated in triaging and resolving critical, time-sensitive defects to ensure application reliability. Provided mentorship to teammates and supported adoption of new technologies and development best practices.",
     startDate: "Sep 16, 2018",
     endDate: "Mar 15, 2020",
+    topic: "Full-stack Development",
   },
   {
     company: "The Hartford",
@@ -274,6 +277,7 @@ export const jobs = [
       "Provided full-stack expertise, spanning software components, databases, platforms, and infrastructure. Acted as the go-to technical leader, managing high-impact incidents and driving swift service restoration. Led root cause analysis and implemented problem management practices. Championed the migration to open-source platforms, containerization, and public cloud deployment. Drove the adoption of DevOps tools and best practices across the application portfolio. Influenced major technical design decisions and collaborated with architecture and delivery teams to shape the organization’s technical strategy.",
     startDate: "Mar 16, 2018",
     endDate: "Sep 15, 2018",
+    topic: "Reliability Engineering",
   },
   {
     company: "The Hartford",
@@ -284,6 +288,7 @@ export const jobs = [
       "Led an Agile scrum team in the design and architecture of a new internal CRM application for quoting and issuing Personal Insurance policies. Integrated multiple web services to streamline processes and reduce handling time. Successfully resolved defects and incidents, ensuring seamless application performance for Personal Insurance agents.",
     startDate: "Mar 16, 2017",
     endDate: "Mar 15, 2018",
+    topic: "Full-stack Development",
   },
   {
     company: "The Hartford",
@@ -294,5 +299,6 @@ export const jobs = [
       "Triaged and resolved production issues to ensure uninterrupted application functionality. Led disaster recovery testing and annual audits to maintain enterprise compliance and system resilience. Refactored legacy code to reduce technical debt, improving application stability, performance, and maintainability.",
     startDate: "June 15, 2016",
     endDate: "Mar 15, 2017",
+    topic: "Production Support",
   },
 ];

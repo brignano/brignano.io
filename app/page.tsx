@@ -31,7 +31,8 @@ export default function Home() {
                 in building exceptional websites, applications, and everything
                 in between. Big fan of automated processes, clean code, and
                 strong coffee. When I&apos;m not writing code or playing video
-                games, you&apos;ll probably find me climbing rocks or snowboarding.
+                games, you&apos;ll probably find me climbing rocks or
+                snowboarding.
               </div>
             </div>
             <div style={{ opacity: 1 }}>
@@ -73,7 +74,7 @@ export default function Home() {
                 </div>
                 <div className="flex justify-start xl:flex-col flex-row flex-wrap gap-2">
                   {Array.from(
-                    { length: new Date().getFullYear() - 2021 + 1 },
+                    { length: 5 },
                     (_, i) => new Date().getFullYear() - i
                   ).map((year) => (
                     <button
@@ -131,6 +132,9 @@ export default function Home() {
                   <div className="flex flex-col items-start">
                     <h3 className="text-xl font-semibold">{job.company}</h3>
                     <p>{job.title}</p>
+                    <button className="border text-white bg-zinc-800 dark:bg-zinc-200 dark:text-zinc-800 text-xs p-1 px-2 rounded-full my-2">
+                      {job.topic}
+                    </button>
                     <time className="text-sm text-zinc-500 mt-2 tracking-widest uppercase">
                       {job.startDate.toUpperCase()} -{" "}
                       <span
