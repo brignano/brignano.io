@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
-      <section data-aos="fade-down" data-aos-duration={4a00} className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 mb-16">
+      <section data-aos="fade-down" data-aos-duration={400} data-aos-once={true} className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 mb-16">
         <div className="lg:max-w-2xl max-w-2xl">
           <div style={{ opacity: 1, transform: "none" }}>
             <div>
@@ -117,7 +117,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section data-aos="fade-up" data-aos-duration={1000} >
+      <section data-aos="fade-up" data-aos-duration={1000} data-aos-once={true}>
         <div style={{ opacity: "1" }}>
           <div className="mb-8">
             <h2 className="font-incognito text-4xl font-bold tracking-tight">
@@ -160,7 +160,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="mt-32" data-aos="fade-up" data-aos-duration={1000}>
+      <section className="mt-32" data-aos="fade-up" data-aos-duration={1000} data-aos-once={true}>
         <div style={{ opacity: "1" }}>
           <div>
             <div className="mb-16">
