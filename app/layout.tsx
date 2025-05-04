@@ -16,8 +16,11 @@ const silkscreen = Silkscreen({
 });
 
 export const metadata: Metadata = {
-  title: "Anthony Brignano",
-  description: "My personal portfolio.",
+  title: "@brignano",
+  description: "Anthony Brignano's personal portfolio website.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
