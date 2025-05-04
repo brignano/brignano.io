@@ -125,6 +125,7 @@ export default function Home() {
                       src={job.logo}
                       width={50}
                       height={50}
+                      className="dark:invert"
                     />
                   </Link>
                   <div className="flex flex-col items-start">
