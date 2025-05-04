@@ -3,6 +3,8 @@ import { Inconsolata, Silkscreen } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata-mono",
