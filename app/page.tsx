@@ -16,7 +16,7 @@ export default function Home() {
           <div style={{ opacity: 1, transform: "none" }}>
             <div>
               <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
-                Full-stack Developer, DevSecOps Engineer & Solutions Architect
+                Full-stack Developer, DevSecOps Engineer, & Solutions Architect
               </h1>
               <div className="text-base dark:text-zinc-400 text-zinc-600">
                 <div
