@@ -22,7 +22,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const pages: string[] = [];//['about', 'resume'];
+  const pages: string[] = [];//['about', 'skills'];
 
   useEffect(() => {
     const theme = localStorage.getItem('theme');
