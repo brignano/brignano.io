@@ -5,7 +5,6 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 
-
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata-mono",
   subsets: ["latin"],
@@ -30,7 +29,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+   return (
     <html lang="en">
       <body
         className={`${inconsolata.variable} ${silkscreen.variable} antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}

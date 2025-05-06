@@ -2,14 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { jobs, socialLinks } from "@/utils/constants";
 import AOS from "aos";
 
 export default function Home() {
   const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
-  AOS.init();
+
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
