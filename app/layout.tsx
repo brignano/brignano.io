@@ -18,7 +18,7 @@ const silkscreen = Silkscreen({
 });
 
 export const metadata: Metadata = {
-  title: "@brignano",
+  title: "Anthony Brignano | Full-stack Developer",
   description: "Anthony Brignano's personal portfolio website.",
   icons: {
     icon: "/favicon.svg",
