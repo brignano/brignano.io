@@ -31,17 +31,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Anthony Brignano | Full-stack Developer",
     description:
-      "Explore Anthony Brignano's portfolio, featuring full-stack development projects and expertise.",
-    url: "https://yourwebsite.com",
+      "Explore Anthony Brignano's portfolio and full-stack development experience.",
+    url: "https://brignano.io",
     siteName: "Anthony Brignano Portfolio",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Anthony Brignano Portfolio Preview",
-      },
-    ],
+    // todo: below
+    // images: [
+    //   {
+    //     url: "/og-image.jpg",
+    //     width: 1200,
+    //     height: 630,
+    //     alt: "Anthony Brignano Portfolio Preview",
+    //   },
+    // ],
     locale: "en_US",
     type: "website",
   },
@@ -49,8 +50,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Anthony Brignano | Full-stack Developer",
     description:
-      "Discover Anthony Brignano's portfolio and full-stack development expertise.",
-    images: ["/og-image.jpg"],
+      "Discover Anthony Brignano's portfolio and full-stack development experience.",
+    // todo: below
+    //  images: ["/og-image.jpg"],
   },
 };
 
