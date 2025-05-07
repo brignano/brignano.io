@@ -21,7 +21,7 @@
 }
 
 :is(.dark .dark\:text-primary-color) {
-  color: rgb(51, 224, 146);
+  color: rgb(33, 110, 57);
 }
 
 .text-tertiary-color {
@@ -30,7 +30,7 @@
 }
 
 .bg-secondary-color {
-  background-color: rgb(51, 224, 146);
+  background-color: rgb(33, 110, 57);
 }
 
 :is(.dark .dark\:bg-primary-bg) {
