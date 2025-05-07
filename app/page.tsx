@@ -39,9 +39,9 @@ export default function Home() {
                 </div>
                 &nbsp;&nbsp;Hi, I&apos;m Anthony — a full-stack engineer
                 passionate about building exceptional websites, applications,
-                and everything in between. I live on automation, clean code, and
-                strong coffee. When I&apos;m not coding or gaming, you can find
-                me climbing or snowboarding mountains.
+                and everything in between. I depend on automated processes, clean code, and
+                strong coffee. If I&apos;m not coding or gaming, you&apos;ll probably find
+                me climbing rocks or snowboarding in the glades.
               </div>
             </div>
             <div style={{ opacity: 1 }}>
