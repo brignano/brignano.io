@@ -113,7 +113,7 @@ export default function Home() {
                   y2="-216.277"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#27b173"></stop>
+                  <stop stopColor="#27b173"></stop>
                   <stop offset="0.619553" stop-color="#1a663f"></stop>
                   <stop offset="0.93102" stop-color="#26312d"></stop>
                 </linearGradient>
