@@ -50,7 +50,7 @@ export default function Header() {
           <Image
             alt="icon"
             src="favicon.svg"
-            className="h-8 w-auto invert dark:invert-0"
+            className="h-8 w-auto invert-0 dark:invert"
             width={35}
             height={35}
           />
