@@ -24,6 +24,10 @@
   color: rgb(11, 96, 45);
 }
 
+:is(svg.dark .dark\:text-primary-color) {
+  color: rgb(51, 224, 146);
+}
+
 .text-tertiary-color {
     --tw-text-opacity: 1;
     color: rgb(22 163 74 / var(--tw-text-opacity));
