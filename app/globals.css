@@ -20,29 +20,27 @@
   }
 }
 
-:is(.dark .dark\:text-primary-color) {
-  color: rgb(11, 96, 45);
+.text-primary-color {
+  color: rgb(33, 110, 57);
+  .dark & {
+    color: rgb(51, 224, 146);
+  }
 }
 
-:is(svg.dark .dark\:text-primary-color) {
-  color: rgb(51, 224, 146);
+.dark button > svg:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255, 255, 255);
 }
 
 .bg-secondary-color {
   background-color: rgb(33, 110, 57);
-}
-
-:is(.dark .dark\:bg-secondary-color) {
-  background-color: rgba(51, 224, 146);
+  .dark & {
+    background-color: rgb(51, 224, 146);
+  }
 }
 
 :is(.dark .dark\:bg-primary-bg) {
   background-color: rgba(39, 39, 43, 0.4);
-}
-
-:is(.dark .dark\:hover\:text-primary-color:hover) {
-  --tw-text-opacity: 1;
-  color: rgb(51 224 146 / var(--tw-text-opacity));
 }
 
 h1 {
