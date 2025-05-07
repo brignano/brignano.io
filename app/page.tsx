@@ -114,8 +114,8 @@ export default function Home() {
                   gradientUnits="userSpaceOnUse"
                 >
                   <stop stopColor="#27b173"></stop>
-                  <stop offset="0.619553" stop-color="#1a663f"></stop>
-                  <stop offset="0.93102" stop-color="#26312d"></stop>
+                  <stop offset="0.619553" stopColor="#1a663f"></stop>
+                  <stop offset="0.93102" stopColor="#26312d"></stop>
                 </linearGradient>
                 <clipPath>
                   <rect width="1273" height="906" fill="white"></rect>
