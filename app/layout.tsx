@@ -19,7 +19,7 @@ const silkscreen = Silkscreen({
 });
 
 export const metadata: Metadata = {
-  title: "Anthony Brignano | Full-stack Developer",
+  title: "Anthony Brignano | Full-stack Engineer",
   description:
     "Anthony Brignano's personal portfolio website showcasing projects, skills, and experience.",
   icons: {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Anthony Brignano | Full-stack Developer",
+    title: "Anthony Brignano | Full-stack Engineer",
     description:
       "Explore Anthony Brignano's portfolio and full-stack development experience.",
     url: "https://brignano.io",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anthony Brignano | Full-stack Developer",
+    title: "Anthony Brignano | Full-stack Engineer",
     description:
       "Discover Anthony Brignano's portfolio and full-stack development experience.",
     // todo: below
