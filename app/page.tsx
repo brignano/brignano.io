@@ -210,7 +210,7 @@ export default function Home() {
                     <button className="border text-white bg-zinc-800 dark:bg-zinc-200 dark:text-zinc-800 text-xs p-1 px-2 rounded-full my-2">
                       {job.topic}
                     </button>
-                    <time className="text-sm text-zinc-500 mt-2 tracking-widest uppercase">
+                    <time className="text-sm text-zinc-500 dark:text-zinc-400 mt-2 tracking-widest uppercase">
                       {job.startDate.toUpperCase()} -{" "}
                       <span
                         className={
