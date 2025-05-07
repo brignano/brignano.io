@@ -215,7 +215,7 @@ export default function Home() {
                       <span
                         className={
                           job.endDate.toLowerCase() === "present"
-                            ? "text-tertiary-color"
+                            ? "text-primary-color"
                             : ""
                         }
                       >

@@ -28,11 +28,6 @@
   color: rgb(51, 224, 146);
 }
 
-.text-tertiary-color {
-    --tw-text-opacity: 1;
-    color: rgb(22 163 74 / var(--tw-text-opacity));
-}
-
 .bg-secondary-color {
   background-color: rgb(33, 110, 57);
 }
