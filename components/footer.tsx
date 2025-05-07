@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto flex lg:flex-row flex-col items-center lg:justify-between justify-center gap-y-4 md:px-16 px-6 py-16">
           <div className="flex md:flex-row flex-col items-center gap-x-2">
             <h3 className="font-inter">Built with: </h3>
-            <ul className="flex items-center gap-x-2 text-sm dark:text-zinc-600 text-zinc-400 md:mt-0 mt-3">
+            <ul className="flex items-center gap-x-2 text-sm dark:text-zinc-400 text-zinc-500 md:mt-0 mt-3">
               {buildTools.map((tool) => (
                 <li key={tool.name}>
                   <Link
@@ -50,7 +50,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col lg:items-end items-center lg:text-start text-center">
-            <small className="text-zinc-400">
+            <small className="text-zinc-500 dark:text-zinc-400">
               Copyright © Anthony Brignano {new Date().getFullYear()} All rights
               Reserved
             </small>
