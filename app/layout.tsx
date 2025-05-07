@@ -20,9 +20,37 @@ const silkscreen = Silkscreen({
 
 export const metadata: Metadata = {
   title: "Anthony Brignano | Full-stack Developer",
-  description: "Anthony Brignano's personal portfolio website.",
+  description:
+    "Anthony Brignano's personal portfolio website showcasing projects, skills, and experience.",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.svg" },
+      { url: "/favicon-dark.png", media: "(prefers-color-scheme: dark)" },
+    ],
+  },
+  openGraph: {
+    title: "Anthony Brignano | Full-stack Developer",
+    description:
+      "Explore Anthony Brignano's portfolio, featuring full-stack development projects and expertise.",
+    url: "https://yourwebsite.com",
+    siteName: "Anthony Brignano Portfolio",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Anthony Brignano Portfolio Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Anthony Brignano | Full-stack Developer",
+    description:
+      "Discover Anthony Brignano's portfolio and full-stack development expertise.",
+    images: ["/og-image.jpg"],
   },
 };
 
