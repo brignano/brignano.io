@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.svg" },
-      { url: "/favicon-dark.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/favicon-dark.svg", media: "(prefers-color-scheme: dark)" },
     ],
   },
   openGraph: {
