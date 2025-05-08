@@ -41,7 +41,7 @@ export default function Home() {
                 passionate about building exceptional websites, applications,
                 and everything in between. I depend on automated processes,
                 clean code, and strong coffee. If I&apos;m not coding or gaming,
-                you can probably find me climbing rocks or snowboarding
+                you will probably find me climbing rocks or snowboarding
                 glades.
               </div>
             </div>
