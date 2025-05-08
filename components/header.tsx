@@ -76,9 +76,9 @@ export default function Header() {
             className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0"
           >
             {isDarkMode ? (
-              <MoonIcon className="size-5 text-primary-color hover:text-white duration-300 cursor-pointer" />
+              <MoonIcon className="size-5 text-primary-color hover:text-white duration-400 cursor-pointer" />
             ) : (
-              <SunIcon className="size-5 text-yellow-600 hover:text-zinc-500 duration-300 cursor-pointer" />
+              <SunIcon className="size-5 text-yellow-600 hover:text-zinc-500 duration-400 cursor-pointer" />
             )}
           </button>
           {pages.length > 0 && (
