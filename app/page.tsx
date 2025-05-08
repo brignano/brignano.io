@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { jobs, socialLinks } from "@/utils/constants";
 import AOS from "aos";
+import { track } from "@vercel/analytics";
 
 export default function Home() {
   const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
@@ -54,6 +55,12 @@ export default function Home() {
                         href={link.href}
                         target="_blank"
                         className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
+                        onClick={() => {
+                          track("Social Link Clicked", {
+                            name: link.name,
+                            href: link.href,
+                          });
+                        }}
                       >
                         {link.icon} <span className="ml-1">{link.name}</span>
                       </Link>
