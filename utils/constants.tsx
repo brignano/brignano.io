@@ -202,7 +202,7 @@ export const socialLinks = [
   },
   {
     name: "Instagram",
-    href: "https://instagram.com/brignano",
+    href: "https://instagram.com/_brignano",
     icon: (
       <svg
         stroke="currentColor"
