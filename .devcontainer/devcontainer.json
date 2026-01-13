@@ -57,10 +57,6 @@
   // Use 'postCreateCommand' to run commands after the container is created
   "postCreateCommand": "npm install",
 
-  // Use 'postStartCommand' to run commands after the container starts
-  // "postStartCommand": "",
-
-  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root
-  // "remoteUser": "root"
+  // Run as non-root user
   "remoteUser": "node"
 }
