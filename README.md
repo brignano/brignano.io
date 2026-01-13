@@ -61,8 +61,8 @@ The DevContainer includes:
 ### Available Scripts
 
 - `npm run dev` - Start the development server with Turbopack
-- `npm run build` - Build the application for production
-- `npm run start` - Start the production server
+- `npm run build` - Build the application for production (static export to `out/` directory)
+- `npm run start` - Start Next.js production server (not used for static exports; serve the `out/` directory with a static file server instead)
 - `npm run lint` - Run ESLint to check code quality
 
 ## 📦 Building for Production
@@ -114,17 +114,21 @@ If you need environment variables for your deployment:
 ```
 .
 ├── .devcontainer/          # DevContainer configuration
-├── app/                    # Next.js app directory
-│   ├── about/             # About page
-│   ├── skills/            # Skills page
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page
-├── components/            # React components
-├── public/               # Static assets
-├── utils/                # Utility functions
-├── next.config.ts        # Next.js configuration
-├── tailwind.config.ts    # TailwindCSS configuration
-└── tsconfig.json         # TypeScript configuration
+├── .github/               # GitHub workflows and configurations
+├── app/                   # Next.js app directory
+│   ├── about/            # About page
+│   ├── skills/           # Skills page
+│   ├── globals.css       # Global styles
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # Home page
+├── components/           # React components
+├── public/              # Static assets
+├── utils/               # Utility functions
+├── eslint.config.mjs    # ESLint configuration
+├── next.config.ts       # Next.js configuration
+├── postcss.config.mjs   # PostCSS configuration
+├── tailwind.config.ts   # TailwindCSS configuration
+└── tsconfig.json        # TypeScript configuration
 ```
 
 ## 📝 Configuration
