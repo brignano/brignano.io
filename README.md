@@ -1,125 +1,161 @@
-# Next.js GitHub Pages
+# brignano.io
 
-Deploy Next.js to GitHub Pages with GitHub Actions. [View the deployed app](https://gregrickaby.github.io/nextjs-github-pages/) 🚀
+![Website Deploy](https://deploy-badge.vercel.app/?url=https%3A%2F%2Fbrignano.io&style=for-the-badge&logo=vercel&name=brignano.io)
 
-> ⚠️ Heads up! GitHub Pages _does not_ support serverless or edge functions. This means dynamic functionality will be disabled. See all the [unsupported features](https://nextjs.org/docs/app/building-your-application/deploying/static-exports#unsupported-features).
+A personal website and portfolio built with Next.js 15, React 19, and TailwindCSS 4, deployed on Vercel.
 
----
+## 🚀 Features
 
-## Configure Next.js
+- **Next.js 15** with App Router and static export support
+- **React 19** with modern hooks and components
+- **TailwindCSS 4** for styling
+- **TypeScript** for type safety
+- **Vercel Analytics** and **Speed Insights** integration
+- **GitHub Calendar** visualization
+- **AOS** (Animate On Scroll) animations
+
+## 🛠️ Development
+
+### Prerequisites
+
+- Node.js 20 or higher
+- npm or yarn
+
+### Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/brignano/brignano.io.git
+   cd brignano.io
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Development with DevContainer
+
+This repository includes a DevContainer configuration for VS Code. To use it:
+
+1. Install [Docker](https://www.docker.com/products/docker-desktop) and [VS Code](https://code.visualstudio.com/)
+2. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+3. Open the repository in VS Code
+4. When prompted, click "Reopen in Container" (or run the command "Dev Containers: Reopen in Container")
+5. The container will automatically install dependencies after building
+
+The DevContainer includes:
+- Node.js 20
+- Git and GitHub CLI
+- ESLint and Prettier extensions
+- TailwindCSS IntelliSense
+- All recommended VS Code extensions for Next.js/React development
+
+### Available Scripts
+
+- `npm run dev` - Start the development server with Turbopack
+- `npm run build` - Build the application for production (static export to `out/` directory)
+- `npm run start` - Start Next.js production server (not used for static exports; serve the `out/` directory with a static file server instead)
+- `npm run lint` - Run ESLint to check code quality
+
+## 📦 Building for Production
+
+Next.js is configured with static exports to ensure compatibility with various hosting platforms:
+
+```bash
+npm run build
+```
+
+The build output will be in the `out/` directory.
+
+## 🚢 Deployment on Vercel
+
+This project is optimized for deployment on [Vercel](https://vercel.com):
+
+### Deploy Your Own
+
+Deploy your own version with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbrignano%2Fbrignano.io)
+
+### Manual Deployment
+
+1. Push your code to a Git repository (GitHub, GitLab, Bitbucket)
+2. Import your project to Vercel:
+   - Go to [vercel.com/new](https://vercel.com/new)
+   - Select your repository
+   - Vercel will automatically detect the Next.js framework
+   - Click "Deploy"
+
+Vercel will automatically:
+- Build your Next.js application
+- Deploy to a global CDN
+- Provide automatic HTTPS
+- Set up preview deployments for pull requests
+- Enable Vercel Analytics and Speed Insights (already configured)
+
+### Environment Variables
+
+If you need environment variables for your deployment:
+
+1. Go to your project settings on Vercel
+2. Navigate to "Environment Variables"
+3. Add your variables for Production, Preview, and Development environments
+
+## 🏗️ Project Structure
+
+```
+.
+├── .devcontainer/          # DevContainer configuration
+├── .github/               # GitHub workflows and configurations
+├── app/                   # Next.js app directory
+│   ├── about/            # About page
+│   ├── skills/           # Skills page
+│   ├── globals.css       # Global styles
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # Home page
+├── components/           # React components
+├── public/              # Static assets
+├── utils/               # Utility functions
+├── eslint.config.mjs    # ESLint configuration
+├── next.config.ts       # Next.js configuration
+├── postcss.config.mjs   # PostCSS configuration
+├── tailwind.config.ts   # TailwindCSS configuration
+└── tsconfig.json        # TypeScript configuration
+```
+
+## 📝 Configuration
 
 ### Next.js Config
 
-First, you need to configure Next.js to [deploy static exports](https://nextjs.org/docs/app/building-your-application/deploying/static-exports). This is required for GitHub Pages to work.
+The `next.config.ts` is configured for static exports:
+- `output: "export"` - Enables static HTML export
+- `images.unoptimized: true` - Disables server-side image optimization
+- `basePath: ""` - Set to your repository slug if deploying to a subdirectory
 
-1. Open the `next.config.ts` file
-2. Add the following:
+### Vercel Analytics
 
-```typescript
-import type { NextConfig } from "next";
+Vercel Analytics and Speed Insights are already integrated via:
+- `@vercel/analytics`
+- `@vercel/speed-insights`
 
-const nextConfig: NextConfig = {
-  /**
-   * Enable static exports.
-   *
-   * @see https://nextjs.org/docs/app/building-your-application/deploying/static-exports
-   */
-  output: "export",
+These packages are automatically enabled when deployed on Vercel.
 
-  /**
-   * Set base path. This is the slug of your GitHub repository.
-   *
-   * @see https://nextjs.org/docs/app/api-reference/next-config-js/basePath
-   */
-  basePath: "",
+## 🤝 Contributing
 
-  /**
-   * Disable server-based image optimization. Next.js does not support
-   * dynamic features with static exports.
-   *
-   * @see https://nextjs.org/docs/app/api-reference/components/image#unoptimized
-   */
-  images: {
-    unoptimized: true,
-  },
-};
+Contributions are welcome! Feel free to open issues or submit pull requests.
 
-export default nextConfig;
-```
+## 📄 License
 
-3. Save the `next.config.ts`
-
-4. Finally, place a `.nojekyll` file in the `/public` directory to disable GitHub Pages from trying to create a [Jekyll](https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/) website.
-
-```treeview
-.
-├── app/
-├── public/
-│   └── .nojekyll
-├── next.config.ts
-```
-
-Perfect! This is all you need to configure Next.js to deploy on GitHub Pages.
-
-### Add base path to `page.tsx`
-
-Next, you will need to add the base path to images in `page.tsx` file. This is required for the images to appear on GitHub Pages.
-
-1. Open `app/page.tsx`
-2. Find the `Image` components
-3. Add `/nextjs-github-pages/` (or the slug of your GitHub repository) to the `src` prop:
-
-```tsx
-<Image
-  src="/nextjs-github-pages/vercel.svg"
-  alt="Vercel Logo"
-  className={styles.vercelLogo}
-  width={100}
-  height={24}
-  priority
-/>
-```
-
-4. Save the `page.tsx` file
-
-Learn more by reading the official documentation [for basePath and images](https://nextjs.org/docs/app/api-reference/config/next-config-js/basePath#images).
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## Configure GitHub Repository
-
-Now that Next.js is configured, you need to set up your GitHub repository to deploy to GitHub Pages.
-
-### Setup GitHub Action
-
-This is where the magic happens! This [workflow file](https://github.com/gregrickaby/nextjs-github-pages/blob/main/.github/workflows/deploy.yml) will automatically build and deploy the app when you push to the `main` branch.
-
-1. Create `.github/workflows/deploy.yml` file
-2. Paste the contents of <https://github.com/gregrickaby/nextjs-github-pages/blob/main/.github/workflows/deploy.yml>
-3. Save the `deploy.yml` file
-
-### Enable GitHub Pages
-
-1. Go to your repository's **Settings** tab
-2. Click "Pages" in the sidebar
-3. Under "Build and Deployment", select "GitHub Actions" as the source:
-
-![screenshot of github pages settings](https://dl.dropboxusercontent.com/s/vf74zv2wcepnt9w/Screenshot%202025-02-03%20at%2021.10.06.png?dl=0)
-
-### Push to GitHub
-
-Now that everything is configured, you can commit your code and push to GitHub. This will trigger the GitHub Action workflow and deploy your app to GitHub Pages.
-
-```bash
-git add . && git commit -m "initial commit" && git push
-```
-
-You should see your site deployed to GitHub Pages in a few minutes. 🚀
-
----
-
-## Wrap up
-
-Thanks for reading and I hope this helps. If you noticed someting wrong, please [open an issue](https://github.com/gregrickaby/nextjs-github-pages/issues). Cheers! 🍻
-
----
+Built with ❤️ using [Next.js](https://nextjs.org/) and deployed on [Vercel](https://vercel.com)
