@@ -1,6 +1,6 @@
 # brignano.io
 
-[![Vercel](https://vercelbadge.vercel.app/api/anthony-brignano/brignano-io)](https://vercel.com/anthony-brignano/brignano-io)
+![Website Deploy](https://deploy-badge.vercel.app/?url=https%3A%2F%2Fbrignano.io&style=for-the-badge&logo=vercel&name=brignano.io)
 
 A personal website and portfolio built with Next.js 15, React 19, and TailwindCSS 4, deployed on Vercel.
 
