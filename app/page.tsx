@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import GitHubCalendar from "react-github-calendar";
+import { GitHubCalendar } from "react-github-calendar";
 import { jobs, socialLinks } from "@/utils/constants";
 import AOS from "aos";
 import { track } from "@vercel/analytics";
