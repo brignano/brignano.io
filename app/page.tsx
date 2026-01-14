@@ -28,7 +28,8 @@ export default function Home() {
           <div style={{ opacity: 1, transform: "none" }}>
             <div>
               <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
-                I build secure, reliable cloud-native systems and the platforms teams depend on.
+                I build secure, reliable cloud-native systems and the platforms
+                teams depend on.
               </h1>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
                 Full-stack engineer focused on DevSecOps, automation, and
@@ -40,12 +41,25 @@ export default function Home() {
               <div className="flex flex-wrap gap-4 mb-10">
                 <a
                   href="mailto:anthony@brignano.io"
-                  className="inline-flex items-center px-6 py-3 bg-primary-color hover:bg-opacity-90 text-white dark:text-zinc-900 font-semibold rounded-lg transition-all duration-200"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
                   onClick={() => {
                     track("CTA Clicked", { type: "Contact" });
                   }}
                 >
                   Contact Me
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
                 </a>
                 <a
                   href="https://docs.google.com/document/d/1NIwgN8u-V-1foCZ2Cb5I2KjpnA6birGL0aV9ZDjX5RI/edit?usp=sharing"
@@ -56,7 +70,7 @@ export default function Home() {
                     track("CTA Clicked", { type: "Resume" });
                   }}
                 >
-                  Download Resume
+                  View Resume
                   <svg
                     className="ml-2 w-4 h-4"
                     fill="none"
@@ -165,7 +179,7 @@ export default function Home() {
 
       {/* About Section */}
       <section
-        className="mt-32 mb-24"
+        className="md:mt-40 lg:mt-0"
         data-aos="fade-up"
         data-aos-duration={1000}
         data-aos-once={true}
@@ -174,7 +188,7 @@ export default function Home() {
           <div>
             <div className="mb-8">
               <h2 className="font-incognito text-4xl mb-8 font-bold tracking-tight">
-                About
+                About Me
               </h2>
               <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
                 <p>
@@ -278,67 +292,9 @@ export default function Home() {
         </section>
       )}
 
-      {/* Contribution Graph with Context */}
-      <section
-        className="mt-32"
-        data-aos="fade-up"
-        data-aos-duration={1000}
-        data-aos-once={true}
-      >
-        <div style={{ opacity: "1" }}>
-          <div className="mb-8">
-            <h2 className="font-incognito text-4xl font-bold tracking-tight mb-4">
-              Contribution Graph
-            </h2>
-            <p className="dark:text-zinc-400 text-zinc-600 max-w-2xl">
-              GitHub contribution activity over the past year. Note: Private
-              repository contributions may not appear, and the graph reflects
-              only public activity on this platform.
-            </p>
-          </div>
-          <div style={{ opacity: "1", transform: "none" }}>
-            <div>
-              <div className="flex xl:flex-row flex-col gap-4">
-                <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-8 rounded-lg max-w-fit max-h-fit">
-                  <GitHubCalendar
-                    username="brignano"
-                    year={calendarYear}
-                    colorScheme={"light"}
-                  />
-                </div>
-                <div className="flex justify-start xl:flex-col flex-row flex-wrap gap-2">
-                  {Array.from(
-                    { length: 5 },
-                    (_, i) => new Date().getFullYear() - i
-                  ).map((year) => (
-                    <button
-                      className={
-                        "cursor-pointer rounded-lg text-center px-4 py-2 border border-transparent dark:hover:border-zinc-700 hover:border-zinc-200 duration-100 text-sm font-medium" +
-                        " " +
-                        (year === calendarYear
-                          ? "dark:bg-secondary-color bg-secondary-color dark:hover:border-transparent dark:text-zinc-800 text-white hover:border-transparent"
-                          : "dark:bg-primary-bg bg-zinc-50 dark:text-white text-zinc-800")
-                      }
-                      key={year}
-                      title={`View graph for the year ${year}`}
-                      onClick={() => {
-                        setCalendarYear(year);
-                        track("Contribution Graph Year Changed", { year });
-                      }}
-                    >
-                      {year}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Work Experience */}
       <section
-        className="mt-40"
+        className="md:mt-24"
         data-aos="fade-up"
         data-aos-duration={1000}
         data-aos-once={true}
@@ -404,7 +360,10 @@ export default function Home() {
                         return (
                           <li key={index} className="text-sm">
                             {parts.map((part, i) => {
-                              if (part.startsWith('**') && part.endsWith('**')) {
+                              if (
+                                part.startsWith("**") &&
+                                part.endsWith("**")
+                              ) {
                                 return (
                                   <strong
                                     key={i}
@@ -433,9 +392,67 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Contribution Graph with Context */}
+      <section
+        className="mt-10 sm:mt-32 lg:mt-24"
+        data-aos="fade-up"
+        data-aos-duration={1000}
+        data-aos-once={true}
+      >
+        <div style={{ opacity: "1" }}>
+          <div className="mb-8">
+            <h2 className="font-incognito text-4xl font-bold tracking-tight mb-4">
+              Contribution Graph
+            </h2>
+            <p className="dark:text-zinc-400 text-zinc-600 max-w-2xl">
+              GitHub contribution activity over the past year. Note: Private
+              repository contributions may not appear, and the graph reflects
+              only public activity on this platform.
+            </p>
+          </div>
+          <div style={{ opacity: "1", transform: "none" }}>
+            <div>
+              <div className="flex xl:flex-row flex-col gap-4">
+                <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-8 rounded-lg max-w-fit max-h-fit">
+                  <GitHubCalendar
+                    username="brignano"
+                    year={calendarYear}
+                    colorScheme={"light"}
+                  />
+                </div>
+                <div className="flex justify-start xl:flex-col flex-row flex-wrap gap-2">
+                  {Array.from(
+                    { length: 5 },
+                    (_, i) => new Date().getFullYear() - i
+                  ).map((year) => (
+                    <button
+                      className={
+                        "cursor-pointer rounded-lg text-center px-4 py-2 border border-transparent dark:hover:border-zinc-700 hover:border-zinc-200 duration-100 text-sm font-medium" +
+                        " " +
+                        (year === calendarYear
+                          ? "dark:bg-secondary-color bg-secondary-color dark:hover:border-transparent dark:text-zinc-800 text-white hover:border-transparent"
+                          : "dark:bg-primary-bg bg-zinc-50 dark:text-white text-zinc-800")
+                      }
+                      key={year}
+                      title={`View graph for the year ${year}`}
+                      onClick={() => {
+                        setCalendarYear(year);
+                        track("Contribution Graph Year Changed", { year });
+                      }}
+                    >
+                      {year}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact CTA - Prominent Final Section */}
       <section
-        className="mt-40 mb-20"
+        className="mt-10 sm:mt-32 lg:mt-24"
         data-aos="fade-up"
         data-aos-duration={1000}
         data-aos-once={true}
@@ -445,7 +462,9 @@ export default function Home() {
             Want to collaborate or chat?
           </h2>
           <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
-            I'm always open to discussing platform engineering challenges, DevSecOps transformations, or open source collaborations. Reach out via email — I typically respond within 24 hours.
+            I'm always open to discussing platform engineering challenges,
+            DevSecOps transformations, or open source collaborations. Reach out
+            via email — I typically respond within 24 hours.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
