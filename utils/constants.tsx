@@ -313,8 +313,14 @@ export const jobs = [
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Multi-Stack Engineer",
-    description:
-      "Provided full-stack expertise, spanning software components, databases, platforms, and infrastructure. Acted as the go-to technical leader, managing high-impact incidents and driving swift service restoration. Led root cause analysis and implemented problem management practices. Championed the migration to open-source platforms, containerization, and public cloud deployment. Drove the adoption of DevOps tools and best practices across the application portfolio. Influenced major technical design decisions and collaborated with architecture and delivery teams to shape the organization’s technical strategy.",
+    summary: "Full-stack technical leader managing incidents, infrastructure, and driving cloud migration strategies.",
+    bullets: [
+      "Managed high-impact incidents and drove swift service restoration as go-to technical leader",
+      "Led root cause analysis and implemented problem management practices",
+      "Championed migration to open-source platforms, containerization, and public cloud deployment",
+      "Influenced major technical design decisions and shaped organization's technical strategy",
+    ],
+    tech: "Java, Docker, Kubernetes, AWS, Jenkins, Open Source Platforms",
     startDate: "Mar 16, 2018",
     endDate: "Sep 15, 2018",
     topic: "Reliability Engineering",
