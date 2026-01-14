@@ -200,10 +200,18 @@ export default function Home() {
                   solutions that empower teams to ship with confidence.
                 </p>
                 <p>
-                  I'm always open to collaborating on platform engineering
-                  challenges, DevSecOps transformations, or contributing to open
-                  source projects. When I'm not coding, you'll probably find me
-                  climbing rocks, snowboarding glades, or gaming with friends.
+                  I enjoy building systems that are secure, reliable, and
+                  maintainable. My engineering philosophy centers on automation,
+                  strong testing practices, and security-first delivery. I focus
+                  on designing platforms and workflows that reduce friction and
+                  help teams ship with confidence. I'm especially drawn to
+                  platform engineering challenges, DevSecOps transformations,
+                  and work that improves developer experience at scale. I'm
+                  always open to collaborating on meaningful problems or
+                  contributing to open source. Outside of work, you'll usually
+                  find me climbing rocks, snowboarding glades, or exploring new
+                  ideas. I value curiosity, creativity, and meaningful
+                  connections in both my work and personal life.
                 </p>
               </div>
             </div>
