@@ -191,7 +191,7 @@ export default function Home() {
       >
         <div style={{ opacity: "1" }}>
           <div>
-            <div className="mb-16">
+            <div className="mb-8">
               <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
                 Projects
               </h2>
@@ -379,18 +379,26 @@ export default function Home() {
                       {job.summary}
                     </p>
                     <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2">
-                      {job.bullets.map((bullet, index) => (
-                        <li
-                          key={index}
-                          className="text-sm"
-                          dangerouslySetInnerHTML={{
-                            __html: bullet.replace(
-                              /\*\*(.*?)\*\*/g,
-                              '<strong class="font-bold dark:text-white text-zinc-900">$1</strong>'
-                            ),
-                          }}
-                        />
-                      ))}
+                      {job.bullets.map((bullet, index) => {
+                        const parts = bullet.split(/(\*\*.*?\*\*)/);
+                        return (
+                          <li key={index} className="text-sm">
+                            {parts.map((part, i) => {
+                              if (part.startsWith('**') && part.endsWith('**')) {
+                                return (
+                                  <strong
+                                    key={i}
+                                    className="font-bold dark:text-white text-zinc-900"
+                                  >
+                                    {part.slice(2, -2)}
+                                  </strong>
+                                );
+                              }
+                              return part;
+                            })}
+                          </li>
+                        );
+                      })}
                     </ul>
                     {job.tech && (
                       <p className="text-xs dark:text-zinc-500 text-zinc-500 mt-4">

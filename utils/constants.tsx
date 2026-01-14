@@ -223,6 +223,13 @@ export const socialLinks = [
   },
 ];
 
+export type Project = {
+  title: string;
+  description: string;
+  tech: string[];
+  links?: { label: string; url: string }[];
+};
+
 export const highlights = [
   "AWS + cloud-native architecture",
   "DevSecOps / security-first delivery",
@@ -232,12 +239,7 @@ export const highlights = [
   "Test automation / test data strategy",
 ];
 
-export const projects: Array<{
-  title: string;
-  description: string;
-  tech: string[];
-  links?: { label: string; url: string }[];
-}> = [];
+export const projects: Project[] = [];
 
 export const jobs = [
   {
