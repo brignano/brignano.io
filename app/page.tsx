@@ -182,7 +182,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Projects Section - Only show if there are real projects */}
+      {/* Projects Section - Only show if projects exist */}
       {projects.length > 0 && (
         <section
           className="mb-32"
