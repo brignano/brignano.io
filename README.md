@@ -2,11 +2,11 @@
 
 ![Website Deploy](https://deploy-badge.vercel.app/?url=https%3A%2F%2Fbrignano.io&style=for-the-badge&logo=vercel&name=brignano.io)
 
-A personal website and portfolio built with Next.js 15, React 19, and TailwindCSS 4, deployed on Vercel.
+A personal website and portfolio built with Next.js 16, React 19, and TailwindCSS 4, deployed on Vercel.
 
 ## 🚀 Features
 
-- **Next.js 15** with App Router and static export support
+- **Next.js 16** with App Router and static export support
 - **React 19** with modern hooks and components
 - **TailwindCSS 4** for styling
 - **TypeScript** for type safety

@@ -54,9 +54,23 @@
     }
   },
 
-  // Use 'postCreateCommand' to run commands after the container is created
-  "postCreateCommand": "npm install",
+  // Use 'onCreateCommand' to cache dependencies in the container
+  "onCreateCommand": {
+    "restore-cache": "echo 'Setting up dependency cache...'",
+    "install-deps": "npm ci --prefer-offline --no-audit"
+  },
+
+  // Use 'postCreateCommand' for additional setup after container is ready
+  "postCreateCommand": "npm run build || echo 'Build will be run on first deployment'",
+
+  // Use 'updateContentCommand' to update dependencies when container is rebuilt
+  "updateContentCommand": "npm ci --prefer-offline --no-audit",
 
   // Run as non-root user
-  "remoteUser": "node"
+  "remoteUser": "node",
+
+  // Mount node_modules as a volume for better performance
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
+  ]
 }
