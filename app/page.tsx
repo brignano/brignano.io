@@ -229,6 +229,7 @@ export default function Home() {
                           key={i}
                           href={link.url}
                           target="_blank"
+                          rel="noopener noreferrer"
                           className="text-sm text-primary-color hover:underline"
                         >
                           {link.label} →
