@@ -163,6 +163,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section
+        className="mt-32 mb-24"
+        data-aos="fade-up"
+        data-aos-duration={1000}
+        data-aos-once={true}
+      >
+        <div style={{ opacity: "1" }}>
+          <div>
+            <div className="mb-8">
+              <h2 className="font-incognito text-4xl mb-8 font-bold tracking-tight">
+                About
+              </h2>
+              <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
+                <p>
+                  I enjoy building systems that are secure, reliable, and
+                  maintainable. My engineering philosophy centers on automation,
+                  strong testing practices, and security-first delivery. Whether
+                  it's designing CI/CD pipelines, building internal platforms,
+                  or optimizing observability strategies, I focus on creating
+                  solutions that empower teams to ship with confidence.
+                </p>
+                <p>
+                  I'm always open to collaborating on platform engineering
+                  challenges, DevSecOps transformations, or contributing to open
+                  source projects. When I'm not coding, you'll probably find me
+                  climbing rocks, snowboarding glades, or gaming with friends.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Highlights Strip */}
       <section
         className="mb-24"
@@ -252,40 +286,6 @@ export default function Home() {
         data-aos-once={true}
       >
         <div style={{ opacity: "1" }}>
-          <div>
-            <div className="mb-8">
-              <h2 className="font-incognito text-4xl mb-8 font-bold tracking-tight">
-                About
-              </h2>
-              <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
-                <p>
-                  I enjoy building systems that are secure, reliable, and
-                  maintainable. My engineering philosophy centers on automation,
-                  strong testing practices, and security-first delivery. Whether
-                  it's designing CI/CD pipelines, building internal platforms,
-                  or optimizing observability strategies, I focus on creating
-                  solutions that empower teams to ship with confidence.
-                </p>
-                <p>
-                  I'm always open to collaborating on platform engineering
-                  challenges, DevSecOps transformations, or contributing to open
-                  source projects. When I'm not coding, you'll probably find me
-                  climbing rocks, snowboarding glades, or gaming with friends.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contribution Graph with Context */}
-      <section
-        className="mt-32"
-        data-aos="fade-up"
-        data-aos-duration={1000}
-        data-aos-once={true}
-      >
-        <div style={{ opacity: "1" }}>
           <div className="mb-8">
             <h2 className="font-incognito text-4xl font-bold tracking-tight mb-4">
               Contribution Graph
@@ -349,40 +349,6 @@ export default function Home() {
               <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
                 Work Experience
               </h2>
-            </div>
-          </div>
-        </div>
-
-        {/* About Section - Positioned before role cards */}
-        <div
-          className="mb-16"
-          data-aos="fade-up"
-          data-aos-duration={1000}
-          data-aos-once={true}
-        >
-          <div style={{ opacity: "1" }}>
-            <div>
-              <div className="mb-8">
-                <h3 className="font-incognito text-2xl mb-6 font-bold tracking-tight">
-                  About
-                </h3>
-                <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
-                  <p>
-                    I enjoy building systems that are secure, reliable, and
-                    maintainable. My engineering philosophy centers on automation,
-                    strong testing practices, and security-first delivery. Whether
-                    it's designing CI/CD pipelines, building internal platforms,
-                    or optimizing observability strategies, I focus on creating
-                    solutions that empower teams to ship with confidence.
-                  </p>
-                  <p>
-                    I'm always open to collaborating on platform engineering
-                    challenges, DevSecOps transformations, or contributing to open
-                    source projects. When I'm not coding, you'll probably find me
-                    climbing rocks, snowboarding glades, or gaming with friends.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
