@@ -62,6 +62,28 @@ export const socialLinks = [
       </svg>
     ),
   },
+  /*
+  {
+    name: "Instagram",
+    href: "https://instagram.com/_brignano",
+    icon: (
+      <svg
+        stroke="currentColor"
+        fill="currentColor"
+        strokeWidth="0"
+        viewBox="0 0 24 24"
+        className="flex-shrink-0 h-5 w-5 text-zinc-500 group-hover:dark:text-white group-hover:text-zinc-800 duration-300"
+        aria-hidden="true"
+        height="1em"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248zm0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008z"></path>
+        <circle cx="16.806" cy="7.207" r="1.078"></circle>
+        <path d="M20.533 6.111A4.605 4.605 0 0 0 17.9 3.479a6.606 6.606 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.554 6.554 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.585 6.585 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71 0 2.442 0 2.753.056 3.71.015.748.156 1.486.419 2.187a4.61 4.61 0 0 0 2.634 2.632 6.584 6.584 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.615 6.615 0 0 0 2.186-.419 4.613 4.613 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.581 6.581 0 0 0-.421-2.217zm-1.218 9.532a5.043 5.043 0 0 1-.311 1.688 2.987 2.987 0 0 1-1.712 1.711 4.985 4.985 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a4.96 4.96 0 0 1-1.669-.311 2.985 2.985 0 0 1-1.719-1.711 5.08 5.08 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654 0-2.437 0-2.686.053-3.655a5.038 5.038 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5.01 5.01 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a4.96 4.96 0 0 1 1.67.311 2.991 2.991 0 0 1 1.712 1.712 5.08 5.08 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655 0 2.436 0 2.698-.043 3.654h-.011z"></path>
+      </svg>
+    ),
+  },
   {
     name: "Stack Overflow",
     href: "https://stackoverflow.com/users/5574831/anthony",
@@ -181,124 +203,136 @@ export const socialLinks = [
       </svg>
     ),
   },
-  {
-    name: "X",
-    href: "https://twitter.com/brignano__",
-    icon: (
-      <svg
-        stroke="currentColor"
-        fill="currentColor"
-        strokeWidth="0"
-        viewBox="0 0 448 512"
-        className="flex-shrink-0 h-5 w-5 text-zinc-500 group-hover:dark:text-white group-hover:text-zinc-800 duration-300"
-        aria-hidden="true"
-        height="1em"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm297.1 84L257.3 234.6 379.4 396H283.8L209 298.1 123.3 396H75.8l111-126.9L69.7 116h98l67.7 89.5L313.6 116h47.5zM323.3 367.6L153.4 142.9H125.1L296.9 367.6h26.3z"></path>
-      </svg>
-    ),
-  },
-  {
-    name: "Instagram",
-    href: "https://instagram.com/_brignano",
-    icon: (
-      <svg
-        stroke="currentColor"
-        fill="currentColor"
-        strokeWidth="0"
-        viewBox="0 0 24 24"
-        className="flex-shrink-0 h-5 w-5 text-zinc-500 group-hover:dark:text-white group-hover:text-zinc-800 duration-300"
-        aria-hidden="true"
-        height="1em"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248zm0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008z"></path>
-        <circle cx="16.806" cy="7.207" r="1.078"></circle>
-        <path d="M20.533 6.111A4.605 4.605 0 0 0 17.9 3.479a6.606 6.606 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.554 6.554 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.585 6.585 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71 0 2.442 0 2.753.056 3.71.015.748.156 1.486.419 2.187a4.61 4.61 0 0 0 2.634 2.632 6.584 6.584 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.615 6.615 0 0 0 2.186-.419 4.613 4.613 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.581 6.581 0 0 0-.421-2.217zm-1.218 9.532a5.043 5.043 0 0 1-.311 1.688 2.987 2.987 0 0 1-1.712 1.711 4.985 4.985 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a4.96 4.96 0 0 1-1.669-.311 2.985 2.985 0 0 1-1.719-1.711 5.08 5.08 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654 0-2.437 0-2.686.053-3.655a5.038 5.038 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5.01 5.01 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a4.96 4.96 0 0 1 1.67.311 2.991 2.991 0 0 1 1.712 1.712 5.08 5.08 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655 0 2.436 0 2.698-.043 3.654h-.011z"></path>
-      </svg>
-    ),
-  },
+  */
 ];
+
+export type Project = {
+  title: string;
+  description: string;
+  tech: string[];
+  links?: { label: string; url: string }[];
+};
+
+export const highlights = [
+  "Cloud-native architecture (AWS / GCP)",
+  "DevSecOps & security-first delivery",
+  "CI/CD automation & developer experience",
+  "Platform engineering & internal tooling",
+  "Observability & reliability",
+  "Test automation & test data strategy",
+];
+
+export const projects: Project[] = [];
 
 export const jobs = [
   {
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
-    title: "Senior Staff Software Engineer",
-    description:
-      "Serve as Technical Lead and Solutions Architect for the Platform Engineering organization, driving the rationalization of CI/CD tools, Cloud/SaaS migrations, and enterprise-wide improvements to the developer experience. Lead inner-sourcing initiatives within the Engineering Center of Practice, the annual enterprise Hackathon, and corporate-sponsored engagements with Central Connecticut State University as a member of their Computer Science Industry Advisory Board. Mentor developers and interns to foster professional growth and promote engineering excellence.",
-    startDate: "May 16, 2023",
+    title: "Senior Staff Software Engineer — Enterprise Platform Engineering",
+    summary:
+      "Owner of the enterprise developer platform ecosystem, spanning CI/CD, security, artifact management, and observability across thousands of repositories.",
+    bullets: [
+      "Drove enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud (**11,000+ repositories**)",
+      "Built and operated scalable CI/CD execution, governance, and observability platforms",
+      "Led rollout of next-generation CI/CD tooling and reduced developer-reported incidents",
+      "Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity",
+    ],
+    tech: "GitHub Actions, GitHub Enterprise, Terraform, AWS, Harness, Dynatrace",
+    startDate: "2023",
     endDate: "Present",
     topic: "DevSecOps",
+    location: "The Hartford",
   },
   {
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
-    title: "Staff Software Engineer",
-    description:
-      "Functioned as the technical lead for multiple teams to deliver automated solutions for end-to-end quality assurance. Designed and implemented enterprise-grade tools for test data management and forms validation using Playwright and Cucumber. Established and enforced SDLC standards across the organization to ensure scalable and consistent development practices. Improved test performance by over 30% with core automation optimizations and improved test data management strategies.",
-    startDate: "Mar 16, 2021",
-    endDate: "May 15, 2023",
-    topic: "Quality Assurance",
+    title: "Staff Software Engineer — Enterprise Quality Engineering",
+    summary:
+      "Drove standardization of enterprise quality engineering platforms, enabling scalable, reliable end-to-end validation.",
+    bullets: [
+      "Led multiple teams delivering automated testing solutions across critical systems",
+      "Built enterprise test data management and automated validation platforms",
+      "Established SDLC and automation standards across the organization",
+      "Reduced end-to-end test execution time by **30%+**",
+    ],
+    startDate: "2021",
+    endDate: "2023",
+    topic: "Quality Engineering",
+    location: "The Hartford",
   },
   {
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
-    title: "Senior Software Engineer",
-    description:
-      "Led the technical implementation of a new Policy Administration platform, serving as the technical lead for a large Agile team within the Scaled Agile Framework (SAFe). Designed and delivered a premium data integration solution for the enterprise general ledger. Established DevOps pipelines using Jenkins and uDeploy, and implemented performance monitoring and alerting with Dynatrace, and SumoLogic. Championed engineering best practices through code reviews, CI/CD optimization, and automation. Mentored developers and enforced standards around code quality, versioning, and test coverage to ensure scalable, maintainable solutions.",
-    startDate: "Mar 16, 2020",
-    endDate: "Mar 15, 2021",
+    title: "Senior Software Engineer — Batch Processing Modernization",
+    summary:
+      "Owned modernization of enterprise batch processing pipelines supporting financial and regulatory reporting.",
+    bullets: [
+      "Transformed policy administration data into general ledger flat files for premium reporting",
+      "Consolidated **108 legacy applications** into a single modern policy administration platform",
+      "Established CI/CD, monitoring, and reliability standards for batch delivery",
+    ],
+    tech: "Jenkins, uDeploy, .NET, Oracle, Dynatrace, Sumo Logic",
+    startDate: "2020",
+    endDate: "2021",
     topic: "Batch Processing",
+    location: "The Hartford",
   },
   {
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
-    title: "Software Engineer",
-    description:
-      "Contributed to the development of a customer-facing application for selling Personal Lines Auto and Home insurance, built on a microservices architecture (20+ services) using Spring Boot and Angular. Collaborated with Agile Product Owners and Scrum Masters on story creation, refinement, and execution. Participated in triaging and resolving critical, time-sensitive defects to ensure application reliability. Provided mentorship to teammates and supported adoption of new technologies and development best practices.",
-    startDate: "Sep 16, 2018",
-    endDate: "Mar 15, 2020",
-    topic: "Full-stack Development",
+    title: "Software Engineer — Full-Stack Development",
+    summary:
+      "Built and supported customer-facing policy quoting and issuance platforms for Personal Lines insurance, enabling real-time pricing and issuance workflows.",
+    bullets: [
+      "Developed Java microservices and Angular-based frontend features supporting quoting and issuance",
+      "Integrated Oracle databases and third-party services for pricing and issuance",
+      "Supported scalable production deployments and reliability initiatives",
+    ],
+    startDate: "2018",
+    endDate: "2020",
+    topic: "Full-Stack Development",
+    location: "The Hartford",
   },
   {
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Multi-Stack Engineer",
-    description:
-      "Provided full-stack expertise, spanning software components, databases, platforms, and infrastructure. Acted as the go-to technical leader, managing high-impact incidents and driving swift service restoration. Led root cause analysis and implemented problem management practices. Championed the migration to open-source platforms, containerization, and public cloud deployment. Drove the adoption of DevOps tools and best practices across the application portfolio. Influenced major technical design decisions and collaborated with architecture and delivery teams to shape the organization’s technical strategy.",
-    startDate: "Mar 16, 2018",
-    endDate: "Sep 15, 2018",
-    topic: "Reliability Engineering",
+    summary:
+      "Owned application platforms and production operations, focusing on reliability, modernization, and DevOps enablement across the application portfolio.",
+    bullets: [
+      "Served as the primary point of ownership for full-stack applications spanning software, databases, platforms, and infrastructure",
+      "Led triage and restoration of high-impact production incidents, minimizing service disruption",
+      "Drove root cause analysis and problem management practices to prevent recurring issues",
+      "Championed migration to open-source platforms, containerization, and public cloud deployment",
+      "Led adoption of DevOps tools and best practices across the application portfolio",
+      "Influenced major technical design decisions in partnership with architecture and delivery teams",
+    ],
+    startDate: "2017",
+    endDate: "2018",
+    topic: "Full-Stack / Operations",
+    location: "The Hartford",
   },
   {
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Developer",
-    description:
-      "Led an Agile scrum team in the design and architecture of a new internal CRM application for quoting and issuing Personal Insurance policies. Integrated multiple web services to streamline processes and reduce handling time. Successfully resolved defects and incidents, ensuring seamless application performance for Personal Insurance agents.",
-    startDate: "Mar 16, 2017",
-    endDate: "Mar 15, 2018",
-    topic: "Full-stack Development",
-  },
-  {
-    company: "The Hartford",
-    logo: "the-hartford.svg",
-    url: "https://www.thehartford.com/",
-    title: "Spec App Development",
-    description:
-      "Triaged and resolved production issues to ensure uninterrupted application functionality. Led disaster recovery testing and annual audits to maintain enterprise compliance and system resilience. Refactored legacy code to reduce technical debt, improving application stability, performance, and maintainability.",
-    startDate: "June 15, 2016",
-    endDate: "Mar 15, 2017",
+    summary:
+      "Drove delivery and production stability for an internal policy quoting and issuance application, supporting Personal Insurance agents.",
+    bullets: [
+      "Led an Agile scrum team in the design and architecture of a new internal application for quoting and issuing Personal Insurance policies",
+      "Integrated multiple internal and external web services to streamline workflows and reduce agent handling time",
+      "Resolved **1,500+ production defects and incidents**, ensuring reliable application performance",
+      "Supported ongoing enhancements and operational stability for a mission-critical internal system",
+    ],
+    startDate: "2016",
+    endDate: "2017",
     topic: "Production Support",
+    location: "Windsor, Connecticut · On-site",
   },
 ];

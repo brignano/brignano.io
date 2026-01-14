@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { GitHubCalendar } from "react-github-calendar";
-import { jobs, socialLinks } from "@/utils/constants";
+import { jobs, socialLinks, highlights, projects } from "@/utils/constants";
 import AOS from "aos";
 import { track } from "@vercel/analytics";
 
@@ -17,6 +17,7 @@ export default function Home() {
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+      {/* Hero Section with CTAs */}
       <section
         data-aos="fade-down"
         data-aos-duration={500}
@@ -27,46 +28,88 @@ export default function Home() {
           <div style={{ opacity: 1, transform: "none" }}>
             <div>
               <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
-                Full-stack Developer, DevSecOps Engineer, & Solutions Architect
+                I build secure, reliable cloud-native systems and the platforms
+                teams depend on.
               </h1>
-              <div className="text-base dark:text-zinc-400 text-zinc-600">
-                <div
-                  className="inline-block"
-                  style={{
-                    animation: "wave 1.25s ease-in-out infinite",
+              <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
+                Full-stack engineer focused on DevSecOps, automation, and
+                scalable architecture — helping teams ship faster with stronger
+                CI/CD and security-first practices.
+              </p>
+
+              {/* Primary CTAs */}
+              <div className="flex flex-wrap gap-4 mb-10">
+                <a
+                  href="mailto:anthony@brignano.io"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+                  onClick={() => {
+                    track("CTA Clicked", { type: "Contact" });
                   }}
                 >
-                  👋
-                </div>
-                &nbsp;&nbsp;Hi, I&apos;m Anthony — a full-stack engineer
-                passionate about building exceptional websites, applications,
-                and everything in between. I depend on automated processes,
-                clean code, and strong coffee. If I&apos;m not coding or gaming,
-                you will probably find me climbing rocks or snowboarding
-                glades.
+                  Contact Me
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </a>
+                <a
+                  href="https://docs.google.com/document/d/1NIwgN8u-V-1foCZ2Cb5I2KjpnA6birGL0aV9ZDjX5RI/edit?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+                  onClick={() => {
+                    track("CTA Clicked", { type: "Resume" });
+                  }}
+                >
+                  View Resume
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    />
+                  </svg>
+                </a>
               </div>
-            </div>
-            <div style={{ opacity: 1 }}>
-              <div>
-                <ul className="flex items-center flex-wrap gap-x-5 gap-y-4 my-10">
-                  {socialLinks.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        target="_blank"
-                        className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
-                        onClick={() => {
-                          track("Social Link Clicked", {
-                            name: link.name,
-                            href: link.href,
-                          });
-                        }}
-                      >
-                        {link.icon} <span className="ml-1">{link.name}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+
+              {/* Social Links */}
+              <div style={{ opacity: 1 }}>
+                <div>
+                  <ul className="flex items-center flex-wrap gap-x-5 gap-y-4">
+                    {socialLinks.map((link) => (
+                      <li key={link.name}>
+                        <Link
+                          href={link.href}
+                          target="_blank"
+                          className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
+                          onClick={() => {
+                            track("Social Link Clicked", {
+                              name: link.name,
+                              href: link.href,
+                            });
+                          }}
+                        >
+                          {link.icon} <span className="ml-1">{link.name}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -133,12 +176,247 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section data-aos="fade-up" data-aos-duration={1000} data-aos-once={true}>
+
+      {/* About Section */}
+      <section
+        className="md:mt-40 lg:mt-0"
+        data-aos="fade-up"
+        data-aos-duration={1000}
+        data-aos-once={true}
+      >
+        <div style={{ opacity: "1" }}>
+          <div>
+            <div className="mb-8">
+              <h2 className="font-incognito text-4xl mb-8 font-bold tracking-tight">
+                About Me
+              </h2>
+              <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
+                <p>
+                  I enjoy building systems that are secure, reliable, and
+                  maintainable. My engineering philosophy centers on automation,
+                  strong testing practices, and security-first delivery. Whether
+                  it's designing CI/CD pipelines, building internal platforms,
+                  or optimizing observability strategies, I focus on creating
+                  solutions that empower teams to ship with confidence.
+                </p>
+                <p>
+                  I enjoy building systems that are secure, reliable, and
+                  maintainable. My engineering philosophy centers on automation,
+                  strong testing practices, and security-first delivery. I focus
+                  on designing platforms and workflows that reduce friction and
+                  help teams ship with confidence. I'm especially drawn to
+                  platform engineering challenges, DevSecOps transformations,
+                  and work that improves developer experience at scale. I'm
+                  always open to collaborating on meaningful problems or
+                  contributing to open source. Outside of work, you'll usually
+                  find me climbing rocks, snowboarding glades, or exploring new
+                  ideas. I value curiosity, creativity, and meaningful
+                  connections in both my work and personal life.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Highlights Strip */}
+      <section
+        className="mb-24"
+        data-aos="fade-up"
+        data-aos-duration={800}
+        data-aos-once={true}
+      >
+        <div className="grid md:grid-cols-3 grid-cols-2 gap-4">
+          {highlights.map((highlight, index) => (
+            <div
+              key={index}
+              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-4 rounded-lg text-center"
+            >
+              <p className="text-sm font-medium">{highlight}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Projects Section - Only show if projects exist */}
+      {projects.length > 0 && (
+        <section
+          className="mb-32"
+          data-aos="fade-up"
+          data-aos-duration={1000}
+          data-aos-once={true}
+        >
+          <div style={{ opacity: "1" }}>
+            <div>
+              <div className="mb-8">
+                <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
+                  Projects
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div style={{ opacity: "1" }}>
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+              {projects.map((project, index) => (
+                <div
+                  key={index}
+                  className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+                >
+                  <h3 className="text-xl font-semibold mb-3">
+                    {project.title}
+                  </h3>
+                  <p className="dark:text-zinc-400 text-zinc-600 mb-4">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.tech.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  {project.links && project.links.length > 0 && (
+                    <div className="flex gap-3">
+                      {project.links.map((link, i) => (
+                        <Link
+                          key={i}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-primary-color hover:underline"
+                        >
+                          {link.label} →
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Work Experience */}
+      <section
+        className="md:mt-24"
+        data-aos="fade-up"
+        data-aos-duration={1000}
+        data-aos-once={true}
+      >
+        <div style={{ opacity: "1" }}>
+          <div>
+            <div className="mb-16">
+              <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
+                Work Experience
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div style={{ opacity: "1" }}>
+          <div>
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-12 gap-y-10">
+              {jobs.map((job) => (
+                <div
+                  key={job.company + job.title}
+                  className="flex items-start lg:gap-x-6 gap-x-4 max-w-2xl relative before:absolute before:bottom-0 before:top-[5rem] before:left-9 before:w-[1px] before:h-[calc(100%-70px)] dark:before:bg-zinc-800 before:bg-zinc-200"
+                >
+                  <Link
+                    href={job.url}
+                    target="_blank"
+                    className="grid place-items-center dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 min-h-[80px] min-w-[80px] p-2 rounded-md overflow-clip relative"
+                    onClick={() => {
+                      track("Job Link Clicked", { company: job.company });
+                    }}
+                  >
+                    <Image
+                      alt={`${job.company} Logo`}
+                      src={job.logo}
+                      width={50}
+                      height={50}
+                      className="dark:invert"
+                    />
+                  </Link>
+                  <div className="flex flex-col items-start">
+                    <h3 className="text-xl font-semibold">{job.company}</h3>
+                    <p className="font-medium">{job.title}</p>
+                    <button className="border text-white bg-zinc-800 dark:bg-zinc-200 dark:text-zinc-800 text-xs p-1 px-2 rounded-full my-2">
+                      {job.topic}
+                    </button>
+                    <time className="text-sm text-zinc-600 dark:text-zinc-400 mt-2 tracking-widest uppercase">
+                      {job.startDate.toUpperCase()} -{" "}
+                      <span
+                        className={
+                          job.endDate.toLowerCase() === "present"
+                            ? "text-primary-color"
+                            : ""
+                        }
+                      >
+                        {job.endDate.toUpperCase()}
+                      </span>
+                    </time>
+                    <p className="tracking-tight dark:text-zinc-400 text-zinc-600 my-4 italic">
+                      {job.summary}
+                    </p>
+                    <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2">
+                      {job.bullets.map((bullet, index) => {
+                        const parts = bullet.split(/(\*\*.*?\*\*)/);
+                        return (
+                          <li key={index} className="text-sm">
+                            {parts.map((part, i) => {
+                              if (
+                                part.startsWith("**") &&
+                                part.endsWith("**")
+                              ) {
+                                return (
+                                  <strong
+                                    key={i}
+                                    className="font-bold dark:text-white text-zinc-900"
+                                  >
+                                    {part.slice(2, -2)}
+                                  </strong>
+                                );
+                              }
+                              return part;
+                            })}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                    {job.tech && (
+                      <p className="text-xs dark:text-zinc-500 text-zinc-500 mt-4">
+                        <span className="font-semibold">Tech:</span> {job.tech}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contribution Graph with Context */}
+      <section
+        className="mt-10 sm:mt-32 lg:mt-24"
+        data-aos="fade-up"
+        data-aos-duration={1000}
+        data-aos-once={true}
+      >
         <div style={{ opacity: "1" }}>
           <div className="mb-8">
-            <h2 className="font-incognito text-4xl font-bold tracking-tight">
+            <h2 className="font-incognito text-4xl font-bold tracking-tight mb-4">
               Contribution Graph
             </h2>
+            <p className="dark:text-zinc-400 text-zinc-600 max-w-2xl">
+              GitHub contribution activity over the past year. Note: Private
+              repository contributions may not appear, and the graph reflects
+              only public activity on this platform.
+            </p>
           </div>
           <div style={{ opacity: "1", transform: "none" }}>
             <div>
@@ -165,7 +443,10 @@ export default function Home() {
                       }
                       key={year}
                       title={`View graph for the year ${year}`}
-                      onClick={() => setCalendarYear(year)}
+                      onClick={() => {
+                        setCalendarYear(year);
+                        track("Contribution Graph Year Changed", { year });
+                      }}
                     >
                       {year}
                     </button>
@@ -176,67 +457,64 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Contact CTA - Prominent Final Section */}
       <section
-        className="mt-32"
+        className="mt-10 sm:mt-32 lg:mt-24"
         data-aos="fade-up"
         data-aos-duration={1000}
         data-aos-once={true}
       >
-        <div style={{ opacity: "1" }}>
-          <div>
-            <div className="mb-16">
-              <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
-                Work Experience
-              </h2>
-            </div>
-          </div>
-        </div>
-        <div style={{ opacity: "1" }}>
-          <div>
-            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-12 gap-y-10">
-              {jobs.map((job) => (
-                <div
-                  key={job.company + job.title}
-                  className="flex items-start lg:gap-x-6 gap-x-4 max-w-2xl relative before:absolute before:bottom-0 before:top-[5rem] before:left-9 before:w-[1px] before:h-[calc(100%-70px)] dark:before:bg-zinc-800 before:bg-zinc-200"
-                >
-                  <Link
-                    href={job.url}
-                    target="_blank"
-                    className="grid place-items-center dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 min-h-[80px] min-w-[80px] p-2 rounded-md overflow-clip relative"
-                  >
-                    <Image
-                      alt={`${job.company} Logo`}
-                      src={job.logo}
-                      width={50}
-                      height={50}
-                      className="dark:invert"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-start">
-                    <h3 className="text-xl font-semibold">{job.company}</h3>
-                    <p>{job.title}</p>
-                    <button className="border text-white bg-zinc-800 dark:bg-zinc-200 dark:text-zinc-800 text-xs p-1 px-2 rounded-full my-2">
-                      {job.topic}
-                    </button>
-                    <time className="text-sm text-zinc-600 dark:text-zinc-400 mt-2 tracking-widest uppercase">
-                      {job.startDate.toUpperCase()} -{" "}
-                      <span
-                        className={
-                          job.endDate.toLowerCase() === "present"
-                            ? "text-primary-color"
-                            : ""
-                        }
-                      >
-                        {job.endDate.toUpperCase()}
-                      </span>
-                    </time>
-                    <p className="tracking-tight dark:text-zinc-400 text-zinc-600 my-4">
-                      {job.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="dark:bg-primary-bg bg-zinc-50 dark:border-zinc-800 border-zinc-200 border-2 p-16 rounded-xl text-center">
+          <h2 className="font-incognito text-4xl mb-6 font-bold tracking-tight">
+            Want to collaborate or chat?
+          </h2>
+          <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
+            I'm always open to discussing platform engineering challenges,
+            DevSecOps transformations, or open source collaborations. Reach out
+            via email — I typically respond within 24 hours.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href="mailto:anthony@brignano.io"
+              className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
+              onClick={() => {
+                track("Contact CTA Clicked", { location: "bottom" });
+              }}
+            >
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              Email Me
+            </a>
+            <a
+              href="https://www.linkedin.com/in/brignano"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
+              onClick={() => {
+                track("LinkedIn CTA Clicked", { location: "bottom" });
+              }}
+            >
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.339 18.337H5.667v-8.59h2.672v8.59zM7.003 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.763h-2.669V14.16c0-.996-.018-2.277-1.388-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248h-2.667v-8.59h2.56v1.174h.037c.355-.675 1.227-1.387 2.524-1.387 2.704 0 3.203 1.778 3.203 4.092v4.71z" />
+              </svg>
+              LinkedIn
+            </a>
           </div>
         </div>
       </section>

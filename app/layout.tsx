@@ -19,7 +19,7 @@ const silkscreen = Silkscreen({
 });
 
 export const metadata: Metadata = {
-  title: "Anthony Brignano | Full-stack Engineer",
+  title: "Anthony Brignano | Platform Engineering & DevSecOps",
   description:
     "Anthony Brignano's personal portfolio website showcasing projects, skills, and experience.",
   icons: {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Anthony Brignano | Full-stack Engineer",
+    title: "Anthony Brignano | Platform Engineering & DevSecOps",
     description:
       "Explore Anthony Brignano's portfolio and full-stack development experience.",
     url: "https://brignano.io",
@@ -48,9 +48,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anthony Brignano | Full-stack Engineer",
+    title: "Anthony Brignano | Platform Engineering & DevSecOps",
     description:
-      "Discover Anthony Brignano's portfolio and full-stack development experience.",
+      "Platform engineering and DevSecOps leader building secure, scalable CI/CD and cloud-native systems, with deep experience across enterprise platforms.",
     // todo: below
     //  images: ["/og-image.jpg"],
   },
