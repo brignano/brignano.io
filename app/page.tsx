@@ -271,8 +271,47 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section */}
+      <section
+        className="mt-32"
+        data-aos="fade-up"
+        data-aos-duration={1000}
+        data-aos-once={true}
+      >
+        <div style={{ opacity: "1" }}>
+          <div>
+            <div className="mb-8">
+              <h2 className="font-incognito text-4xl mb-8 font-bold tracking-tight">
+                About
+              </h2>
+              <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
+                <p>
+                  I enjoy building systems that are secure, reliable, and
+                  maintainable. My engineering philosophy centers on automation,
+                  strong testing practices, and security-first delivery. Whether
+                  it's designing CI/CD pipelines, building internal platforms,
+                  or optimizing observability strategies, I focus on creating
+                  solutions that empower teams to ship with confidence.
+                </p>
+                <p>
+                  I'm always open to collaborating on platform engineering
+                  challenges, DevSecOps transformations, or contributing to open
+                  source projects. When I'm not coding, you'll probably find me
+                  climbing rocks, snowboarding glades, or gaming with friends.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contribution Graph with Context */}
-      <section data-aos="fade-up" data-aos-duration={1000} data-aos-once={true}>
+      <section
+        className="mt-32"
+        data-aos="fade-up"
+        data-aos-duration={1000}
+        data-aos-once={true}
+      >
         <div style={{ opacity: "1" }}>
           <div className="mb-8">
             <h2 className="font-incognito text-4xl font-bold tracking-tight mb-4">
@@ -323,7 +362,7 @@ export default function Home() {
 
       {/* Work Experience */}
       <section
-        className="mt-32"
+        className="mt-40"
         data-aos="fade-up"
         data-aos-duration={1000}
         data-aos-once={true}
@@ -414,73 +453,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* Contact CTA - Prominent Final Section */}
       <section
-        className="mt-32"
+        className="mt-40 mb-20"
         data-aos="fade-up"
         data-aos-duration={1000}
         data-aos-once={true}
       >
-        <div style={{ opacity: "1" }}>
-          <div>
-            <div className="mb-8">
-              <h2 className="font-incognito text-4xl mb-8 font-bold tracking-tight">
-                About
-              </h2>
-              <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
-                <p>
-                  I enjoy building systems that are secure, reliable, and
-                  maintainable. My engineering philosophy centers on automation,
-                  strong testing practices, and security-first delivery. Whether
-                  it's designing CI/CD pipelines, building internal platforms,
-                  or optimizing observability strategies, I focus on creating
-                  solutions that empower teams to ship with confidence.
-                </p>
-                <p>
-                  I'm always open to collaborating on platform engineering
-                  challenges, DevSecOps transformations, or contributing to open
-                  source projects. When I'm not coding, you'll probably find me
-                  climbing rocks, snowboarding glades, or gaming with friends.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact CTA */}
-      <section
-        className="mt-32 mb-20"
-        data-aos="fade-up"
-        data-aos-duration={1000}
-        data-aos-once={true}
-      >
-        <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-12 rounded-lg text-center">
-          <h2 className="font-incognito text-3xl mb-4 font-bold tracking-tight">
+        <div className="dark:bg-primary-bg bg-zinc-50 dark:border-zinc-800 border-zinc-200 border-2 p-16 rounded-xl text-center">
+          <h2 className="font-incognito text-4xl mb-6 font-bold tracking-tight">
             Want to collaborate or chat?
           </h2>
-          <p className="dark:text-zinc-400 text-zinc-600 mb-8 max-w-xl mx-auto">
-            Reach out via email or connect with me on LinkedIn.
+          <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
+            I'm always open to discussing platform engineering challenges, DevSecOps transformations, or open source collaborations. Reach out via email — I typically respond within 24 hours.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="mailto:anthony@brignano.io"
-              className="inline-flex items-center px-6 py-3 bg-primary-color hover:bg-opacity-90 text-white dark:text-zinc-900 font-semibold rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-8 py-4 bg-primary-color hover:bg-opacity-90 text-white dark:text-zinc-900 font-bold text-lg rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
               onClick={() => {
                 track("Contact CTA Clicked", { location: "bottom" });
               }}
             >
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
               Email Me
             </a>
             <a
               href="https://www.linkedin.com/in/brignano"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-semibold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
                 track("LinkedIn CTA Clicked", { location: "bottom" });
               }}
             >
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.339 18.337H5.667v-8.59h2.672v8.59zM7.003 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.763h-2.669V14.16c0-.996-.018-2.277-1.388-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248h-2.667v-8.59h2.56v1.174h.037c.355-.675 1.227-1.387 2.524-1.387 2.704 0 3.203 1.778 3.203 4.092v4.71z" />
+              </svg>
               LinkedIn
             </a>
           </div>
