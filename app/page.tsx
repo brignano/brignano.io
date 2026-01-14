@@ -321,7 +321,10 @@ export default function Home() {
                       }
                       key={year}
                       title={`View graph for the year ${year}`}
-                      onClick={() => setCalendarYear(year)}
+                      onClick={() => {
+                        setCalendarYear(year);
+                        track("Contribution Graph Year Changed", { year });
+                      }}
                     >
                       {year}
                     </button>
@@ -396,6 +399,9 @@ export default function Home() {
                     href={job.url}
                     target="_blank"
                     className="grid place-items-center dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 min-h-[80px] min-w-[80px] p-2 rounded-md overflow-clip relative"
+                    onClick={() => {
+                      track("Job Link Clicked", { company: job.company });
+                    }}
                   >
                     <Image
                       alt={`${job.company} Logo`}
@@ -478,7 +484,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="mailto:anthony@brignano.io"
-              className="inline-flex items-center px-8 py-4 bg-primary-color hover:bg-opacity-90 text-white dark:text-zinc-900 font-bold text-lg rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
                 track("Contact CTA Clicked", { location: "bottom" });
               }}
@@ -502,7 +508,7 @@ export default function Home() {
               href="https://www.linkedin.com/in/brignano"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-semibold text-lg rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
                 track("LinkedIn CTA Clicked", { location: "bottom" });
               }}
