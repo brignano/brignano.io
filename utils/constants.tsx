@@ -223,14 +223,36 @@ export const socialLinks = [
   },
 ];
 
+export const highlights = [
+  "AWS + cloud-native architecture",
+  "DevSecOps / security-first delivery",
+  "CI/CD automation & developer experience",
+  "Platform engineering / internal tooling",
+  "Observability & reliability",
+  "Test automation / test data strategy",
+];
+
+export const projects: Array<{
+  title: string;
+  description: string;
+  tech: string[];
+  links?: { label: string; url: string }[];
+}> = [];
+
 export const jobs = [
   {
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Senior Staff Software Engineer",
-    description:
-      "Serve as Technical Lead and Solutions Architect for the Platform Engineering organization, driving the rationalization of CI/CD tools, Cloud/SaaS migrations, and enterprise-wide improvements to the developer experience. Lead inner-sourcing initiatives within the Engineering Center of Practice, the annual enterprise Hackathon, and corporate-sponsored engagements with Central Connecticut State University as a member of their Computer Science Industry Advisory Board. Mentor developers and interns to foster professional growth and promote engineering excellence.",
+    summary: "Technical Lead and Solutions Architect for Platform Engineering, driving CI/CD rationalization, Cloud/SaaS migrations, and enterprise developer experience improvements.",
+    bullets: [
+      "Lead inner-sourcing initiatives within the Engineering Center of Practice",
+      "Drive annual enterprise Hackathon and corporate-sponsored engagements with CCSU as Industry Advisory Board member",
+      "Rationalize CI/CD tooling and Cloud/SaaS migration strategies across the organization",
+      "Mentor developers and interns to foster professional growth and promote engineering excellence",
+    ],
+    tech: "Jenkins, GitHub Actions, AWS, Terraform, Docker, Kubernetes",
     startDate: "May 16, 2023",
     endDate: "Present",
     topic: "DevSecOps",
@@ -240,8 +262,14 @@ export const jobs = [
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Staff Software Engineer",
-    description:
-      "Functioned as the technical lead for multiple teams to deliver automated solutions for end-to-end quality assurance. Designed and implemented enterprise-grade tools for test data management and forms validation using Playwright and Cucumber. Established and enforced SDLC standards across the organization to ensure scalable and consistent development practices. Improved test performance by over 30% with core automation optimizations and improved test data management strategies.",
+    summary: "Technical lead for multiple QA teams, delivering automated solutions for end-to-end quality assurance.",
+    bullets: [
+      "Improved test performance by **30%+** with core automation optimizations and test data management strategies",
+      "Designed and implemented enterprise-grade tools for test data management and forms validation",
+      "Established and enforced SDLC standards across the organization for scalable, consistent development",
+      "Led technical implementation using Playwright and Cucumber for automated testing",
+    ],
+    tech: "Playwright, Cucumber, TypeScript, Node.js, Jenkins",
     startDate: "Mar 16, 2021",
     endDate: "May 15, 2023",
     topic: "Quality Assurance",
@@ -251,8 +279,14 @@ export const jobs = [
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Senior Software Engineer",
-    description:
-      "Led the technical implementation of a new Policy Administration platform, serving as the technical lead for a large Agile team within the Scaled Agile Framework (SAFe). Designed and delivered a premium data integration solution for the enterprise general ledger. Established DevOps pipelines using Jenkins and uDeploy, and implemented performance monitoring and alerting with Dynatrace, and SumoLogic. Championed engineering best practices through code reviews, CI/CD optimization, and automation. Mentored developers and enforced standards around code quality, versioning, and test coverage to ensure scalable, maintainable solutions.",
+    summary: "Technical lead for a large Agile team implementing a new Policy Administration platform within SAFe.",
+    bullets: [
+      "Designed and delivered premium data integration solution for enterprise general ledger",
+      "Established DevOps pipelines using Jenkins and uDeploy with Dynatrace and SumoLogic monitoring",
+      "Championed engineering best practices through code reviews, CI/CD optimization, and automation",
+      "Mentored developers and enforced standards around code quality, versioning, and test coverage",
+    ],
+    tech: "Java, Spring Boot, Jenkins, uDeploy, Dynatrace, SumoLogic, Oracle DB",
     startDate: "Mar 16, 2020",
     endDate: "Mar 15, 2021",
     topic: "Batch Processing",
@@ -262,8 +296,14 @@ export const jobs = [
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Software Engineer",
-    description:
-      "Contributed to the development of a customer-facing application for selling Personal Lines Auto and Home insurance, built on a microservices architecture (20+ services) using Spring Boot and Angular. Collaborated with Agile Product Owners and Scrum Masters on story creation, refinement, and execution. Participated in triaging and resolving critical, time-sensitive defects to ensure application reliability. Provided mentorship to teammates and supported adoption of new technologies and development best practices.",
+    summary: "Full-stack developer on customer-facing Personal Lines insurance application with **20+** microservices.",
+    bullets: [
+      "Built microservices architecture using Spring Boot and Angular for Auto and Home insurance sales",
+      "Collaborated with Product Owners and Scrum Masters on story creation, refinement, and execution",
+      "Triaged and resolved critical, time-sensitive defects to ensure application reliability",
+      "Mentored teammates and supported adoption of new technologies and best practices",
+    ],
+    tech: "Spring Boot, Angular, Java, TypeScript, Microservices, REST APIs",
     startDate: "Sep 16, 2018",
     endDate: "Mar 15, 2020",
     topic: "Full-stack Development",
@@ -284,8 +324,13 @@ export const jobs = [
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Developer",
-    description:
-      "Led an Agile scrum team in the design and architecture of a new internal CRM application for quoting and issuing Personal Insurance policies. Integrated multiple web services to streamline processes and reduce handling time. Successfully resolved defects and incidents, ensuring seamless application performance for Personal Insurance agents.",
+    summary: "Led Agile team in designing and architecting new internal CRM for Personal Insurance policy management.",
+    bullets: [
+      "Led design and architecture of internal CRM application for quoting and issuing policies",
+      "Integrated multiple web services to streamline processes and reduce handling time",
+      "Resolved defects and incidents, ensuring seamless application performance for insurance agents",
+    ],
+    tech: "Java, Spring, REST APIs, Oracle DB, Web Services",
     startDate: "Mar 16, 2017",
     endDate: "Mar 15, 2018",
     topic: "Full-stack Development",
@@ -295,8 +340,13 @@ export const jobs = [
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
     title: "Spec App Development",
-    description:
-      "Triaged and resolved production issues to ensure uninterrupted application functionality. Led disaster recovery testing and annual audits to maintain enterprise compliance and system resilience. Refactored legacy code to reduce technical debt, improving application stability, performance, and maintainability.",
+    summary: "Production support specialist ensuring application stability, compliance, and reducing technical debt.",
+    bullets: [
+      "Triaged and resolved production issues to ensure uninterrupted application functionality",
+      "Led disaster recovery testing and annual audits to maintain enterprise compliance",
+      "Refactored legacy code to reduce technical debt and improve application stability",
+    ],
+    tech: "Java, Production Support, Disaster Recovery, Legacy Code Refactoring",
     startDate: "June 15, 2016",
     endDate: "Mar 15, 2017",
     topic: "Production Support",
