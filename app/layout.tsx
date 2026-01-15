@@ -31,9 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-
-
+      <body
+        className={`${inconsolata.variable} ${silkscreen.variable} antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
+      >
         <Script
           id="structured-data"
           type="application/ld+json"
@@ -56,10 +56,6 @@ export default function RootLayout({
             }),
           }}
         />
-      </head>
-      <body
-        className={`${inconsolata.variable} ${silkscreen.variable} antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
-      >
         {/* Google Analytics */}
         <Script
           strategy="afterInteractive"
