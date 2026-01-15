@@ -21,7 +21,20 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 - Node.js 20 or higher
 - npm or yarn
 
+
 ### Getting Started
+
+[![Open in Codespaces](https://img.shields.io/badge/-Open%20in%20Codespaces-181717?style=for-the-badge&logo=github)](https://codespaces.new/brignano/brignano.io)
+
+The fastest way to get started is to open this repository in a [GitHub Codespace](https://github.com/features/codespaces) or any compatible Dev Container environment by clicking the badge above.
+
+This will automatically set up your development environment with all dependencies pre-installed.
+
+---
+
+#### Manual Setup (optional)
+
+If you prefer to run locally without a Dev Container:
 
 1. Clone the repository:
    ```bash
@@ -40,23 +53,6 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-### Development with DevContainer
-
-This repository includes a DevContainer configuration for VS Code. To use it:
-
-1. Install [Docker](https://www.docker.com/products/docker-desktop) and [VS Code](https://code.visualstudio.com/)
-2. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-3. Open the repository in VS Code
-4. When prompted, click "Reopen in Container" (or run the command "Dev Containers: Reopen in Container")
-5. The container will automatically install dependencies after building
-
-The DevContainer includes:
-- Node.js 20
-- Git and GitHub CLI
-- ESLint and Prettier extensions
-- TailwindCSS IntelliSense
-- All recommended VS Code extensions for Next.js/React development
 
 ### Available Scripts
 
