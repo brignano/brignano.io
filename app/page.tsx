@@ -90,7 +90,7 @@ export default function Home() {
               {/* Social Links */}
               <div style={{ opacity: 1 }}>
                 <div>
-                  <ul className="flex items-center flex-wrap gap-x-5 gap-y-4">
+                  <ul className="flex items-center flex-wrap gap-x-5 gap-y-4 xl:mb-0 mb-8">
                     {socialLinks.map((link) => (
                       <li key={link.name}>
                         <Link
@@ -179,7 +179,7 @@ export default function Home() {
 
       {/* About Section */}
       <section
-        className="md:mt-40 lg:mt-0"
+        className="md:mt-32 xl:mt-30"
         data-aos="fade-up"
         data-aos-duration={1000}
         data-aos-once={true}
