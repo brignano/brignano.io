@@ -40,7 +40,8 @@
         "bradlc.vscode-tailwindcss",
         "PKief.material-icon-theme",
         "formulahendry.auto-rename-tag",
-        "dsznajder.es7-react-js-snippets"
+        "dsznajder.es7-react-js-snippets",
+        "GitHub.vscode-pull-request-github"
       ]
     }
   },
