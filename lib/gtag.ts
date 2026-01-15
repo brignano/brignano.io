@@ -19,10 +19,10 @@ export const event = (action: string, params?: Record<string, any>) => {
 // Extend window type for gtag
 declare global {
   interface Window {
-    gtag?: (
-      command: 'config' | 'event' | 'js',
-      targetId: string,
-      config?: Record<string, any>
-    ) => void;
+    gtag?: {
+      (command: 'config', targetId: string, config?: Record<string, any>): void;
+      (command: 'event', eventName: string, eventParams?: Record<string, any>): void;
+      (command: 'js', date: Date): void;
+    };
   }
 }
