@@ -1,3 +1,56 @@
+import type { Metadata } from "next";
+
+export const siteMetadata: Metadata = {
+  metadataBase: new URL("https://brignano.io"),
+  title: "Anthony Brignano | Platform Engineering & DevSecOps",
+  description:
+    "Anthony Brignano's personal portfolio website showcasing projects, skills, and experience.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg" },
+      { url: "/favicon-dark.svg", media: "(prefers-color-scheme: dark)" },
+    ],
+  },
+  openGraph: {
+    title: "Anthony Brignano | Platform Engineering & DevSecOps",
+    description:
+      "Explore Anthony Brignano's portfolio and full-stack development experience.",
+    url: "https://brignano.io",
+    siteName: "Anthony Brignano Portfolio",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Anthony Brignano Portfolio Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Anthony Brignano | Platform Engineering & DevSecOps",
+    description:
+      "Platform engineering and DevSecOps leader building secure, scalable CI/CD and cloud-native systems, with deep experience across enterprise platforms.",
+    images: ["/og-image.jpg"],
+  },
+  alternates: {
+    canonical: "https://brignano.io",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
 export const socialLinks = [
   {
     name: "GitHub",
