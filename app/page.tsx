@@ -40,7 +40,7 @@ export default function Home() {
               {/* Primary CTAs */}
               <div className="flex flex-wrap gap-4 mb-10">
                 <a
-                  href="mailto:anthony@brignano.io"
+                  href="mailto:hi@brignano.io"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
                   onClick={() => {
                     event("CTA Clicked", { type: "Contact" });
@@ -476,7 +476,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="mailto:anthony@brignano.io"
+              href="mailto:hi@brignano.io"
               className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
                 event("Contact CTA Clicked", { location: "bottom" });
