@@ -51,7 +51,7 @@ export default function RootLayout({
                 "https://www.linkedin.com/in/brignano",
                 "https://github.com/brignano",
               ],
-              jobTitle: "Platform Engineer",
+              jobTitle: "Senior Staff Software Engineer",
               worksFor: {
                 "@type": "Organization",
                 name: "The Hartford",
