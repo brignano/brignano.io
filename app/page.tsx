@@ -32,9 +32,8 @@ export default function Home() {
                 teams depend on.
               </h1>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
-                Full-stack engineer focused on DevSecOps, automation, and
-                scalable architecture — helping teams ship faster with stronger
-                CI/CD and security-first practices.
+                Full-stack engineer working at the intersection of DevSecOps,
+                automation, and cloud-native systems.
               </p>
 
               {/* Primary CTAs */}
@@ -192,26 +191,25 @@ export default function Home() {
               </h2>
               <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
                 <p>
-                  I enjoy building systems that are secure, reliable, and
-                  maintainable. My engineering philosophy centers on automation,
-                  strong testing practices, and security-first delivery. Whether
-                  it's designing CI/CD pipelines, building internal platforms,
-                  or optimizing observability strategies, I focus on creating
-                  solutions that empower teams to ship with confidence.
+                  I enjoy building systems that are easy to operate, hard to
+                  break, and designed to scale with teams. My approach
+                  emphasizes automation, strong testing practices, and security
+                  as a first-class concern.
                 </p>
                 <p>
-                  I enjoy building systems that are secure, reliable, and
-                  maintainable. My engineering philosophy centers on automation,
-                  strong testing practices, and security-first delivery. I focus
-                  on designing platforms and workflows that reduce friction and
-                  help teams ship with confidence. I'm especially drawn to
-                  platform engineering challenges, DevSecOps transformations,
-                  and work that improves developer experience at scale. I'm
-                  always open to collaborating on meaningful problems or
-                  contributing to open source. Outside of work, you'll usually
-                  find me climbing rocks, snowboarding glades, or exploring new
-                  ideas. I value curiosity, creativity, and meaningful
-                  connections in both my work and personal life.
+                  I'm drawn to work that sits at the intersection of
+                  infrastructure, developer experience, and emerging
+                  technologies—whether that's platform engineering, DevSecOps
+                  transformations, or exploring how AI-enabled tooling can
+                  improve software delivery and operational insight. I enjoy
+                  solving ambiguous problems and building systems that grow
+                  alongside the teams using them.
+                </p>
+                <p>
+                  Outside of work, you'll usually find me rock climbing,
+                  snowboarding in the trees, or exploring new ideas. I value
+                  curiosity, creativity, and meaningful connections in both my
+                  work and personal life.
                 </p>
               </div>
             </div>
