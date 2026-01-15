@@ -206,8 +206,8 @@ export default function Home() {
                   alongside the teams using them.
                 </p>
                 <p>
-                  Outside of work, you'll usually find me rock climbing,
-                  snowboarding in the trees, or exploring new ideas. I value
+                  Outside of work, you'll usually find me climbing rocks,
+                  snowboarding through trees, or exploring new ideas. I value
                   curiosity, creativity, and meaningful connections in both my
                   work and personal life.
                 </p>
