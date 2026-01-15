@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { GitHubCalendar } from "react-github-calendar";
 import { jobs, socialLinks, highlights, projects } from "@/utils/constants";
 import AOS from "aos";
-import { track } from "@vercel/analytics";
+import { event } from "@/lib/gtag";
 
 export default function Home() {
   const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
@@ -43,7 +43,7 @@ export default function Home() {
                   href="mailto:anthony@brignano.io"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
                   onClick={() => {
-                    track("CTA Clicked", { type: "Contact" });
+                    event("CTA Clicked", { type: "Contact" });
                   }}
                 >
                   Contact Me
@@ -67,7 +67,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
                   onClick={() => {
-                    track("CTA Clicked", { type: "Resume" });
+                    event("CTA Clicked", { type: "Resume" });
                   }}
                 >
                   View Resume
@@ -98,7 +98,7 @@ export default function Home() {
                           target="_blank"
                           className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
                           onClick={() => {
-                            track("Social Link Clicked", {
+                            event("Social Link Clicked", {
                               name: link.name,
                               href: link.href,
                             });
@@ -330,7 +330,7 @@ export default function Home() {
                     target="_blank"
                     className="grid place-items-center dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 min-h-[80px] min-w-[80px] p-2 rounded-md overflow-clip relative"
                     onClick={() => {
-                      track("Job Link Clicked", { company: job.company });
+                      event("Job Link Clicked", { company: job.company });
                     }}
                   >
                     <Image
@@ -445,7 +445,7 @@ export default function Home() {
                       title={`View graph for the year ${year}`}
                       onClick={() => {
                         setCalendarYear(year);
-                        track("Contribution Graph Year Changed", { year });
+                        event("Contribution Graph Year Changed", { year });
                       }}
                     >
                       {year}
@@ -479,7 +479,7 @@ export default function Home() {
               href="mailto:anthony@brignano.io"
               className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
-                track("Contact CTA Clicked", { location: "bottom" });
+                event("Contact CTA Clicked", { location: "bottom" });
               }}
             >
               <svg
@@ -503,7 +503,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
-                track("LinkedIn CTA Clicked", { location: "bottom" });
+                event("LinkedIn CTA Clicked", { location: "bottom" });
               }}
             >
               <svg
