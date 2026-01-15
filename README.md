@@ -24,7 +24,7 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 
 ### Getting Started
 
-[![Open in Dev Container](https://img.shields.io/badge/-Open%20in%20Codespaces-181717?style=for-the-badge&logo=github)](https://codespaces.new/brignano/brignano.io)
+[![Open in Codespaces](https://img.shields.io/badge/-Open%20in%20Codespaces-181717?style=for-the-badge&logo=github)](https://codespaces.new/brignano/brignano.io)
 
 The fastest way to get started is to open this repository in a [GitHub Codespace](https://github.com/features/codespaces) or any compatible Dev Container environment by clicking the badge above.
 
@@ -34,7 +34,7 @@ This will automatically set up your development environment with all dependencie
 
 #### Manual Setup (optional)
 
-If you prefer to run locally without a devcontainer:
+If you prefer to run locally without a Dev Container:
 
 1. Clone the repository:
    ```bash
