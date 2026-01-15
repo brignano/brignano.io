@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
+import { Suspense } from "react";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -91,7 +92,9 @@ export default function RootLayout({
         {children}
         <Footer />
         <SpeedInsights />
-        <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
       </body>
     </html>
   );
