@@ -7,7 +7,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
+import GoogleAnalytics from "@/components/google-analytics";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 
 const inconsolata = Inconsolata({
