@@ -87,31 +87,37 @@ export const pageview = async (url: string): Promise<void> => {
     return;
   }
 
-  const gtagAvailable = await waitForGtag();
+  try {
+    const gtagAvailable = await waitForGtag();
 
-  if (gtagAvailable && window.gtag) {
-    // Send config event
-    window.gtag('config', GA_MEASUREMENT_ID, {
-      page_path: url,
-    });
+    if (gtagAvailable && window.gtag) {
+      // Send config event
+      window.gtag('config', GA_MEASUREMENT_ID, {
+        page_path: url,
+      });
 
-    // Send user_engagement event to improve realtime active sessions
-    await sendEvent('user_engagement', {
-      engagement_time_msec: DEFAULT_ENGAGEMENT_TIME_MSEC,
-    });
-  } else {
-    // Fallback to dataLayer
-    ensureDataLayer();
-    window.dataLayer?.push({
-      event: 'page_view',
-      page_path: url,
-    });
-    
-    // Also queue user_engagement
-    window.dataLayer?.push({
-      event: 'user_engagement',
-      engagement_time_msec: DEFAULT_ENGAGEMENT_TIME_MSEC,
-    });
+      // Send user_engagement event to improve realtime active sessions
+      await sendEvent('user_engagement', {
+        engagement_time_msec: DEFAULT_ENGAGEMENT_TIME_MSEC,
+      });
+    } else {
+      // Fallback to dataLayer
+      ensureDataLayer();
+      window.dataLayer?.push({
+        event: 'page_view',
+        page_path: url,
+      });
+      
+      // Also queue user_engagement
+      window.dataLayer?.push({
+        event: 'user_engagement',
+        engagement_time_msec: DEFAULT_ENGAGEMENT_TIME_MSEC,
+      });
+    }
+  } catch (err) {
+    if (typeof console !== 'undefined') {
+      console.error('GA pageview error:', err);
+    }
   }
 };
 
