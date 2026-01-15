@@ -10,7 +10,8 @@ export default function GoogleAnalytics() {
 
   useEffect(() => {
     if (pathname) {
-      const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
+      const search = searchParams?.toString();
+      const url = pathname + (search ? `?${search}` : '');
       pageview(url);
     }
   }, [pathname, searchParams]);
