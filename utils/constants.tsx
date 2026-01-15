@@ -354,7 +354,7 @@ export const jobs = [
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
-    title: "Multi-Stack Engineer",
+    title: "Multi-Stack Engineer - Reliability Engineering",
     summary:
       "Owned application platforms and production operations, focusing on reliability, modernization, and DevOps enablement across the application portfolio.",
     bullets: [
@@ -367,14 +367,14 @@ export const jobs = [
     ],
     startDate: "2017",
     endDate: "2018",
-    topic: "Full-Stack / Operations",
+    topic: "Reliability Engineering",
     location: "The Hartford",
   },
   {
     company: "The Hartford",
     logo: "the-hartford.svg",
     url: "https://www.thehartford.com/",
-    title: "Developer",
+    title: "Developer - Personal Lines Insurance",
     summary:
       "Drove delivery and production stability for an internal policy quoting and issuance application, supporting Personal Insurance agents.",
     bullets: [
