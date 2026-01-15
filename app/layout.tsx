@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Inconsolata, Silkscreen } from "next/font/google";
+import Script from "next/script";
+import { Suspense } from "react";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import 'aos/dist/aos.css'; // You can also use <link> for styles
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
+import GoogleAnalytics from "@/components/google-analytics";
+import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata-mono",
@@ -66,11 +69,32 @@ export default function RootLayout({
       <body
         className={`${inconsolata.variable} ${silkscreen.variable} antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
       >
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_MEASUREMENT_ID}', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
         <Header />
         {children}
         <Footer />
         <SpeedInsights />
-        <Analytics />
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
       </body>
     </html>
   );
