@@ -1,7 +1,7 @@
-export const socialLinks = [
 import type { Metadata } from "next";
 
 export const siteMetadata: Metadata = {
+  metadataBase: new URL("https://brignano.io"),
   title: "Anthony Brignano | Platform Engineering & DevSecOps",
   description:
     "Anthony Brignano's personal portfolio website showcasing projects, skills, and experience.",
@@ -50,6 +50,8 @@ export const siteMetadata: Metadata = {
     },
   },
 };
+
+export const socialLinks = [
   {
     name: "GitHub",
     href: "https://www.github.com/brignano",
