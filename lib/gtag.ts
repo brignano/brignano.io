@@ -1,5 +1,8 @@
 export const GA_MEASUREMENT_ID = 'G-QGJLCCQ9X8';
 
+// Default engagement time for user_engagement events (in milliseconds)
+const DEFAULT_ENGAGEMENT_TIME_MSEC = 100;
+
 /**
  * Wait for gtag to be available on the window object.
  * Polls every 50ms for up to timeout milliseconds.
@@ -94,7 +97,7 @@ export const pageview = async (url: string): Promise<void> => {
 
     // Send user_engagement event to improve realtime active sessions
     await sendEvent('user_engagement', {
-      engagement_time_msec: 100,
+      engagement_time_msec: DEFAULT_ENGAGEMENT_TIME_MSEC,
     });
   } else {
     // Fallback to dataLayer
@@ -107,15 +110,19 @@ export const pageview = async (url: string): Promise<void> => {
     // Also queue user_engagement
     window.dataLayer?.push({
       event: 'user_engagement',
-      engagement_time_msec: 100,
+      engagement_time_msec: DEFAULT_ENGAGEMENT_TIME_MSEC,
     });
   }
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
 export const event = (action: string, params?: Record<string, any>): void => {
-  // Fire and forget - use sendEvent internally
-  sendEvent(action, params);
+  // Fire and forget - use sendEvent internally with error handling
+  sendEvent(action, params).catch((err) => {
+    if (typeof console !== 'undefined') {
+      console.error('GA event error:', err);
+    }
+  });
 };
 
 // Extend window type for gtag and dataLayer
