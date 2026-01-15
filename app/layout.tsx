@@ -1,4 +1,3 @@
-// import type { Metadata } from "next";
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
