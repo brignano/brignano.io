@@ -284,7 +284,7 @@ export const jobs = [
     url: "https://www.thehartford.com/",
     title: "Senior Staff Software Engineer — Enterprise Platform Engineering",
     summary:
-      "Owner of the enterprise developer platform ecosystem, spanning CI/CD, security, artifact management, and observability across thousands of repositories.",
+      "Leading the enterprise developer platform ecosystem, spanning CI/CD, security, artifact management, and observability across thousands of repositories.",
     bullets: [
       "Drove enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud (**11,000+ repositories**)",
       "Built and operated scalable CI/CD execution, governance, and observability platforms",
