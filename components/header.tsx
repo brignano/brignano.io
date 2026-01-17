@@ -32,6 +32,11 @@ export default function Header() {
     return undefined;
   }
 
+  // Helper to set theme cookie for all subdomains
+  function setThemeCookie(theme: 'dark' | 'light') {
+    document.cookie = `theme=${theme}; domain=.brignano.io; path=/; max-age=31536000; SameSite=Lax`;
+  }
+
   useEffect(() => {
     // 1. Try cookie
     const cookieTheme = getCookie('theme');
@@ -55,14 +60,12 @@ export default function Header() {
     const newDark = !isDarkMode;
     document.documentElement.classList.toggle('dark');
     setIsDarkMode(newDark);
-    // Set cookie for .brignano.io, expires in 1 year
-    document.cookie = `theme=${newDark ? "dark" : "light"}; domain=.brignano.io; path=/; max-age=31536000; SameSite=Lax`;
+    setThemeCookie(newDark ? "dark" : "light");
   }
 
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-    // Also update cookie if theme changes (for manual sync)
-    document.cookie = `theme=${isDarkMode ? "dark" : "light"}; domain=.brignano.io; path=/; max-age=31536000; SameSite=Lax`;
+    setThemeCookie(isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
   return (
