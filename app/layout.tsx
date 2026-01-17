@@ -1,5 +1,6 @@
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
+import { Analytics } from '@vercel/analytics/react'
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -79,6 +80,7 @@ export default function RootLayout({
         <Footer />
         <SpeedInsights />
         <GoogleAnalytics />
+        <Analytics />
       </body>
     </html>
   );
