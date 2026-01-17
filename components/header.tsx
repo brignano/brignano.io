@@ -24,22 +24,45 @@ export default function Header() {
 
   const pages: string[] = [];//['about', 'skills'];
 
+  // Helper to get cookie value
+  function getCookie(name: string) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+    return undefined;
+  }
+
   useEffect(() => {
-    const isDarkDefault =
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
+    // 1. Try cookie
+    const cookieTheme = getCookie('theme');
+    let isDarkDefault = false;
+    if (cookieTheme === 'dark') isDarkDefault = true;
+    else if (cookieTheme === 'light') isDarkDefault = false;
+    else {
+      // 2. Fallback to localStorage
+      if (localStorage.theme === "dark") isDarkDefault = true;
+      else if (localStorage.theme === "light") isDarkDefault = false;
+      else {
+        // 3. Fallback to system
+        isDarkDefault = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      }
+    }
     document.documentElement.classList.toggle("dark", isDarkDefault);
     setIsDarkMode(isDarkDefault);
   }, []);
 
   const toggleTheme = () => {
-    document.documentElement.classList.toggle('dark')
-    setIsDarkMode(!isDarkMode);
+    const newDark = !isDarkMode;
+    document.documentElement.classList.toggle('dark');
+    setIsDarkMode(newDark);
+    // Set cookie for .brignano.io, expires in 1 year
+    document.cookie = `theme=${newDark ? "dark" : "light"}; domain=.brignano.io; path=/; max-age=31536000; SameSite=Lax`;
   }
 
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+    // Also update cookie if theme changes (for manual sync)
+    document.cookie = `theme=${isDarkMode ? "dark" : "light"}; domain=.brignano.io; path=/; max-age=31536000; SameSite=Lax`;
   }, [isDarkMode]);
 
   return (
