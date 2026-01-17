@@ -1,6 +1,5 @@
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
-import { Suspense } from "react";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -61,7 +60,7 @@ export default function RootLayout({
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         />
         <Script
-          id="google-analytics"
+          id="gtag-init"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
@@ -70,6 +69,10 @@ export default function RootLayout({
               gtag('js', new Date());
               gtag('config', '${GA_MEASUREMENT_ID}', {
                 page_path: window.location.pathname,
+                cookie_domain: 'auto',
+                linker: {
+                  domains: ['brignano.io', 'resume.brignano.io']
+                }
               });
             `,
           }}
@@ -78,9 +81,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <SpeedInsights />
-        <Suspense fallback={null}>
-          <GoogleAnalytics />
-        </Suspense>
+        <GoogleAnalytics />
       </body>
     </html>
   );

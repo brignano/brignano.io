@@ -1,10 +1,10 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { pageview } from "@/lib/gtag";
+import { useEffect, Suspense } from "react";
+import * as gtag from "@/lib/gtag";
 
-export default function GoogleAnalytics() {
+function GoogleAnalyticsInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -12,9 +12,17 @@ export default function GoogleAnalytics() {
     if (pathname) {
       const search = searchParams?.toString();
       const url = pathname + (search ? `?${search}` : '');
-      pageview(url);
+      gtag.pageview(url);
     }
   }, [pathname, searchParams]);
 
   return null;
+}
+
+export default function GoogleAnalytics() {
+  return (
+    <Suspense fallback={null}>
+      <GoogleAnalyticsInner />
+    </Suspense>
+  );
 }
