@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import type { ResumeData } from "@/types/resume";
+import "./globals.css";
+import Header from "@/components/resume-header";
+import Footer from "@/components/resume-footer";
 
 export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
@@ -40,32 +43,42 @@ export default function Home() {
 
   if (loading) {
     return (
-      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
-        <div className="text-center">
-          <p className="text-lg dark:text-zinc-400 text-zinc-600">
-            Loading resume...
-          </p>
-        </div>
-      </main>
+      <div className="resume-wrapper">
+        <Header />
+        <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+          <div className="text-center">
+            <p className="text-lg dark:text-zinc-400 text-zinc-600">
+              Loading resume...
+            </p>
+          </div>
+        </main>
+        <Footer />
+      </div>
     );
   }
 
   if (error || !resumeData) {
     return (
-      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
-        <div className="text-center">
-          <p className="text-lg text-red-600 dark:text-red-400">
-            {error || "Failed to load resume data"}
-          </p>
-        </div>
-      </main>
+      <div className="resume-wrapper">
+        <Header />
+        <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+          <div className="text-center">
+            <p className="text-lg text-red-600 dark:text-red-400">
+              {error || "Failed to load resume data"}
+            </p>
+          </div>
+        </main>
+        <Footer />
+      </div>
     );
   }
 
   const { personalInfo, summary, experience, education, skills, certifications, projects } = resumeData;
 
   return (
-    <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+    <div className="resume-wrapper">
+      <Header />
+      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
       {/* Hero Section */}
       <section
         data-aos="fade-down"
@@ -425,5 +438,7 @@ export default function Home() {
         </section>
       )}
     </main>
+    <Footer />
+  </div>
   );
 }

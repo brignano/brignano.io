@@ -2,7 +2,11 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-
+/* Hide root layout header/footer when resume page is shown */
+body:has(.resume-wrapper) > header,
+body:has(.resume-wrapper) > footer {
+  display: none !important;
+}
 
 .font-inconsolata {
   font-family: 'Inconsolata', monospace, system-ui;
