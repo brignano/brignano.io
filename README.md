@@ -13,7 +13,7 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 - **Vercel Analytics** and **Speed Insights** integration
 - **GitHub Calendar** visualization
 - **AOS** (Animate On Scroll) animations
-- **Resume Integration** at `/resume` path (served via CloudFront proxy)
+- **Resume Integration** at `/resume` path (served via Vercel rewrites)
 
 ## 🛠️ Development
 
@@ -57,7 +57,7 @@ If you prefer to run locally without a Dev Container:
 
 ### Resume Content
 
-The resume is accessible at `/resume` and is served via a CloudFront proxy in production. For local development, this route will return a 404 until the infrastructure is configured.
+The resume is accessible at `/resume` and is served via a Vercel rewrite in production. For local development, this route will return a 404 until the infrastructure is configured.
 
 ### Available Scripts
 
