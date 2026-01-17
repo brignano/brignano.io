@@ -8,7 +8,7 @@ import "aos/dist/aos.css"; // You can also use <link> for styles
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from "@/components/google-analytics";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
-import { siteMetadata } from "@/utils/constants";
+import { siteMetadata } from "@/lib/constants";
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata-mono",
