@@ -24,22 +24,48 @@ export default function Header() {
 
   const pages: string[] = [];//['about', 'skills'];
 
+  // Helper to get cookie value
+  function getCookie(name: string) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift();
+    return undefined;
+  }
+
+  // Helper to set theme cookie for all subdomains
+  function setThemeCookie(theme: 'dark' | 'light') {
+    document.cookie = `theme=${theme}; domain=.brignano.io; path=/; max-age=31536000; SameSite=Lax`;
+  }
+
   useEffect(() => {
-    const isDarkDefault =
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
+    // 1. Try cookie
+    const cookieTheme = getCookie('theme');
+    let isDarkDefault = false;
+    if (cookieTheme === 'dark') isDarkDefault = true;
+    else if (cookieTheme === 'light') isDarkDefault = false;
+    else {
+      // 2. Fallback to localStorage
+      if (localStorage.theme === "dark") isDarkDefault = true;
+      else if (localStorage.theme === "light") isDarkDefault = false;
+      else {
+        // 3. Fallback to system
+        isDarkDefault = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      }
+    }
     document.documentElement.classList.toggle("dark", isDarkDefault);
     setIsDarkMode(isDarkDefault);
   }, []);
 
   const toggleTheme = () => {
-    document.documentElement.classList.toggle('dark')
-    setIsDarkMode(!isDarkMode);
+    const newDark = !isDarkMode;
+    document.documentElement.classList.toggle('dark');
+    setIsDarkMode(newDark);
+    setThemeCookie(newDark ? "dark" : "light");
   }
 
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+    setThemeCookie(isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
   return (
