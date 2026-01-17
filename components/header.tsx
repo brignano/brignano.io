@@ -10,15 +10,18 @@ import {
   XMarkIcon,
   MoonIcon,
   SunIcon,
+  ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import {
   Bars3Icon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
+interface HeaderProps {
+  isResumePage?: boolean;
+}
 
-
-export default function Header() {
+export default function Header({ isResumePage = false }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -58,10 +61,14 @@ export default function Header() {
 
   const toggleTheme = () => {
     const newDark = !isDarkMode;
-    document.documentElement.classList.toggle('dark');
+    document.documentElement.classList.toggle('dark', newDark);
     setIsDarkMode(newDark);
     setThemeCookie(newDark ? "dark" : "light");
   }
+
+  const handleDownloadPDF = () => {
+    window.print();
+  };
 
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
@@ -96,6 +103,15 @@ export default function Header() {
           </ul>
         </nav>
         <div className="flex items-center gap-x-4">
+          {isResumePage && (
+            <button
+              aria-label="Download PDF"
+              onClick={handleDownloadPDF}
+              className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0"
+            >
+              <ArrowDownTrayIcon className="size-5 hover:text-primary-color duration-400 cursor-pointer" />
+            </button>
+          )}
           <button
             aria-label="Toggle Theme"
             onClick={() => toggleTheme()}

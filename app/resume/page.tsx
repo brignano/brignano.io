@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import type { ResumeData } from "@/types/resume";
-import "./globals.css";
-import Header from "@/components/resume-header";
-import Footer from "@/components/resume-footer";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
@@ -14,6 +13,12 @@ export default function Home() {
 
   useEffect(() => {
     AOS.init();
+    // Add class to body to identify resume page
+    document.body.classList.add('resume-page');
+    
+    return () => {
+      document.body.classList.remove('resume-page');
+    };
   }, []);
 
   useEffect(() => {
@@ -43,8 +48,8 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="resume-wrapper">
-        <Header />
+      <>
+        <Header isResumePage={true} />
         <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
           <div className="text-center">
             <p className="text-lg dark:text-zinc-400 text-zinc-600">
@@ -53,14 +58,14 @@ export default function Home() {
           </div>
         </main>
         <Footer />
-      </div>
+      </>
     );
   }
 
   if (error || !resumeData) {
     return (
-      <div className="resume-wrapper">
-        <Header />
+      <>
+        <Header isResumePage={true} />
         <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
           <div className="text-center">
             <p className="text-lg text-red-600 dark:text-red-400">
@@ -69,15 +74,15 @@ export default function Home() {
           </div>
         </main>
         <Footer />
-      </div>
+      </>
     );
   }
 
   const { personalInfo, summary, experience, education, skills, certifications, projects } = resumeData;
 
   return (
-    <div className="resume-wrapper">
-      <Header />
+    <>
+      <Header isResumePage={true} />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
       {/* Hero Section */}
       <section
@@ -439,6 +444,6 @@ export default function Home() {
       )}
     </main>
     <Footer />
-  </div>
+  </>
   );
 }
