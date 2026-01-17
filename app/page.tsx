@@ -61,7 +61,7 @@ export default function Home() {
                   </svg>
                 </a>
                 <a
-                  href="https://docs.google.com/document/d/1NIwgN8u-V-1foCZ2Cb5I2KjpnA6birGL0aV9ZDjX5RI/edit?usp=sharing"
+                  href="https://resume.brignano.io"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
