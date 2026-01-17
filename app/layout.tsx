@@ -69,10 +69,7 @@ export default function RootLayout({
               gtag('js', new Date());
               gtag('config', '${GA_MEASUREMENT_ID}', {
                 page_path: window.location.pathname,
-                cookie_domain: 'auto',
-                linker: {
-                  domains: ['brignano.io', 'resume.brignano.io']
-                }
+                cookie_domain: 'auto'
               });
             `,
           }}
