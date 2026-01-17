@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { GitHubCalendar } from "react-github-calendar";
-import { jobs, socialLinks, highlights, projects } from "@/utils/constants";
+import { jobs, socialLinks, highlights, projects } from "@/lib/constants";
 import AOS from "aos";
 import { event } from "@/lib/gtag";
 
