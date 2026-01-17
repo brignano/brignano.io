@@ -62,7 +62,6 @@ export default function Home() {
                 </a>
                 <a
                   href="https://resume.brignano.io"
-                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
                   onClick={() => {
