@@ -1,0 +1,210 @@
+
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+
+.font-inconsolata {
+  font-family: 'Inconsolata', monospace, system-ui;
+}
+
+.font-silkscreen-mono {
+  font-family: 'Silkscreen', monospace, system-ui;
+}
+
+.text-primary-color {
+  color: rgb(33, 110, 57);
+  .dark & {
+    color: rgb(51, 224, 146);
+  }
+}
+
+.dark button > svg:hover {
+  --tw-text-opacity: 1;
+  color: rgb(255, 255, 255);
+}
+
+:is(.dark .dark\:bg-primary-bg) {
+  background-color: rgba(39, 39, 43, 0.4);
+}
+
+h1 {
+  font-family: 'Silkscreen', monospace, system-ui;
+}
+
+  /* Print styles for PDF output */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Hide header, footer, nav, and non-essential UI */
+  header,
+  footer {
+    display: none !important;
+  }
+
+  nav, .print-hide, .no-print {
+    display: none !important;
+  }
+
+  /* Remove all backgrounds, borders, and box-shadows */
+  * {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    animation: none !important;
+    transition: none !important;
+    color-adjust: exact !important;
+  }
+  /* Universal override: remove all borders and backgrounds in print for main content */
+  main *,
+  .print\:no-border-bg,
+  .print\:no-border-bg * {
+    border: none !important;
+    border-width: 0 !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    background: none !important;
+  }
+
+  /* Remove borders and background from experience/box cards when printing */
+  .print\:no-border-bg, .print\:no-border-bg * {
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Main content: single column for print */
+  main {
+    display: block !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Print: keep link buttons inline and spaced */
+  .print-link-row {
+    display: inline-flex !important;
+    gap: 1.2em !important;
+    flex-wrap: wrap !important;
+    margin-bottom: 0.5em !important;
+  }
+  .print-link-row a {
+    display: inline !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    color: black !important;
+    font-size: 0.92em !important;
+  }
+
+  /* Remove extra padding/margins from sections and headings */
+  section {
+    margin-bottom: 2.5em !important;
+  }
+  article, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+    margin: 0 0 0.15em 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Reduce font sizes for headings and text */
+  h1 {
+    font-size: 1.1em !important;
+    font-weight: bold !important;
+  }
+  h2, h3, h4, h5, h6 {
+    font-size: 1em !important;
+    font-weight: bold !important;
+  }
+  p, li, span, a {
+    font-size: 0.92em !important;
+  }
+
+  /* Remove color classes for print */
+  [class*="bg-"], [class*="text-"], [class*="border-"], [class*="border"] {
+    background: none !important;
+    color: black !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove images unless explicitly allowed */
+  img, svg, picture, figure {
+    display: none !important;
+  }
+
+  /* Make links show their URLs */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #71717a;
+  }
+
+  /* Page setup for condensed output */
+  @page {
+    margin: 0.4in;
+    size: letter;
+  }
+
+  /* Avoid page breaks only for header/summary, allow for experience */
+  section, article {
+    page-break-inside: auto;
+  }
+  .print-no-break {
+    page-break-inside: avoid;
+  }
+
+  /* Remove print color adjustment for backgrounds */
+  html {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Remove animations and transitions */
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Adjust page margins and size */
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+
+
+  /* Remove background colors and borders for better printing */
+  .dark\:bg-primary-bg,
+  .bg-secondary-bg {
+    background-color: white !important;
+    border: 1px solid #e4e4e7 !important;
+  }
+
+  /* Ensure text is readable */
+  .dark\:text-zinc-400,
+  .text-zinc-600 {
+    color: #52525b !important;
+  }
+
+  .dark\:text-zinc-300,
+  .text-zinc-700 {
+    color: #3f3f46 !important;
+  }
+
+
+  /* Make links show their URLs */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #71717a;
+  }
+}
