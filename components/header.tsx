@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogPanel
@@ -10,47 +11,29 @@ import {
   XMarkIcon,
   MoonIcon,
   SunIcon,
+  ArrowDownTrayIcon,
 } from "@heroicons/react/24/outline";
 import {
   Bars3Icon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
-
-
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const pathname = usePathname();
+  const isResumePage = pathname === '/resume';
 
   const pages: string[] = [];//['about', 'skills'];
 
-  // Helper to get cookie value
-  function getCookie(name: string) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(';').shift();
-    return undefined;
-  }
-
-  // Helper to set theme cookie for all subdomains
-  function setThemeCookie(theme: 'dark' | 'light') {
-    document.cookie = `theme=${theme}; domain=.brignano.io; path=/; max-age=31536000; SameSite=Lax`;
-  }
-
   useEffect(() => {
-    // 1. Try cookie
-    const cookieTheme = getCookie('theme');
+    // Check localStorage first, then fallback to system preference
     let isDarkDefault = false;
-    if (cookieTheme === 'dark') isDarkDefault = true;
-    else if (cookieTheme === 'light') isDarkDefault = false;
+    if (localStorage.theme === "dark") isDarkDefault = true;
+    else if (localStorage.theme === "light") isDarkDefault = false;
     else {
-      // 2. Fallback to localStorage
-      if (localStorage.theme === "dark") isDarkDefault = true;
-      else if (localStorage.theme === "light") isDarkDefault = false;
-      else {
-        // 3. Fallback to system
-        isDarkDefault = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      }
+      // Fallback to system preference
+      isDarkDefault = window.matchMedia("(prefers-color-scheme: dark)").matches;
     }
     document.documentElement.classList.toggle("dark", isDarkDefault);
     setIsDarkMode(isDarkDefault);
@@ -58,14 +41,16 @@ export default function Header() {
 
   const toggleTheme = () => {
     const newDark = !isDarkMode;
-    document.documentElement.classList.toggle('dark');
+    document.documentElement.classList.toggle('dark', newDark);
     setIsDarkMode(newDark);
-    setThemeCookie(newDark ? "dark" : "light");
   }
+
+  const handleDownloadPDF = () => {
+    window.print();
+  };
 
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-    setThemeCookie(isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
   return (
@@ -96,6 +81,15 @@ export default function Header() {
           </ul>
         </nav>
         <div className="flex items-center gap-x-4">
+          {isResumePage && (
+            <button
+              aria-label="Download PDF"
+              onClick={handleDownloadPDF}
+              className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0"
+            >
+              <ArrowDownTrayIcon className="size-5 hover:text-primary-color duration-400 cursor-pointer" />
+            </button>
+          )}
           <button
             aria-label="Toggle Theme"
             onClick={() => toggleTheme()}

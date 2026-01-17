@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/resume/:path*", "destination": "https://resume.brignano.io/:path*" },
-    { "source": "/resume", "destination": "https://resume.brignano.io/" }
-  ]
-}
