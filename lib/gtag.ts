@@ -4,7 +4,9 @@ export const GA_MEASUREMENT_ID = 'G-QGJLCCQ9X8';
 export const pageview = (url: string) => {
   if (typeof window !== 'undefined' && typeof window.gtag !== 'undefined') {
     window.gtag('config', GA_MEASUREMENT_ID, {
-      page_path: url,
+      page_path: window.location.pathname,
+      cookie_domain: 'auto',
+      linker: { domains: ['brignano.io', 'resume.brignano.io'] }
     });
   }
 };
