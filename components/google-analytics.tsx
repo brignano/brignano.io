@@ -10,7 +10,8 @@ function GoogleAnalyticsInner() {
 
   useEffect(() => {
     if (pathname) {
-      const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
+      const search = searchParams?.toString();
+      const url = pathname + (search ? `?${search}` : '');
       gtag.pageview(url);
     }
   }, [pathname, searchParams]);
