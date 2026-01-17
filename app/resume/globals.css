@@ -179,12 +179,6 @@ h1 {
     transition: none !important;
   }
 
-  /* Adjust page margins and size */
-  @page {
-    margin: 0.5in;
-    size: letter;
-  }
-
 
   /* Remove background colors and borders for better printing */
   .dark\:bg-primary-bg,
@@ -202,13 +196,5 @@ h1 {
   .dark\:text-zinc-300,
   .text-zinc-700 {
     color: #3f3f46 !important;
-  }
-
-
-  /* Make links show their URLs */
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.8em;
-    color: #71717a;
   }
 }

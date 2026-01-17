@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { MoonIcon, SunIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
-  // Get homepage URL from env or default
-  const HOMEPAGE_URL = process.env.NEXT_PUBLIC_HOMEPAGE_URL || "https://brignano.io";
 
 export default function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [faviconError, setFaviconError] = useState(false);
+  // Get homepage URL from env or default
+  const HOMEPAGE_URL = process.env.NEXT_PUBLIC_HOMEPAGE_URL || "https://brignano.io";
 
   // Helper to get cookie value
   function getCookie(name: string) {
@@ -38,7 +38,7 @@ export default function Header() {
 
   const toggleTheme = () => {
     const newDark = !isDarkMode;
-    document.documentElement.classList.toggle("dark");
+    document.documentElement.classList.toggle("dark", newDark);
     setIsDarkMode(newDark);
     // Set cookie for .brignano.io, expires in 1 year
     document.cookie = `theme=${newDark ? "dark" : "light"}; domain=.brignano.io; path=/; max-age=31536000; SameSite=Lax`;
