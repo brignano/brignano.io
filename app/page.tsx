@@ -60,7 +60,7 @@ export default function Home() {
                     />
                   </svg>
                 </a>
-                <a
+                <Link
                   href="/resume"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
                   onClick={() => {
@@ -81,7 +81,7 @@ export default function Home() {
                       d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
 
               {/* Social Links */}
