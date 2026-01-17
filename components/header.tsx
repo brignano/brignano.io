@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogPanel
@@ -17,13 +18,11 @@ import {
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
-interface HeaderProps {
-  isResumePage?: boolean;
-}
-
-export default function Header({ isResumePage = false }: HeaderProps) {
+export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const pathname = usePathname();
+  const isResumePage = pathname === '/resume';
 
   const pages: string[] = [];//['about', 'skills'];
 

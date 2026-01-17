@@ -47,12 +47,6 @@ h1 {
   font-family: var(--font-silkscreen-mono);
 }
 
-/* Hide root layout header/footer on resume page, show resume page's header/footer */
-body.resume-page > header:first-of-type,
-body.resume-page > footer:first-of-type {
-  display: none !important;
-}
-
 /* Print styles for PDF output (resume page) */
 @media print {
   body {
