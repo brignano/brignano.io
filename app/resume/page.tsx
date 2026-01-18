@@ -8,10 +8,36 @@ export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [shareSupported, setShareSupported] = useState(false);
 
   useEffect(() => {
     AOS.init();
+    setShareSupported(typeof navigator !== "undefined" && !!navigator.share);
   }, []);
+
+  const handleShare = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "/resume";
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Anthony Brignano — Resume", url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        alert("Link copied to clipboard");
+      }
+    } catch (err) {
+      console.error("Share failed", err);
+    }
+  };
+
+  const handleCopy = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "/resume";
+    try {
+      await navigator.clipboard.writeText(url);
+      alert("Link copied to clipboard");
+    } catch (err) {
+      console.error("Copy failed", err);
+    }
+  };
 
   useEffect(() => {
     const fetchResume = async () => {
@@ -123,12 +149,14 @@ export default function Home() {
               GitHub
             </a>
           )}
+          {/* Share button moved to header for better UX */}
         </div>
+        {/* single share button removed from here; added next to social links above */}
       </section>
 
       {/* Social Media Links for print only (horizontal list) */}
       {(personalInfo.website || personalInfo.linkedin || personalInfo.github) && (
-        <section className="mb-8 hidden print:block">
+        <section className="mb-8 hidden print:block print-no-gap">
           <ul className="flex flex-wrap justify-start gap-6 list-none p-0 m-0 print:block print-link-row">
             {personalInfo.website && (
               <li>

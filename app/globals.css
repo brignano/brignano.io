@@ -123,6 +123,27 @@ h1 {
     text-decoration: none !important;
   }
 
+  /* Remove extra gap for print-only sections where we want no surrounding whitespace */
+  .print-no-gap {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  /* Also remove top margin on the immediate following heading/paragraph to collapse space */
+  .print-no-gap + * {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  /* Ensure inner headings/paragraphs inside print-no-gap don't add space */
+  .print-no-gap h1,
+  .print-no-gap h2,
+  .print-no-gap h3,
+  .print-no-gap p {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   /* Remove extra padding/margins from sections and headings */
   section {
     margin-bottom: 2.5em !important;
