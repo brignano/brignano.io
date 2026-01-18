@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import type { ResumeData } from "@/types/resume";
+import { event } from "@/lib/gtag";
 
 export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
@@ -125,6 +126,9 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              onClick={() => {
+                event("website_clicked", { cta: "resume_website", origin: "resume", transport_type: "beacon" });
+              }}
             >
               Website
             </a>
