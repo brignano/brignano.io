@@ -12,6 +12,7 @@ import {
   MoonIcon,
   SunIcon,
   ArrowDownTrayIcon,
+  ShareIcon,
 } from "@heroicons/react/24/outline";
 import {
   Bars3Icon,
@@ -49,6 +50,30 @@ export default function Header() {
     window.print();
   };
 
+  const handleShare = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "/resume";
+    try {
+      if (typeof navigator !== "undefined" && (navigator as any).share) {
+        await (navigator as any).share({ title: "Anthony Brignano — Resume", url });
+      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+        await navigator.clipboard.writeText(url);
+        // small fallback feedback
+        // eslint-disable-next-line no-alert
+        alert("Resume link copied to clipboard");
+      } else {
+        // last resort
+        // eslint-disable-next-line no-alert
+        alert(url);
+      }
+    } catch (err) {
+      // swallow share errors silently
+      // eslint-disable-next-line no-console
+      console.error("Share failed", err);
+    }
+  };
+
+
+
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
@@ -83,11 +108,20 @@ export default function Header() {
         <div className="flex items-center gap-x-4">
           {isResumePage && (
             <button
+              aria-label="Share Resume"
+              onClick={handleShare}
+              className="print:hidden dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform transform hover:scale-105 hover:shadow-sm hover:bg-zinc-200 dark:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary-color/20"
+            >
+              <ShareIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300" />
+            </button>
+          )}
+          {isResumePage && (
+            <button
               aria-label="Download PDF"
               onClick={handleDownloadPDF}
-              className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0"
+              className="dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform transform hover:scale-105 hover:shadow-sm hover:bg-zinc-200 dark:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary-color/20"
             >
-              <ArrowDownTrayIcon className="size-5 hover:text-primary-color duration-400 cursor-pointer" />
+              <ArrowDownTrayIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300" />
             </button>
           )}
           <button

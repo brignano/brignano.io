@@ -8,10 +8,36 @@ export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [shareSupported, setShareSupported] = useState(false);
 
   useEffect(() => {
     AOS.init();
+    setShareSupported(typeof navigator !== "undefined" && !!navigator.share);
   }, []);
+
+  const handleShare = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "/resume";
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Anthony Brignano — Resume", url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        alert("Link copied to clipboard");
+      }
+    } catch (err) {
+      console.error("Share failed", err);
+    }
+  };
+
+  const handleCopy = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "/resume";
+    try {
+      await navigator.clipboard.writeText(url);
+      alert("Link copied to clipboard");
+    } catch (err) {
+      console.error("Copy failed", err);
+    }
+  };
 
   useEffect(() => {
     const fetchResume = async () => {
@@ -71,7 +97,7 @@ export default function Home() {
         data-aos="fade-down"
         data-aos-duration={500}
         data-aos-once={true}
-        className="mb-16 print-no-break"
+        className="mb-16 print-no-break print-no-gap"
       >
         <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-4 lg:leading-[3.7rem] leading-tight">
           {personalInfo.name}
@@ -123,13 +149,15 @@ export default function Home() {
               GitHub
             </a>
           )}
+          {/* Share button moved to header for better UX */}
         </div>
+        {/* single share button removed from here; added next to social links above */}
       </section>
 
       {/* Social Media Links for print only (horizontal list) */}
       {(personalInfo.website || personalInfo.linkedin || personalInfo.github) && (
-        <section className="mb-8 hidden print:block">
-          <ul className="flex flex-wrap justify-start gap-6 list-none p-0 m-0 print-link-row">
+        <section className="mb-16 hidden print:block print-no-top">
+          <ul className="flex flex-wrap justify-start gap-6 list-none p-0 m-0 print:block print-link-row">
             {personalInfo.website && (
               <li>
                 <span>Website: {personalInfo.website}</span>
@@ -299,25 +327,28 @@ export default function Home() {
           <h2 className="text-3xl mb-8 font-bold tracking-tight">
             Skills
           </h2>
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+          <div
+            className="grid md:grid-cols-2 grid-cols-1 gap-6 print-skills-grid"
+            style={{ ["--print-cols" as any]: String(Math.max(1, Math.min(4, skills.length))) } as React.CSSProperties}
+          >
             {skills.map((skillGroup, index) => (
               <div
                 key={index}
-                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg print:no-border-bg"
+                className="skill-group dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg print:no-border-bg"
               >
                 <h3 className="text-lg font-semibold mb-3">
                   {skillGroup.category}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <ul className="skill-items flex flex-wrap gap-2">
                   {skillGroup.items.map((skill, i) => (
-                    <span
+                    <li
                       key={i}
                       className="text-sm px-3 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
                     >
                       {skill}
-                    </span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
@@ -335,7 +366,7 @@ export default function Home() {
           <h2 className="text-3xl mb-8 font-bold tracking-tight">
             Projects
           </h2>
-          <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 print-projects-grid">
             {projects.map((project, index) => (
               <div
                 key={index}
