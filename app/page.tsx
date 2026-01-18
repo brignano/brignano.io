@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { GitHubCalendar } from "react-github-calendar";
-import { jobs, socialLinks, highlights, projects } from "@/lib/constants";
+import { socialLinks, highlights, projects } from "@/lib/constants";
 import AOS from "aos";
 import { event } from "@/lib/gtag";
 
@@ -28,12 +27,10 @@ export default function Home() {
           <div style={{ opacity: 1, transform: "none" }}>
             <div>
               <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
-                I build secure, reliable cloud-native systems and the platforms
-                teams depend on.
+                I build secure, reliable cloud-native systems and the platforms teams depend on.
               </h1>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
-                Full-stack engineer working at the intersection of DevSecOps,
-                automation, and cloud-native systems.
+                Full-stack engineer working at the intersection of DevSecOps, automation, and cloud-native systems.
               </p>
 
               {/* Primary CTAs */}
@@ -67,7 +64,7 @@ export default function Home() {
                     event("CTA Clicked", { type: "Resume" });
                   }}
                 >
-                  View Resume
+                  My Resume
                   <svg
                     className="ml-2 w-4 h-4"
                     fill="none"
@@ -296,102 +293,34 @@ export default function Home() {
         </section>
       )}
 
-      {/* Work Experience */}
+      {/* Work Experience (Current Position Only) */}
       <section
-        className="md:mt-24"
+        className="mb-16"
         data-aos="fade-up"
         data-aos-duration={1000}
         data-aos-once={true}
       >
-        <div style={{ opacity: "1" }}>
-          <div>
-            <div className="mb-16">
-              <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
-                Work Experience
-              </h2>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ opacity: "1" }}>
-          <div>
-            <div className="grid lg:grid-cols-2 grid-cols-1 gap-x-12 gap-y-10">
-              {jobs.map((job) => (
-                <div
-                  key={job.company + job.title}
-                  className="flex items-start lg:gap-x-6 gap-x-4 max-w-2xl relative before:absolute before:bottom-0 before:top-[5rem] before:left-9 before:w-[1px] before:h-[calc(100%-70px)] dark:before:bg-zinc-800 before:bg-zinc-200"
-                >
-                  <Link
-                    href={job.url}
-                    target="_blank"
-                    className="grid place-items-center dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 min-h-[80px] min-w-[80px] p-2 rounded-md overflow-clip relative"
-                    onClick={() => {
-                      event("Job Link Clicked", { company: job.company });
-                    }}
-                  >
-                    <Image
-                      alt={`${job.company} Logo`}
-                      src={job.logo}
-                      width={50}
-                      height={50}
-                      className="dark:invert"
-                    />
-                  </Link>
-                  <div className="flex flex-col items-start">
-                    <h3 className="text-xl font-semibold">{job.company}</h3>
-                    <p className="font-medium">{job.title}</p>
-                    <button className="border text-white bg-zinc-800 dark:bg-zinc-200 dark:text-zinc-800 text-xs p-1 px-2 rounded-full my-2">
-                      {job.topic}
-                    </button>
-                    <time className="text-sm text-zinc-600 dark:text-zinc-400 mt-2 tracking-widest uppercase">
-                      {job.startDate.toUpperCase()} -{" "}
-                      <span
-                        className={
-                          job.endDate.toLowerCase() === "present"
-                            ? "text-primary-color"
-                            : ""
-                        }
-                      >
-                        {job.endDate.toUpperCase()}
-                      </span>
-                    </time>
-                    <p className="tracking-tight dark:text-zinc-400 text-zinc-600 my-4 italic">
-                      {job.summary}
-                    </p>
-                    <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2">
-                      {job.bullets.map((bullet, index) => {
-                        const parts = bullet.split(/(\*\*.*?\*\*)/);
-                        return (
-                          <li key={index} className="text-sm">
-                            {parts.map((part, i) => {
-                              if (
-                                part.startsWith("**") &&
-                                part.endsWith("**")
-                              ) {
-                                return (
-                                  <strong
-                                    key={i}
-                                    className="font-bold dark:text-white text-zinc-900"
-                                  >
-                                    {part.slice(2, -2)}
-                                  </strong>
-                                );
-                              }
-                              return part;
-                            })}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                    {job.tech && (
-                      <p className="text-xs dark:text-zinc-500 text-zinc-500 mt-4">
-                        <span className="font-semibold">Tech:</span> {job.tech}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div style={{ opacity: 1 }}>
+          <div className="max-w-3xl">
+            <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
+              Current Role
+            </h2>
+            <h3 className="text-2xl font-semibold mb-2">Senior Staff Software Engineer — Enterprise Platform Engineering</h3>
+            <p className="text-lg dark:text-zinc-300 text-zinc-700 mb-4">
+              At The Hartford, I lead the strategy, design, and delivery of the enterprise developer platform ecosystem. My work spans CI/CD, security, artifact management, and observability, supporting thousands of repositories and enabling engineering teams to deliver software securely and efficiently at scale.
+            </p>
+            <p className="text-base dark:text-zinc-400 text-zinc-600 mb-4">
+              I drive large-scale migrations (including 11,000+ repositories to GitHub Enterprise Cloud), architect and operate scalable CI/CD and governance platforms, and champion the adoption of next-generation developer tooling. My focus is on automation, reliability, and security as first-class concerns, reducing incidents and accelerating developer productivity across the organization.
+            </p>
+            <ul className="list-disc list-inside mb-4">
+              <li>Led enterprise migration to GitHub Enterprise Cloud</li>
+              <li>Built and operated CI/CD, governance, and observability platforms</li>
+              <li>Rolled out next-gen CI/CD tooling, reducing developer-reported incidents</li>
+              <li>Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity</li>
+            </ul>
+            <p className="text-sm dark:text-zinc-500 text-zinc-500 mt-4">
+              For my full career history, see <Link href="/resume" className="underline text-primary-color">my resume</Link>.
+            </p>
           </div>
         </div>
       </section>
