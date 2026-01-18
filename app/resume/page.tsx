@@ -129,7 +129,7 @@ export default function Home() {
       {/* Social Media Links for print only (horizontal list) */}
       {(personalInfo.website || personalInfo.linkedin || personalInfo.github) && (
         <section className="mb-8 hidden print:block">
-          <ul className="flex flex-wrap justify-start gap-6 list-none p-0 m-0 print-link-row">
+          <ul className="flex flex-wrap justify-start gap-6 list-none p-0 m-0 print:block print-link-row">
             {personalInfo.website && (
               <li>
                 <span>Website: {personalInfo.website}</span>
