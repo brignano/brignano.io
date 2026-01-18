@@ -130,6 +130,11 @@ h1 {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
+  /* Remove only top spacing for elements that should be flush to the top in print */
+  .print-no-top {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
   /* Also remove top margin on the immediate following heading/paragraph to collapse space */
   .print-no-gap + * {
     margin-top: 0 !important;

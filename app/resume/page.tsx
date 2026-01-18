@@ -97,7 +97,7 @@ export default function Home() {
         data-aos="fade-down"
         data-aos-duration={500}
         data-aos-once={true}
-        className="mb-16 print-no-break"
+        className="mb-16 print-no-break print-no-gap"
       >
         <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-4 lg:leading-[3.7rem] leading-tight">
           {personalInfo.name}
@@ -156,7 +156,7 @@ export default function Home() {
 
       {/* Social Media Links for print only (horizontal list) */}
       {(personalInfo.website || personalInfo.linkedin || personalInfo.github) && (
-        <section className="mb-8 hidden print:block print-no-gap">
+        <section className="mb-16 hidden print:block print-no-top">
           <ul className="flex flex-wrap justify-start gap-6 list-none p-0 m-0 print:block print-link-row">
             {personalInfo.website && (
               <li>
