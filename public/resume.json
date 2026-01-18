@@ -115,7 +115,7 @@
     },
     {
       "category": "CI/CD & DevOps",
-      "items": ["GitHub Actions", "Jenkins", "Harness", "GitLab CI", "CircleCI", "ArgoCD"]
+      "items": ["GitHub Actions", "Jenkins", "Harness", "uDeploy"]
     },
     {
       "category": "Programming Languages",
@@ -127,23 +127,18 @@
     },
     {
       "category": "Observability",
-      "items": ["Dynatrace", "Splunk", "Datadog", "Prometheus", "Grafana", "ELK Stack"]
+      "items": ["Dynatrace", "Splunk", "Google Analytics"]
     },
     {
       "category": "Frameworks & Tools",
-      "items": ["Next.js", "React", "Spring Boot", "Node.js", "FastAPI", "Express"]
+      "items": ["Next.js", "React", "Spring Boot", "Node.js", "Express"]
     }
   ],
   "certifications": [
     {
-      "name": "AWS Certified Solutions Architect",
-      "issuer": "Amazon Web Services",
-      "date": "2022"
-    },
-    {
-      "name": "Certified Kubernetes Administrator (CKA)",
-      "issuer": "Cloud Native Computing Foundation",
-      "date": "2021"
+      "name": "Professional Scrum Developer (PSD)",
+      "issuer": "Scrum.org",
+      "date": "2019"
     }
   ],
   "projects": [
@@ -155,14 +150,9 @@
       "github": "https://github.com/brignano/brignano.io"
     },
     {
-      "name": "Enterprise CI/CD Platform",
-      "description": "Built and maintained enterprise-scale CI/CD platform supporting 11,000+ repositories with governance, security scanning, and observability.",
+      "name": "GitHub Enterprise Cloud Migration",
+      "description": "Architected and executed enterprise-scale CI/CD migration supporting 11,000+ repositories with governance, security scanning, and observability.",
       "technologies": ["GitHub Actions", "Terraform", "AWS", "Python", "TypeScript"]
-    },
-    {
-      "name": "Test Data Management Platform",
-      "description": "Developed enterprise test data management solution enabling scalable, compliant test data provisioning across multiple environments.",
-      "technologies": ["Python", "PostgreSQL", "Docker", "FastAPI", "React"]
     }
   ]
 }
