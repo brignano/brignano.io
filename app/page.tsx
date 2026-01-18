@@ -39,7 +39,7 @@ export default function Home() {
                   href="mailto:hi@brignano.io"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
                   onClick={() => {
-                    event("CTA Clicked", { type: "Contact" });
+                    event("cta_clicked", { cta: "contact", location: "hero", transport_type: "beacon" });
                   }}
                 >
                   Contact Me
@@ -61,7 +61,7 @@ export default function Home() {
                   href="/resume"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
                   onClick={() => {
-                    event("CTA Clicked", { type: "Resume" });
+                    event("cta_clicked", { cta: "resume", location: "hero", transport_type: "beacon" });
                   }}
                 >
                   My Resume
@@ -92,10 +92,8 @@ export default function Home() {
                           target="_blank"
                           className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
                           onClick={() => {
-                            event("Social Link Clicked", {
-                              name: link.name,
-                              href: link.href,
-                            });
+                            const ctaName = String(link.name).toLowerCase().replace(/\s+/g, "_");
+                            event("social_link_clicked", { cta: ctaName, href: link.href, transport_type: "beacon" });
                           }}
                         >
                           {link.icon} <span className="ml-1">{link.name}</span>
@@ -370,7 +368,7 @@ export default function Home() {
                       title={`View graph for the year ${year}`}
                       onClick={() => {
                         setCalendarYear(year);
-                        event("Contribution Graph Year Changed", { year });
+                        event("contribution_graph_year_changed", { year });
                       }}
                     >
                       {year}
@@ -404,7 +402,7 @@ export default function Home() {
               href="mailto:hi@brignano.io"
               className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
-                event("Contact CTA Clicked", { location: "bottom" });
+                event("cta_clicked", { cta: "contact_bottom", location: "bottom", transport_type: "beacon" });
               }}
             >
               <svg
@@ -428,7 +426,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
-                event("LinkedIn CTA Clicked", { location: "bottom" });
+                event("cta_clicked", { cta: "linkedin_bottom", location: "bottom", transport_type: "beacon" });
               }}
             >
               <svg
