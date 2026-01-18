@@ -135,6 +135,98 @@ h1 {
     margin-top: 0 !important;
     padding-top: 0 !important;
   }
+ 
+  /* Print: render skills as a single horizontal row of columns */
+  /* Print: render skills into a grid of columns with up to 4 rows per column
+     The number of columns is provided via the CSS variable --print-cols set
+     inline on the section element by the component. */
+  .print-skills-grid {
+    display: grid !important;
+    grid-template-columns: repeat(var(--print-cols, 4), 1fr) !important;
+    gap: 1rem !important;
+    align-items: start !important;
+  }
+  /* Ensure each skill-group stacks vertically; max 4 groups per column is
+     achieved by computing --print-cols = ceil(count / 4) in the component. */
+  .print-skills-grid > .skill-group {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .print-skills-grid .skill-group h3,
+  .print-skills-grid .skill-group .skill-items {
+    margin: 0 0 0.25em 0 !important;
+    padding: 0 !important;
+  }
+  /* In print show skill-items as a normal unordered list with bullets */
+  .print-skills-grid .skill-items {
+    display: block !important;
+    list-style-type: disc !important;
+    list-style-position: outside !important;
+    padding-left: 1.4rem !important;
+    margin: 0 !important;
+    background: none !important;
+    -webkit-padding-start: 1.4rem !important;
+  }
+  .print-skills-grid .skill-items li {
+    display: list-item !important;
+    list-style: disc outside !important;
+    margin: 0 0 0.35em 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: black !important;
+    font-weight: normal !important;
+    white-space: normal !important;
+  }
+  /* Ensure marker is visible and uses default bullet */
+  .print-skills-grid .skill-items li::marker {
+    color: #000 !important;
+    font-size: 0.95em !important;
+    opacity: 1 !important;
+  }
+
+  /* Safety: ensure ul printed as block and not affected by flexbox rules */
+  .print-skills-grid .skill-items[role],
+  .print-skills-grid .skill-items {
+    display: block !important;
+  }
+
+  /* Projects: two columns per row in print */
+  .print-projects-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+  .print-projects-grid > * {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Ensure project cards behave as grid items (avoid full-width overrides) */
+  .print-projects-grid > * {
+    display: block !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+
+  /* Avoid splitting skill groups and their lists across pages/columns */
+  .print-skills-grid > .skill-group,
+  .print-skills-grid .skill-items,
+  .print-skills-grid .skill-items li {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Ensure headings don't get orphaned from their content */
+  .print-skills-grid h3,
+  .print-projects-grid h3,
+  .print-no-break h2 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
   /* Also remove top margin on the immediate following heading/paragraph to collapse space */
   .print-no-gap + * {
     margin-top: 0 !important;
