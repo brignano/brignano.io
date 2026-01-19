@@ -1,6 +1,6 @@
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from "@/components/google-analytics";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 import { siteMetadata } from "@/lib/constants";
+import ScrollToTop from "@/components/scroll-to-top";
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata-mono",
@@ -78,6 +79,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <ScrollToTop />
         <SpeedInsights />
         <GoogleAnalytics />
         <Analytics />
