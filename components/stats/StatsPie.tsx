@@ -121,26 +121,27 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
-                data={chartDataSecs}
-                dataKey="seconds"
-                nameKey="name"
+                              data={chartDataSecs}
+                              dataKey="seconds"
+                              nameKey="name"
                               cursor="pointer"
-                outerRadius={100}
-                innerRadius={48}
-                paddingAngle={2}
-                activeIndex={displayIndex ?? undefined}
-                activeShape={renderActiveShape}
-                onMouseEnter={(_, idx) => setActiveIndex(idx)}
-                onMouseLeave={() => setActiveIndex(null)}
-                onClick={(_, idx) => setSelectedIndex(idx === selectedIndex ? null : idx)}
-              />
-              {chartDataSecs.map((_, idx) => (
-                <Cell
-                  key={`cell-${idx}`}
-                  fill={COLORS[idx % COLORS.length] as string}
-                      style={{ cursor: 'pointer' }}
-                />
-              ))}
+                              outerRadius={100}
+                              innerRadius={48}
+                              paddingAngle={2}
+                              activeIndex={displayIndex ?? undefined}
+                              activeShape={renderActiveShape}
+                              onMouseEnter={(_, idx) => setActiveIndex(idx)}
+                              onMouseLeave={() => setActiveIndex(null)}
+                              onClick={(_, idx) => setSelectedIndex(idx === selectedIndex ? null : idx)}
+                          >
+                              {chartDataSecs.map((_, idx) => (
+                                  <Cell
+                                      key={`cell-${idx}`}
+                                      fill={COLORS[idx % COLORS.length] as string}
+                                      style={{ cursor: 'pointer' }}
+                                  />
+                              ))}
+                          </Pie>
             </PieChart>
           </ResponsiveContainer>
         </div>
