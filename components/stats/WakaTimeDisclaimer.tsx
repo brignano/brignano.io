@@ -16,15 +16,16 @@ export default function WakaTimeDisclaimer({ url }: { url?: string | null }) {
   }
 
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={handleClick}
-      className="inline-flex items-center gap-2"
-    >
+    <>
       <span className="leading-none">🚀</span>
-      <span>Powered by WakaTime</span>
-    </a>
+      <span>Powered by <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleClick}
+        className="inline-flex items-center gap-2 underline"
+      >WakaTime</a>.
+      </span >
+    </>
   )
 }

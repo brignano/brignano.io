@@ -5,12 +5,13 @@ import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from 'recharts'
 type Props = {
   data: { name: string; seconds: number }[]
   title?: string
+  description?: string
 }
 
 // Fixed palette ensures slices render with color
 const COLORS = ['#4f46e5','#ef4444','#10b981','#f59e0b','#06b6d4','#a78bfa','#f97316','#ef9aa3','#60a5fa','#34d399']
 
-export default function StatsPie({ data, title = 'Languages' }: Props) {
+export default function StatsPie({ data, title, description }: Props) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const displayIndex = selectedIndex ?? activeIndex
@@ -75,8 +76,9 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
   }
 
   return (
-    <div className="w-full pb-6 md:pb-0 md:h-80">
-      <h3 className="text-xl font-semibold mb-6">{title}</h3>
+    <div className="w-full pb-6 md:pb-0 overflow-auto">
+      {title && <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">{title}</h3>}
+      {description && <p className="text-sm dark:text-zinc-500 text-zinc-500 mb-4">{description}</p>}
       <div className="flex flex-col md:flex-row items-start gap-4">
         <div className="flex-1 md:max-w-md min-w-0">
           <ul className="space-y-3">
@@ -93,6 +95,33 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
                   onMouseEnter={() => setActiveIndex(idx)}
                   onMouseLeave={() => setActiveIndex(null)}
                   onClick={() => setSelectedIndex(idx === selectedIndex ? null : idx)}
+                  tabIndex={0}
+                  role="button"
+                  aria-pressed={selectedIndex === idx}
+                  onFocus={() => setActiveIndex(idx)}
+                  onBlur={() => setActiveIndex(null)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setSelectedIndex(idx === selectedIndex ? null : idx)
+                    } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                      e.preventDefault()
+                      setActiveIndex((prev) => {
+                        const next = (prev ?? idx) + 1
+                        return next >= chartData.length ? 0 : next
+                      })
+                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                      e.preventDefault()
+                      setActiveIndex((prev) => {
+                        const next = (prev ?? idx) - 1
+                        return next < 0 ? chartData.length - 1 : next
+                      })
+                    } else if (e.key === 'Escape') {
+                      e.preventDefault()
+                      setSelectedIndex(null)
+                      setActiveIndex(null)
+                    }
+                  }}
                 >
                   <div className="flex items-center gap-2 flex-1 min-w-0">
                     <span
@@ -111,7 +140,38 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
           </ul>
         </div>
 
-              <div className="w-full md:w-80 lg:w-96 flex-shrink-0 flex items-center justify-center h-60 relative mt-6 md:mt-0 mx-auto cursor-pointer" onMouseDown={(e) => e.preventDefault()}>
+        <div
+          className="w-full md:w-80 lg:w-96 flex-shrink-0 flex items-center justify-center h-60 relative mt-6 md:mt-0 mx-auto cursor-pointer"
+          onMouseDown={(e) => e.preventDefault()}
+          tabIndex={0}
+          role="group"
+          aria-label={`${title} chart`}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+              e.preventDefault()
+              setActiveIndex((prev) => {
+                const next = (prev ?? -1) + 1
+                return next >= chartDataSecs.length ? 0 : next
+              })
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+              e.preventDefault()
+              setActiveIndex((prev) => {
+                const next = (prev ?? chartDataSecs.length) - 1
+                return next < 0 ? chartDataSecs.length - 1 : next
+              })
+            } else if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault()
+              setSelectedIndex((prev) => {
+                const idx = activeIndex ?? 0
+                return idx === prev ? null : idx
+              })
+            } else if (e.key === 'Escape') {
+              e.preventDefault()
+              setSelectedIndex(null)
+              setActiveIndex(null)
+            }
+          }}
+        >
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie

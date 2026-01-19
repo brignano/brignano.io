@@ -2,6 +2,7 @@ const WAKATIME_API_BASE = 'https://wakatime.com/api/v1'
 
 import StatsPie from '../../components/stats/StatsPie'
 import WakaTimeDisclaimer from '../../components/stats/WakaTimeDisclaimer'
+import GitHubCalendarClient from '../../components/GitHubCalendarClient'
 // DayOfWeekChart removed to avoid premium WakaTime summaries endpoint
 // HourlyChart removed: heartbeat endpoint and heartbeat-derived charts are not used
 
@@ -179,13 +180,22 @@ export default async function Page() {
               </div>
           </div>
 
+          <div className="mt-6">
+            <GitHubCalendarClient
+              initialYear={2026}
+              buttonSize="large"
+              title="Contribution Graph"
+              description={"GitHub contribution activity by year."}
+            />
+          </div>
+
           <section className="grid grid-cols-1 gap-8 mt-6">
               <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
-                <StatsPie data={languages} title="Languages" />
+              <StatsPie data={languages} title="Programming Languages" description="Languages used in the IDE (tracked by WakaTime)." />
             </div>
 
               <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
-              <StatsPie data={categories} title="Activities" />
+              <StatsPie data={categories} title="Activity Types" description="Types of IDE activity (tracked by WakaTime)." />
             </div>
           </section>
             <div className="mt-6 text-sm text-zinc-600 dark:text-zinc-400 flex justify-start">

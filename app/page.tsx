@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { GitHubCalendar } from "react-github-calendar";
+import { useEffect } from "react";
+import GitHubCalendarClient from "@/components/GitHubCalendarClient";
 import { socialLinks, highlights, projects } from "@/lib/constants";
 import AOS from "aos";
 import { event } from "@/lib/gtag";
 
 export default function Home() {
-  const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     AOS.init();
@@ -244,7 +243,7 @@ export default function Home() {
           {highlights.map((highlight, index) => (
             <div
               key={index}
-              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-4 rounded-lg text-center"
+              className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-6 py-4 shadow-sm w-full sm:w-auto text-center"
             >
               <p className="text-sm font-medium">{highlight}</p>
             </div>
@@ -274,7 +273,7 @@ export default function Home() {
               {projects.map((project, index) => (
                 <div
                   key={index}
-                  className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+                  className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-6 py-4 shadow-sm"
                 >
                   <h3 className="text-xl font-semibold mb-3">
                     {project.title}
@@ -359,54 +358,25 @@ export default function Home() {
               Contribution Graph
             </h2>
             <p className="dark:text-zinc-400 text-zinc-600 max-w-2xl">
-              GitHub contribution activity over the past year. Note: Private
-              repository contributions may not appear, and the graph reflects
-              only public activity on this platform.
+              GitHub contribution activity by year.
+            </p>
+            <p className="text-sm dark:text-zinc-500 text-zinc-500 italic">
+              Note: Private repository contributions may not appear, and the graph reflects only public activity on this platform.
             </p>
           </div>
           <div style={{ opacity: "1", transform: "none" }}>
-            <div>
-              <div className="flex xl:flex-row flex-col gap-4">
-                <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-8 rounded-lg max-w-fit max-h-fit">
-                  <GitHubCalendar
-                    username="brignano"
-                    year={calendarYear}
-                    colorScheme={"light"}
-                  />
-                </div>
-                <div className="flex justify-start xl:flex-col flex-row flex-wrap gap-2">
-                  {Array.from(
-                    { length: 5 },
-                    (_, i) => new Date().getFullYear() - i
-                  ).map((year) => (
-                    <button
-                      className={
-                        "cursor-pointer rounded-lg text-center px-4 py-2 border border-transparent dark:hover:border-zinc-700 hover:border-zinc-200 duration-100 text-sm font-medium" +
-                        " " +
-                        (year === calendarYear
-                          ? "dark:bg-secondary-color bg-secondary-color dark:hover:border-transparent dark:text-zinc-800 text-white hover:border-transparent"
-                          : "dark:bg-primary-bg bg-zinc-50 dark:text-white text-zinc-800")
-                      }
-                      key={year}
-                      title={`View graph for the year ${year}`}
-                      onClick={() => {
-                        setCalendarYear(year);
-                        event("contribution_graph_year_changed", { year });
-                      }}
-                    >
-                      {year}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <GitHubCalendarClient
+              username="brignano"
+              initialYear={new Date().getFullYear()}
+              colorScheme="light"
+            />
           </div>
         </div>
+        <p className="text-sm dark:text-zinc-500 text-zinc-500 mt-4">
+          For more detailed information, see <Link href="/coding" className="underline text-primary-color">my coding activity</Link>.
+        </p>
       </section>
 
-      <div className="text-sm dark:text-zinc-500 text-zinc-500 mt-4">
-        For my full coding statistics, see <Link href="/coding" className="underline text-primary-color">my coding activity</Link>.
-      </div>
 
       {/* Contact CTA - Prominent Final Section */}
       <section
