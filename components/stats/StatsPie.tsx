@@ -70,10 +70,28 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
 
   const totalHours = chartData.reduce((s, d) => s + d.value, 0) || 1;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderActiveShape = (props: any) => {
-    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, payload } =
-      props;
+  const renderActiveShape = (props: unknown) => {
+    // Type guard to safely access props
+    if (!props || typeof props !== "object") return <g />;
+
+    const {
+      cx,
+      cy,
+      innerRadius,
+      outerRadius,
+      startAngle,
+      endAngle,
+      payload,
+    } = props as {
+      cx: number;
+      cy: number;
+      innerRadius: number;
+      outerRadius: number;
+      startAngle: number;
+      endAngle: number;
+      payload: { name: string };
+    };
+
     const idx = chartDataSecs.findIndex((d) => d.name === payload?.name);
     const color = COLORS[idx >= 0 ? idx % COLORS.length : 0];
 
