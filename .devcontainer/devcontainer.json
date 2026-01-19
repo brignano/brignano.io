@@ -62,7 +62,7 @@
   },
 
   // Use 'postCreateCommand' for additional setup after container is ready
-  "postCreateCommand": "npm run build || echo 'Build will be run on first deployment'",
+  "postCreateCommand": "npm install -g vercel@latest --no-audit || true && npm run build || echo 'Build will be run on first deployment'",
 
   // Use 'updateContentCommand' to update dependencies when container is rebuilt
   "updateContentCommand": "npm ci --prefer-offline --no-audit",

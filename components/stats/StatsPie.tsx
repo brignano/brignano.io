@@ -74,23 +74,16 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
     // Type guard to safely access props
     if (!props || typeof props !== "object") return <g />;
 
-    const {
-      cx,
-      cy,
-      innerRadius,
-      outerRadius,
-      startAngle,
-      endAngle,
-      payload,
-    } = props as {
-      cx: number;
-      cy: number;
-      innerRadius: number;
-      outerRadius: number;
-      startAngle: number;
-      endAngle: number;
-      payload: { name: string };
-    };
+    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, payload } =
+      props as {
+        cx: number;
+        cy: number;
+        innerRadius: number;
+        outerRadius: number;
+        startAngle: number;
+        endAngle: number;
+        payload: { name: string };
+      };
 
     const idx = chartDataSecs.findIndex((d) => d.name === payload?.name);
     const color = COLORS[idx >= 0 ? idx % COLORS.length : 0];

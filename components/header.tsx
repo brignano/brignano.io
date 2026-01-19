@@ -20,7 +20,7 @@ export default function Header() {
   const pathname = usePathname();
   const isResumePage = pathname === "/resume";
 
-  const pages: string[] = []; //['about', 'skills'];
+  const pages: string[] = ['home', 'resume', 'coding'];
 
   useEffect(() => {
     // Check localStorage first, then fallback to system preference
@@ -46,15 +46,14 @@ export default function Header() {
   };
 
   const handleShare = async () => {
-    const url =
-      typeof window !== "undefined" ? window.location.href : "/resume";
+    const url = window?.location.href ?? "/resume";
     try {
-      if (typeof navigator !== "undefined" && (navigator as any).share) {
+      if ((navigator as any)?.share) {
         await (navigator as any).share({
           title: "Anthony Brignano — Resume",
           url,
         });
-      } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+      } else if (navigator?.clipboard) {
         await navigator.clipboard.writeText(url);
         // small fallback feedback
         // eslint-disable-next-line no-alert
@@ -76,7 +75,7 @@ export default function Header() {
   }, [isDarkMode]);
 
   return (
-    <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 md:mb-28 mb-10">
+    <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 lg:mb-28 mb-10">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <Link href="/" className="cursor-pointer">
           <span className="sr-only">Anthony Brignano</span>
@@ -93,7 +92,7 @@ export default function Header() {
             {pages?.map((page) => (
               <li key={page}>
                 <Link
-                  href={`/${page}`}
+                  href={page === 'home' ? '/' : `/${page}`}
                   className="text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-primary-color text-base cursor-pointer"
                 >
                   {page.charAt(0).toUpperCase() + page.slice(1)}

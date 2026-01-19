@@ -14,8 +14,8 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 - **GitHub Calendar** visualization
 - **AOS** (Animate On Scroll) animations
 - **Resume Integration** at `/resume` path (now served directly from the application)
- - **Coding Activity** page with WakaTime tiles and a GitHub contribution calendar
- - **Scroll-to-top** button for long pages
+- **Coding Activity** page with WakaTime tiles and a GitHub contribution calendar
+- **Scroll-to-top** button for long pages
 
 ## 🛠️ Development
 
@@ -23,7 +23,6 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 
 - Node.js 20 or higher
 - npm or yarn
-
 
 ### Getting Started
 
@@ -40,17 +39,20 @@ This will automatically set up your development environment with all dependencie
 If you prefer to run locally without a Dev Container:
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/brignano/brignano.io.git
    cd brignano.io
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
 
 3. Run the development server:
+
    ```bash
    npm run dev
    ```
@@ -98,6 +100,7 @@ Deploy your own version with one click:
    - Click "Deploy"
 
 Vercel will automatically:
+
 - Build your Next.js application
 - Deploy to a global CDN
 - Provide automatic HTTPS
@@ -136,36 +139,43 @@ WAKATIME_API_KEY=your_wakatime_api_key_here
 
 Generating `.env.local` from Vercel CLI
 
-If you already have environment variables set up in the Vercel dashboard, you can pull them into a local `.env.local` file using the Vercel CLI:
+If you already have environment variables set up in the Vercel dashboard, you can pull them into a local `.env.local` file using the Vercel CLI. Follow these steps exactly:
 
-1. Install the Vercel CLI if you don't have it:
+1. Install the Vercel CLI (if needed):
 
 ```bash
 npm install -g vercel
 ```
 
-2. Login and link the project (follow prompts):
+2. Authenticate and link the local repo to the Vercel project (this is required so `env pull` knows which project to read from):
 
 ```bash
 vercel login
 vercel link
-# or run `vercel` and follow the interactive setup
+# or `vercel link --yes` to auto-confirm when you already know the project
 ```
 
-3. Pull environment variables into `.env.local`:
+3. Pull environment variables into `.env.local` from the linked Vercel project. Specify the environment if needed (production/preview/development):
 
 ```bash
-vercel env pull .env.local
+vercel env pull .env.local --environment=development
 ```
 
-This creates a `.env.local` file containing environment variables from the linked Vercel project. Be careful not to commit secrets — `.env.local` should remain in your local environment and is usually ignored by Git.
+Notes and troubleshooting:
 
-Alternatively, you can add variables from the CLI directly:
+- `vercel env add <NAME> <environment>` only sets a variable on Vercel (it will prompt for the value) — it does not automatically write to your local `.env.local` file.
+- `vercel env pull` reads variables from the currently linked Vercel project. If variables are missing after `env pull`, ensure your local repo is linked to the correct Vercel project (`vercel link`) and that you have permission to read that project's variables.
+- To re-check or re-link the project use `vercel link --yes` or run `vercel` and follow the interactive prompts.
+- If you prefer to add variables directly via CLI to Vercel (not local), you can run:
 
 ```bash
 vercel env add GA_MEASUREMENT_ID production
 vercel env add WAKATIME_API_KEY production
 ```
+
+After adding variables on Vercel, re-run `vercel env pull .env.local --environment=production` to fetch them into your local file.
+
+Be careful not to commit secrets — `.env.local` should remain local and is usually ignored by Git.
 
 Required variables for development:
 
@@ -214,6 +224,7 @@ Optional:
 ### Next.js Config
 
 The `next.config.ts` is configured for static exports:
+
 - `output: "export"` - Enables static HTML export
 - `images.unoptimized: true` - Disables server-side image optimization
 - `basePath: ""` - Set to your repository slug if deploying to a subdirectory
@@ -221,6 +232,7 @@ The `next.config.ts` is configured for static exports:
 ### Vercel Analytics
 
 Vercel Analytics and Speed Insights are already integrated via:
+
 - `@vercel/analytics`
 - `@vercel/speed-insights`
 

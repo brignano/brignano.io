@@ -1,0 +1,23 @@
+# Ignore artifacts
+node_modules
+.next
+out
+dist
+build
+coverage
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Generated files
+public/static
+**/*.min.js
+**/*.bundle.js
+
+# Mac / Editor
+.DS_Store
+.vscode
