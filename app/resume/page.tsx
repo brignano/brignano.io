@@ -69,7 +69,7 @@ export default function Home() {
 
   if (loading) {
     return (
-      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
         <div className="text-center">
           <p className="text-lg dark:text-zinc-400 text-zinc-600">
             Loading resume...
@@ -81,7 +81,7 @@ export default function Home() {
 
   if (error || !resumeData) {
     return (
-      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
         <div className="text-center">
           <p className="text-lg text-red-600 dark:text-red-400">
             {error || "Failed to load resume data"}

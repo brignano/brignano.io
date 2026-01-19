@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import GitHubCalendarClient from "@/components/GitHubCalendarClient";
+import GitHubCalendarClient from "@/components/github-calendar-client";
 import { socialLinks, highlights, projects } from "@/lib/constants";
 import AOS from "aos";
 import { event } from "@/lib/gtag";
@@ -396,16 +396,12 @@ export default function Home() {
         data-aos-once={true}
       >
         <div style={{ opacity: "1" }}>
-          <div className="mb-8">
+          <div className="mb-4">
             <h2 className="font-incognito text-4xl font-bold tracking-tight mb-4">
               Contribution Graph
             </h2>
             <p className="dark:text-zinc-400 text-zinc-600 max-w-2xl">
               GitHub contribution activity by year.
-            </p>
-            <p className="text-sm dark:text-zinc-500 text-zinc-500 italic">
-              Note: Private repository contributions may not appear, and the
-              graph reflects only public activity on this platform.
             </p>
           </div>
           <div style={{ opacity: "1", transform: "none" }}>
