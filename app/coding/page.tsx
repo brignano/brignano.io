@@ -75,11 +75,8 @@ export default async function Page() {
     const userResp = await safeFetch('/users/current')
     const allTimeResp = await safeFetch('/users/current/stats/all_time')
 
-    const end = new Date()
-
     const user = userResp?.data?.data ?? null
     const allTime = allTimeResp?.data?.data ?? null
-    const summaries: any[] = []
 
     // No premium endpoints used; summaries removed.
 
@@ -138,10 +135,6 @@ export default async function Page() {
     })()
 
     // summaries removed (premium). Day-of-week averages are not available without premium summaries.
-    const dayData: { day: string; avgSeconds: number }[] = []
-
-    // Hourly activity removed (depends on heartbeats)
-    const hourData: { hour: string; count: number }[] = []
 
     // Try to read a fallback total-lines value from the repository README (badge)
     const readmeLines = await fetchReadmeLines()
@@ -173,7 +166,7 @@ export default async function Page() {
 
               <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
               <div className="text-xs text-zinc-500">Total lines coded</div>
-              <div className="text-lg font-semibold">{totalLines > 0 ? totalLines.toLocaleString() : (readmeLines ?? '—')}</div>
+              <div className="text-lg font-semibold">{readmeLines ?? '—'}</div>
             </div>
 
                 <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">

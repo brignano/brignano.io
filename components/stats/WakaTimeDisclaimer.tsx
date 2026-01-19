@@ -8,8 +8,10 @@ export default function WakaTimeDisclaimer({ url }: { url?: string | null }) {
   const handleClick = () => {
     try {
       gtag.event('click_wakatime_profile', { category: 'outbound', label: href })
-    } catch (e) {
-      // noop
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to send WakaTime analytics event', error)
+      }
     }
   }
 
