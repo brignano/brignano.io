@@ -167,7 +167,7 @@ export default function Header() {
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <Link href="/" className="-m-1.5 p-1.5 cursor-pointer">
+            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="-m-1.5 p-1.5 cursor-pointer">
               <span className="sr-only">Anthony Brignano</span>
               <Image
                 alt="icon"
@@ -205,6 +205,7 @@ export default function Header() {
                     <Link
                       key={page}
                         href={page === "home" ? "/" : `/${page}`}
+                        onClick={() => setMobileMenuOpen(false)}
                         className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-white hover:text-zinc-900 dark:hover:text-primary-color dark:hover:bg-zinc-800 dark:text-white duration-300 cursor-pointer"
                       >
                         {label}
