@@ -79,7 +79,6 @@ export default async function Page() {
 
     const user = userResp?.data?.data ?? null
     const allTime = allTimeResp?.data?.data ?? null
-    const summaries: any[] = []
 
     // No premium endpoints used; summaries removed.
 
