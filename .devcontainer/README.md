@@ -59,16 +59,19 @@ When you first open the repository in the DevContainer:
 ### Working with Dependencies
 
 **Adding new dependencies:**
+
 ```bash
 npm install <package-name>
 ```
 
 **Updating dependencies:**
+
 ```bash
 npm update
 ```
 
 **Cleaning cache and reinstalling:**
+
 ```bash
 rm -rf node_modules
 npm ci
@@ -104,22 +107,26 @@ If you update the DevContainer configuration or need a fresh start:
 ## Troubleshooting
 
 ### Dependencies not installing
+
 ```bash
 # Manually install dependencies
 npm ci
 ```
 
 ### Build errors
+
 ```bash
 # Run build manually to see full error output
 npm run build
 ```
 
 ### Container performance issues
+
 - Ensure Docker Desktop has sufficient resources (4GB RAM minimum, 8GB recommended)
 - The node_modules volume mount should significantly improve performance
 
 ### Need to reset everything
+
 ```bash
 # Remove node_modules and reinstall
 rm -rf node_modules

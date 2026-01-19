@@ -23,7 +23,14 @@
         "Led rollout of next-generation CI/CD tooling and reduced developer-reported incidents",
         "Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity"
       ],
-      "technologies": ["GitHub Actions", "GitHub Enterprise", "Terraform", "AWS", "Harness", "Dynatrace"]
+      "technologies": [
+        "GitHub Actions",
+        "GitHub Enterprise",
+        "Terraform",
+        "AWS",
+        "Harness",
+        "Dynatrace"
+      ]
     },
     {
       "company": "The Hartford",
@@ -52,7 +59,14 @@
         "Consolidated 108 legacy applications into a single modern policy administration platform",
         "Established CI/CD, monitoring, and reliability standards for batch delivery"
       ],
-      "technologies": ["Jenkins", "uDeploy", ".NET", "Oracle", "Dynatrace", "Sumo Logic"]
+      "technologies": [
+        "Jenkins",
+        "uDeploy",
+        ".NET",
+        "Oracle",
+        "Dynatrace",
+        "Sumo Logic"
+      ]
     },
     {
       "company": "The Hartford",
@@ -111,7 +125,14 @@
   "skills": [
     {
       "category": "Cloud & Infrastructure",
-      "items": ["AWS", "GCP", "Terraform", "Docker", "Kubernetes", "CloudFormation"]
+      "items": [
+        "AWS",
+        "GCP",
+        "Terraform",
+        "Docker",
+        "Kubernetes",
+        "CloudFormation"
+      ]
     },
     {
       "category": "CI/CD & DevOps",
@@ -123,7 +144,13 @@
     },
     {
       "category": "Security & Compliance",
-      "items": ["SAST/DAST", "Secret Scanning", "Dependency Scanning", "Policy as Code", "OWASP"]
+      "items": [
+        "SAST/DAST",
+        "Secret Scanning",
+        "Dependency Scanning",
+        "Policy as Code",
+        "OWASP"
+      ]
     },
     {
       "category": "Observability",
@@ -145,14 +172,26 @@
     {
       "name": "brignano.io",
       "description": "Personal website and portfolio built with Next.js 16, React 19, and TailwindCSS 4, deployed on Vercel.",
-      "technologies": ["Next.js", "React", "TailwindCSS", "TypeScript", "Vercel"],
+      "technologies": [
+        "Next.js",
+        "React",
+        "TailwindCSS",
+        "TypeScript",
+        "Vercel"
+      ],
       "url": "https://brignano.io",
       "github": "https://github.com/brignano/brignano.io"
     },
     {
       "name": "GitHub Enterprise Cloud Migration",
       "description": "Architected and executed enterprise-scale CI/CD migration supporting 11,000+ repositories with governance, security scanning, and observability.",
-      "technologies": ["GitHub Actions", "Terraform", "AWS", "Python", "TypeScript"]
+      "technologies": [
+        "GitHub Actions",
+        "Terraform",
+        "AWS",
+        "Python",
+        "TypeScript"
+      ]
     }
   ]
 }

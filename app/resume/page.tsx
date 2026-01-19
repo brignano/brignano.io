@@ -17,7 +17,8 @@ export default function Home() {
   }, []);
 
   const handleShare = async () => {
-    const url = typeof window !== "undefined" ? window.location.href : "/resume";
+    const url =
+      typeof window !== "undefined" ? window.location.href : "/resume";
     try {
       if (navigator.share) {
         await navigator.share({ title: "Anthony Brignano — Resume", url });
@@ -31,7 +32,8 @@ export default function Home() {
   };
 
   const handleCopy = async () => {
-    const url = typeof window !== "undefined" ? window.location.href : "/resume";
+    const url =
+      typeof window !== "undefined" ? window.location.href : "/resume";
     try {
       await navigator.clipboard.writeText(url);
       alert("Link copied to clipboard");
@@ -89,7 +91,15 @@ export default function Home() {
     );
   }
 
-  const { personalInfo, summary, experience, education, skills, certifications, projects } = resumeData;
+  const {
+    personalInfo,
+    summary,
+    experience,
+    education,
+    skills,
+    certifications,
+    projects,
+  } = resumeData;
 
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
@@ -127,7 +137,11 @@ export default function Home() {
               rel="noopener noreferrer"
               className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
               onClick={() => {
-                event("website_clicked", { cta: "resume_website", origin: "resume", transport_type: "beacon" });
+                event("website_clicked", {
+                  cta: "resume_website",
+                  origin: "resume",
+                  transport_type: "beacon",
+                });
               }}
             >
               Website
@@ -159,7 +173,9 @@ export default function Home() {
       </section>
 
       {/* Social Media Links for print only (horizontal list) */}
-      {(personalInfo.website || personalInfo.linkedin || personalInfo.github) && (
+      {(personalInfo.website ||
+        personalInfo.linkedin ||
+        personalInfo.github) && (
         <section className="mb-16 hidden print:block print-no-top">
           <ul className="flex flex-wrap justify-start gap-6 list-none p-0 m-0 print:block print-link-row">
             {personalInfo.website && (
@@ -189,9 +205,7 @@ export default function Home() {
         data-aos-once={true}
         className="mb-16"
       >
-        <h2 className="text-3xl mb-6 font-bold tracking-tight">
-          Summary
-        </h2>
+        <h2 className="text-3xl mb-6 font-bold tracking-tight">Summary</h2>
         <p className="text-base dark:text-zinc-400 text-zinc-600 max-w-3xl">
           {summary}
         </p>
@@ -205,9 +219,7 @@ export default function Home() {
           data-aos-duration={1000}
           data-aos-once={true}
         >
-          <h2 className="text-3xl mb-8 font-bold tracking-tight">
-            Experience
-          </h2>
+          <h2 className="text-3xl mb-8 font-bold tracking-tight">Experience</h2>
           <div className="space-y-10">
             {experience.map((job, index) => (
               <div
@@ -277,9 +289,7 @@ export default function Home() {
           data-aos-duration={1000}
           data-aos-once={true}
         >
-          <h2 className="text-3xl mb-8 font-bold tracking-tight">
-            Education
-          </h2>
+          <h2 className="text-3xl mb-8 font-bold tracking-tight">Education</h2>
           <div className="space-y-6">
             {education.map((edu, index) => (
               <div
@@ -328,12 +338,16 @@ export default function Home() {
           data-aos-duration={1000}
           data-aos-once={true}
         >
-          <h2 className="text-3xl mb-8 font-bold tracking-tight">
-            Skills
-          </h2>
+          <h2 className="text-3xl mb-8 font-bold tracking-tight">Skills</h2>
           <div
             className="grid md:grid-cols-2 grid-cols-1 gap-6 print-skills-grid"
-            style={{ ["--print-cols" as any]: String(Math.max(1, Math.min(4, skills.length))) } as React.CSSProperties}
+            style={
+              {
+                ["--print-cols" as any]: String(
+                  Math.max(1, Math.min(4, skills.length))
+                ),
+              } as React.CSSProperties
+            }
           >
             {skills.map((skillGroup, index) => (
               <div
@@ -367,9 +381,7 @@ export default function Home() {
           data-aos-duration={1000}
           data-aos-once={true}
         >
-          <h2 className="text-3xl mb-8 font-bold tracking-tight">
-            Projects
-          </h2>
+          <h2 className="text-3xl mb-8 font-bold tracking-tight">Projects</h2>
           <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 print-projects-grid">
             {projects.map((project, index) => (
               <div
@@ -438,7 +450,9 @@ export default function Home() {
                 className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
               >
                 <h3 className="text-lg font-semibold">{cert.name}</h3>
-                <p className="dark:text-zinc-400 text-zinc-600">{cert.issuer}</p>
+                <p className="dark:text-zinc-400 text-zinc-600">
+                  {cert.issuer}
+                </p>
                 {cert.date && (
                   <p className="text-sm dark:text-zinc-400 text-zinc-600 mt-2">
                     Issued: {cert.date}

@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "PKief.material-icon-theme",
+    "GitHub.vscode-pull-request-github"
+  ]
+}
