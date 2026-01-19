@@ -137,7 +137,6 @@ export default async function Page() {
     })()
 
     // summaries removed (premium). Day-of-week averages are not available without premium summaries.
-    const dayData: { day: string; avgSeconds: number }[] = []
 
     // Try to read a fallback total-lines value from the repository README (badge)
     const readmeLines = await fetchReadmeLines()
