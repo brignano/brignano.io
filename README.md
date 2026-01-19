@@ -141,9 +141,9 @@ vercel env pull .env.local --environment=production
 ```
 
 Notes:
+
 - `vercel env add <NAME> production` adds a variable to the Vercel project; run `vercel env pull` afterwards to fetch it locally.
 - For CI, set env vars in the Vercel dashboard or use the Vercel Git integration.
-
 
 ## 🏗️ Infrastructure
 

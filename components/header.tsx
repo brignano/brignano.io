@@ -102,7 +102,8 @@ export default function Header() {
         setAnimateSidenav(true);
         // save focus and move to first focusable element in the panel
         try {
-          previousActiveElement.current = document.activeElement as HTMLElement | null;
+          previousActiveElement.current =
+            document.activeElement as HTMLElement | null;
           const first = panelRef.current?.querySelector<HTMLElement>(
             'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
           );
@@ -142,7 +143,9 @@ export default function Header() {
 
   return (
     <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 lg:mb-28 mb-10">
-      <div className={`max-w-6xl mx-auto flex items-center justify-between relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}>
+      <div
+        className={`max-w-6xl mx-auto flex items-center justify-between relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}
+      >
         <Link href="/" className="cursor-pointer">
           <span className="sr-only">Anthony Brignano</span>
           <Image
@@ -161,16 +164,19 @@ export default function Header() {
               return (
                 <li key={page}>
                   {isActive ? (
-                    <span className="text-zinc-400 dark:text-zinc-500 text-base cursor-default" aria-current="page">
+                    <span
+                      className="text-zinc-400 dark:text-zinc-500 text-base cursor-default"
+                      aria-current="page"
+                    >
                       {label}
                     </span>
                   ) : (
-                      <Link
-                        href={page === "home" ? "/" : `/${page}`}
-                        className="text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-white text-base cursor-pointer"
-                      >
-                        {label}
-                      </Link>
+                    <Link
+                      href={page === "home" ? "/" : `/${page}`}
+                      className="text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-white text-base cursor-pointer"
+                    >
+                      {label}
+                    </Link>
                   )}
                 </li>
               );
@@ -223,11 +229,21 @@ export default function Header() {
         </div>
       </div>
       {mobileMenuOpen && (
-        <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-          <div className={`fixed inset-0 z-10 bg-black/20 transition-opacity duration-300 ${animateSidenav ? "opacity-100" : "opacity-0 pointer-events-none"}`} />
+        <Dialog
+          as="div"
+          className="lg:hidden"
+          open={mobileMenuOpen}
+          onClose={setMobileMenuOpen}
+        >
+          <div
+            className={`fixed inset-0 z-10 bg-black/20 transition-opacity duration-300 ${animateSidenav ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+          />
 
           <div className="fixed inset-x-0 bottom-0 z-20 w-full sm:inset-auto sm:right-0 sm:w-full sm:max-w-sm">
-            <DialogPanel ref={panelRef} className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:ring-1 sm:ring-gray-900/10 transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}>
+            <DialogPanel
+              ref={panelRef}
+              className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:ring-1 sm:ring-gray-900/10 transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
+            >
               <div className="flex items-center justify-between">
                 <button
                   aria-label="Close menu"
@@ -244,13 +260,23 @@ export default function Header() {
                   <div className="space-y-6 w-full py-6 flex flex-col items-center">
                     {pages?.map((page) => {
                       const isActive = currentPage === page;
-                      const label = page.charAt(0).toUpperCase() + page.slice(1);
+                      const label =
+                        page.charAt(0).toUpperCase() + page.slice(1);
                       return isActive ? (
-                        <div key={page} className="w-full text-center text-base font-medium text-zinc-400 dark:text-zinc-500 cursor-default" aria-current="page">
+                        <div
+                          key={page}
+                          className="w-full text-center text-base font-medium text-zinc-400 dark:text-zinc-500 cursor-default"
+                          aria-current="page"
+                        >
                           {label}
                         </div>
                       ) : (
-                        <Link key={page} href={page === "home" ? "/" : `/${page}`} onClick={() => setMobileMenuOpen(false)} className="w-full text-center px-3 py-2 text-base font-medium text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-white cursor-pointer">
+                        <Link
+                          key={page}
+                          href={page === "home" ? "/" : `/${page}`}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="w-full text-center px-3 py-2 text-base font-medium text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-white cursor-pointer"
+                        >
                           {label}
                         </Link>
                       );
