@@ -34,10 +34,10 @@ export default function Home() {
               </p>
 
               {/* Primary CTAs */}
-              <div className="flex gap-4 mb-10 items-center flex-nowrap overflow-x-auto">
+              <div className="flex flex-wrap md:flex-nowrap gap-4 mb-10 items-center">
                 <a
                   href="mailto:hi@brignano.io"
-                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 flex-shrink-0"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", { cta: "contact", location: "hero", transport_type: "beacon" });
                   }}
@@ -59,7 +59,7 @@ export default function Home() {
                 </a>
                 <Link
                   href="/resume"
-                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 flex-shrink-0"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", { cta: "resume", location: "hero", transport_type: "beacon" });
                   }}
@@ -80,8 +80,8 @@ export default function Home() {
                   </svg>
                 </Link>
                 <Link
-                  href="/stats"
-                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 flex-shrink-0"
+                  href="/coding"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", { cta: "coding_activity", location: "hero", transport_type: "beacon" });
                   }}
@@ -405,7 +405,7 @@ export default function Home() {
       </section>
 
       <div className="text-sm dark:text-zinc-500 text-zinc-500 mt-4">
-        For my full coding statistics, see <Link href="/stats" className="underline text-primary-color">my coding stats</Link>.
+        For my full coding statistics, see <Link href="/coding" className="underline text-primary-color">my coding activity</Link>.
       </div>
 
       {/* Contact CTA - Prominent Final Section */}

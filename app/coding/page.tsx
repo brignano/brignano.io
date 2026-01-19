@@ -1,4 +1,3 @@
-
 const WAKATIME_API_BASE = 'https://wakatime.com/api/v1'
 
 import StatsPie from '../../components/stats/StatsPie'
@@ -157,7 +156,7 @@ export default async function Page() {
       <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
         <div className="max-w-6xl mx-auto">
           <h1 className="font-incognito text-4xl font-bold tracking-tight">
-            My Coding Stats
+            Coding Activity
           </h1>
           <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400 italic pl-1">... {rangeText ?? '—'}</div>
 
@@ -205,7 +204,7 @@ export default async function Page() {
   } catch (err: any) {
     return (
       <main className="max-w-4xl mx-auto px-6 pt-0 pb-12">
-        <h1 className="prose">My Coding Statistics</h1>
+        <h1 className="prose">Coding Activity</h1>
         <p>Error loading coding statistics: {err?.message ?? String(err)}</p>
         <p>Ensure `WAKATIME_API_KEY` is set in your environment.</p>
       </main>
