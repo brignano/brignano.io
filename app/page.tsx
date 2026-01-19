@@ -64,7 +64,7 @@ export default function Home() {
                     event("cta_clicked", { cta: "resume", location: "hero", transport_type: "beacon" });
                   }}
                 >
-                  My Resume
+                  View Resume
                   <svg
                     className="ml-2 w-4 h-4"
                     fill="none"
@@ -380,6 +380,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <div className="max-w-2xl text-sm dark:text-zinc-400 text-zinc-600 mt-4">
+        For my full coding statistics, see <Link href="/stats" className="underline text-primary-color">my coding stats</Link>.
+      </div>
 
       {/* Contact CTA - Prominent Final Section */}
       <section

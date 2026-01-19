@@ -2,6 +2,34 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Chart color variables (light theme) */
+:root {
+  --chart-1: #4f46e5;
+  --chart-2: #ef4444;
+  --chart-3: #10b981;
+  --chart-4: #f59e0b;
+  --chart-5: #06b6d4;
+  --chart-6: #a78bfa;
+  --chart-7: #f97316;
+  --chart-8: #ef9aa3;
+  --chart-9: #60a5fa;
+  --chart-10: #34d399;
+}
+
+/* Dark theme overrides for chart variables */
+.dark {
+  --chart-1: #8b5cf6;
+  --chart-2: #fb7185;
+  --chart-3: #34d399;
+  --chart-4: #fbbf24;
+  --chart-5: #2dd4bf;
+  --chart-6: #c4b5fd;
+  --chart-7: #fb923c;
+  --chart-8: #fca5a5;
+  --chart-9: #60a5fa;
+  --chart-10: #86efac;
+}
+
 @keyframes wave {
   0% {
     transform: rotate(0deg);
