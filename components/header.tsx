@@ -205,10 +205,6 @@ export default function Header() {
           <div className="fixed inset-x-0 bottom-0 z-20 w-full sm:inset-auto sm:right-0 sm:w-full sm:max-w-sm">
             <DialogPanel ref={panelRef} className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:ring-1 sm:ring-gray-900/10 transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}>
               <div className="flex items-center justify-between">
-                {/* <Link href="/" onClick={() => setMobileMenuOpen(false)} className="-m-1.5 p-1.5 cursor-pointer">
-                  <span className="sr-only">Anthony Brignano</span>
-                  <Image alt="icon" src={isDarkMode ? "favicon-dark.svg" : "favicon.svg"} className="h-8 w-auto" width={35} height={35} />
-                </Link> */}
                 <button
                   aria-label="Close menu"
                   type="button"
