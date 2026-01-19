@@ -6,9 +6,9 @@ import type {
   WakaTimeUser,
   StatsData,
 } from "@/types/wakatime";
-import StatsPie from "../../components/stats/StatsPie";
-import WakaTimeDisclaimer from "../../components/stats/WakaTimeDisclaimer";
-import GitHubCalendarClient from "../../components/GitHubCalendarClient";
+import StatsPie from "../../components/stats/stats-pie";
+import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
+import GitHubCalendarClient from "../../components/github-calendar-client";
 
 async function fetchWaka(path: string) {
   const apiKey = process.env.WAKATIME_API_KEY;
