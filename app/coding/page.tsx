@@ -75,8 +75,6 @@ export default async function Page() {
     const userResp = await safeFetch('/users/current')
     const allTimeResp = await safeFetch('/users/current/stats/all_time')
 
-    const end = new Date()
-
     const user = userResp?.data?.data ?? null
     const allTime = allTimeResp?.data?.data ?? null
 
