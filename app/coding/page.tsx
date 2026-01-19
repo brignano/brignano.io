@@ -212,6 +212,7 @@ export default async function Page() {
               buttonSize="large"
               title="Contribution Graph"
               description={"GitHub contribution activity by year."}
+              showDisclaimer={true}
             />
           </div>
 

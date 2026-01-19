@@ -11,6 +11,7 @@ interface GitHubCalendarClientProps {
   title?: string;
   description?: string;
   buttonSize?: "small" | "large";
+  showDisclaimer?: boolean;
 }
 
 export default function GitHubCalendarClient({
@@ -20,6 +21,7 @@ export default function GitHubCalendarClient({
   title,
   description,
   buttonSize = "small",
+  showDisclaimer = false,
 }: GitHubCalendarClientProps) {
   const [year, setYear] = useState<number | string>(initialYear);
 
@@ -33,7 +35,8 @@ export default function GitHubCalendarClient({
   };
 
   return (
-    <div className="flex xl:flex-row flex-col gap-4 items-center">
+    <>
+      <div className="flex xl:flex-row flex-col gap-4 items-center">
       <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 sm:p-8 rounded-lg w-full overflow-hidden">
         {title && (
           <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">
@@ -81,6 +84,22 @@ export default function GitHubCalendarClient({
           )
         )}
       </div>
-    </div>
+      </div>
+
+      {showDisclaimer && (
+        <div className="w-full mt-3 text-sm text-zinc-600 dark:text-zinc-400">
+          View more information on{' '}
+          <a
+            href="https://github.com/brignano"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            GitHub
+          </a>
+          .
+        </div>
+      )}
+    </>
   );
 }
