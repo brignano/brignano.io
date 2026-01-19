@@ -19,8 +19,13 @@ export default function Header() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const pathname = usePathname();
   const isResumePage = pathname === "/resume";
+  const currentPage = (() => {
+    if (!pathname || pathname === "/") return "home";
+    const seg = pathname.split("/")[1];
+    return seg || "home";
+  })();
 
-  const pages: string[] = []; // ['home', 'resume', 'coding'];
+  const pages: string[] = ['home', 'resume', 'coding'];
 
   useEffect(() => {
     // Check localStorage first, then fallback to system preference
@@ -76,7 +81,7 @@ export default function Header() {
 
   return (
     <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 lg:mb-28 mb-10">
-      <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <div className="max-w-6xl mx-auto flex items-center justify-between relative">
         <Link href="/" className="cursor-pointer">
           <span className="sr-only">Anthony Brignano</span>
           <Image
@@ -87,18 +92,28 @@ export default function Header() {
             height={35}
           />
         </Link>
-        <nav className="md:block hidden">
+        <nav className="hidden md:block md:absolute md:left-1/2 md:-translate-x-1/2 md:transform">
           <ul className="flex items-center gap-x-8">
-            {pages?.map((page) => (
-              <li key={page}>
-                <Link
-                  href={page === 'home' ? '/' : `/${page}`}
-                  className="text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-primary-color text-base cursor-pointer"
-                >
-                  {page.charAt(0).toUpperCase() + page.slice(1)}
-                </Link>
-              </li>
-            ))}
+            {pages?.map((page) => {
+              const isActive = currentPage === page;
+              const label = page.charAt(0).toUpperCase() + page.slice(1);
+              return (
+                <li key={page}>
+                  {isActive ? (
+                    <span className="text-zinc-400 dark:text-zinc-500 text-base cursor-default" aria-current="page">
+                      {label}
+                    </span>
+                  ) : (
+                      <Link
+                        href={page === "home" ? "/" : `/${page}`}
+                        className="text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-primary-color text-base cursor-pointer"
+                      >
+                        {label}
+                      </Link>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </nav>
         <div className="flex items-center gap-x-4">
@@ -156,7 +171,7 @@ export default function Header() {
               <span className="sr-only">Anthony Brignano</span>
               <Image
                 alt="icon"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
+                src={isDarkMode ? "favicon-dark.svg" : "favicon.svg"}
                 className="h-8 w-auto"
                 width={35}
                 height={35}
@@ -175,15 +190,27 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {pages?.map((page) => (
-                  <Link
-                    key={page}
-                    href={`/${page}`}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-white hover:text-zinc-900 dark:hover:text-primary-color dark:hover:bg-zinc-800 dark:text-white duration-300 cursor-pointer"
-                  >
-                    {page.charAt(0).toUpperCase() + page.slice(1)}
-                  </Link>
-                ))}
+                {pages?.map((page) => {
+                  const isActive = currentPage === page;
+                  const label = page.charAt(0).toUpperCase() + page.slice(1);
+                  return isActive ? (
+                    <div
+                      key={page}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-zinc-400 dark:text-zinc-500 cursor-default"
+                      aria-current="page"
+                    >
+                      {label}
+                    </div>
+                  ) : (
+                    <Link
+                      key={page}
+                        href={page === "home" ? "/" : `/${page}`}
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-white hover:text-zinc-900 dark:hover:text-primary-color dark:hover:bg-zinc-800 dark:text-white duration-300 cursor-pointer"
+                      >
+                        {label}
+                      </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
