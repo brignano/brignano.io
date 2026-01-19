@@ -57,6 +57,30 @@ export default function GitHubCalendarClient({
             />
           </div>
         </div>
+          {showDisclaimer && (
+            <div className="w-full mt-3 text-sm text-zinc-500 dark:text-zinc-500">
+              View more information on{' '}
+              <a
+                href="https://github.com/brignano"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline"
+                onClick={() => {
+                  try {
+                    event("click_github_disclaimer", {
+                      category: "outbound",
+                      label: "https://github.com/brignano",
+                    });
+                  } catch (e) {
+                    // noop
+                  }
+                }}
+              >
+                GitHub
+              </a>
+              .
+            </div>
+          )}
       </div>
 
       <div className="flex justify-center xl:justify-start xl:flex-col flex-row flex-wrap gap-2">
@@ -85,21 +109,6 @@ export default function GitHubCalendarClient({
         )}
       </div>
       </div>
-
-      {showDisclaimer && (
-        <div className="w-full mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-          View more information on{' '}
-          <a
-            href="https://github.com/brignano"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            GitHub
-          </a>
-          .
-        </div>
-      )}
     </>
   );
 }
