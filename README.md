@@ -107,6 +107,44 @@ Vercel will automatically:
 - Set up preview deployments for pull requests
 - Enable Vercel Analytics and Speed Insights (already configured)
 
+### Deploying with Vercel CLI
+
+Use the Vercel CLI to deploy from your machine or CI. Commands vary slightly by CLI version — prefer `npx vercel` if you don't want a global install.
+
+1. Authenticate and link the repo:
+
+```bash
+vercel login
+vercel link       # or `vercel link --yes` to auto-confirm
+```
+
+2. Deploy:
+
+```bash
+# interactive preview deploy
+vercel
+
+# production deploy (non-interactive)
+vercel --prod --confirm
+# or with npx
+npx vercel --prod --confirm
+```
+
+3. Fetch environment variables locally (when needed):
+
+```bash
+# older CLI: positional
+vercel env pull .env.local production
+
+# newer CLI: long option
+vercel env pull .env.local --environment=production
+```
+
+Notes:
+- `vercel env add <NAME> production` adds a variable to the Vercel project; run `vercel env pull` afterwards to fetch it locally.
+- For CI, set env vars in the Vercel dashboard or use the Vercel Git integration.
+
+
 ## 🏗️ Infrastructure
 
 Infrastructure-as-code (IaC) for this site is maintained in a separate repository:
