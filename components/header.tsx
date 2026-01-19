@@ -21,6 +21,10 @@ export default function Header() {
   const [animateSidenav, setAnimateSidenav] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
+  const [showResumeIcons, setShowResumeIcons] = useState(false);
+  const [resumeIconsAnimatingOut, setResumeIconsAnimatingOut] = useState(false);
+  const RESUME_ICON_ANIM_MS = 300;
+  const [resumeIconsVisible, setResumeIconsVisible] = useState(false);
   const pathname = usePathname();
   const isResumePage = pathname === "/resume";
   const currentPage = (() => {
@@ -118,6 +122,24 @@ export default function Header() {
     }
   }, [mobileMenuOpen]);
 
+  useEffect(() => {
+    if (isResumePage) {
+      setResumeIconsAnimatingOut(false);
+      setShowResumeIcons(true);
+      setResumeIconsVisible(false);
+      requestAnimationFrame(() => setResumeIconsVisible(true));
+    } else if (showResumeIcons) {
+      // animate out, then unmount
+      setResumeIconsAnimatingOut(true);
+      setResumeIconsVisible(false);
+      const t = setTimeout(() => {
+        setShowResumeIcons(false);
+        setResumeIconsAnimatingOut(false);
+      }, RESUME_ICON_ANIM_MS);
+      return () => clearTimeout(t);
+    }
+  }, [isResumePage]);
+
   return (
     <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 lg:mb-28 mb-10">
       <div className={`max-w-6xl mx-auto flex items-center justify-between relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}>
@@ -156,23 +178,25 @@ export default function Header() {
           </ul>
         </nav>
         <div className="flex items-center gap-x-4">
-          {isResumePage && (
-            <button
-              aria-label="Share Resume"
-              onClick={handleShare}
-              className="print:hidden dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform transform hover:scale-105 hover:shadow-sm hover:bg-zinc-200 dark:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary-color/20"
-            >
-              <ShareIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300" />
-            </button>
-          )}
-          {isResumePage && (
-            <button
-              aria-label="Download PDF"
-              onClick={handleDownloadPDF}
-              className="dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform transform hover:scale-105 hover:shadow-sm hover:bg-zinc-200 dark:hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-primary-color/20"
-            >
-              <ArrowDownTrayIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300" />
-            </button>
+          {showResumeIcons && (
+            <>
+              <button
+                aria-label="Share Resume"
+                onClick={handleShare}
+                aria-hidden={!isResumePage}
+                className={`group print:hidden dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition transform duration-300 ease-out ${resumeIconsVisible && !resumeIconsAnimatingOut ? "translate-y-0 opacity-100 scale-100 cursor-pointer" : "translate-y-1 opacity-0 scale-95 pointer-events-none"}`}
+              >
+                <ShareIcon className="h-5 w-5 transition-colors duration-200 text-blue-600 dark:text-blue-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300" />
+              </button>
+              <button
+                aria-label="Download PDF"
+                onClick={handleDownloadPDF}
+                aria-hidden={!resumeIconsVisible}
+                className={`group dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition transform duration-300 ease-out ${resumeIconsVisible && !resumeIconsAnimatingOut ? "translate-y-0 opacity-100 scale-100 cursor-pointer" : "translate-y-1 opacity-0 scale-95 pointer-events-none"}`}
+              >
+                <ArrowDownTrayIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300 group-hover:text-[rgb(33,110,57)] dark:group-hover:text-zinc-300" />
+              </button>
+            </>
           )}
           <button
             aria-label="Toggle Theme"
