@@ -137,7 +137,7 @@ export default function Header() {
           </button>
           {pages.length > 0 && (
             <button
-              araia-label="Toggle Menu"
+              aria-label="Toggle Menu"
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               className="md:hidden dark:focus:text-primary-color dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-md p-2 hover:text-zinc-900 duration-300 cursor-pointer"

@@ -11,7 +11,7 @@ function GoogleAnalyticsInner() {
   useEffect(() => {
     if (pathname) {
       const search = searchParams?.toString();
-      const url = pathname + (search ? `?${search}` : '');
+      const url = pathname + (search ? `?${search}` : "");
       gtag.pageview(url);
     }
   }, [pathname, searchParams]);

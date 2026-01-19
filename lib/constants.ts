@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import {
   GitHubIcon,
   LinkedinIcon,
-  WakaTimeIcon
+  WakaTimeIcon,
 } from "./social-icons";
+
+export interface SocialLink {
+  name: string;
+  href: string;
+  icon: ReactNode;
+}
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL("https://brignano.io"),
@@ -56,14 +63,14 @@ export const siteMetadata: Metadata = {
   },
 };
 
-export const socialLinks = [
+export const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
     href: "https://www.github.com/brignano",
     icon: GitHubIcon,
   },
   {
-    name: "Linkedin",
+    name: "LinkedIn",
     href: "https://www.linkedin.com/in/brignano",
     icon: LinkedinIcon,
   },
