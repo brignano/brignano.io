@@ -24,6 +24,8 @@ const silkscreen = Silkscreen({
 
 export const metadata = siteMetadata;
 
+const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -56,16 +58,18 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Google Analytics */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        />
-        <Script
-          id="gtag-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
+        {/* Google Analytics (only in production) */}
+        {isProduction && GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="gtag-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
@@ -74,8 +78,10 @@ export default function RootLayout({
                 cookie_domain: 'auto'
               });
             `,
-          }}
-        />
+              }}
+            />
+          </>
+        )}
         <Header />
         {children}
         <Footer />
