@@ -20,7 +20,7 @@ export default function Header() {
   const pathname = usePathname();
   const isResumePage = pathname === "/resume";
 
-  const pages: string[] = ['home', 'resume', 'coding'];
+  const pages: string[] = []; // ['home', 'resume', 'coding'];
 
   useEffect(() => {
     // Check localStorage first, then fallback to system preference
