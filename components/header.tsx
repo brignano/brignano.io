@@ -25,7 +25,7 @@ export default function Header() {
     return seg || "home";
   })();
 
-  const pages: string[] = ['home', 'resume', 'coding'];
+  const pages: string[] = ["home", "resume", "coding"];
 
   useEffect(() => {
     // Check localStorage first, then fallback to system preference
@@ -76,7 +76,9 @@ export default function Header() {
   };
 
   useEffect(() => {
-    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+    }
   }, [isDarkMode]);
 
   return (
@@ -106,7 +108,7 @@ export default function Header() {
                   ) : (
                       <Link
                         href={page === "home" ? "/" : `/${page}`}
-                        className="text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-primary-color text-base cursor-pointer"
+                        className="text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-white text-base cursor-pointer"
                       >
                         {label}
                       </Link>
@@ -159,64 +161,45 @@ export default function Header() {
           )}
         </div>
       </div>
-      <Dialog
-        open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
-        className="lg:hidden"
-      >
-        <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <Link href="/" onClick={() => setMobileMenuOpen(false)} className="-m-1.5 p-1.5 cursor-pointer">
-              <span className="sr-only">Anthony Brignano</span>
-              <Image
-                alt="icon"
-                src={isDarkMode ? "favicon-dark.svg" : "favicon.svg"}
-                className="h-8 w-auto"
-                width={35}
-                height={35}
-              />
-            </Link>
-            <button
-              aria-label="Close menu"
-              type="button"
-              onClick={() => setMobileMenuOpen(false)}
-              className="dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 hover:text-zinc-900"
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="size-5" />
-            </button>
-          </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                {pages?.map((page) => {
-                  const isActive = currentPage === page;
-                  const label = page.charAt(0).toUpperCase() + page.slice(1);
-                  return isActive ? (
-                    <div
-                      key={page}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-zinc-400 dark:text-zinc-500 cursor-default"
-                      aria-current="page"
-                    >
-                      {label}
-                    </div>
-                  ) : (
-                    <Link
-                      key={page}
-                        href={page === "home" ? "/" : `/${page}`}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold hover:bg-white hover:text-zinc-900 dark:hover:text-primary-color dark:hover:bg-zinc-800 dark:text-white duration-300 cursor-pointer"
-                      >
-                        {label}
-                      </Link>
-                  );
-                })}
+      {mobileMenuOpen && (
+        <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
+          <div className="fixed inset-0 z-10 bg-black/20" />
+
+          <div className="fixed inset-y-0 right-0 z-20 w-full sm:max-w-sm">
+            <DialogPanel className="h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:ring-1 sm:ring-gray-900/10">
+              <div className="flex items-center justify-between">
+                <Link href="/" onClick={() => setMobileMenuOpen(false)} className="-m-1.5 p-1.5 cursor-pointer">
+                  <span className="sr-only">Anthony Brignano</span>
+                  <Image alt="icon" src={isDarkMode ? "favicon-dark.svg" : "favicon.svg"} className="h-8 w-auto" width={35} height={35} />
+                </Link>
+                <button aria-label="Close menu" type="button" onClick={() => setMobileMenuOpen(false)} className="dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 hover:text-zinc-900">
+                  <span className="sr-only">Close menu</span>
+                  <XMarkIcon aria-hidden="true" className="size-5" />
+                </button>
               </div>
-            </div>
+              <div className="mt-6 flow-root flex-grow flex items-center">
+                <div className="-my-6 divide-y divide-gray-500/10 w-full">
+                  <div className="space-y-6 w-full py-6 flex flex-col items-center">
+                    {pages?.map((page) => {
+                      const isActive = currentPage === page;
+                      const label = page.charAt(0).toUpperCase() + page.slice(1);
+                      return isActive ? (
+                        <div key={page} className="w-full text-center text-base font-medium text-zinc-400 dark:text-zinc-500 cursor-default" aria-current="page">
+                          {label}
+                        </div>
+                      ) : (
+                        <Link key={page} href={page === "home" ? "/" : `/${page}`} onClick={() => setMobileMenuOpen(false)} className="w-full text-center px-3 py-2 text-base font-medium text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-white cursor-pointer">
+                          {label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </DialogPanel>
           </div>
-        </DialogPanel>
-      </Dialog>
+        </Dialog>
+      )}
     </header>
   );
 }
