@@ -88,7 +88,7 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
               return (
                 <li
                   key={`${d.name}-${idx}`}
-                      className={`flex items-center transition-opacity max-w-75 ${dim ? 'opacity-60' : 'opacity-100'} cursor-pointer`}
+                      className={`flex items-center transition-opacity max-w-sm ${dim ? 'opacity-60' : 'opacity-100'} cursor-pointer`}
                       onMouseDown={(e) => e.preventDefault()}
                   onMouseEnter={() => setActiveIndex(idx)}
                   onMouseLeave={() => setActiveIndex(null)}
@@ -96,14 +96,8 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
                 >
                   <div className="flex items-center gap-2 flex-1 min-w-0">
                     <span
-                      className="inline-block"
-                      style={{
-                        width: isActive ? 14 : 12,
-                        height: isActive ? 14 : 12,
-                        background: COLORS[idx % COLORS.length],
-                        borderRadius: 3,
-                        transition: 'all .12s ease-in-out',
-                      }}
+                      className={`inline-block rounded-sm transition-all duration-100 ${isActive ? 'w-[14px] h-[14px]' : 'w-3 h-3'}`}
+                      style={{ background: COLORS[idx % COLORS.length] }}
                     />
                     <span className={`text-sm ${isActive ? 'font-semibold' : 'font-medium'} truncate text-left`}>{d.name}</span>
                   </div>
