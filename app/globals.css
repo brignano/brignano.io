@@ -48,6 +48,15 @@
   }
 }
 
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 .text-primary-color {
   color: rgb(33, 110, 57);
   .dark & {

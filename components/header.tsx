@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Dialog, DialogPanel } from "@headlessui/react";
@@ -17,6 +17,10 @@ import Link from "next/link";
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [animateHeader, setAnimateHeader] = useState(false);
+  const [animateSidenav, setAnimateSidenav] = useState(false);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
   const pathname = usePathname();
   const isResumePage = pathname === "/resume";
   const currentPage = (() => {
@@ -81,9 +85,42 @@ export default function Header() {
     }
   }, [isDarkMode]);
 
+  useEffect(() => {
+    // run header drop animation on mount
+    requestAnimationFrame(() => setAnimateHeader(true));
+  }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      // reset then trigger so CSS transition runs on open
+      setAnimateSidenav(false);
+      requestAnimationFrame(() => {
+        setAnimateSidenav(true);
+        // save focus and move to first focusable element in the panel
+        try {
+          previousActiveElement.current = document.activeElement as HTMLElement | null;
+          const first = panelRef.current?.querySelector<HTMLElement>(
+            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          );
+          first?.focus();
+        } catch (e) {
+          // ignore focus errors
+        }
+      });
+    } else {
+      setAnimateSidenav(false);
+      // restore focus when closing
+      try {
+        previousActiveElement.current?.focus?.();
+      } catch (e) {
+        // ignore
+      }
+    }
+  }, [mobileMenuOpen]);
+
   return (
     <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 lg:mb-28 mb-10">
-      <div className="max-w-6xl mx-auto flex items-center justify-between relative">
+      <div className={`max-w-6xl mx-auto flex items-center justify-between relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}>
         <Link href="/" className="cursor-pointer">
           <span className="sr-only">Anthony Brignano</span>
           <Image
@@ -163,16 +200,21 @@ export default function Header() {
       </div>
       {mobileMenuOpen && (
         <Dialog as="div" className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-          <div className="fixed inset-0 z-10 bg-black/20" />
+          <div className={`fixed inset-0 z-10 bg-black/20 transition-opacity duration-300 ${animateSidenav ? "opacity-100" : "opacity-0 pointer-events-none"}`} />
 
-          <div className="fixed inset-y-0 right-0 z-20 w-full sm:max-w-sm">
-            <DialogPanel className="h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:ring-1 sm:ring-gray-900/10">
+          <div className="fixed inset-x-0 bottom-0 z-20 w-full sm:inset-auto sm:right-0 sm:w-full sm:max-w-sm">
+            <DialogPanel ref={panelRef} className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:ring-1 sm:ring-gray-900/10 transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}>
               <div className="flex items-center justify-between">
-                <Link href="/" onClick={() => setMobileMenuOpen(false)} className="-m-1.5 p-1.5 cursor-pointer">
+                {/* <Link href="/" onClick={() => setMobileMenuOpen(false)} className="-m-1.5 p-1.5 cursor-pointer">
                   <span className="sr-only">Anthony Brignano</span>
                   <Image alt="icon" src={isDarkMode ? "favicon-dark.svg" : "favicon.svg"} className="h-8 w-auto" width={35} height={35} />
-                </Link>
-                <button aria-label="Close menu" type="button" onClick={() => setMobileMenuOpen(false)} className="dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 hover:text-zinc-900">
+                </Link> */}
+                <button
+                  aria-label="Close menu"
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="ml-auto dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 hover:text-zinc-900"
+                >
                   <span className="sr-only">Close menu</span>
                   <XMarkIcon aria-hidden="true" className="size-5" />
                 </button>
