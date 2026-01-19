@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import {
-  GitHubIcon,
-  LinkedinIcon,
-  WakaTimeIcon,
-} from "./social-icons";
+import { GitHubIcon, LinkedinIcon, WakaTimeIcon } from "./social-icons";
 
 export interface SocialLink {
   name: string;

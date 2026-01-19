@@ -29,11 +29,7 @@ const COLORS = [
   "#34d399",
 ];
 
-export default function StatsPie({
-  data,
-  title,
-  description,
-}: StatsPieProps) {
+export default function StatsPie({ data, title, description }: StatsPieProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const displayIndex = selectedIndex ?? activeIndex;
@@ -147,7 +143,10 @@ export default function StatsPie({
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
                       setSelectedIndex(idx === selectedIndex ? null : idx);
-                    } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+                    } else if (
+                      e.key === "ArrowRight" ||
+                      e.key === "ArrowDown"
+                    ) {
                       e.preventDefault();
                       setActiveIndex((prev) => {
                         const next = (prev ?? idx) + 1;

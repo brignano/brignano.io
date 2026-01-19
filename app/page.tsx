@@ -8,7 +8,6 @@ import AOS from "aos";
 import { event } from "@/lib/gtag";
 
 export default function Home() {
-
   useEffect(() => {
     AOS.init();
   }, []);
@@ -26,10 +25,12 @@ export default function Home() {
           <div style={{ opacity: 1, transform: "none" }}>
             <div>
               <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
-                I build secure, reliable cloud-native systems and the platforms teams depend on.
+                I build secure, reliable cloud-native systems and the platforms
+                teams depend on.
               </h1>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
-                Full-stack engineer working at the intersection of DevSecOps, automation, and cloud-native systems.
+                Full-stack engineer working at the intersection of DevSecOps,
+                automation, and cloud-native systems.
               </p>
 
               {/* Primary CTAs */}
@@ -38,7 +39,11 @@ export default function Home() {
                   href="mailto:hi@brignano.io"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                   onClick={() => {
-                    event("cta_clicked", { cta: "contact", location: "hero", transport_type: "beacon" });
+                    event("cta_clicked", {
+                      cta: "contact",
+                      location: "hero",
+                      transport_type: "beacon",
+                    });
                   }}
                 >
                   Contact Me
@@ -60,7 +65,11 @@ export default function Home() {
                   href="/resume"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                   onClick={() => {
-                    event("cta_clicked", { cta: "resume", location: "hero", transport_type: "beacon" });
+                    event("cta_clicked", {
+                      cta: "resume",
+                      location: "hero",
+                      transport_type: "beacon",
+                    });
                   }}
                 >
                   View Resume
@@ -82,7 +91,11 @@ export default function Home() {
                   href="/coding"
                   className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                   onClick={() => {
-                    event("cta_clicked", { cta: "coding_activity", location: "hero", transport_type: "beacon" });
+                    event("cta_clicked", {
+                      cta: "coding_activity",
+                      location: "hero",
+                      transport_type: "beacon",
+                    });
                   }}
                 >
                   Coding Activity
@@ -114,8 +127,14 @@ export default function Home() {
                           target="_blank"
                           className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
                           onClick={() => {
-                            const ctaName = String(link.name).toLowerCase().replace(/\s+/g, "_");
-                            event("social_link_clicked", { cta: ctaName, href: link.href, transport_type: "beacon" });
+                            const ctaName = String(link.name)
+                              .toLowerCase()
+                              .replace(/\s+/g, "_");
+                            event("social_link_clicked", {
+                              cta: ctaName,
+                              href: link.href,
+                              transport_type: "beacon",
+                            });
                           }}
                         >
                           {link.icon} <span className="ml-1">{link.name}</span>
@@ -325,21 +344,45 @@ export default function Home() {
             <h2 className="font-incognito text-4xl mb-4 font-bold tracking-tight">
               Current Role
             </h2>
-            <h3 className="text-2xl font-semibold mb-2">Senior Staff Software Engineer — Enterprise Platform Engineering</h3>
+            <h3 className="text-2xl font-semibold mb-2">
+              Senior Staff Software Engineer — Enterprise Platform Engineering
+            </h3>
             <p className="text-lg dark:text-zinc-300 text-zinc-700 mb-4">
-              At The Hartford, I lead the strategy, design, and delivery of the enterprise developer platform ecosystem. My work spans CI/CD, security, artifact management, and observability, supporting thousands of repositories and enabling engineering teams to deliver software securely and efficiently at scale.
+              At The Hartford, I lead the strategy, design, and delivery of the
+              enterprise developer platform ecosystem. My work spans CI/CD,
+              security, artifact management, and observability, supporting
+              thousands of repositories and enabling engineering teams to
+              deliver software securely and efficiently at scale.
             </p>
             <p className="text-base dark:text-zinc-400 text-zinc-600 mb-4">
-              I drive large-scale migrations (including 11,000+ repositories to GitHub Enterprise Cloud), architect and operate scalable CI/CD and governance platforms, and champion the adoption of next-generation developer tooling. My focus is on automation, reliability, and security as first-class concerns, reducing incidents and accelerating developer productivity across the organization.
+              I drive large-scale migrations (including 11,000+ repositories to
+              GitHub Enterprise Cloud), architect and operate scalable CI/CD and
+              governance platforms, and champion the adoption of next-generation
+              developer tooling. My focus is on automation, reliability, and
+              security as first-class concerns, reducing incidents and
+              accelerating developer productivity across the organization.
             </p>
             <ul className="list-disc list-inside mb-4">
               <li>Led enterprise migration to GitHub Enterprise Cloud</li>
-              <li>Built and operated CI/CD, governance, and observability platforms</li>
-              <li>Rolled out next-gen CI/CD tooling, reducing developer-reported incidents</li>
-              <li>Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity</li>
+              <li>
+                Built and operated CI/CD, governance, and observability
+                platforms
+              </li>
+              <li>
+                Rolled out next-gen CI/CD tooling, reducing developer-reported
+                incidents
+              </li>
+              <li>
+                Recognized with the 2023 Enterprise Tech Data & Cyber Award for
+                platform adoption and productivity
+              </li>
             </ul>
             <p className="text-sm dark:text-zinc-500 text-zinc-500 mt-4">
-              For my full career history, see <Link href="/resume" className="underline text-primary-color">my resume</Link>.
+              For my full career history, see{" "}
+              <Link href="/resume" className="underline text-primary-color">
+                my resume
+              </Link>
+              .
             </p>
           </div>
         </div>
@@ -361,7 +404,8 @@ export default function Home() {
               GitHub contribution activity by year.
             </p>
             <p className="text-sm dark:text-zinc-500 text-zinc-500 italic">
-              Note: Private repository contributions may not appear, and the graph reflects only public activity on this platform.
+              Note: Private repository contributions may not appear, and the
+              graph reflects only public activity on this platform.
             </p>
           </div>
           <div style={{ opacity: "1", transform: "none" }}>
@@ -373,10 +417,13 @@ export default function Home() {
           </div>
         </div>
         <p className="text-sm dark:text-zinc-500 text-zinc-500 mt-4">
-          For more detailed information, see <Link href="/coding" className="underline text-primary-color">my coding activity</Link>.
+          For more detailed information, see{" "}
+          <Link href="/coding" className="underline text-primary-color">
+            my coding activity
+          </Link>
+          .
         </p>
       </section>
-
 
       {/* Contact CTA - Prominent Final Section */}
       <section
@@ -399,7 +446,11 @@ export default function Home() {
               href="mailto:hi@brignano.io"
               className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
-                event("cta_clicked", { cta: "contact_bottom", location: "bottom", transport_type: "beacon" });
+                event("cta_clicked", {
+                  cta: "contact_bottom",
+                  location: "bottom",
+                  transport_type: "beacon",
+                });
               }}
             >
               <svg
@@ -423,7 +474,11 @@ export default function Home() {
               rel="noopener noreferrer"
               className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
               onClick={() => {
-                event("cta_clicked", { cta: "linkedin_bottom", location: "bottom", transport_type: "beacon" });
+                event("cta_clicked", {
+                  cta: "linkedin_bottom",
+                  location: "bottom",
+                  transport_type: "beacon",
+                });
               }}
             >
               <svg

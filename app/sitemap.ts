@@ -1,29 +1,29 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from "next";
 
-export const dynamic = 'force-static'
+export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Get the base URL from environment variable or use default
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://brignano.io'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://brignano.io";
 
   return [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 1,
     },
     {
       url: `${baseUrl}/resume`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${baseUrl}/coding`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.8,
     },
-  ]
+  ];
 }

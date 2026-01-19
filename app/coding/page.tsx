@@ -53,9 +53,7 @@ async function fetchReadmeLines(): Promise<string | null> {
     const md = await res.text();
 
     // Try to find a human-readable "lines" phrase (e.g. "1.80 million%20lines")
-    const m = md.match(
-      /([0-9.,]+\s*(?:%20million|k|thousand|M|K)\s*(?:%20))/i
-    );
+    const m = md.match(/([0-9.,]+\s*(?:%20million|k|thousand|M|K)\s*(?:%20))/i);
     if (m) return decodeURIComponent(m[1].trim());
 
     // Fallback: look for the shields.io badge URL and attempt to decode the badge message
@@ -88,9 +86,8 @@ async function fetchReadmeLines(): Promise<string | null> {
 
 export default async function Page() {
   try {
-    const userResp = await safeFetch<WakaTimeApiResponse<WakaTimeUser>>(
-      "/users/current"
-    );
+    const userResp =
+      await safeFetch<WakaTimeApiResponse<WakaTimeUser>>("/users/current");
     const allTimeResp = await safeFetch<
       WakaTimeApiResponse<WakaTimeAllTimeStats>
     >("/users/current/stats/all_time");
@@ -156,7 +153,9 @@ export default async function Page() {
         return lastHb.language ?? lastHb.entity ?? null;
 
       // fallback common fields
-      return user.last_language ?? user.language ?? user.preferred_language ?? null;
+      return (
+        user.last_language ?? user.language ?? user.preferred_language ?? null
+      );
     })();
 
     // Most recently used branch from the `/users/current` response when available.
@@ -256,8 +255,7 @@ export default async function Page() {
       </main>
     );
   } catch (err) {
-    const errorMessage =
-      err instanceof Error ? err.message : String(err);
+    const errorMessage = err instanceof Error ? err.message : String(err);
     return (
       <main className="max-w-4xl mx-auto px-6 pt-0 pb-12">
         <h1 className="prose">Coding Activity</h1>

@@ -3,10 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import {
-  Dialog,
-  DialogPanel
-} from "@headlessui/react";
+import { Dialog, DialogPanel } from "@headlessui/react";
 import {
   XMarkIcon,
   MoonIcon,
@@ -14,18 +11,16 @@ import {
   ArrowDownTrayIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
-import {
-  Bars3Icon,
-} from "@heroicons/react/24/solid";
+import { Bars3Icon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const pathname = usePathname();
-  const isResumePage = pathname === '/resume';
+  const isResumePage = pathname === "/resume";
 
-  const pages: string[] = [];//['about', 'skills'];
+  const pages: string[] = []; //['about', 'skills'];
 
   useEffect(() => {
     // Check localStorage first, then fallback to system preference
@@ -42,19 +37,23 @@ export default function Header() {
 
   const toggleTheme = () => {
     const newDark = !isDarkMode;
-    document.documentElement.classList.toggle('dark', newDark);
+    document.documentElement.classList.toggle("dark", newDark);
     setIsDarkMode(newDark);
-  }
+  };
 
   const handleDownloadPDF = () => {
     window.print();
   };
 
   const handleShare = async () => {
-    const url = typeof window !== "undefined" ? window.location.href : "/resume";
+    const url =
+      typeof window !== "undefined" ? window.location.href : "/resume";
     try {
       if (typeof navigator !== "undefined" && (navigator as any).share) {
-        await (navigator as any).share({ title: "Anthony Brignano — Resume", url });
+        await (navigator as any).share({
+          title: "Anthony Brignano — Resume",
+          url,
+        });
       } else if (typeof navigator !== "undefined" && navigator.clipboard) {
         await navigator.clipboard.writeText(url);
         // small fallback feedback
@@ -71,8 +70,6 @@ export default function Header() {
       console.error("Share failed", err);
     }
   };
-
-
 
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");

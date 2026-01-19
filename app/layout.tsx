@@ -1,6 +1,6 @@
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -24,7 +24,9 @@ const silkscreen = Silkscreen({
 
 export const metadata = siteMetadata;
 
-const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
+const isProduction =
+  process.env.VERCEL_ENV === "production" ||
+  process.env.NODE_ENV === "production";
 
 export default function RootLayout({
   children,

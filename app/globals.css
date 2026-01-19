@@ -93,7 +93,9 @@ h1 {
     display: none !important;
   }
 
-  nav, .print-hide, .no-print {
+  nav,
+  .print-hide,
+  .no-print {
     display: none !important;
   }
 
@@ -163,7 +165,7 @@ h1 {
     margin-top: 0 !important;
     padding-top: 0 !important;
   }
- 
+
   /* Print: render skills as a single horizontal row of columns */
   /* Print: render skills into a grid of columns with up to 3 rows per column
      The number of columns is provided via the CSS variable --print-cols set
@@ -260,7 +262,18 @@ h1 {
   section {
     margin-bottom: 2.5em !important;
   }
-  article, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+  article,
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  li {
     margin: 0 0 0.15em 0 !important;
     padding: 0 !important;
   }
@@ -270,16 +283,26 @@ h1 {
     font-size: 1.1em !important;
     font-weight: bold !important;
   }
-  h2, h3, h4, h5, h6 {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: 1em !important;
     font-weight: bold !important;
   }
-  p, li, span, a {
+  p,
+  li,
+  span,
+  a {
     font-size: 0.92em !important;
   }
 
   /* Remove color classes for print */
-  [class*="bg-"], [class*="text-"], [class*="border-"], [class*="border"] {
+  [class*="bg-"],
+  [class*="text-"],
+  [class*="border-"],
+  [class*="border"] {
     background: none !important;
     color: black !important;
     border: none !important;
@@ -287,7 +310,10 @@ h1 {
   }
 
   /* Remove images unless explicitly allowed */
-  img, svg, picture, figure {
+  img,
+  svg,
+  picture,
+  figure {
     display: none !important;
   }
 
@@ -305,7 +331,8 @@ h1 {
   }
 
   /* Avoid page breaks only for header/summary, allow for experience */
-  section, article {
+  section,
+  article {
     page-break-inside: auto;
   }
   .print-no-break {
