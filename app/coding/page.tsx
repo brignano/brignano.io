@@ -159,14 +159,31 @@ export default async function Page() {
     return (
       <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
         <div className="max-w-6xl mx-auto">
-          <h1 className="font-incognito text-4xl font-bold tracking-tight">
+          <h1
+            data-aos="fade-up"
+            data-aos-duration="600"
+            data-aos-once="true"
+            className="font-incognito text-4xl font-bold tracking-tight"
+          >
             Coding Activity
           </h1>
-          <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400 italic pl-1">
+          <div
+            data-aos="fade-up"
+            data-aos-duration="500"
+            data-aos-once="true"
+            data-aos-delay="100"
+            className="mt-1 text-xs text-zinc-500 dark:text-zinc-400 italic pl-1"
+          >
             ... {rangeText ?? "—"}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 items-center my-6">
+          <div
+            data-aos="fade-up"
+            data-aos-duration="600"
+            data-aos-once="true"
+            data-aos-delay="150"
+            className="flex flex-col sm:flex-row gap-4 items-center my-6"
+          >
             <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
               <div className="text-xs text-zinc-500">Total time coding</div>
               <div className="text-lg font-semibold">{totalTimeText}</div>
@@ -183,7 +200,13 @@ export default async function Page() {
             </div>
           </div>
 
-          <div className="mt-6">
+          <div
+            data-aos="fade-up"
+            data-aos-duration="700"
+            data-aos-once="true"
+            data-aos-delay="200"
+            className="mt-6"
+          >
             <GitHubCalendarClient
               initialYear={2026}
               buttonSize="large"
@@ -193,7 +216,13 @@ export default async function Page() {
           </div>
 
           <section className="grid grid-cols-1 gap-8 mt-6">
-            <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-once="true"
+              data-aos-delay="250"
+              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+            >
               <StatsPie
                 data={languages}
                 title="Programming Languages"
@@ -201,7 +230,13 @@ export default async function Page() {
               />
             </div>
 
-            <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-once="true"
+              data-aos-delay="300"
+              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+            >
               <StatsPie
                 data={categories}
                 title="Activity Types"
@@ -209,7 +244,13 @@ export default async function Page() {
               />
             </div>
           </section>
-          <div className="mt-6 text-sm text-zinc-600 dark:text-zinc-400 flex justify-start">
+          <div
+            data-aos="fade-up"
+            data-aos-duration="700"
+            data-aos-once="true"
+            data-aos-delay="350"
+            className="mt-6 text-sm text-zinc-600 dark:text-zinc-400 flex justify-start"
+          >
             <WakaTimeDisclaimer url={wakaProfile} />
           </div>
         </div>
