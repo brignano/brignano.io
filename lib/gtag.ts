@@ -1,4 +1,4 @@
-export const GA_MEASUREMENT_ID = 'G-QGJLCCQ9X8';
+export const GA_MEASUREMENT_ID = String(process.env.GA_MEASUREMENT_ID);
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {

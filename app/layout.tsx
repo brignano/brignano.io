@@ -1,6 +1,6 @@
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -9,6 +9,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from "@/components/google-analytics";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 import { siteMetadata } from "@/lib/constants";
+import ScrollToTop from "@/components/scroll-to-top";
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata-mono",
@@ -22,6 +23,8 @@ const silkscreen = Silkscreen({
 });
 
 export const metadata = siteMetadata;
+
+const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
 
 export default function RootLayout({
   children,
@@ -55,16 +58,18 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Google Analytics */}
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        />
-        <Script
-          id="gtag-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
+        {/* Google Analytics (only in production) */}
+        {isProduction && GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="gtag-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
@@ -73,11 +78,14 @@ export default function RootLayout({
                 cookie_domain: 'auto'
               });
             `,
-          }}
-        />
+              }}
+            />
+          </>
+        )}
         <Header />
         {children}
         <Footer />
+        <ScrollToTop />
         <SpeedInsights />
         <GoogleAnalytics />
         <Analytics />
