@@ -100,8 +100,8 @@ export default async function Page() {
       ? (allTime as any).human_readable_total_including_other_language
       : `${totalHoursReadable} hours`
     // Prefer the human-readable daily average when available; fall back to computed value
-    const dailyAverageText = (allTime && ((allTime as any).human_readable_daily_average ?? (allTime as any).human_readable_daily_average_including_other_language))
-      ? ((allTime as any).human_readable_daily_average ?? (allTime as any).human_readable_daily_average_including_other_language)
+    const dailyAverageText = (allTime && ((allTime as any).human_readable_daily_average_including_other_language ?? (allTime as any).human_readable_daily_average))
+      ? ((allTime as any).human_readable_daily_average_including_other_language ?? (allTime as any).human_readable_daily_average)
       : (() => {
           const days = (allTime && (allTime as any).days_including_holidays) || 1
           const avgSec = days > 0 ? totalSecondsFromLanguages / days : 0
@@ -157,11 +157,11 @@ export default async function Page() {
       <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
         <div className="max-w-6xl mx-auto">
           <h1 className="font-incognito text-4xl font-bold tracking-tight">
-            My Coding <span className="hidden md:inline">Statistics</span><span className="inline md:hidden">Stats</span>
+            My Coding Stats
           </h1>
-          <div className="mb-4 mt-1 text-xs text-zinc-500 dark:text-zinc-400 italic pl-2">... {rangeText ?? '—'}</div>
+          <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400 italic pl-1">... {rangeText ?? '—'}</div>
 
-            <div className="flex flex-col sm:flex-row gap-4 items-center mb-6">
+          <div className="flex flex-col sm:flex-row gap-4 items-center my-6">
               <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
                 <div className="text-xs text-zinc-500">Total time coding</div>
                 <div className="text-lg font-semibold">{totalTimeText}</div>
@@ -193,7 +193,7 @@ export default async function Page() {
             </div>
 
               <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
-                <StatsPie data={categories} title="Categories" />
+              <StatsPie data={categories} title="Activities" />
             </div>
           </section>
             <div className="mt-6 text-sm text-zinc-600 dark:text-zinc-400 flex justify-start">

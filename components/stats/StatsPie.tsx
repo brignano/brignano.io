@@ -88,7 +88,8 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
               return (
                 <li
                   key={`${d.name}-${idx}`}
-                  className={`flex items-center transition-opacity max-w-75 ${dim ? 'opacity-60' : 'opacity-100'}`}
+                      className={`flex items-center transition-opacity max-w-75 ${dim ? 'opacity-60' : 'opacity-100'} cursor-pointer`}
+                      onMouseDown={(e) => e.preventDefault()}
                   onMouseEnter={() => setActiveIndex(idx)}
                   onMouseLeave={() => setActiveIndex(null)}
                   onClick={() => setSelectedIndex(idx === selectedIndex ? null : idx)}
@@ -116,13 +117,14 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
           </ul>
         </div>
 
-        <div className="w-full md:w-80 lg:w-96 flex-shrink-0 flex items-center justify-center h-60 relative mt-6 md:mt-0 mx-auto">
+              <div className="w-full md:w-80 lg:w-96 flex-shrink-0 flex items-center justify-center h-60 relative mt-6 md:mt-0 mx-auto cursor-pointer" onMouseDown={(e) => e.preventDefault()}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={chartDataSecs}
                 dataKey="seconds"
                 nameKey="name"
+                              cursor="pointer"
                 outerRadius={100}
                 innerRadius={48}
                 paddingAngle={2}
@@ -136,6 +138,7 @@ export default function StatsPie({ data, title = 'Languages' }: Props) {
                 <Cell
                   key={`cell-${idx}`}
                   fill={COLORS[idx % COLORS.length] as string}
+                      style={{ cursor: 'pointer' }}
                 />
               ))}
             </PieChart>

@@ -34,10 +34,10 @@ export default function Home() {
               </p>
 
               {/* Primary CTAs */}
-              <div className="flex flex-wrap gap-4 mb-10">
+              <div className="flex gap-4 mb-10 items-center flex-nowrap overflow-x-auto">
                 <a
                   href="mailto:hi@brignano.io"
-                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", { cta: "contact", location: "hero", transport_type: "beacon" });
                   }}
@@ -59,7 +59,7 @@ export default function Home() {
                 </a>
                 <Link
                   href="/resume"
-                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", { cta: "resume", location: "hero", transport_type: "beacon" });
                   }}
@@ -76,6 +76,29 @@ export default function Home() {
                       strokeLinejoin="round"
                       strokeWidth={2}
                       d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                </Link>
+                <Link
+                  href="/stats"
+                  className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 flex-shrink-0"
+                  onClick={() => {
+                    event("cta_clicked", { cta: "coding_activity", location: "hero", transport_type: "beacon" });
+                  }}
+                >
+                  Coding Activity
+                  <svg
+                    className="ml-2 w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 18l6-6-6-6M8 6L2 12l6 6"
                     />
                   </svg>
                 </Link>
@@ -381,7 +404,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="max-w-2xl text-sm dark:text-zinc-400 text-zinc-600 mt-4">
+      <div className="text-sm dark:text-zinc-500 text-zinc-500 mt-4">
         For my full coding statistics, see <Link href="/stats" className="underline text-primary-color">my coding stats</Link>.
       </div>
 
