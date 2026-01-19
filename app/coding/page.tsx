@@ -9,8 +9,6 @@ import type {
 import StatsPie from "../../components/stats/StatsPie";
 import WakaTimeDisclaimer from "../../components/stats/WakaTimeDisclaimer";
 import GitHubCalendarClient from "../../components/GitHubCalendarClient";
-// DayOfWeekChart removed to avoid premium WakaTime summaries endpoint
-// HourlyChart removed: heartbeat endpoint and heartbeat-derived charts are not used
 
 async function fetchWaka(path: string) {
   const apiKey = process.env.WAKATIME_API_KEY;
@@ -95,8 +93,6 @@ export default async function Page() {
     const user = userResp?.data?.data ?? null;
     const allTime = allTimeResp?.data?.data ?? null;
 
-    // No premium endpoints used; summaries removed.
-
     const languages: StatsData[] = Array.isArray(allTime?.languages)
       ? allTime.languages.map((l) => ({
           name: l.name,
@@ -140,32 +136,10 @@ export default async function Page() {
     // Range helper text from all_time (e.g. "since Dec 11 2020")
     const rangeText = allTime?.human_readable_range || null;
 
-    // Total lines: heartbeats endpoint removed; prefer README badge fallback
+    // Total lines: prefer README badge fallback
     const totalLines = 0;
 
-    // Most recently used language from the `/users/current` response when available.
-    const mostRecentLanguage = (() => {
-      if (!user) return null;
-
-      // common shape: user.last_heartbeat may be an object with language/entity
-      const lastHb = user.last_heartbeat ?? user.last_heartbeat_at ?? null;
-      if (lastHb && typeof lastHb === "object")
-        return lastHb.language ?? lastHb.entity ?? null;
-
-      // fallback common fields
-      return (
-        user.last_language ?? user.language ?? user.preferred_language ?? null
-      );
-    })();
-
-    // Most recently used branch from the `/users/current` response when available.
-    const mostRecentBranch = (() => {
-      if (!user) return null;
-      const lastHb = user.last_heartbeat ?? null;
-      if (lastHb && typeof lastHb === "object")
-        return lastHb.branch ?? lastHb.branch_name ?? null;
-      return user.last_branch ?? null;
-    })();
+    // We'll source recent branch/language from GitHub events instead of WakaTime.
 
     // summaries removed (premium). Day-of-week averages are not available without premium summaries.
 
@@ -206,19 +180,6 @@ export default async function Page() {
             <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
               <div className="text-xs text-zinc-500">Total lines coded</div>
               <div className="text-lg font-semibold">{readmeLines ?? "—"}</div>
-            </div>
-
-            <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
-              <div className="text-xs text-zinc-500">Last language</div>
-              <div className="text-lg font-semibold">
-                {mostRecentLanguage ?? "—"}
-              </div>
-            </div>
-            <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
-              <div className="text-xs text-zinc-500">Last branch</div>
-              <div className="text-lg font-semibold">
-                {mostRecentBranch ?? "—"}
-              </div>
             </div>
           </div>
 
