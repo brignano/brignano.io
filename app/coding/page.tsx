@@ -241,10 +241,6 @@ export default async function Page() {
     // Total lines: prefer README badge fallback
     const totalLines = 0;
 
-    // We'll source recent branch/language from GitHub events instead of WakaTime.
-
-    // summaries removed (premium). Day-of-week averages are not available without premium summaries.
-
     // Try to read a fallback total-lines value from the repository README (badge)
     const readmeLines = await fetchReadmeLines();
     // Compute a link to the user's WakaTime profile when available
@@ -259,21 +255,29 @@ export default async function Page() {
     })();
 
     // fetch latest public commit (server-side)
-    const latestCommitRaw: LatestCommit | null = await fetchLatestPublicCommit();
+    const latestCommitRaw: LatestCommit | null =
+      await fetchLatestPublicCommit();
     let latestCommit: LatestCommit | null = latestCommitRaw;
-    if (latestCommitRaw) {
-      const details = await fetchCommitDetails(latestCommitRaw.repo, latestCommitRaw.sha);
+    if (latestCommitRaw?.repo && latestCommitRaw?.sha) {
+      const details = await fetchCommitDetails(
+        latestCommitRaw.repo,
+        latestCommitRaw.sha
+      );
       if (details) {
         latestCommit = {
           sha: latestCommitRaw.sha,
           repo: latestCommitRaw.repo,
           url: latestCommitRaw.url,
           message: details.commit?.message || latestCommitRaw.message,
-          author_name: details.commit?.author?.name || latestCommitRaw.author_name,
+          author_name:
+            details.commit?.author?.name || latestCommitRaw.author_name,
           author_login: details.author?.login || latestCommitRaw.author_login,
-          author_avatar: details.author?.avatar_url || latestCommitRaw.author_avatar,
+          author_avatar:
+            details.author?.avatar_url || latestCommitRaw.author_avatar,
           date: details.commit?.author?.date || latestCommitRaw.date,
-          filesChanged: Array.isArray(details.files) ? details.files.length : undefined,
+          filesChanged: Array.isArray(details.files)
+            ? details.files.length
+            : undefined,
           additions: details.stats?.additions ?? undefined,
           deletions: details.stats?.deletions ?? undefined,
         } as LatestCommit;
@@ -344,7 +348,9 @@ export default async function Page() {
             >
               <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-incognito text-2xl font-bold tracking-tight">Last Commit</h3>
+                  <h3 className="font-incognito text-2xl font-bold tracking-tight">
+                    Last Commit
+                  </h3>
                   <a
                     href={`https://github.com/${latestCommit.repo}/tree/${latestCommit.sha}`}
                     target="_blank"
@@ -359,7 +365,11 @@ export default async function Page() {
                       width="16"
                       height="16"
                       fill="currentColor"
-                      style={{ display: "inline-block", overflow: "visible", verticalAlign: "text-bottom" }}
+                      style={{
+                        display: "inline-block",
+                        overflow: "visible",
+                        verticalAlign: "text-bottom",
+                      }}
                     >
                       <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
                     </svg>
@@ -375,7 +385,7 @@ export default async function Page() {
                       {commitSubject && (
                         <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
                           {commitSubject}
-                      </div>
+                        </div>
                       )}
                       {commitBody && (
                         <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap">
@@ -395,7 +405,7 @@ export default async function Page() {
                       <span className="mx-2">•</span>
 
                       <a
-                        href={latestCommit.url}
+                        href={String(latestCommit.url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded"
@@ -408,37 +418,80 @@ export default async function Page() {
                           xmlns="http://www.w3.org/2000/svg"
                           aria-hidden="true"
                         >
-                          <path d="M14 3h7v7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M10 14L21 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M21 21H3V3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          <path
+                            d="M14 3h7v7"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M10 14L21 3"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M21 21H3V3"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </a>
 
                       {typeof latestCommit.filesChanged === "number" && (
-                        <span className="ml-2">• {latestCommit.filesChanged} files changed</span>
-                      )}
-
-                      {typeof latestCommit.additions === "number" && typeof latestCommit.deletions === "number" && (
-                        <span className="ml-2">•
-                          <span className="ml-2 text-green-600 dark:text-green-400 font-semibold">+{latestCommit.additions}</span>
-                          <span className="ml-2 text-red-600 dark:text-red-400 font-semibold">−{latestCommit.deletions}</span>
+                        <span className="ml-2">
+                          • {latestCommit.filesChanged} files changed
                         </span>
                       )}
 
+                      {typeof latestCommit.additions === "number" &&
+                        typeof latestCommit.deletions === "number" && (
+                          <span className="ml-2">
+                            •
+                            <span className="ml-2 text-green-600 dark:text-green-400 font-semibold">
+                              +{latestCommit.additions}
+                            </span>
+                            <span className="ml-2 text-red-600 dark:text-red-400 font-semibold">
+                              −{latestCommit.deletions}
+                            </span>
+                          </span>
+                        )}
+
                       {latestCommit.author_avatar ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={latestCommit.author_avatar} alt={latestCommit.author_login ?? latestCommit.author_name ?? "author"} className="w-6 h-6 rounded-full ml-2" />
+                        <img
+                          src={latestCommit.author_avatar}
+                          alt={
+                            latestCommit.author_login ??
+                            latestCommit.author_name ??
+                            "author"
+                          }
+                          className="w-6 h-6 rounded-full ml-2"
+                        />
                       ) : null}
 
                       {latestCommit.author_login ? (
-                        <a href={`https://github.com/${latestCommit.author_login}`} target="_blank" rel="noopener noreferrer" className="ml-2 font-medium text-primary-color hover:underline">
+                        <a
+                          href={`https://github.com/${latestCommit.author_login}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="ml-2 font-medium text-primary-color hover:underline"
+                        >
                           {latestCommit.author_login}
                         </a>
                       ) : latestCommit.author_name ? (
-                        <span className="ml-2">by {latestCommit.author_name}</span>
+                          <span className="ml-2">
+                            by {latestCommit.author_name}
+                          </span>
                       ) : null}
 
-                      {latestCommit.date && <LocalTime iso={latestCommit.date} />}
+                      {latestCommit.date && (
+                        <LocalTime iso={latestCommit.date} />
+                      )}
                     </div>
                   </div>
                 </div>

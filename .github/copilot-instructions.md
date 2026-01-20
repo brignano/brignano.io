@@ -34,6 +34,7 @@ This is a personal portfolio website built with Next.js 16, React 19, and Tailwi
 - Use explicit typing where it improves clarity
 - Use `@/` import alias for absolute imports (e.g., `@/components/header`)
 - Follow React 19 conventions (e.g., `React.ReactNode` for children)
+ - Prefer optional chaining (`obj?.prop`) and nullish coalescing (`??`) when appropriate to reduce nested conditional checks and simplify runtime-safe property access.
 
 ### React Components
 

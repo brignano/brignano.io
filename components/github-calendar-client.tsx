@@ -37,29 +37,29 @@ export default function GitHubCalendarClient({
   return (
     <>
       <div className="flex xl:flex-row flex-col gap-4 items-center">
-      <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 sm:p-8 rounded-lg w-full overflow-hidden">
-        {title && (
-          <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">
-            {title}
-          </h3>
-        )}
-        {description && (
-          <p className="text-sm dark:text-zinc-500 text-zinc-500 mb-4">
-            {description}
-          </p>
-        )}
-        <div className="overflow-x-auto -mx-6 sm:-mx-8 px-6 sm:px-8 py-2">
-          <div className="min-w-[320px]">
-            <GitHubCalendar
-              username={username}
-              year={Number(year)}
-              colorScheme={colorScheme}
-            />
+        <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 sm:p-8 rounded-lg w-full overflow-hidden">
+          {title && (
+            <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">
+              {title}
+            </h3>
+          )}
+          {description && (
+            <p className="text-sm dark:text-zinc-500 text-zinc-500 mb-4">
+              {description}
+            </p>
+          )}
+          <div className="overflow-x-auto -mx-6 sm:-mx-8 px-6 sm:px-8 py-2">
+            <div className="min-w-[320px]">
+              <GitHubCalendar
+                username={username}
+                year={Number(year)}
+                colorScheme={colorScheme}
+              />
+            </div>
           </div>
-        </div>
           {showDisclaimer && (
             <div className="w-full mt-3 text-sm text-zinc-500 dark:text-zinc-500 italic">
-              View more information on{' '}
+              View more information on{" "}
               <a
                 href="https://github.com/brignano"
                 target="_blank"
@@ -81,11 +81,13 @@ export default function GitHubCalendarClient({
               .
             </div>
           )}
-      </div>
+        </div>
 
-      <div className="flex justify-center xl:justify-start xl:flex-col flex-row flex-wrap gap-2">
-        {Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map(
-          (y) => (
+        <div className="flex justify-center xl:justify-start xl:flex-col flex-row flex-wrap gap-2">
+          {Array.from(
+            { length: 5 },
+            (_, i) => new Date().getFullYear() - i
+          ).map((y) => (
             <button
               key={y}
               title={`View graph for the year ${y}`}
@@ -105,9 +107,8 @@ export default function GitHubCalendarClient({
             >
               {y}
             </button>
-          )
-        )}
-      </div>
+          ))}
+        </div>
       </div>
     </>
   );

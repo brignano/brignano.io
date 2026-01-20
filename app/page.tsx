@@ -323,9 +323,13 @@ export default function Home() {
         data-aos-once={true}
       >
         <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-6 py-4 shadow-sm">
-          <h3 className="font-incognito text-2xl mb-3 font-bold">Latest Public Commit</h3>
+          <h3 className="font-incognito text-2xl mb-3 font-bold">
+            Latest Public Commit
+          </h3>
           {commitLoading ? (
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">Loading latest commit…</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              Loading latest commit…
+            </p>
           ) : commit ? (
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
@@ -350,7 +354,9 @@ export default function Home() {
                   <span className="font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">
                     {commit.sha.substring(0, 7)}
                   </span>
-                  {commit.author && <span className="ml-2">by {commit.author}</span>}
+                  {commit.author && (
+                    <span className="ml-2">by {commit.author}</span>
+                  )}
                   {commit.date && (
                     <span className="ml-2 text-xs text-zinc-500 dark:text-zinc-500">
                       {new Date(commit.date).toLocaleString()}
@@ -360,7 +366,9 @@ export default function Home() {
               </div>
             </div>
           ) : (
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">No recent public commits found.</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              No recent public commits found.
+            </p>
           )}
         </div>
       </section>

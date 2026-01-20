@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = { iso?: string | null };
 
@@ -29,10 +29,16 @@ export default function LocalTime({ iso }: Props) {
     }
   }
 
-  const title = new Date(iso).toLocaleString(undefined, { timeZoneName: "short" });
+  const title = new Date(iso).toLocaleString(undefined, {
+    timeZoneName: "short",
+  });
 
   return (
-    <time dateTime={iso} title={title} className="ml-2 text-xs text-zinc-500 dark:text-zinc-500">
+    <time
+      dateTime={iso}
+      title={title}
+      className="ml-2 text-xs text-zinc-500 dark:text-zinc-500"
+    >
       {relative}
     </time>
   );
