@@ -34,7 +34,7 @@ export default function Home() {
           url: c.url || `https://github.com/${c.repo}/commit/${c.sha}`,
           repo: c.repo || "",
           author: c.author_name || c.author_login || undefined,
-          date: c.date,
+          date: String(c.date),
         });
         setCommitLoading(false);
       } catch (e) {

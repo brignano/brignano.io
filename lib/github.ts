@@ -7,6 +7,9 @@ export type LatestCommit = {
   author_login?: string | null;
   author_avatar?: string | null;
   date?: string | null;
+  filesChanged?: number | undefined;
+  additions?: number | undefined;
+  deletions?: number | undefined;
 };
 
 export async function fetchLatestPublicCommit(): Promise<LatestCommit | null> {
