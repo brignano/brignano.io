@@ -248,17 +248,36 @@ export default async function Page() {
               className="mb-6"
             >
               <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
-                <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">Last Commit</h3>
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-incognito text-2xl font-bold tracking-tight">Last Commit</h3>
+                  <a
+                    href={`https://github.com/${latestCommit.repo}/tree/${latestCommit.sha}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-4 py-1.5 border rounded bg-zinc-100 dark:bg-zinc-800 text-sm font-medium hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      focusable="false"
+                      className="octicon octicon-file-code w-4 h-4 mr-2 text-zinc-700 dark:text-zinc-200"
+                      viewBox="0 0 16 16"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      style={{ display: "inline-block", overflow: "visible", verticalAlign: "text-bottom" }}
+                    >
+                      <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
+                    </svg>
+                    Browse files
+                  </a>
+                </div>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
-                    <a
-                      href={latestCommit.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary-color font-semibold hover:underline"
-                    >
-                      {latestCommit.message || "View Commit"}
-                    </a>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                        {latestCommit.message || "Commit message"}
+                      </div>
+                    </div>
                     <div className="mt-2 text-sm dark:text-zinc-400 text-zinc-600">
                       <a
                         href={`https://github.com/${latestCommit.repo}`}
