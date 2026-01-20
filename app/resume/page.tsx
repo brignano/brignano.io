@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AOS from "aos";
 import type { ResumeData } from "@/types/resume";
 import { event } from "@/lib/gtag";
 
@@ -12,7 +11,6 @@ export default function Home() {
   const [shareSupported, setShareSupported] = useState(false);
 
   useEffect(() => {
-    AOS.init();
     setShareSupported(typeof navigator !== "undefined" && !!navigator.share);
   }, []);
 

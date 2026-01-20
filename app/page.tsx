@@ -1,17 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
 import GitHubCalendarClient from "@/components/github-calendar-client";
 import { socialLinks, highlights, projects } from "@/lib/constants";
-import AOS from "aos";
 import { event } from "@/lib/gtag";
 
 export default function Home() {
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
       {/* Hero Section with CTAs */}
