@@ -24,7 +24,7 @@ export default function WakaTimeDisclaimer({ url }: WakaTimeDisclaimerProps) {
 
   return (
     <>
-      <span className="leading-none">🚀</span>
+      <span className="leading-none">🚀&nbsp;</span>
       <span>
         Powered by{" "}
         <a
