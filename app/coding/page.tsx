@@ -337,7 +337,7 @@ export default async function Page() {
                       >
                         {latestCommit.repo}
                       </a>
-                      <span className="mx-2">•</span>
+                      <span className="mx-1 md:mx-2">&nbsp;•</span>
 
                       <a
                         href={String(latestCommit.url)}
@@ -378,22 +378,28 @@ export default async function Page() {
                       </a>
 
                       {typeof latestCommit.filesChanged === "number" && (
-                        <span className="ml-2">
-                          • {latestCommit.filesChanged} files changed
-                        </span>
+                        <>
+                          <span className="mx-1 md:mx-2">&nbsp;•</span>
+                          <span>
+                            {latestCommit.filesChanged} files changed
+                          </span>
+                        </>
                       )}
 
                       {typeof latestCommit.additions === "number" &&
                         typeof latestCommit.deletions === "number" && (
-                          <span className="ml-2">
+                        <>
+                          <span className="mx-1 md:mx-2">
                             •
+                          </span>
+
                             <span className="ml-2 text-green-600 dark:text-green-400 font-semibold">
                               +{latestCommit.additions}
                             </span>
                             <span className="ml-2 text-red-600 dark:text-red-400 font-semibold">
                               −{latestCommit.deletions}
                             </span>
-                          </span>
+                        </>
                         )}
 
                       {latestCommit.author_avatar ? (
