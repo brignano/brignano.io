@@ -5,14 +5,15 @@ import { useEffect, useState } from "react";
 type Props = { iso?: string | null };
 
 export default function LocalTime({ iso }: Props) {
-  if (!iso) return null;
-
+  // Hooks must be called unconditionally (Rules of Hooks).
   const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
     const t = setInterval(() => setNow(Date.now()), 60_000);
     return () => clearInterval(t);
   }, []);
+
+  if (!iso) return null;
 
   const then = new Date(iso).getTime();
   const diff = Math.max(0, Math.floor((now - then) / 1000));
