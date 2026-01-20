@@ -76,6 +76,32 @@ async function fetchLatestPublicCommit() {
   }
 }
 
+// Structured type for the latest commit we render
+type LatestCommit = {
+  sha: string;
+  message?: string | null;
+  url?: string | null;
+  repo?: string | null;
+  author_name?: string | null;
+  author_login?: string | null;
+  author_avatar?: string | null;
+  date?: string | null;
+  filesChanged?: number | undefined;
+  additions?: number | undefined;
+  deletions?: number | undefined;
+};
+
+function splitMessage(message?: string | null) {
+  if (!message) return { subject: "", bodyLines: [] as string[] };
+  const lines = message.split(/\r?\n/);
+  const subject = (lines[0] || "").trim();
+  const rest = lines.slice(1);
+  // Trim leading/trailing empty lines from body
+  while (rest.length && rest[0].trim() === "") rest.shift();
+  while (rest.length && rest[rest.length - 1].trim() === "") rest.pop();
+  return { subject, bodyLines: rest };
+}
+
 async function fetchReadmeLines(): Promise<string | null> {
   try {
     const res = await fetch(
@@ -112,6 +138,46 @@ async function fetchReadmeLines(): Promise<string | null> {
       }
     }
     return null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function shortSha(sha?: string | null) {
+  if (!sha) return "";
+  return sha.substring(0, 7);
+}
+
+function timeAgo(iso?: string | null) {
+  if (!iso) return "";
+  try {
+    const then = new Date(iso).getTime();
+    const now = Date.now();
+    const diff = Math.max(0, Math.floor((now - then) / 1000));
+    if (diff < 60) return `${diff}s ago`;
+    const mins = Math.floor(diff / 60);
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    const days = Math.floor(hrs / 24);
+    return `${days}d ago`;
+  } catch (e) {
+    return "";
+  }
+}
+
+async function fetchCommitDetails(repoFullName: string, sha: string) {
+  try {
+    const url = `https://api.github.com/repos/${repoFullName}/commits/${sha}`;
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent": "brignano.io-commit-fetch",
+        Accept: "application/vnd.github+json",
+      },
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) return null;
+    return await res.json();
   } catch (e) {
     return null;
   }
@@ -192,7 +258,35 @@ export default async function Page() {
     })();
 
     // fetch latest public commit (server-side)
-    const latestCommit = await fetchLatestPublicCommit();
+    const latestCommitRaw: LatestCommit | null = await fetchLatestPublicCommit();
+    let latestCommit: LatestCommit | null = latestCommitRaw;
+    if (latestCommitRaw) {
+      const details = await fetchCommitDetails(latestCommitRaw.repo, latestCommitRaw.sha);
+      if (details) {
+        latestCommit = {
+          sha: latestCommitRaw.sha,
+          repo: latestCommitRaw.repo,
+          url: latestCommitRaw.url,
+          message: details.commit?.message || latestCommitRaw.message,
+          author_name: details.commit?.author?.name || latestCommitRaw.author_name,
+          author_login: details.author?.login || latestCommitRaw.author_login,
+          author_avatar: details.author?.avatar_url || latestCommitRaw.author_avatar,
+          date: details.commit?.author?.date || latestCommitRaw.date,
+          filesChanged: Array.isArray(details.files) ? details.files.length : undefined,
+          additions: details.stats?.additions ?? undefined,
+          deletions: details.stats?.deletions ?? undefined,
+        } as LatestCommit;
+      }
+    }
+
+    // Prepare subject/body for rendering (preserve body formatting)
+    let commitSubject = "";
+    let commitBody = "";
+    if (latestCommit) {
+      const parts = splitMessage(latestCommit.message);
+      commitSubject = parts.subject;
+      commitBody = parts.bodyLines.length ? parts.bodyLines.join("\n") : "";
+    }
 
     return (
       <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
@@ -271,14 +365,24 @@ export default async function Page() {
                     Browse files
                   </a>
                 </div>
+                <p className="text-sm dark:text-zinc-500 text-zinc-500 mb-4">
+                  Most recent public commit on GitHub.
+                </p>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
                     <div className="flex items-start justify-between gap-4">
-                      <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                        {latestCommit.message || "Commit message"}
+                      {commitSubject && (
+                        <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
+                          {commitSubject}
                       </div>
+                      )}
+                      {commitBody && (
+                        <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap">
+                          {commitBody}
+                        </div>
+                      )}
                     </div>
-                    <div className="mt-2 text-sm dark:text-zinc-400 text-zinc-600">
+                    <div className="mt-2 text-sm dark:text-zinc-400 text-zinc-600 flex items-center gap-2 flex-wrap">
                       <a
                         href={`https://github.com/${latestCommit.repo}`}
                         target="_blank"
@@ -288,14 +392,59 @@ export default async function Page() {
                         {latestCommit.repo}
                       </a>
                       <span className="mx-2">•</span>
-                      <span className="font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">
-                        {latestCommit.sha.substring(0, 7)}
-                      </span>
-                      {latestCommit.author_name && <span className="ml-2">by {latestCommit.author_name}</span>}
-                      {latestCommit.date && (
-                        <span className="ml-2 text-xs text-zinc-500 dark:text-zinc-500">
-                          {new Date(latestCommit.date).toLocaleString()}
+
+                      <a
+                        href={latestCommit.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded"
+                      >
+                        <span>{shortSha(latestCommit.sha)}</span>
+                        <svg
+                          className="w-3 h-3 ml-2 text-zinc-700 dark:text-zinc-300"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          aria-hidden="true"
+                        >
+                          <path d="M14 3h7v7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M10 14L21 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M21 21H3V3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </a>
+
+                      {typeof latestCommit.filesChanged === "number" && (
+                        <span className="ml-2">• {latestCommit.filesChanged} files changed</span>
+                      )}
+
+                      {typeof latestCommit.additions === "number" && typeof latestCommit.deletions === "number" && (
+                        <span className="ml-2">•
+                          <span className="ml-2 text-green-600 dark:text-green-400 font-semibold">+{latestCommit.additions}</span>
+                          <span className="ml-2 text-red-600 dark:text-red-400 font-semibold">−{latestCommit.deletions}</span>
                         </span>
+                      )}
+
+                      {latestCommit.author_avatar ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={latestCommit.author_avatar} alt={latestCommit.author_login ?? latestCommit.author_name ?? "author"} className="w-6 h-6 rounded-full ml-2" />
+                      ) : null}
+
+                      {latestCommit.author_login ? (
+                        <a href={`https://github.com/${latestCommit.author_login}`} target="_blank" rel="noopener noreferrer" className="ml-2 font-medium text-primary-color hover:underline">
+                          {latestCommit.author_login}
+                        </a>
+                      ) : latestCommit.author_name ? (
+                        <span className="ml-2">by {latestCommit.author_name}</span>
+                      ) : null}
+
+                      {latestCommit.date && (
+                        <time
+                          dateTime={latestCommit.date}
+                          title={new Date(latestCommit.date).toLocaleString()}
+                          className="ml-2 text-xs text-zinc-500 dark:text-zinc-500"
+                        >
+                          {timeAgo(latestCommit.date)}
+                        </time>
                       )}
                     </div>
                   </div>
