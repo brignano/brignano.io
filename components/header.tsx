@@ -156,7 +156,7 @@ export default function Header() {
             height={35}
           />
         </Link>
-        <nav className="hidden md:block md:absolute md:left-1/2 md:-translate-x-1/2 md:transform">
+        <nav className="hidden lg:block lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:transform">
           <ul className="flex items-center gap-x-8">
             {pages?.map((page) => {
               const isActive = currentPage === page;
@@ -220,7 +220,7 @@ export default function Header() {
               aria-label="Toggle Menu"
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden dark:focus:text-primary-color dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-md p-2 hover:text-zinc-900 duration-300 cursor-pointer"
+              className="lg:hidden dark:focus:text-primary-color dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-md p-2 hover:text-zinc-900 duration-300 cursor-pointer"
             >
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="size-5" />
@@ -236,13 +236,13 @@ export default function Header() {
           onClose={setMobileMenuOpen}
         >
           <div
-            className={`fixed inset-0 z-10 bg-black/20 transition-opacity duration-300 ${animateSidenav ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+            className={`fixed inset-0 z-40 bg-black/20 transition-opacity duration-300 ${animateSidenav ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           />
 
-          <div className="fixed inset-x-0 bottom-0 z-20 w-full sm:inset-auto sm:right-0 sm:w-full sm:max-w-sm">
+          <div className="fixed inset-x-0 bottom-0 z-50 w-full lg:inset-auto lg:right-0 lg:w-full lg:max-w-sm">
             <DialogPanel
               ref={panelRef}
-              className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 sm:ring-1 sm:ring-gray-900/10 transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
+              className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 lg:ring-1 lg:ring-gray-900/10 transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
             >
               <div className="flex items-center justify-between">
                 <button
