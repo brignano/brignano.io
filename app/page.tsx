@@ -337,7 +337,7 @@ export default function Home() {
                   >
                     {commit.repo}
                   </a>
-                    <span className="mx-2">&nbsp;•</span>
+                  <span className="mx-2">&nbsp;•</span>
                   <span className="font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">
                     {commit.sha.substring(0, 7)}
                   </span>

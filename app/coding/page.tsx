@@ -380,18 +380,14 @@ export default async function Page() {
                       {typeof latestCommit.filesChanged === "number" && (
                         <>
                           <span className="mx-1 md:mx-2">&nbsp;•</span>
-                          <span>
-                            {latestCommit.filesChanged} files changed
-                          </span>
+                          <span>{latestCommit.filesChanged} files changed</span>
                         </>
                       )}
 
                       {typeof latestCommit.additions === "number" &&
                         typeof latestCommit.deletions === "number" && (
-                        <>
-                          <span className="mx-1 md:mx-2">
-                            •
-                          </span>
+                          <>
+                            <span className="mx-1 md:mx-2">•</span>
 
                             <span className="ml-2 text-green-600 dark:text-green-400 font-semibold">
                               +{latestCommit.additions}
@@ -399,7 +395,7 @@ export default async function Page() {
                             <span className="ml-2 text-red-600 dark:text-red-400 font-semibold">
                               −{latestCommit.deletions}
                             </span>
-                        </>
+                          </>
                         )}
 
                       {latestCommit.author_avatar ? (
@@ -425,9 +421,9 @@ export default async function Page() {
                           {latestCommit.author_login}
                         </a>
                       ) : latestCommit.author_name ? (
-                          <span className="ml-2">
-                            by {latestCommit.author_name}
-                          </span>
+                        <span className="ml-2">
+                          by {latestCommit.author_name}
+                        </span>
                       ) : null}
 
                       {latestCommit.date && (

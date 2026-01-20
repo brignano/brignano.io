@@ -11,7 +11,10 @@ export type LatestCommit = {
 
 export async function fetchLatestPublicCommit(): Promise<LatestCommit | null> {
   try {
-    const res = await fetch("https://api.github.com/users/brignano/events/public", { next: { revalidate: 60 } });
+    const res = await fetch(
+      "https://api.github.com/users/brignano/events/public",
+      { next: { revalidate: 60 } }
+    );
     if (!res.ok) return null;
     const events = await res.json();
     for (const ev of events) {
