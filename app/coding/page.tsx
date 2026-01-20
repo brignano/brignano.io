@@ -9,6 +9,7 @@ import type {
 import StatsPie from "../../components/stats/stats-pie";
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
 import GitHubCalendarClient from "../../components/github-calendar-client";
+import LocalTime from "../../components/local-time";
 
 async function fetchWaka(path: string) {
   const apiKey = process.env.WAKATIME_API_KEY;
@@ -437,15 +438,7 @@ export default async function Page() {
                         <span className="ml-2">by {latestCommit.author_name}</span>
                       ) : null}
 
-                      {latestCommit.date && (
-                        <time
-                          dateTime={latestCommit.date}
-                          title={new Date(latestCommit.date).toLocaleString()}
-                          className="ml-2 text-xs text-zinc-500 dark:text-zinc-500"
-                        >
-                          {timeAgo(latestCommit.date)}
-                        </time>
-                      )}
+                      {latestCommit.date && <LocalTime iso={latestCommit.date} />}
                     </div>
                   </div>
                 </div>
