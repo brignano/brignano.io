@@ -41,6 +41,41 @@ async function safeFetch<T>(path: string) {
   }
 }
 
+async function fetchLatestPublicCommit() {
+  try {
+    const res = await fetch(
+      "https://api.github.com/users/brignano/events/public",
+      { next: { revalidate: 60 } }
+    );
+    if (!res.ok) return null;
+    const events = await res.json();
+    for (const ev of events) {
+      if (ev.type === "PushEvent" && ev.payload) {
+        const repo = ev.repo?.name;
+        const commits = ev.payload.commits;
+        const c = (commits && commits[0]) || ev.payload.head_commit;
+        const head = ev.payload.head || (c && c.sha) || null;
+        if (head && repo) {
+          return {
+            sha: head,
+            message: c?.message || "",
+            url: `https://github.com/${repo}/commit/${head}`,
+            repo,
+            // prefer the commit author name, but include actor login for linking
+            author_name: c?.author?.name || null,
+            author_login: ev.actor?.login || null,
+            author_avatar: ev.actor?.avatar_url || null,
+            date: ev.created_at || null,
+          };
+        }
+      }
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+}
+
 async function fetchReadmeLines(): Promise<string | null> {
   try {
     const res = await fetch(
@@ -156,6 +191,9 @@ export default async function Page() {
       );
     })();
 
+    // fetch latest public commit (server-side)
+    const latestCommit = await fetchLatestPublicCommit();
+
     return (
       <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
         <div className="max-w-6xl mx-auto">
@@ -200,6 +238,53 @@ export default async function Page() {
             </div>
           </div>
 
+          {/* Last Commit Tile (server-rendered, styled like other coding tiles) */}
+          {latestCommit && (
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-once="true"
+              data-aos-delay="175"
+              className="mb-6"
+            >
+              <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
+                <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">Last Commit</h3>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div>
+                    <a
+                      href={latestCommit.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary-color font-semibold hover:underline"
+                    >
+                      {latestCommit.message || "View Commit"}
+                    </a>
+                    <div className="mt-2 text-sm dark:text-zinc-400 text-zinc-600">
+                      <a
+                        href={`https://github.com/${latestCommit.repo}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium"
+                      >
+                        {latestCommit.repo}
+                      </a>
+                      <span className="mx-2">•</span>
+                      <span className="font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">
+                        {latestCommit.sha.substring(0, 7)}
+                      </span>
+                      {latestCommit.author_name && <span className="ml-2">by {latestCommit.author_name}</span>}
+                      {latestCommit.date && (
+                        <span className="ml-2 text-xs text-zinc-500 dark:text-zinc-500">
+                          {new Date(latestCommit.date).toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div
             data-aos="fade-up"
             data-aos-duration="700"
@@ -227,7 +312,7 @@ export default async function Page() {
               <StatsPie
                 data={languages}
                 title="Programming Languages"
-                description="Languages used in the IDE (tracked by WakaTime)."
+                description="Languages used in the IDE (when tracked by WakaTime)."
               />
             </div>
 
@@ -241,7 +326,7 @@ export default async function Page() {
               <StatsPie
                 data={categories}
                 title="Activity Types"
-                description="Types of IDE activity (tracked by WakaTime)."
+                description="Types of IDE activity (when tracked by WakaTime)."
               />
             </div>
           </section>

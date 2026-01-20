@@ -58,7 +58,7 @@ export default function GitHubCalendarClient({
           </div>
         </div>
           {showDisclaimer && (
-            <div className="w-full mt-3 text-sm text-zinc-500 dark:text-zinc-500">
+            <div className="w-full mt-3 text-sm text-zinc-500 dark:text-zinc-500 italic">
               View more information on{' '}
               <a
                 href="https://github.com/brignano"

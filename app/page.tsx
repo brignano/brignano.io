@@ -1,15 +1,60 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import GitHubCalendarClient from "@/components/github-calendar-client";
 import { socialLinks, highlights, projects } from "@/lib/constants";
-import AOS from "aos";
+// AOS is initialized globally via components/AOSInit mounted in app/layout.tsx
 import { event } from "@/lib/gtag";
 
 export default function Home() {
+  // AOS initialization moved to root layout via <AOSInit />
+
+  const [commit, setCommit] = useState<{
+    sha: string;
+    message: string;
+    url: string;
+    repo: string;
+    author?: string;
+    date?: string;
+  } | null>(null);
+  const [commitLoading, setCommitLoading] = useState(true);
+
   useEffect(() => {
-    AOS.init();
+    async function fetchLatestCommit() {
+      try {
+        const res = await fetch(
+          "https://api.github.com/users/brignano/events/public"
+        );
+        if (!res.ok) {
+          setCommitLoading(false);
+          return;
+        }
+        const events = await res.json();
+        for (const ev of events) {
+          if (ev.type === "PushEvent" && ev.payload) {
+            const repo = ev.repo?.name;
+            const commits = ev.payload.commits;
+            const head = ev.payload.head || (commits && commits[0]?.sha);
+            const c = (commits && commits[0]) || ev.payload.head_commit;
+            if (head && repo) {
+              const sha = head;
+              const message = c?.message || "";
+              const author = c?.author?.name || ev.actor?.login || "";
+              const date = ev.created_at;
+              const url = `https://github.com/${repo}/commit/${sha}`;
+              setCommit({ sha, message, url, repo, author, date });
+              setCommitLoading(false);
+              return;
+            }
+          }
+        }
+        setCommitLoading(false);
+      } catch (e) {
+        setCommitLoading(false);
+      }
+    }
+    fetchLatestCommit();
   }, []);
 
   return (
@@ -267,6 +312,56 @@ export default function Home() {
               <p className="text-sm font-medium">{highlight}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Latest Commit Tile */}
+      <section
+        className="mb-8"
+        data-aos="fade-up"
+        data-aos-duration={800}
+        data-aos-once={true}
+      >
+        <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-6 py-4 shadow-sm">
+          <h3 className="font-incognito text-2xl mb-3 font-bold">Latest Public Commit</h3>
+          {commitLoading ? (
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">Loading latest commit…</p>
+          ) : commit ? (
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <a
+                  href={commit.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary-color font-semibold hover:underline"
+                >
+                  {commit.message || "View Commit"}
+                </a>
+                <div className="mt-2 text-sm dark:text-zinc-400 text-zinc-600">
+                  <a
+                    href={`https://github.com/${commit.repo}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium"
+                  >
+                    {commit.repo}
+                  </a>
+                  <span className="mx-2">•</span>
+                  <span className="font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded">
+                    {commit.sha.substring(0, 7)}
+                  </span>
+                  {commit.author && <span className="ml-2">by {commit.author}</span>}
+                  {commit.date && (
+                    <span className="ml-2 text-xs text-zinc-500 dark:text-zinc-500">
+                      {new Date(commit.date).toLocaleString()}
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">No recent public commits found.</p>
+          )}
         </div>
       </section>
 
