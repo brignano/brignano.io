@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import GitHubCalendarClient from "@/components/github-calendar-client";
 import { socialLinks, highlights, projects } from "@/lib/constants";
-// AOS is initialized globally via components/AOSInit mounted in app/layout.tsx
+import { fetchLatestPublicCommit } from "@/lib/github";
 import { event } from "@/lib/gtag";
 
 export default function Home() {
@@ -23,32 +23,19 @@ export default function Home() {
   useEffect(() => {
     async function fetchLatestCommit() {
       try {
-        const res = await fetch(
-          "https://api.github.com/users/brignano/events/public"
-        );
-        if (!res.ok) {
+        const c = await fetchLatestPublicCommit();
+        if (!c) {
           setCommitLoading(false);
           return;
         }
-        const events = await res.json();
-        for (const ev of events) {
-          if (ev.type === "PushEvent" && ev.payload) {
-            const repo = ev.repo?.name;
-            const commits = ev.payload.commits;
-            const head = ev.payload.head || (commits && commits[0]?.sha);
-            const c = (commits && commits[0]) || ev.payload.head_commit;
-            if (head && repo) {
-              const sha = head;
-              const message = c?.message || "";
-              const author = c?.author?.name || ev.actor?.login || "";
-              const date = ev.created_at;
-              const url = `https://github.com/${repo}/commit/${sha}`;
-              setCommit({ sha, message, url, repo, author, date });
-              setCommitLoading(false);
-              return;
-            }
-          }
-        }
+        setCommit({
+          sha: c.sha,
+          message: c.message || "",
+          url: c.url || `https://github.com/${c.repo}/commit/${c.sha}`,
+          repo: c.repo || "",
+          author: c.author_name || c.author_login || undefined,
+          date: c.date,
+        });
         setCommitLoading(false);
       } catch (e) {
         setCommitLoading(false);

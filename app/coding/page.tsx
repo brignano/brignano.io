@@ -9,6 +9,7 @@ import type {
 import StatsPie from "../../components/stats/stats-pie";
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
 import GitHubCalendarClient from "../../components/github-calendar-client";
+import { fetchLatestPublicCommit, LatestCommit } from "@/lib/github";
 import LocalTime from "../../components/local-time";
 
 async function fetchWaka(path: string) {
@@ -42,55 +43,7 @@ async function safeFetch<T>(path: string) {
   }
 }
 
-async function fetchLatestPublicCommit() {
-  try {
-    const res = await fetch(
-      "https://api.github.com/users/brignano/events/public",
-      { next: { revalidate: 60 } }
-    );
-    if (!res.ok) return null;
-    const events = await res.json();
-    for (const ev of events) {
-      if (ev.type === "PushEvent" && ev.payload) {
-        const repo = ev.repo?.name;
-        const commits = ev.payload.commits;
-        const c = (commits && commits[0]) || ev.payload.head_commit;
-        const head = ev.payload.head || (c && c.sha) || null;
-        if (head && repo) {
-          return {
-            sha: head,
-            message: c?.message || "",
-            url: `https://github.com/${repo}/commit/${head}`,
-            repo,
-            // prefer the commit author name, but include actor login for linking
-            author_name: c?.author?.name || null,
-            author_login: ev.actor?.login || null,
-            author_avatar: ev.actor?.avatar_url || null,
-            date: ev.created_at || null,
-          };
-        }
-      }
-    }
-    return null;
-  } catch (e) {
-    return null;
-  }
-}
-
-// Structured type for the latest commit we render
-type LatestCommit = {
-  sha: string;
-  message?: string | null;
-  url?: string | null;
-  repo?: string | null;
-  author_name?: string | null;
-  author_login?: string | null;
-  author_avatar?: string | null;
-  date?: string | null;
-  filesChanged?: number | undefined;
-  additions?: number | undefined;
-  deletions?: number | undefined;
-};
+// Additional rendering helpers and local types
 
 function splitMessage(message?: string | null) {
   if (!message) return { subject: "", bodyLines: [] as string[] };
