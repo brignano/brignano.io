@@ -2,6 +2,7 @@ import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
+import "aos/dist/aos.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
