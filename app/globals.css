@@ -84,6 +84,19 @@ h1 {
   font-family: var(--font-silkscreen-mono);
 }
 
+/* Use Inconsolata for code-like elements for better readability */
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-inconsolata-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Noto Mono", "monospace";
+}
+
+/* Ensure body uses the configured sans variable from next/font */
+body {
+  font-family: var(--font-sans, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
+}
+
 /* Print styles for PDF output (resume page) */
 @media print {
   body {

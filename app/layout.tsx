@@ -1,4 +1,4 @@
-import { Inconsolata, Silkscreen } from "next/font/google";
+import { Inconsolata, Silkscreen, Inter } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
@@ -14,6 +14,11 @@ import AOSInit from "@/components/aos-init";
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata-mono",
+  subsets: ["latin"],
+});
+
+const inter = Inter({
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
@@ -37,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inconsolata.variable} ${silkscreen.variable} antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
+        className={`${inter.variable} ${inconsolata.variable} ${silkscreen.variable} antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
       >
         <Script
           id="structured-data"
