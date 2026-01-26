@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect } from "react";
-import AOS from "aos";
 
 export default function AOSInit() {
   useEffect(() => {
-    try {
-      AOS.init({ once: true });
-    } catch (e) {
-      // noop - fail safe
-    }
+    // Dynamically import AOS only on client-side
+    const initAOS = async () => {
+      try {
+        const AOS = (await import("aos")).default;
+        AOS.init({ once: true, duration: 800 });
+      } catch (e) {
+        // noop - fail safe
+      }
+    };
+    initAOS();
   }, []);
 
   return null;

@@ -19,6 +19,7 @@ export const siteMetadata: Metadata = {
       { url: "/favicon-dark.svg", media: "(prefers-color-scheme: dark)" },
     ],
   },
+  manifest: "/manifest.json",
   openGraph: {
     title: "Anthony Brignano | Platform Engineering & DevSecOps",
     description:
