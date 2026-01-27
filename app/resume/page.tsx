@@ -267,15 +267,15 @@ export default function Home() {
                     )}
                   </div>
                   <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
-                    {job.startDate.toUpperCase()} -{" "}
+                    {String(job.startDate).toUpperCase()} -{" "}
                     <span
                       className={
-                        job.endDate.toLowerCase() === "present"
+                        String(job.endDate).toLowerCase() === "present"
                           ? "text-primary-color"
                           : ""
                       }
                     >
-                      {job.endDate.toUpperCase()}
+                      {String(job.endDate).toUpperCase()}
                     </span>
                   </time>
                 </div>
