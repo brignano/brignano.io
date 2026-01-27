@@ -1,17 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import { pdf } from "@react-pdf/renderer";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { event } from "@/lib/gtag";
 
-// Dynamically import ResumePDF to avoid SSR issues
-const ResumePDF = dynamic(() => import("@/components/resume-pdf"), {
-  ssr: false,
-});
+// `ResumePDF` and `@react-pdf/renderer` are imported dynamically in the
+// download handler to avoid bundling or SSR issues.
 
 const RESUME_BREADCRUMBS = [
   {
@@ -36,7 +32,14 @@ export default function Home() {
 
     setIsGeneratingPDF(true);
     try {
-      // Generate PDF using ResumePDF component
+      // Dynamically import both the PDF renderer and the ResumePDF component
+      // in the browser and generate the PDF. Importing here prevents server
+      // or bundler-time errors caused by `@react-pdf/renderer`.
+      const [{ default: ResumePDF }, { pdf }] = await Promise.all([
+        import("@/components/resume-pdf"),
+        import("@react-pdf/renderer"),
+      ]);
+
       const blob = await pdf(<ResumePDF data={resumeData} />).toBlob();
 
       // Create download link
