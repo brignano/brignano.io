@@ -55,16 +55,34 @@ export default function Home() {
   useEffect(() => {
     const fetchResume = async () => {
       try {
-        // Get the endpoint from environment variable or use default
+        // Get the endpoint from environment variable or use default (now YAML)
         const endpoint =
-          process.env.NEXT_PUBLIC_RESUME_ENDPOINT || "/resume.json";
+          process.env.NEXT_PUBLIC_RESUME_ENDPOINT || "/resume.yml";
         const response = await fetch(endpoint);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch resume: ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const text = await response.text();
+
+        let data: ResumeData | null = null;
+        try {
+          const contentType = response.headers.get("content-type") || "";
+          const isYaml = endpoint.endsWith(".yml") || endpoint.endsWith(".yaml") || contentType.includes("yaml") || contentType.includes("text/plain");
+
+          if (isYaml) {
+            const jsyaml = await import("js-yaml");
+            // `load` can return unknown; cast to ResumeData
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            data = jsyaml.load(text) as ResumeData;
+          } else {
+            data = JSON.parse(text) as ResumeData;
+          }
+        } catch (parseErr) {
+          throw new Error(`Failed to parse resume: ${parseErr instanceof Error ? parseErr.message : String(parseErr)}`);
+        }
+
         setResumeData(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load resume");

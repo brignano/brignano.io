@@ -23,7 +23,7 @@ This is a personal portfolio website built with Next.js 16, React 19, and Tailwi
 - `lib/` - Utilities, constants, and helper functions
   - `constants.ts` - Site metadata, social links, and constants
   - `gtag.ts` - Google Analytics helper
-- `public/` - Static assets (images, favicon, resume.json, robots.txt)
+- `public/` - Static assets (images, favicon, resume.yml, robots.txt)
 - `types/` - TypeScript type definitions
 
 ## Coding Conventions

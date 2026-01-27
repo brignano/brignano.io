@@ -239,7 +239,7 @@ Optional:
 ├── components/             # React components (reusable UI)
 ├── public/                 # Static assets
 │   ├── robots.txt          # Robots rules
-│   └── resume.json         # Resume data
+│   └── resume.yml         # Resume data
 ├── lib/                    # Site constants, analytics helpers
 ├── types/                  # TypeScript types
 ├── eslint.config.mjs       # ESLint configuration
