@@ -17,13 +17,13 @@ export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.url,
+      "@id": item.url,
     })),
   };
 
   return (
     <Script
-      id="breadcrumb-schema"
+      id={`breadcrumb-schema-${items.length > 0 ? items[items.length - 1].name.toLowerCase().replace(/\s+/g, "-") : "home"}`}
       type="application/ld+json"
       strategy="afterInteractive"
       dangerouslySetInnerHTML={{

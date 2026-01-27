@@ -13,6 +13,17 @@ import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { fetchLatestPublicCommit, LatestCommit } from "@/lib/github";
 import LocalTime from "../../components/local-time";
 
+const CODING_BREADCRUMBS = [
+  {
+    name: "Home",
+    url: "https://brignano.io",
+  },
+  {
+    name: "Coding",
+    url: "https://brignano.io/coding",
+  },
+];
+
 async function fetchWaka(path: string) {
   const apiKey = process.env.WAKATIME_API_KEY;
   if (!apiKey) {
@@ -231,18 +242,7 @@ export default async function Page() {
 
     return (
       <>
-        <BreadcrumbSchema
-          items={[
-            {
-              name: "Home",
-              url: "https://brignano.io",
-            },
-            {
-              name: "Coding",
-              url: "https://brignano.io/coding",
-            },
-          ]}
-        />
+        <BreadcrumbSchema items={CODING_BREADCRUMBS} />
         <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
         <div className="max-w-6xl mx-auto">
           <h1
@@ -512,18 +512,7 @@ export default async function Page() {
     const errorMessage = err instanceof Error ? err.message : String(err);
     return (
       <>
-        <BreadcrumbSchema
-          items={[
-            {
-              name: "Home",
-              url: "https://brignano.io",
-            },
-            {
-              name: "Coding",
-              url: "https://brignano.io/coding",
-            },
-          ]}
-        />
+        <BreadcrumbSchema items={CODING_BREADCRUMBS} />
         <main className="max-w-4xl mx-auto px-6 pt-0 pb-12">
           <h1 className="prose">Coding Activity</h1>
           <p>Error loading coding statistics: {errorMessage}</p>

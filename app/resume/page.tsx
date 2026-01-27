@@ -5,6 +5,17 @@ import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { event } from "@/lib/gtag";
 
+const RESUME_BREADCRUMBS = [
+  {
+    name: "Home",
+    url: "https://brignano.io",
+  },
+  {
+    name: "Resume",
+    url: "https://brignano.io/resume",
+  },
+];
+
 export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -69,18 +80,7 @@ export default function Home() {
   if (loading) {
     return (
       <>
-        <BreadcrumbSchema
-          items={[
-            {
-              name: "Home",
-              url: "https://brignano.io",
-            },
-            {
-              name: "Resume",
-              url: "https://brignano.io/resume",
-            },
-          ]}
-        />
+        <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
         <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
         <div className="text-center">
           <p className="text-lg dark:text-zinc-400 text-zinc-600">
@@ -95,18 +95,7 @@ export default function Home() {
   if (error || !resumeData) {
     return (
       <>
-        <BreadcrumbSchema
-          items={[
-            {
-              name: "Home",
-              url: "https://brignano.io",
-            },
-            {
-              name: "Resume",
-              url: "https://brignano.io/resume",
-            },
-          ]}
-        />
+        <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
         <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
         <div className="text-center">
           <p className="text-lg text-red-600 dark:text-red-400">
@@ -130,18 +119,7 @@ export default function Home() {
 
   return (
     <>
-      <BreadcrumbSchema
-        items={[
-          {
-            name: "Home",
-            url: "https://brignano.io",
-          },
-          {
-            name: "Resume",
-            url: "https://brignano.io/resume",
-          },
-        ]}
-      />
+      <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
       {/* Hero Section */}
       <section
