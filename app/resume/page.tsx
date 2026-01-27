@@ -31,20 +31,6 @@ export default function Home() {
   const [shareSupported, setShareSupported] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
-  useEffect(() => {
-    setShareSupported(typeof navigator !== "undefined" && !!navigator.share);
-
-    // Listen for download event from header
-    const handleDownloadEvent = () => {
-      handleDownloadPDF();
-    };
-
-    window.addEventListener("download-resume-pdf", handleDownloadEvent);
-    return () => {
-      window.removeEventListener("download-resume-pdf", handleDownloadEvent);
-    };
-  }, [resumeData, isGeneratingPDF]);
-
   const handleDownloadPDF = async () => {
     if (!resumeData || isGeneratingPDF) return;
 
@@ -76,6 +62,21 @@ export default function Home() {
       setIsGeneratingPDF(false);
     }
   };
+
+  useEffect(() => {
+    setShareSupported(typeof navigator !== "undefined" && !!navigator.share);
+
+    // Listen for download event from header
+    const handleDownloadEvent = () => {
+      handleDownloadPDF();
+    };
+
+    window.addEventListener("download-resume-pdf", handleDownloadEvent);
+    return () => {
+      window.removeEventListener("download-resume-pdf", handleDownloadEvent);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeData, isGeneratingPDF]);
 
   const handleShare = async () => {
     const url =
