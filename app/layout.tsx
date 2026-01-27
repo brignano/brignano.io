@@ -46,6 +46,47 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Helper: convert various possibly-null/undefined values into string | undefined
+  const toStringOrUndefined = (v: unknown): string | undefined =>
+    v === null || v === undefined ? undefined : String(v);
+
+  const urlToString = (v: unknown): string | undefined => {
+    if (v instanceof URL) return v.toString();
+    if (typeof v === "string") return v;
+    return toStringOrUndefined(v);
+  };
+
+  const getFirstImageUrl = (images: any): string | undefined => {
+    if (!images) return undefined;
+    if (typeof images === "string") return images;
+    if (Array.isArray(images)) return images[0]?.url ?? images[0] ?? undefined;
+    if (typeof images === "object") return images.url ?? undefined;
+    return undefined;
+  };
+
+  const getImageDimension = (images: any, key: "width" | "height"): number | undefined => {
+    if (!images) return undefined;
+    if (Array.isArray(images)) return images[0]?.[key] ?? undefined;
+    if (typeof images === "object") return images[key] ?? undefined;
+    return undefined;
+  };
+
+  // Compute meta values ensuring types match React's MetaHTMLAttributes
+  const metaDescription = toStringOrUndefined(siteMetadata.description);
+  const ogTitle = toStringOrUndefined(siteMetadata.openGraph?.title ?? siteMetadata.title);
+  const ogDescription = toStringOrUndefined(siteMetadata.openGraph?.description ?? siteMetadata.description);
+  const ogUrl = urlToString(siteMetadata.openGraph?.url ?? siteMetadata.metadataBase?.toString());
+  const ogSiteName = toStringOrUndefined(siteMetadata.openGraph?.siteName);
+  const ogType = toStringOrUndefined((siteMetadata.openGraph && (siteMetadata.openGraph as any).type) ?? "website");
+  const ogImageUrl = getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og-image.jpg";
+  const ogImageWidth = String(getImageDimension(siteMetadata.openGraph?.images, "width") ?? 1200);
+  const ogImageHeight = String(getImageDimension(siteMetadata.openGraph?.images, "height") ?? 630);
+  const twitterCard = toStringOrUndefined((siteMetadata.twitter && (siteMetadata.twitter as any).card) ?? "summary_large_image");
+  const twitterTitle = toStringOrUndefined(siteMetadata.twitter?.title ?? siteMetadata.title);
+  const twitterDescription = toStringOrUndefined(siteMetadata.twitter?.description ?? siteMetadata.description);
+  const twitterImage =
+    getFirstImageUrl(siteMetadata.twitter?.images) ?? getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og-image.jpg";
+
   return (
     <html lang="en">
       <head>
@@ -57,6 +98,20 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        {/* Explicit Open Graph / Twitter meta tags to improve link previews (eg. iMessage) */}
+        <meta name="description" content={metaDescription} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:url" content={ogUrl} />
+        <meta property="og:site_name" content={ogSiteName} />
+        <meta property="og:type" content={ogType} />
+        <meta property="og:image" content={ogImageUrl} />
+        <meta property="og:image:width" content={ogImageWidth} />
+        <meta property="og:image:height" content={ogImageHeight} />
+        <meta name="twitter:card" content={twitterCard} />
+        <meta name="twitter:title" content={twitterTitle} />
+        <meta name="twitter:description" content={twitterDescription} />
+        <meta name="twitter:image" content={twitterImage} />
       </head>
       <body
         className={`${inconsolata.variable} ${silkscreen.variable} antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
@@ -113,7 +168,7 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
         <SpeedInsights />
-        <GoogleAnalytics />
+        {isProduction && GA_MEASUREMENT_ID && <GoogleAnalytics />}
         <Analytics />
       </body>
     </html>
