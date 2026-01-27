@@ -2,7 +2,19 @@
 
 import { useEffect, useState } from "react";
 import type { ResumeData } from "@/types/resume";
+import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { event } from "@/lib/gtag";
+
+const RESUME_BREADCRUMBS = [
+  {
+    name: "Home",
+    url: "https://brignano.io",
+  },
+  {
+    name: "Resume",
+    url: "https://brignano.io/resume",
+  },
+];
 
 export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
@@ -67,25 +79,31 @@ export default function Home() {
 
   if (loading) {
     return (
-      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
+      <>
+        <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
+        <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
         <div className="text-center">
           <p className="text-lg dark:text-zinc-400 text-zinc-600">
             Loading resume...
           </p>
         </div>
       </main>
+      </>
     );
   }
 
   if (error || !resumeData) {
     return (
-      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
+      <>
+        <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
+        <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
         <div className="text-center">
           <p className="text-lg text-red-600 dark:text-red-400">
             {error || "Failed to load resume data"}
           </p>
         </div>
       </main>
+      </>
     );
   }
 
@@ -100,7 +118,9 @@ export default function Home() {
   } = resumeData;
 
   return (
-    <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+    <>
+      <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
+      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
       {/* Hero Section */}
       <section
         data-aos="fade-down"
@@ -126,14 +146,15 @@ export default function Home() {
           {personalInfo.phone && <span>{personalInfo.phone}</span>}
           {personalInfo.location && <span>{personalInfo.location}</span>}
         </div>
-        {/* Social Media Links for screen only (button style) */}
-        <div className="flex flex-wrap gap-4 mb-8 print:hidden">
+        {/* Social Media Links */}
+        <div className="flex flex-wrap gap-4 mb-8">
+          {/* Website button - show in print only */}
           {personalInfo.website && (
             <a
               href={personalInfo.website}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              className="hidden print:inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
               onClick={() => {
                 event("website_clicked", {
                   cta: "resume_website",
@@ -145,12 +166,13 @@ export default function Home() {
               Website
             </a>
           )}
+          {/* LinkedIn and GitHub - show in browser only */}
           {personalInfo.linkedin && (
             <a
               href={personalInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              className="print:hidden inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
             >
               LinkedIn
             </a>
@@ -160,7 +182,7 @@ export default function Home() {
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              className="print:hidden inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
             >
               GitHub
             </a>
@@ -472,5 +494,6 @@ export default function Home() {
         </section>
       )}
     </main>
+    </>
   );
 }

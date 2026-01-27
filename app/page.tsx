@@ -3,12 +3,22 @@
 import Link from "next/link";
 import GitHubCalendarClient from "@/components/github-calendar-client";
 import HeroSVG from "@/components/hero-svg";
+import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { socialLinks, highlights, projects } from "@/lib/constants";
 import { event } from "@/lib/gtag";
 
+const HOME_BREADCRUMBS = [
+  {
+    name: "Home",
+    url: "https://brignano.io",
+  },
+];
+
 export default function Home() {
   return (
-    <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
+    <>
+      <BreadcrumbSchema items={HOME_BREADCRUMBS} />
+      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
       {/* Hero Section with CTAs */}
       <section
         data-aos="fade-down"
@@ -429,5 +439,6 @@ export default function Home() {
         </div>
       </section>
     </main>
+    </>
   );
 }

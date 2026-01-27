@@ -9,8 +9,20 @@ import type {
 import StatsPie from "../../components/stats/stats-pie";
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
 import GitHubCalendarClient from "../../components/github-calendar-client";
+import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { fetchLatestPublicCommit, LatestCommit } from "@/lib/github";
 import LocalTime from "../../components/local-time";
+
+const CODING_BREADCRUMBS = [
+  {
+    name: "Home",
+    url: "https://brignano.io",
+  },
+  {
+    name: "Coding",
+    url: "https://brignano.io/coding",
+  },
+];
 
 async function fetchWaka(path: string) {
   const apiKey = process.env.WAKATIME_API_KEY;
@@ -229,7 +241,9 @@ export default async function Page() {
     }
 
     return (
-      <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
+      <>
+        <BreadcrumbSchema items={CODING_BREADCRUMBS} />
+        <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
         <div className="max-w-6xl mx-auto">
           <h1
             data-aos="fade-up"
@@ -492,15 +506,19 @@ export default async function Page() {
           </div>
         </div>
       </main>
+      </>
     );
   } catch (err) {
     const errorMessage = err instanceof Error ? err.message : String(err);
     return (
-      <main className="max-w-4xl mx-auto px-6 pt-0 pb-12">
-        <h1 className="prose">Coding Activity</h1>
-        <p>Error loading coding statistics: {errorMessage}</p>
-        <p>Ensure `WAKATIME_API_KEY` is set in your environment.</p>
-      </main>
+      <>
+        <BreadcrumbSchema items={CODING_BREADCRUMBS} />
+        <main className="max-w-4xl mx-auto px-6 pt-0 pb-12">
+          <h1 className="prose">Coding Activity</h1>
+          <p>Error loading coding statistics: {errorMessage}</p>
+          <p>Ensure `WAKATIME_API_KEY` is set in your environment.</p>
+        </main>
+      </>
     );
   }
 }
