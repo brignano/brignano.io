@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderBottomWidth: 1,
     borderBottomColor: "#000",
-    paddingBottom: 2,
+    paddingBottom: 6,
   },
   summaryText: {
     fontSize: 10,
