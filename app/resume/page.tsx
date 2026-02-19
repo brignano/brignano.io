@@ -42,19 +42,28 @@ export default function Home() {
 
       const blob = await pdf(<ResumePDF data={resumeData} />).toBlob();
 
-      // Create download link
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${resumeData.personalInfo.name.replace(/\s+/g, "_")}_Resume.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      // Open a preview tab for the PDF without auto-printing.
+      const pdfBlobUrl = URL.createObjectURL(blob);
+      const opened = window.open(pdfBlobUrl, "_blank");
+
+      if (!opened) {
+        // Fallback to download if popup was blocked
+        const link = document.createElement("a");
+        link.href = pdfBlobUrl;
+        link.download = `${resumeData.personalInfo.name.replace(/\s+/g, "_")}_Resume.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // Clean up object URL after a short delay
+      setTimeout(() => {
+        URL.revokeObjectURL(pdfBlobUrl);
+      }, 60_000);
 
       // Track event
-      event("pdf_downloaded", {
-        cta: "resume_download",
+      event("pdf_preview_opened", {
+        cta: "resume_preview",
         origin: "resume",
         transport_type: "beacon",
       });
