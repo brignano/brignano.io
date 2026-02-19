@@ -43,8 +43,18 @@ const styles = StyleSheet.create({
   },
   contactInfo: {
     fontSize: 9,
-    marginBottom: 4,
     color: "#555",
+  },
+  contactInfoRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 4,
+  },
+  contactInfoItem: {
+    fontSize: 9,
+    color: "#555",
+    width: "50%",
+    marginBottom: 2,
   },
   section: {
     marginBottom: 16,
@@ -210,32 +220,38 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
         <View style={styles.header}>
           <Text style={styles.name}>{personalInfo.name}</Text>
           <Text style={styles.title}>{personalInfo.title}</Text>
-          {personalInfo.email && (
-            <Text style={styles.contactInfo}>Email: {personalInfo.email}</Text>
-          )}
-          {personalInfo.phone && (
-            <Text style={styles.contactInfo}>Phone: {personalInfo.phone}</Text>
-          )}
-          {personalInfo.location && (
-            <Text style={styles.contactInfo}>
-              Location: {personalInfo.location}
-            </Text>
-          )}
-          {personalInfo.website && (
-            <Text style={styles.contactInfo}>
-              Website: {personalInfo.website}
-            </Text>
-          )}
-          {personalInfo.linkedin && (
-            <Text style={styles.contactInfo}>
-              LinkedIn: {personalInfo.linkedin}
-            </Text>
-          )}
-          {personalInfo.github && (
-            <Text style={styles.contactInfo}>
-              GitHub: {personalInfo.github}
-            </Text>
-          )}
+          <View style={styles.contactInfoRow}>
+            {personalInfo.email && (
+              <Text style={styles.contactInfoItem}>
+                Email: {personalInfo.email}
+              </Text>
+            )}
+            {personalInfo.phone && (
+              <Text style={styles.contactInfoItem}>
+                Phone: {personalInfo.phone}
+              </Text>
+            )}
+            {personalInfo.location && (
+              <Text style={styles.contactInfoItem}>
+                Location: {personalInfo.location}
+              </Text>
+            )}
+            {personalInfo.website && (
+              <Text style={styles.contactInfoItem}>
+                Website: {personalInfo.website}
+              </Text>
+            )}
+            {personalInfo.linkedin && (
+              <Text style={styles.contactInfoItem}>
+                LinkedIn: {personalInfo.linkedin}
+              </Text>
+            )}
+            {personalInfo.github && (
+              <Text style={styles.contactInfoItem}>
+                GitHub: {personalInfo.github}
+              </Text>
+            )}
+          </View>
         </View>
 
         {/* Summary Section */}
@@ -289,31 +305,7 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
           </View>
         )}
 
-        {/* Education Section */}
-        {education && education.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Education</Text>
-            {education.map((edu, index) => (
-              <View key={index} style={styles.educationItem}>
-                <Text style={styles.degree}>{edu.degree}</Text>
-                {edu.field && (
-                  <Text style={styles.institution}>{edu.field}</Text>
-                )}
-                <Text style={styles.institution}>{edu.institution}</Text>
-                {(edu.startDate || edu.endDate) && (
-                  <Text style={styles.educationDetails}>
-                    {edu.startDate && edu.endDate
-                      ? `${edu.startDate} - ${edu.endDate}`
-                      : String(edu.startDate ?? edu.endDate ?? "")}
-                  </Text>
-                )}
-                {edu.gpa && (
-                  <Text style={styles.educationDetails}>GPA: {edu.gpa}</Text>
-                )}
-              </View>
-            ))}
-          </View>
-        )}
+        {/* Education Section intentionally omitted in PDF to keep it to 2 pages */}
 
         {/* Skills Section */}
         {skills && skills.length > 0 && (
@@ -328,30 +320,6 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
                   <Text style={styles.skillItems}>
                     {skillGroup.items.join(", ")}
                   </Text>
-                </View>
-              ))}
-            </View>
-          </View>
-        )}
-
-        {/* Projects Section */}
-        {projects && projects.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Projects</Text>
-            <View style={styles.projectsGrid}>
-              {projects.map((project, index) => (
-                <View key={index} style={styles.projectItem}>
-                  <Text style={styles.projectName}>{project.name}</Text>
-                  <Text style={styles.projectDescription}>
-                    {project.description}
-                  </Text>
-                  <View style={styles.techList}>
-                    {project.technologies.map((tech, i) => (
-                      <Text key={i} style={styles.techItem}>
-                        {tech}
-                      </Text>
-                    ))}
-                  </View>
                 </View>
               ))}
             </View>
