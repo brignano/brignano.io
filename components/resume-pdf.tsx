@@ -32,12 +32,13 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 4,
+    marginBottom: 10,
   },
   title: {
     fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 8,
+    marginTop: 6,
+    marginBottom: 12,
     color: "#333",
   },
   contactInfo: {
