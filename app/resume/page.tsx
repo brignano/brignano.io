@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { event } from "@/lib/gtag";
+
+// `ResumePDF` and `@react-pdf/renderer` are imported dynamically in the
+// download handler to avoid bundling or SSR issues.
 
 const RESUME_BREADCRUMBS = [
   {
@@ -21,10 +25,71 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [shareSupported, setShareSupported] = useState(false);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const handleDownloadPDF = async () => {
+    if (!resumeData || isGeneratingPDF) return;
+
+    setIsGeneratingPDF(true);
+    try {
+      // Dynamically import both the PDF renderer and the ResumePDF component
+      // in the browser and generate the PDF. Importing here prevents server
+      // or bundler-time errors caused by `@react-pdf/renderer`.
+      const [{ default: ResumePDF }, { pdf }] = await Promise.all([
+        import("@/components/resume-pdf"),
+        import("@react-pdf/renderer"),
+      ]);
+
+      const blob = await pdf(<ResumePDF data={resumeData} />).toBlob();
+
+      // Open a preview tab for the PDF without auto-printing.
+      const pdfBlobUrl = URL.createObjectURL(blob);
+      const opened = window.open(pdfBlobUrl, "_blank");
+
+      if (!opened) {
+        // Fallback to download if popup was blocked
+        const link = document.createElement("a");
+        link.href = pdfBlobUrl;
+        link.download = `${resumeData.personalInfo.name.replace(/\s+/g, "_")}_Resume.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // Clean up object URL after a short delay
+      setTimeout(() => {
+        URL.revokeObjectURL(pdfBlobUrl);
+      }, 60_000);
+
+      // Track event
+      event("pdf_preview_opened", {
+        cta: "resume_preview",
+        origin: "resume",
+        transport_type: "beacon",
+      });
+    } catch (err) {
+      console.error("Failed to generate PDF", err);
+      alert("Failed to generate PDF. Please try again.");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
 
   useEffect(() => {
     setShareSupported(typeof navigator !== "undefined" && !!navigator.share);
-  }, []);
+
+    // Listen for download event from header
+    const handleDownloadEvent = () => {
+      handleDownloadPDF();
+    };
+
+    window.addEventListener("download-resume-pdf", handleDownloadEvent);
+    return () => {
+      window.removeEventListener("download-resume-pdf", handleDownloadEvent);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeData, isGeneratingPDF]);
 
   const handleShare = async () => {
     const url =
@@ -55,16 +120,17 @@ export default function Home() {
   useEffect(() => {
     const fetchResume = async () => {
       try {
-        // Get the endpoint from environment variable or use default
+        // Get the endpoint from environment variable or use default (now YAML)
         const endpoint =
-          process.env.NEXT_PUBLIC_RESUME_ENDPOINT || "/resume.json";
+          process.env.NEXT_PUBLIC_RESUME_ENDPOINT || "/resume.yml";
         const response = await fetch(endpoint);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch resume: ${response.statusText}`);
         }
 
-        const data = await response.json();
+        const yamlText = await response.text();
+        const data = yaml.load(yamlText) as ResumeData;
         setResumeData(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load resume");
@@ -76,6 +142,16 @@ export default function Home() {
 
     fetchResume();
   }, []);
+
+  useEffect(() => {
+    if (!resumeData || expandedIndex !== null) return;
+    const presentIndex = resumeData.experience?.findIndex(
+      (job) => String(job.endDate).toLowerCase() === "present"
+    );
+    if (presentIndex !== undefined && presentIndex >= 0) {
+      setExpandedIndex(presentIndex);
+    }
+  }, [resumeData, expandedIndex]);
 
   if (loading) {
     return (
@@ -126,7 +202,7 @@ export default function Home() {
         data-aos="fade-down"
         data-aos-duration={500}
         data-aos-once={true}
-        className="mb-16 print-no-break print-no-gap"
+        className="mb-16"
       >
         <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-4 lg:leading-[3.7rem] leading-tight">
           {personalInfo.name}
@@ -148,31 +224,13 @@ export default function Home() {
         </div>
         {/* Social Media Links */}
         <div className="flex flex-wrap gap-4 mb-8">
-          {/* Website button - show in print only */}
-          {personalInfo.website && (
-            <a
-              href={personalInfo.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden print:inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
-              onClick={() => {
-                event("website_clicked", {
-                  cta: "resume_website",
-                  origin: "resume",
-                  transport_type: "beacon",
-                });
-              }}
-            >
-              Website
-            </a>
-          )}
-          {/* LinkedIn and GitHub - show in browser only */}
+          {/* LinkedIn and GitHub */}
           {personalInfo.linkedin && (
             <a
               href={personalInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="print:hidden inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
             >
               LinkedIn
             </a>
@@ -182,40 +240,13 @@ export default function Home() {
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="print:hidden inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
             >
               GitHub
             </a>
           )}
-          {/* Share button moved to header for better UX */}
         </div>
-        {/* single share button removed from here; added next to social links above */}
       </section>
-
-      {/* Social Media Links for print only (horizontal list) */}
-      {(personalInfo.website ||
-        personalInfo.linkedin ||
-        personalInfo.github) && (
-        <section className="mb-16 hidden print:block print-no-top">
-          <ul className="flex flex-wrap justify-start gap-6 list-none p-0 m-0 print:block print-link-row">
-            {personalInfo.website && (
-              <li>
-                <span>Website: {personalInfo.website}</span>
-              </li>
-            )}
-            {personalInfo.linkedin && (
-              <li>
-                <span>LinkedIn: {personalInfo.linkedin}</span>
-              </li>
-            )}
-            {personalInfo.github && (
-              <li>
-                <span>GitHub: {personalInfo.github}</span>
-              </li>
-            )}
-          </ul>
-        </section>
-      )}
 
       {/* Summary Section */}
       <section
@@ -240,63 +271,96 @@ export default function Home() {
           data-aos-once={true}
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Experience</h2>
-          <div className="space-y-10">
-            {experience.map((job, index) => (
-              <div
-                key={index}
-                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg print:no-border-bg"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <h3 className="text-xl font-semibold">{job.position}</h3>
-                    <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
-                      {job.company}
-                    </p>
-                    {job.location && (
-                      <p className="text-sm dark:text-zinc-400 text-zinc-600">
-                        {job.location}
-                      </p>
-                    )}
-                  </div>
-                  <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
-                    {job.startDate.toUpperCase()} -{" "}
-                    <span
-                      className={
-                        job.endDate.toLowerCase() === "present"
-                          ? "text-primary-color"
-                          : ""
+            <div className="relative">
+              <div className="absolute left-4 top-8 bottom-8 w-px -translate-x-1/2 dark:bg-zinc-700 bg-zinc-300" />
+              <div className="space-y-10">
+                {experience.map((job, index) => (
+                  <div key={index} className="relative">
+                    <div
+                      className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${expandedIndex === index
+                          ? "border-zinc-400 bg-secondary-color"
+                          : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
+                        }`}
+                    />
+                    <div
+                      className="ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer"
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={expandedIndex === index}
+                      onClick={() =>
+                        setExpandedIndex((prev) =>
+                          prev === index ? null : index
+                        )
                       }
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          setExpandedIndex((prev) =>
+                            prev === index ? null : index
+                          );
+                        }
+                      }}
                     >
-                      {job.endDate.toUpperCase()}
-                    </span>
-                  </time>
-                </div>
-                {job.summary && (
-                  <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
-                    {job.summary}
-                  </p>
-                )}
-                <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
-                  {job.highlights.map((highlight, i) => (
-                    <li key={i} className="text-sm">
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
-                {job.technologies && (
-                  <div className="flex flex-wrap gap-2">
-                    {job.technologies.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
+                            {job.position}
+                          </h3>
+                          <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
+                            {job.company}
+                          </p>
+                          <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                            {job.location}
+                          </p>
+                        </div>
+                        <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
+                          {String(job.startDate).toUpperCase()} -{" "}
+                          <span
+                            className={
+                              String(job.endDate).toLowerCase() === "present"
+                                ? "text-primary-color"
+                                : ""
+                            }
+                          >
+                            {String(job.endDate).toUpperCase()}
+                          </span>
+                        </time>
+                      </div>
+                      <div
+                        className={`transition-all duration-300 overflow-hidden ${expandedIndex === index
+                          ? "max-h-[1000px] mt-4"
+                          : "max-h-0"
+                          }`}
                       >
-                        {tech}
-                      </span>
-                    ))}
+                        {job.summary && (
+                          <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
+                            {job.summary}
+                          </p>
+                        )}
+                        <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
+                          {job.highlights.map((highlight, i) => (
+                            <li key={i} className="text-sm">
+                              {highlight}
+                            </li>
+                          ))}
+                        </ul>
+                        {job.technologies && (
+                          <div className="flex flex-wrap gap-2">
+                            {job.technologies.map((tech, i) => (
+                              <span
+                                key={i}
+                                className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                )}
+                ))}
               </div>
-            ))}
           </div>
         </section>
       )}
@@ -310,33 +374,39 @@ export default function Home() {
           data-aos-once={true}
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Education</h2>
-          <div className="space-y-6">
+            <div className="space-y-10">
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg print:no-border-bg"
+                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
               >
-                <h3 className="text-xl font-semibold">{edu.degree}</h3>
-                {edu.field && (
-                  <p className="text-lg dark:text-zinc-300 text-zinc-700">
-                    {edu.field}
-                  </p>
-                )}
-                <p className="font-medium dark:text-zinc-400 text-zinc-600">
-                  {edu.institution}
-                </p>
-                {(edu.startDate || edu.endDate) && (
-                  <p className="text-sm dark:text-zinc-400 text-zinc-600 mt-2">
-                    {edu.startDate} - {edu.endDate}
-                  </p>
-                )}
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h3 className="text-xl font-semibold">{edu.degree}</h3>
+                    {edu.field && (
+                      <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
+                        {edu.field}
+                      </p>
+                    )}
+                    <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                      {edu.institution}
+                    </p>
+                  </div>
+                  {(edu.startDate || edu.endDate) && (
+                    <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
+                      {edu.startDate && edu.endDate
+                        ? `${String(edu.startDate).toUpperCase()} - ${String(edu.endDate).toUpperCase()}`
+                        : String(edu.startDate ?? edu.endDate ?? "").toUpperCase()}
+                    </time>
+                  )}
+                </div>
                 {edu.gpa && (
-                  <p className="text-sm dark:text-zinc-400 text-zinc-600 mt-1">
+                  <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
                     GPA: {edu.gpa}
                   </p>
                 )}
                 {edu.honors && edu.honors.length > 0 && (
-                  <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 mt-2">
+                  <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
                     {edu.honors.map((honor, i) => (
                       <li key={i} className="text-sm">
                         {honor}
@@ -360,19 +430,12 @@ export default function Home() {
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Skills</h2>
           <div
-            className="grid md:grid-cols-2 grid-cols-1 gap-6 print-skills-grid"
-            style={
-              {
-                ["--print-cols" as any]: String(
-                  Math.max(1, Math.min(4, skills.length))
-                ),
-              } as React.CSSProperties
-            }
+            className="grid md:grid-cols-2 grid-cols-1 gap-6"
           >
             {skills.map((skillGroup, index) => (
               <div
                 key={index}
-                className="skill-group dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg print:no-border-bg"
+                className="skill-group dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
               >
                 <h3 className="text-lg font-semibold mb-3">
                   {skillGroup.category}
@@ -402,7 +465,7 @@ export default function Home() {
           data-aos-once={true}
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Projects</h2>
-          <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 print-projects-grid">
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-6">
             {projects.map((project, index) => (
               <div
                 key={index}

@@ -14,18 +14,27 @@ experience:
     location: Hartford, CT
     startDate: 2023
     endDate: Present
-    summary: Leading the enterprise developer platform ecosystem, spanning CI/CD, security, artifact management, and observability across thousands of repositories.
+    summary: Leading architecture and strategy for the enterprise developer platform ecosystem, spanning CI/CD, AI/ML enablement, security, artifact management, observability, and developer experience across thousands of repositories.
     highlights:
-      - Drove enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud (11,000+ repositories)
-      - Built and operated scalable CI/CD execution, governance, and observability platforms
-      - Led rollout of next-generation CI/CD tooling and reduced developer-reported incidents
+      - Serve as solution architect for the Platform Engineering organization, defining standards and long-term strategy across enterprise software delivery platforms
+      - Provide architectural oversight across a multi-platform CI/CD ecosystem (GitHub Actions, Harness, Jenkins, AWS CodePipeline, UrbanCode Deploy)
+      - Drove enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud (11,000+ repositories in under 12 months)
+      - Architecting an internal developer platform layer to unify build execution, pipeline interaction, and developer workflows across heterogeneous tech stacks
+      - Leading development of enterprise-standardized build tooling enabling consistent single-command builds across the organization
+      - Driving platform-wide developer telemetry and workflow instrumentation to improve reliability, productivity, and incident reduction
+      - Supporting onboarding of Google Cloud projects and modern delivery patterns for Vertex AI and AI/ML workloads
+      - Built and operated scalable CI/CD execution, governance, and observability platforms using infrastructure as code
       - Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity
     technologies:
       - GitHub Actions
-      - GitHub Enterprise
+      - GitHub Enterprise Cloud
       - Terraform
       - AWS
+      - GCP
       - Harness
+      - Jenkins
+      - AWS CodePipeline
+      - UrbanCode Deploy
       - Dynatrace
   - company: The Hartford
     position: Staff Software Engineer — Enterprise Quality Engineering
@@ -114,3 +123,12 @@ experience:
       - Sumo Logic
       - SOAP
       - REST
+education:
+  - institution: Central Connecticut State University
+    degree: Bachelor of Science
+    field: Computer Science
+    endDate: 2016
+    honors:
+      - Dean's List
+      - President's List
+      - Upsilon Pi Epsilon Honor Society
