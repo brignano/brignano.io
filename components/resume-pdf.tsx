@@ -302,7 +302,9 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
                 <Text style={styles.institution}>{edu.institution}</Text>
                 {(edu.startDate || edu.endDate) && (
                   <Text style={styles.educationDetails}>
-                    {edu.startDate} - {edu.endDate}
+                    {edu.startDate && edu.endDate
+                      ? `${edu.startDate} - ${edu.endDate}`
+                      : String(edu.startDate ?? edu.endDate ?? "")}
                   </Text>
                 )}
                 {edu.gpa && (

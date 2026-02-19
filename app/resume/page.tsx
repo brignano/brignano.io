@@ -330,33 +330,39 @@ export default function Home() {
           data-aos-once={true}
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Education</h2>
-          <div className="space-y-6">
+            <div className="space-y-10">
             {education.map((edu, index) => (
               <div
                 key={index}
                 className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
               >
-                <h3 className="text-xl font-semibold">{edu.degree}</h3>
-                {edu.field && (
-                  <p className="text-lg dark:text-zinc-300 text-zinc-700">
-                    {edu.field}
-                  </p>
-                )}
-                <p className="font-medium dark:text-zinc-400 text-zinc-600">
-                  {edu.institution}
-                </p>
-                {(edu.startDate || edu.endDate) && (
-                  <p className="text-sm dark:text-zinc-400 text-zinc-600 mt-2">
-                    {edu.startDate} - {edu.endDate}
-                  </p>
-                )}
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h3 className="text-xl font-semibold">{edu.degree}</h3>
+                    {edu.field && (
+                      <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
+                        {edu.field}
+                      </p>
+                    )}
+                    <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                      {edu.institution}
+                    </p>
+                  </div>
+                  {(edu.startDate || edu.endDate) && (
+                    <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
+                      {edu.startDate && edu.endDate
+                        ? `${String(edu.startDate).toUpperCase()} - ${String(edu.endDate).toUpperCase()}`
+                        : String(edu.startDate ?? edu.endDate ?? "").toUpperCase()}
+                    </time>
+                  )}
+                </div>
                 {edu.gpa && (
-                  <p className="text-sm dark:text-zinc-400 text-zinc-600 mt-1">
+                  <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
                     GPA: {edu.gpa}
                   </p>
                 )}
                 {edu.honors && edu.honors.length > 0 && (
-                  <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 mt-2">
+                  <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
                     {edu.honors.map((honor, i) => (
                       <li key={i} className="text-sm">
                         {honor}
