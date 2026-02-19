@@ -271,92 +271,95 @@ export default function Home() {
           data-aos-once={true}
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Experience</h2>
-            <div className="relative pl-10">
+            <div className="relative">
               <div className="absolute left-4 top-8 bottom-8 w-px -translate-x-1/2 dark:bg-zinc-700 bg-zinc-300" />
               <div className="space-y-10">
-            {experience.map((job, index) => (
-              <div
-                key={index}
-                className="relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer"
-                role="button"
-                tabIndex={0}
-                aria-expanded={expandedIndex === index}
-                onClick={() =>
-                  setExpandedIndex((prev) => (prev === index ? null : index))
-                }
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    setExpandedIndex((prev) =>
-                      prev === index ? null : index
-                    );
-                  }
-                }}
-              >
-                <div
-                  className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${expandedIndex === index
-                    ? "border-zinc-400 bg-secondary-color"
-                    : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
-                    }`}
-                />
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
-                      {job.position}
-                    </h3>
-                    <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
-                      {job.company}
-                    </p>
-                    {job.location && (
-                      <p className="text-sm dark:text-zinc-400 text-zinc-600">
-                        {job.location}
-                      </p>
-                    )}
-                  </div>
-                  <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
-                    {String(job.startDate).toUpperCase()} -{" "}
-                    <span
-                      className={
-                        String(job.endDate).toLowerCase() === "present"
-                          ? "text-primary-color"
-                          : ""
+                {experience.map((job, index) => (
+                  <div key={index} className="relative">
+                    <div
+                      className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${expandedIndex === index
+                          ? "border-zinc-400 bg-secondary-color"
+                          : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
+                        }`}
+                    />
+                    <div
+                      className="ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer"
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={expandedIndex === index}
+                      onClick={() =>
+                        setExpandedIndex((prev) =>
+                          prev === index ? null : index
+                        )
                       }
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          setExpandedIndex((prev) =>
+                            prev === index ? null : index
+                          );
+                        }
+                      }}
                     >
-                      {String(job.endDate).toUpperCase()}
-                    </span>
-                  </time>
-                </div>
-                <div
-                  className={`transition-all duration-300 overflow-hidden ${expandedIndex === index ? "max-h-[1000px] mt-4" : "max-h-0"
-                    }`}
-                >
-                  {job.summary && (
-                    <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
-                      {job.summary}
-                    </p>
-                  )}
-                  <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
-                    {job.highlights.map((highlight, i) => (
-                      <li key={i} className="text-sm">
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-                  {job.technologies && (
-                    <div className="flex flex-wrap gap-2">
-                      {job.technologies.map((tech, i) => (
-                        <span
-                          key={i}
-                          className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
+                            {job.position}
+                          </h3>
+                          <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
+                            {job.company}
+                          </p>
+                          <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                            {job.location}
+                          </p>
+                        </div>
+                        <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
+                          {String(job.startDate).toUpperCase()} -{" "}
+                          <span
+                            className={
+                              String(job.endDate).toLowerCase() === "present"
+                                ? "text-primary-color"
+                                : ""
+                            }
+                          >
+                            {String(job.endDate).toUpperCase()}
+                          </span>
+                        </time>
+                      </div>
+                      <div
+                        className={`transition-all duration-300 overflow-hidden ${expandedIndex === index
+                          ? "max-h-[1000px] mt-4"
+                          : "max-h-0"
+                          }`}
+                      >
+                        {job.summary && (
+                          <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
+                            {job.summary}
+                          </p>
+                        )}
+                        <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
+                          {job.highlights.map((highlight, i) => (
+                            <li key={i} className="text-sm">
+                              {highlight}
+                            </li>
+                          ))}
+                        </ul>
+                        {job.technologies && (
+                          <div className="flex flex-wrap gap-2">
+                            {job.technologies.map((tech, i) => (
+                              <span
+                                key={i}
+                                className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  )}
-                </div>
-              </div>
-            ))}
+                  </div>
+                ))}
               </div>
           </div>
         </section>
