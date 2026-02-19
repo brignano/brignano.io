@@ -26,6 +26,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [shareSupported, setShareSupported] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const handleDownloadPDF = async () => {
     if (!resumeData || isGeneratingPDF) return;
@@ -141,6 +142,16 @@ export default function Home() {
 
     fetchResume();
   }, []);
+
+  useEffect(() => {
+    if (!resumeData || expandedIndex !== null) return;
+    const presentIndex = resumeData.experience?.findIndex(
+      (job) => String(job.endDate).toLowerCase() === "present"
+    );
+    if (presentIndex !== undefined && presentIndex >= 0) {
+      setExpandedIndex(presentIndex);
+    }
+  }, [resumeData, expandedIndex]);
 
   if (loading) {
     return (
@@ -260,15 +271,39 @@ export default function Home() {
           data-aos-once={true}
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Experience</h2>
-          <div className="space-y-10">
+            <div className="relative pl-10">
+              <div className="absolute left-4 top-8 bottom-8 w-px -translate-x-1/2 dark:bg-zinc-700 bg-zinc-300" />
+              <div className="space-y-10">
             {experience.map((job, index) => (
               <div
                 key={index}
-                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+                className="relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer"
+                role="button"
+                tabIndex={0}
+                aria-expanded={expandedIndex === index}
+                onClick={() =>
+                  setExpandedIndex((prev) => (prev === index ? null : index))
+                }
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setExpandedIndex((prev) =>
+                      prev === index ? null : index
+                    );
+                  }
+                }}
               >
+                <div
+                  className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${expandedIndex === index
+                    ? "border-zinc-400 bg-secondary-color"
+                    : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
+                    }`}
+                />
                 <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h3 className="text-xl font-semibold">{job.position}</h3>
+                    <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
+                      {job.position}
+                    </h3>
                     <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
                       {job.company}
                     </p>
@@ -291,32 +326,38 @@ export default function Home() {
                     </span>
                   </time>
                 </div>
-                {job.summary && (
-                  <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
-                    {job.summary}
-                  </p>
-                )}
-                <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
-                  {job.highlights.map((highlight, i) => (
-                    <li key={i} className="text-sm">
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
-                {job.technologies && (
-                  <div className="flex flex-wrap gap-2">
-                    {job.technologies.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
-                      >
-                        {tech}
-                      </span>
+                <div
+                  className={`transition-all duration-300 overflow-hidden ${expandedIndex === index ? "max-h-[1000px] mt-4" : "max-h-0"
+                    }`}
+                >
+                  {job.summary && (
+                    <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
+                      {job.summary}
+                    </p>
+                  )}
+                  <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
+                    {job.highlights.map((highlight, i) => (
+                      <li key={i} className="text-sm">
+                        {highlight}
+                      </li>
                     ))}
-                  </div>
-                )}
+                  </ul>
+                  {job.technologies && (
+                    <div className="flex flex-wrap gap-2">
+                      {job.technologies.map((tech, i) => (
+                        <span
+                          key={i}
+                          className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
+              </div>
           </div>
         </section>
       )}
