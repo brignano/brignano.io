@@ -33,7 +33,7 @@ export default function Home() {
                   I design enterprise developer platforms that help thousands of engineers ship software safely and quickly.
                 </h1>
                 <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
-                  My work focuses on internal developer platforms, CI/CD ecosystems, and DevOps intelligence that make software delivery safer, faster, and more reliable. I treat developer experience as a product, favoring paved roads, self-service platforms, and opinionated defaults over one-off solutions.
+                  My work focuses on internal developer platforms, CI/CD ecosystems, and DevOps intelligence that make software delivery safer, faster, and more reliable — with a growing focus on AI-native tooling and intelligent automation.
                 </p>
 
                 {/* Primary CTAs */}
