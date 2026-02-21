@@ -240,10 +240,10 @@ export default function Header() {
             className={`fixed inset-0 z-40 bg-black/20 transition-opacity duration-300 ${animateSidenav ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           />
 
-          <div className="fixed inset-x-0 bottom-0 z-50 w-full lg:inset-auto lg:right-0 lg:w-full lg:max-w-sm">
+          <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm">
             <DialogPanel
               ref={panelRef}
-              className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 lg:ring-1 lg:ring-gray-900/10 transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
+              className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 shadow-xl transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
             >
               <div className="flex items-center justify-between">
                 <button
