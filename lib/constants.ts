@@ -12,7 +12,7 @@ export const siteMetadata: Metadata = {
   metadataBase: new URL("https://brignano.io"),
   title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
   description:
-    "Anthony Brignano's personal portfolio website showcasing projects, skills, and experience.",
+    "Senior Staff Platform Engineer building internal developer platforms, CI/CD ecosystems, DevOps intelligence, and AI-native software delivery at enterprise scale.",
   icons: {
     icon: [
       { url: "/favicon.svg" },
@@ -23,15 +23,15 @@ export const siteMetadata: Metadata = {
   openGraph: {
     title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
     description:
-      "Explore Anthony Brignano's portfolio and full-stack development experience.",
+      "Senior Staff Platform Engineer building internal developer platforms, CI/CD ecosystems, DevOps intelligence, and AI-native software delivery at enterprise scale.",
     url: "https://brignano.io",
-    siteName: "Anthony Brignano Portfolio",
+    siteName: "Anthony Brignano",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Anthony Brignano Portfolio Preview",
+        alt: "Anthony Brignano — Platform Engineering, DevEx & AI",
       },
     ],
     locale: "en_US",
@@ -41,7 +41,7 @@ export const siteMetadata: Metadata = {
     card: "summary_large_image",
     title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
     description:
-      "Platform engineering and DevSecOps leader building secure, scalable CI/CD and cloud-native systems, with deep experience across enterprise platforms.",
+      "Senior Staff Platform Engineer focused on developer experience and internal platforms—CI/CD, DevOps intelligence, and AI-native delivery at enterprise scale.",
     images: ["/og-image.jpg"],
   },
   alternates: {
