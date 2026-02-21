@@ -34,7 +34,8 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const displayIndex = selectedIndex ?? activeIndex;
 
-  const filtered = (data || []).filter((d) => d.seconds > 0);
+  const MIN_HOURS = 0.1;
+  const filtered = (data || []).filter((d) => d.seconds >= MIN_HOURS * 3600);
 
   // Merge any duplicate names so we don't end up with duplicate buckets.
   const agg = new Map<string, number>();
