@@ -178,7 +178,7 @@ export default function Home() {
                     My work focuses on reducing friction and turning software delivery into a repeatable, paved road through automation, strong testing, and security as first-class concerns. It sits at the intersection of platform engineering, developer experience, and emerging technologies, including AI-enabled tooling.
                   </p>
                   <p>
-                    Outside of work, you'll usually find me climbing rocks, snowboarding through trees, or exploring new ideas.
+                    Outside of work, you'll usually find me climbing rocks, snowboarding the glades, or exploring new ideas.
                   </p>
                 </div>
               </div>
