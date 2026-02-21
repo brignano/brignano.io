@@ -79,14 +79,14 @@ export default function RootLayout({
   const ogUrl = urlToString(siteMetadata.openGraph?.url ?? siteMetadata.metadataBase?.toString());
   const ogSiteName = toStringOrUndefined(siteMetadata.openGraph?.siteName);
   const ogType = toStringOrUndefined((siteMetadata.openGraph && (siteMetadata.openGraph as any).type) ?? "website");
-  const ogImageUrl = getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og-image.jpg";
+  const ogImageUrl = getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og.png";
   const ogImageWidth = String(getImageDimension(siteMetadata.openGraph?.images, "width") ?? 1200);
   const ogImageHeight = String(getImageDimension(siteMetadata.openGraph?.images, "height") ?? 630);
   const twitterCard = toStringOrUndefined((siteMetadata.twitter && (siteMetadata.twitter as any).card) ?? "summary_large_image");
   const twitterTitle = toStringOrUndefined(siteMetadata.twitter?.title ?? siteMetadata.title);
   const twitterDescription = toStringOrUndefined(siteMetadata.twitter?.description ?? siteMetadata.description);
   const twitterImage =
-    getFirstImageUrl(siteMetadata.twitter?.images) ?? getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og-image.jpg";
+    getFirstImageUrl(siteMetadata.twitter?.images) ?? getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og.png";
 
   return (
     <html lang="en">

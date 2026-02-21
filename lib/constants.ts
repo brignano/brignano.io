@@ -28,10 +28,10 @@ export const siteMetadata: Metadata = {
     siteName: "Anthony Brignano",
     images: [
       {
-        url: "/headshot.jpeg",
+        url: "/og.png",
         width: 1200,
-        height: 1200,
-        alt: "Anthony Brignano",
+        height: 630,
+        alt: "Anthony Brignano — Platform Engineering, DevEx & AI",
       },
     ],
     locale: "en_US",
@@ -42,7 +42,7 @@ export const siteMetadata: Metadata = {
     title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
     description:
       "Senior Staff Platform Engineer focused on developer experience and internal platforms—CI/CD, DevOps intelligence, and AI-native delivery at enterprise scale.",
-    images: ["/headshot.jpeg"],
+    images: ["/og.png"],
   },
   alternates: {
     canonical: "https://brignano.io",
