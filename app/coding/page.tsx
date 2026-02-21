@@ -330,14 +330,14 @@ export default async function Page() {
                 </p>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
-                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex flex-col gap-2">
                       {commitSubject && (
-                        <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
+                          <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                           {commitSubject}
                         </div>
                       )}
                       {commitBody && (
-                        <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap">
+                          <div className="text-sm text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap">
                           {commitBody}
                         </div>
                       )}
