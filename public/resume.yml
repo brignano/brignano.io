@@ -7,7 +7,7 @@ personalInfo:
   linkedin: https://www.linkedin.com/in/brignano
   github: https://github.com/brignano
 summary: |
-  Senior Staff Platform Engineer and architect focused on enterprise developer experience, internal developer platforms, and AI-native software delivery. I design and scale the systems that thousands of engineers rely on, spanning CI/CD, DevOps intelligence, cloud platforms, and AI/ML enablement. My work emphasizes paved roads, self-service platforms, and treating developer experience as a first-class product.
+  Senior Staff Platform Engineer and architect focused on enterprise developer experience, internal developer platforms, and AI-native software delivery. I design and scale the systems thousands of engineers rely on across CI/CD, DevOps intelligence, cloud platforms, and AI/ML delivery. I build paved roads and self-service platforms, treating developer experience as a first-class product.
 experience:
   - company: The Hartford
     position: Senior Staff Software Engineer — Enterprise Platform Engineering
@@ -15,21 +15,21 @@ experience:
     startDate: 2023
     endDate: Present
     summary: |
-      Technical Lead for The Hartford's enterprise developer platform and developer experience strategy. Owns the architecture and evolution of internal platforms spanning CI/CD, DevOps intelligence, internal developer portals, AI/ML enablement, and cloud delivery accross thousands of repositories.
+      Technical Lead for The Hartford's enterprise developer platform and developer experience strategy, owning the architecture and evolution of CI/CD, DevOps intelligence, internal developer portals, and AI/ML delivery patterns across thousands of repositories.
     highlights:
-      - Serve as a principal architect for the enterprise developer platform, defining long-term strategy for developer experience, delivery automation, and AI-native software delivery
-      - Lead the design and rollout of internal developer platform capabiltiies, including standardized pipelines, self-service workflows, and opinionated paved roads
-      - Architect and deliver a unified DevOps intelligence layer aggregating SDLC signals into actionable context for developers, platforms, and AI agents
-      - Lead development of an enterprise CLI providing a single command surface for build execution, pipeline interaction, and developer workflows
-      - Drive platform-wide developer telemtry and workflow instrumentation to improve reliability, productivity, and time-to-resolution
-      - Provide architectural leadership across a heterogeneous CI/CD ecosystem (GitHub Actions, Harness, Jenkins, AWS CodePipeline, UrbanCode Deploy, etc.)
-      - Led enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud, modernizing over 11,000 repositories in under 12 months
-      - Enable AI/ML delivery at scale through standardized platform patterns and pipelines for Google Cloud and Vertex AI workloads
-      - Treat developer experience as a product, balancing platform abstraction, governance, and developer autonomy
+      - Led enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud, modernizing 11,000+ repositories in under 12 months
+      - Principal architect for the enterprise developer platform, defining long-term strategy for developer experience, delivery automation, and AI-native software delivery
+      - Designed and rolled out internal developer platform capabilities (standardized pipelines, self-service workflows, opinionated paved roads)
+      - Built an enterprise CLI providing a single command surface for build execution, pipeline interaction, and developer workflows
+      - Architected a unified DevOps intelligence layer aggregating SDLC signals into actionable context for developers, platforms, and AI agents
+      - Drove platform-wide developer telemetry and workflow instrumentation to improve reliability, productivity, and time-to-resolution
+      - Provided architectural leadership across a heterogeneous CI/CD ecosystem (GitHub Actions, Harness, Jenkins, AWS CodePipeline, UrbanCode Deploy)
+      - Enabled AI/ML delivery at scale via standardized platform patterns and pipelines for Google Cloud and Vertex AI workloads
+      - Led next-generation CI/CD tooling adoption and platform governance to improve consistency without sacrificing developer autonomy
       - Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity impact
     technologies:
       - Internal Developer Platforms (IDP)
-      - CI/CD Platforms (GitHub Actions, Harness, Jenkins, AWS CodePipeline, UrbanCode Deploy)
+      - CI/CD Platforms (GitHub Actions, Harness, Jenkins, AWS CodePipeline, UCD)
       - Cloud Platforms (AWS, Google Cloud Platform)
       - AI/ML Platforms (Vertex AI)
       - Infrastructure as Code (Terraform)
