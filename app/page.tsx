@@ -30,8 +30,7 @@ export default function Home() {
           <div style={{ opacity: 1, transform: "none" }}>
             <div>
               <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
-                I build secure, reliable cloud-native systems and the platforms
-                teams depend on.
+                I design enterprise developer platforms that power modern software delivery at scale.
               </h1>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
                 Full-stack engineer working at the intersection of DevSecOps,
