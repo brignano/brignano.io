@@ -62,14 +62,14 @@ export const siteMetadata: Metadata = {
 
 export const socialLinks: SocialLink[] = [
   {
-    name: "GitHub",
-    href: "https://www.github.com/brignano",
-    icon: GitHubIcon,
-  },
-  {
     name: "LinkedIn",
     href: "https://www.linkedin.com/in/brignano",
     icon: LinkedinIcon,
+  },
+  {
+    name: "GitHub",
+    href: "https://www.github.com/brignano",
+    icon: GitHubIcon,
   },
   {
     name: "WakaTime",
