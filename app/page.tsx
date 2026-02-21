@@ -33,7 +33,7 @@ export default function Home() {
                   I design enterprise developer platforms that help thousands of engineers ship software safely and quickly.
                 </h1>
                 <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
-                  My work focuses on internal developer platforms, CI/CD ecosystems, and DevOps intelligence that make software delivery safer, faster, and more reliable — with a growing focus on AI-native tooling and intelligent automation.
+                  My work focuses on internal developer platforms, CI/CD ecosystems, and DevOps intelligence that make software delivery safer, faster, and more reliable — with a growing emphasis on AI-native tooling and intelligent automation.
                 </p>
 
                 {/* Primary CTAs */}
@@ -175,7 +175,7 @@ export default function Home() {
                     I design and scale enterprise developer platforms that are easy to operate, hard to break, and built to grow with the teams that use them.
                   </p>
                   <p>
-                    My work focuses on reducing friction and turning software delivery into a repeatable, paved road through automation, strong testing, and security as first-class concerns. It sits at the intersection of platform engineering, developer experience, and emerging technologies, including AI-enabled tooling.
+                    My work focuses on reducing friction and turning software delivery into a repeatable, paved road through automation, strong testing, and security as first-class concerns. My work sits at the intersection of platform engineering, developer experience, and emerging technologies, including AI-enabled tooling.
                   </p>
                   <p>
                     Outside of work, you'll usually find me climbing rocks, snowboarding the glades, or exploring new ideas.
@@ -283,11 +283,10 @@ export default function Home() {
                 Senior Staff Software Engineer — Enterprise Platform Engineering
               </h3>
               <p className="text-lg dark:text-zinc-300 text-zinc-700 mb-4">
-                At The Hartford, I lead the strategy, design, and delivery of the
-                enterprise developer platform ecosystem. My work spans CI/CD, security, artifact management, and observability — treating the developer platform as a product used by thousands of engineers.
+                I lead the strategy, design, and delivery of The Hartford's internal developer platform.
               </p>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-4">
-                I own large-scale platform initiatives, including the migration of 11,000+ repositories to GitHub Enterprise Cloud, the design and operation of scalable CI/CD and governance platforms, and the adoption of next-generation developer tooling. My focus is on automation, reliability, and security as first-class concerns-reducing operational friction, lowering incident rates, and accelerating developer productivity across the enterprise.
+                I own large-scale platform initiatives, including the migration of 11,000+ repositories to GitHub Enterprise Cloud, the design and operation of scalable CI/CD and governance platforms, and the adoption of next-generation developer tooling. My focus is on automation, reliability, and security as first-class concerns-reducing operational friction, accelerating developer productivity, and lowering incident rates across the enterprise.
               </p>
               <ul className="list-disc list-inside mb-4">
                 <li>Leading development of AI-native platform capabilities, including MCP servers and a unified DevOps intelligence layer that enables AI agents to safely query and operate enterprise CI/CD systems</li>
@@ -362,10 +361,7 @@ export default function Home() {
               Want to collaborate or chat?
             </h2>
             <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
-              Interested in platform engineering, developer experience, or AI-native software delivery?
-            </p>
-            <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
-              I'm always happy to connect with engineers and leaders building internal platforms.
+              If you're working on platform engineering, developer experience, or AI-native software delivery, I'd love to connect.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a
