@@ -283,7 +283,7 @@ export default function Home() {
                         }`}
                     />
                     <div
-                      className="ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer"
+                      className={`ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg ${expandedIndex === index ? "cursor-default" : "cursor-pointer"}`}
                       role="button"
                       tabIndex={0}
                       aria-expanded={expandedIndex === index}
