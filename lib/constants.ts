@@ -10,9 +10,9 @@ export interface SocialLink {
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL("https://brignano.io"),
-  title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
+  title: "Anthony Brignano | Platform Engineering & DevEx",
   description:
-    "Senior Staff Platform Engineer building internal developer platforms, CI/CD ecosystems, DevOps intelligence, and AI-native software delivery at enterprise scale.",
+    "Senior Staff Platform Engineer building internal developer platforms, CI/CD systems, DevOps intelligence, and AI-native delivery at enterprise scale.",
   icons: {
     icon: [
       { url: "/favicon.svg" },
@@ -28,7 +28,7 @@ export const siteMetadata: Metadata = {
     siteName: "Anthony Brignano",
     images: [
       {
-        url: "/og.png",
+        url: "/og.webp",
         width: 1200,
         height: 630,
         alt: "Anthony Brignano — Platform Engineering, DevEx & AI",
@@ -42,7 +42,7 @@ export const siteMetadata: Metadata = {
     title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
     description:
       "Senior Staff Platform Engineer focused on developer experience and internal platforms—CI/CD, DevOps intelligence, and AI-native delivery at enterprise scale.",
-    images: ["/og.png"],
+    images: ["/og.webp"],
   },
   alternates: {
     canonical: "https://brignano.io",
