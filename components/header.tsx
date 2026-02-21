@@ -78,7 +78,11 @@ export default function Header() {
         alert(url);
       }
     } catch (err) {
-      // swallow share errors silently
+      // Ignore AbortError (user canceled share dialog)
+      if (err instanceof Error && err.name === "AbortError") {
+        return;
+      }
+      // Log other errors silently
       // eslint-disable-next-line no-console
       console.error("Share failed", err);
     }
