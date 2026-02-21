@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -27,6 +27,24 @@ export default function Home() {
   const [shareSupported, setShareSupported] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const EXPERIENCE_ANIMATION_LOCK_MS = 360;
+  const experienceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollAnchorRef = useRef<{
+    index: number;
+    top: number;
+    startedAt: number;
+  } | null>(null);
+  const scrollLockFrameRef = useRef<number | null>(null);
+
+  const toggleExperience = (index: number, cardElement: HTMLDivElement) => {
+    scrollAnchorRef.current = {
+      index,
+      top: cardElement.getBoundingClientRect().top,
+      startedAt: performance.now(),
+    };
+
+    setExpandedIndex((prev) => (prev === index ? null : index));
+  };
 
   const handleDownloadPDF = async () => {
     if (!resumeData || isGeneratingPDF) return;
@@ -152,6 +170,66 @@ export default function Home() {
       setExpandedIndex(presentIndex);
     }
   }, [resumeData, expandedIndex]);
+
+  useLayoutEffect(() => {
+    const anchor = scrollAnchorRef.current;
+
+    if (!anchor) {
+      return;
+    }
+
+    const cardElement = experienceCardRefs.current[anchor.index];
+
+    if (!cardElement) {
+      scrollAnchorRef.current = null;
+      return;
+    }
+
+    const adjustScroll = () => {
+      const activeAnchor = scrollAnchorRef.current;
+
+      if (!activeAnchor) {
+        return;
+      }
+
+      const activeCard = experienceCardRefs.current[activeAnchor.index];
+
+      if (!activeCard) {
+        scrollAnchorRef.current = null;
+        return;
+      }
+
+      const nextTop = activeCard.getBoundingClientRect().top;
+      const offset = nextTop - activeAnchor.top;
+
+      if (Math.abs(offset) > 1) {
+        window.scrollBy(0, offset);
+      }
+
+      if (
+        performance.now() - activeAnchor.startedAt < EXPERIENCE_ANIMATION_LOCK_MS
+      ) {
+        scrollLockFrameRef.current = requestAnimationFrame(adjustScroll);
+      } else {
+        scrollAnchorRef.current = null;
+        scrollLockFrameRef.current = null;
+      }
+    };
+
+    if (scrollLockFrameRef.current !== null) {
+      cancelAnimationFrame(scrollLockFrameRef.current);
+      scrollLockFrameRef.current = null;
+    }
+
+    scrollLockFrameRef.current = requestAnimationFrame(adjustScroll);
+
+    return () => {
+      if (scrollLockFrameRef.current !== null) {
+        cancelAnimationFrame(scrollLockFrameRef.current);
+        scrollLockFrameRef.current = null;
+      }
+    };
+  }, [expandedIndex]);
 
   if (loading) {
     return (
@@ -283,21 +361,20 @@ export default function Home() {
                         }`}
                     />
                     <div
+                      ref={(element) => {
+                        experienceCardRefs.current[index] = element;
+                      }}
                       className={`ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg ${expandedIndex === index ? "cursor-default" : "cursor-pointer"}`}
                       role="button"
                       tabIndex={0}
                       aria-expanded={expandedIndex === index}
-                      onClick={() =>
-                        setExpandedIndex((prev) =>
-                          prev === index ? null : index
-                        )
+                      onClick={(event) =>
+                        toggleExperience(index, event.currentTarget)
                       }
                       onKeyDown={(event) => {
                         if (event.key === "Enter" || event.key === " ") {
                           event.preventDefault();
-                          setExpandedIndex((prev) =>
-                            prev === index ? null : index
-                          );
+                          toggleExperience(index, event.currentTarget);
                         }
                       }}
                     >
