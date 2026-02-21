@@ -232,7 +232,7 @@ export const highlights = [
   "Security-first software delivery (DevSecOps)",
   "CI/CD automation & developer experience",
   "Platform engineering & internal developer platforms",
-  "Observability, reliability & delivery intelligence",
+  "Observability, reliability & platform operations",
   "AI-native delivery & developer tooling",
 ];
 
