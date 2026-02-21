@@ -196,11 +196,11 @@ export default function Home() {
         data-aos-duration={800}
         data-aos-once={true}
       >
-        <div className="grid md:grid-cols-3 grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-3 grid-cols-2 gap-4 auto-rows-fr">
           {highlights.map((highlight, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-6 py-4 shadow-sm w-full sm:w-auto text-center"
+              className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-6 py-4 shadow-sm w-full sm:w-auto text-center h-full min-h-24 flex items-center justify-center"
             >
               <p className="text-sm font-medium">{highlight}</p>
             </div>
