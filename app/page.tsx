@@ -368,8 +368,7 @@ export default function Home() {
             Want to collaborate or chat?
           </h2>
           <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
-            I'm always open to discussing platform engineering challenges,
-            DevSecOps transformations, or open source collaborations. Reach out
+            I'm always open to discussing platform engineering, developer experience, and AI-native software delivery. Reach out
             via email — I typically respond within 24 hours.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
