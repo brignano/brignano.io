@@ -228,7 +228,7 @@ export type Project = {
 };
 
 export const highlights = [
-  "Cloud platforms & architecture (AWS / GCP)",
+  "Cloud platforms & infrastructure (AWS / GCP)",
   "Security-first software delivery (DevSecOps)",
   "CI/CD automation & developer experience",
   "Platform engineering & internal developer platforms",
