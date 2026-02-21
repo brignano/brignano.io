@@ -328,7 +328,7 @@ export default function Home() {
                       </div>
                       <div
                         className={`transition-all duration-300 overflow-hidden ${expandedIndex === index
-                          ? "max-h-[1000px] mt-4"
+                          ? "max-h-[3000px] mt-4"
                           : "max-h-0"
                           }`}
                       >
