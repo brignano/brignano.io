@@ -1,6 +1,7 @@
 import { Inconsolata, Silkscreen } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata } from "next";
 import "./globals.css";
 import "aos/dist/aos.css";
 import Header from "@/components/header";
@@ -25,7 +26,7 @@ const silkscreen = Silkscreen({
   display: "swap",
 });
 
-export const metadata = siteMetadata;
+export const metadata: Metadata = siteMetadata;
 
 export const viewport = {
   width: "device-width",
@@ -126,6 +127,7 @@ export default function RootLayout({
               "@type": "Person",
               name: "Anthony Brignano",
               url: "https://brignano.io",
+              image: "https://brignano.io/headshot.jpeg",
               sameAs: [
                 "https://www.linkedin.com/in/brignano",
                 "https://github.com/brignano",
