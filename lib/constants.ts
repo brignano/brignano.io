@@ -228,12 +228,12 @@ export type Project = {
 };
 
 export const highlights = [
-  "Cloud-native architecture (AWS / GCP)",
-  "DevSecOps & security-first delivery",
+  "Cloud platforms & architecture (AWS / GCP)",
+  "Security-first software delivery (DevSecOps)",
   "CI/CD automation & developer experience",
-  "Platform engineering & internal tooling",
-  "Observability & reliability",
-  "Test automation & test data strategy",
+  "Platform engineering & internal developer platforms",
+  "Observability, reliability & delivery intelligence",
+  "AI-native delivery & developer tooling",
 ];
 
 export const projects: Project[] = [];
