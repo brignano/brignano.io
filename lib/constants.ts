@@ -10,7 +10,7 @@ export interface SocialLink {
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL("https://brignano.io"),
-  title: "Anthony Brignano | Platform Engineering & DevSecOps",
+  title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
   description:
     "Anthony Brignano's personal portfolio website showcasing projects, skills, and experience.",
   icons: {
@@ -21,7 +21,7 @@ export const siteMetadata: Metadata = {
   },
   manifest: "/manifest.json",
   openGraph: {
-    title: "Anthony Brignano | Platform Engineering & DevSecOps",
+    title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
     description:
       "Explore Anthony Brignano's portfolio and full-stack development experience.",
     url: "https://brignano.io",
@@ -39,7 +39,7 @@ export const siteMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anthony Brignano | Platform Engineering & DevSecOps",
+    title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
     description:
       "Platform engineering and DevSecOps leader building secure, scalable CI/CD and cloud-native systems, with deep experience across enterprise platforms.",
     images: ["/og-image.jpg"],
@@ -228,12 +228,12 @@ export type Project = {
 };
 
 export const highlights = [
-  "Cloud-native architecture (AWS / GCP)",
-  "DevSecOps & security-first delivery",
+  "Cloud platforms & architecture (AWS / GCP)",
+  "Security-first software delivery (DevSecOps)",
   "CI/CD automation & developer experience",
-  "Platform engineering & internal tooling",
-  "Observability & reliability",
-  "Test automation & test data strategy",
+  "Platform engineering & internal developer platforms",
+  "Observability, reliability & delivery intelligence",
+  "AI-native delivery & developer tooling",
 ];
 
 export const projects: Project[] = [];

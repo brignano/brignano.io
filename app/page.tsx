@@ -30,12 +30,10 @@ export default function Home() {
           <div style={{ opacity: 1, transform: "none" }}>
             <div>
               <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
-                I build secure, reliable cloud-native systems and the platforms
-                teams depend on.
+                I design enterprise developer platforms that power modern software delivery at scale.
               </h1>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
-                Full-stack engineer working at the intersection of DevSecOps,
-                automation, and cloud-native systems.
+                  My work focuses on building internal developer platforms, CI/CD systems, and DevOps intelligence that make software delivery safer, faster, and more reliable. I treat developer experience as a product, favoring paved roads, self-service platforms, and opinionated defaults over one-off solutions.
               </p>
 
               {/* Primary CTAs */}
@@ -174,19 +172,10 @@ export default function Home() {
               </h2>
               <div className="max-w-3xl space-y-4 dark:text-zinc-400 text-zinc-600">
                 <p>
-                  I enjoy building systems that are easy to operate, hard to
-                  break, and designed to scale with teams. My approach
-                  emphasizes automation, strong testing practices, and security
-                  as a first-class concern.
+                    I design and scale enterprise developer platforms that are easy to operate, hard to break, and built to grow with the teams that use them. My work emphasizes automation, strong testing practices, and security as first-class concerns-applied at enterprise scale.
                 </p>
                 <p>
-                  I'm drawn to work that sits at the intersection of
-                  infrastructure, developer experience, and emerging
-                  technologies—whether that's platform engineering, DevSecOps
-                  transformations, or exploring how AI-enabled tooling can
-                  improve software delivery and operational insight. I enjoy
-                  solving ambiguous problems and building systems that grow
-                  alongside the teams using them.
+                    I focus on building internal developer platforms, CI/CD systems, and DevOps intelligence that reduce friction, improve reliability, and turn software delivery into a repeatable, paved road. This work sits at the intersection of platform engineering, developer experience, and emerging technologies, including AI-enabled tooling for modern software delivery and operational insight.
                 </p>
                 <p>
                   Outside of work, you'll usually find me climbing rocks,
@@ -304,15 +293,12 @@ export default function Home() {
               deliver software securely and efficiently at scale.
             </p>
             <p className="text-base dark:text-zinc-400 text-zinc-600 mb-4">
-              I drive large-scale migrations (including 11,000+ repositories to
-              GitHub Enterprise Cloud), architect and operate scalable CI/CD and
-              governance platforms, and champion the adoption of next-generation
-              developer tooling. My focus is on automation, reliability, and
-              security as first-class concerns, reducing incidents and
-              accelerating developer productivity across the organization.
+                I own large-scale platform initiatives, including the migration of 11,000+ repositories to GitHub Enterprise Cloud, the design and operation of scalable CI/CD and governance platforms, and the adoption of next-generation developer tooling. My focus is on automation, reliability, and security as first-class concerns-reducing operational friction, lowering incident rates, and accelerating developer productivity across the enterprise.
             </p>
             <ul className="list-disc list-inside mb-4">
-              <li>Led enterprise migration to GitHub Enterprise Cloud</li>
+              <li>Leading development of AI-native platform capabilities, including MCP servers and a unified DevOps intelligence layer that enables AI agents to safely query and operate enterprise CI/CD systems</li>
+              <li>Architecting a first-class enterprise CLI that provides a consistent command surface for build execution, pipeline interaction, and developer workflows across platforms</li>
+              <li>Led enterprise migration to GitHub Enterprise Cloud (11,000+ repositories)</li>
               <li>
                 Built and operated CI/CD, governance, and observability
                 platforms
@@ -382,8 +368,7 @@ export default function Home() {
             Want to collaborate or chat?
           </h2>
           <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
-            I'm always open to discussing platform engineering challenges,
-            DevSecOps transformations, or open source collaborations. Reach out
+            I'm always open to discussing platform engineering, developer experience, and AI-native software delivery. Reach out
             via email — I typically respond within 24 hours.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
