@@ -33,7 +33,7 @@ export default function Home() {
                 I design enterprise developer platforms that power modern software delivery at scale.
               </h1>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
-                  My work focuses on building internal developer platforms, CI/CD systems, and DevOps intelligence that make software delivery safer, faster, and more reliable. I treat developer experience as a product-favoring paved  roads, self-service platofrms, and opinionated defaults over one-off solutions.
+                  My work focuses on building internal developer platforms, CI/CD systems, and DevOps intelligence that make software delivery safer, faster, and more reliable. I treat developer experience as a product, favoring paved roads, self-service platforms, and opinionated defaults over one-off solutions.
               </p>
 
               {/* Primary CTAs */}
@@ -293,7 +293,7 @@ export default function Home() {
               deliver software securely and efficiently at scale.
             </p>
             <p className="text-base dark:text-zinc-400 text-zinc-600 mb-4">
-                I own large-scale platform initiatives, including the migration of 11,000+ repositories to GitHub Enteprrise Cloud, the desig nand operation of scalable CI/CD and governance platforms, and the adoption of next-generation developer tooling. My focus is on automation, reliability, and security as first-class concerns-reducing operational friction, lowering incident rates, and accelerating developer productivity across the enterprise.
+                I own large-scale platform initiatives, including the migration of 11,000+ repositories to GitHub Enterprise Cloud, the design and operation of scalable CI/CD and governance platforms, and the adoption of next-generation developer tooling. My focus is on automation, reliability, and security as first-class concerns-reducing operational friction, lowering incident rates, and accelerating developer productivity across the enterprise.
             </p>
             <ul className="list-disc list-inside mb-4">
               <li>Leading development of AI-native platform capabilities, including MCP servers and a unified DevOps intelligence layer that enables AI agents to safely query and operate enterprise CI/CD systems</li>
