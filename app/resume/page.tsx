@@ -90,12 +90,12 @@ export default function Home() {
             if (opened.document) {
               const html = opened.document.documentElement;
               const body = opened.document.body;
-              
+
               // Reset html element
               html.style.margin = "0";
               html.style.padding = "0";
               html.style.border = "none";
-              
+
               // Reset body element
               body.style.margin = "0";
               body.style.padding = "0";
