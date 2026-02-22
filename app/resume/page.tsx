@@ -41,13 +41,15 @@ export default function Home() {
       event.preventDefault();
     }
 
-    // Scroll the card to the top of the viewport only if it's not currently visible
+    // Scroll the card into view only if it's not currently visible
     const rect = cardElement.getBoundingClientRect();
 
     // Only scroll if the card is out of view (above or below the viewport)
     if (rect.top < 0 || rect.top > window.innerHeight) {
-      const scrollTop = window.scrollY + rect.top;
-      window.scrollTo(0, scrollTop);
+      // Scroll with padding from the top so the header stays visible after expansion
+      const paddingFromTop = 80;
+      const scrollTop = window.scrollY + rect.top - paddingFromTop;
+      window.scrollTo(0, Math.max(0, scrollTop));
     }
 
     // Disable scrolling during animation
