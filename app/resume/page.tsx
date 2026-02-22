@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -29,13 +29,7 @@ export default function Home() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const EXPERIENCE_ANIMATION_LOCK_MS = 360;
   const experienceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const scrollAnchorRef = useRef<{
-    index: number;
-    top: number;
-    startedAt: number;
-  } | null>(null);
-  const scrollLockFrameRef = useRef<number | null>(null);
-  const scrollPositionRef = useRef<number>(0);
+  const scrollLockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const toggleExperience = (
     index: number,
@@ -47,30 +41,25 @@ export default function Home() {
       event.preventDefault();
     }
 
-    const initialScrollY = window.scrollY;
-    const cardTop = cardElement.getBoundingClientRect().top;
-    const isExpanding = expandedIndex !== index;
+    // Scroll the card to the top of the viewport
+    const rect = cardElement.getBoundingClientRect();
+    const scrollTop = window.scrollY + rect.top;
+    window.scrollTo(0, scrollTop);
 
-    scrollAnchorRef.current = {
-      index,
-      top: cardTop,
-      startedAt: performance.now(),
-    };
+    // Disable scrolling during animation
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // Re-enable scrolling after animation completes
+    if (scrollLockTimeoutRef.current) {
+      clearTimeout(scrollLockTimeoutRef.current);
+    }
+    scrollLockTimeoutRef.current = setTimeout(() => {
+      document.body.style.overflow = originalOverflow;
+      scrollLockTimeoutRef.current = null;
+    }, EXPERIENCE_ANIMATION_LOCK_MS);
 
     setExpandedIndex((prev) => (prev === index ? null : index));
-
-    // On mobile, lock the scroll position only when expanding
-    if (window.innerWidth < 768 && isExpanding) {
-      const preventScroll = () => {
-        if (window.scrollY !== initialScrollY) {
-          window.scrollTo(0, initialScrollY);
-        }
-      };
-
-      // Lock position for the duration of the animation
-      const lockTimeout = setInterval(preventScroll, 16);
-      setTimeout(() => clearInterval(lockTimeout), EXPERIENCE_ANIMATION_LOCK_MS);
-    }
   };
 
   const handleDownloadPDF = async () => {
@@ -212,75 +201,15 @@ export default function Home() {
     }
   }, [resumeData, expandedIndex]);
 
-  useLayoutEffect(() => {
-    const anchor = scrollAnchorRef.current;
-
-    if (!anchor) {
-      return;
-    }
-
-    const cardElement = experienceCardRefs.current[anchor.index];
-
-    if (!cardElement) {
-      scrollAnchorRef.current = null;
-      return;
-    }
-
-    // Only apply scroll lock during expand, not collapse
-    const isExpanding = expandedIndex === anchor.index;
-    if (!isExpanding) {
-      scrollAnchorRef.current = null;
-      return;
-    }
-
-    let lastLayoutTop = cardElement.getBoundingClientRect().top;
-
-    const adjustScroll = () => {
-      const activeAnchor = scrollAnchorRef.current;
-
-      if (!activeAnchor) {
-        return;
-      }
-
-      const activeCard = experienceCardRefs.current[activeAnchor.index];
-
-      if (!activeCard) {
-        scrollAnchorRef.current = null;
-        return;
-      }
-
-      const currentTop = activeCard.getBoundingClientRect().top;
-      const shift = currentTop - lastLayoutTop;
-      lastLayoutTop = currentTop;
-
-      if (Math.abs(shift) > 0.5) {
-        window.scrollBy(0, shift);
-      }
-
-      if (
-        performance.now() - activeAnchor.startedAt < EXPERIENCE_ANIMATION_LOCK_MS
-      ) {
-        scrollLockFrameRef.current = requestAnimationFrame(adjustScroll);
-      } else {
-        scrollAnchorRef.current = null;
-        scrollLockFrameRef.current = null;
-      }
-    };
-
-    if (scrollLockFrameRef.current !== null) {
-      cancelAnimationFrame(scrollLockFrameRef.current);
-      scrollLockFrameRef.current = null;
-    }
-
-    scrollLockFrameRef.current = requestAnimationFrame(adjustScroll);
-
+  // Cleanup on unmount
+  useEffect(() => {
     return () => {
-      if (scrollLockFrameRef.current !== null) {
-        cancelAnimationFrame(scrollLockFrameRef.current);
-        scrollLockFrameRef.current = null;
+      if (scrollLockTimeoutRef.current) {
+        clearTimeout(scrollLockTimeoutRef.current);
       }
+      document.body.style.overflow = "";
     };
-  }, [expandedIndex]);
+  }, []);
 
   if (loading) {
     return (
