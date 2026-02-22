@@ -82,19 +82,29 @@ export default function Home() {
       const opened = window.open(pdfBlobUrl, "_blank");
 
       if (opened) {
-        // After a short delay, ensure the window scrolls to the very top
-        // This prevents grey space on mobile
+        // After the PDF loads, ensure the window scrolls to the very top
+        // and remove all default margins/padding that cause grey space on mobile
         setTimeout(() => {
           try {
             opened.scrollTo(0, 0);
-            if (opened.document && opened.document.body) {
-              opened.document.body.style.margin = "0";
-              opened.document.body.style.padding = "0";
+            if (opened.document) {
+              const html = opened.document.documentElement;
+              const body = opened.document.body;
+              
+              // Reset html element
+              html.style.margin = "0";
+              html.style.padding = "0";
+              html.style.border = "none";
+              
+              // Reset body element
+              body.style.margin = "0";
+              body.style.padding = "0";
+              body.style.border = "none";
             }
           } catch (e) {
-            // Ignore cross-origin errors
+            // Ignore cross-origin errors (expected on some mobile browsers)
           }
-        }, 100);
+        }, 200);
       } else {
         // Fallback to download if popup was blocked
         const link = document.createElement("a");
