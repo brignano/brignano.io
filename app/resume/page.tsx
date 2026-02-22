@@ -35,15 +35,41 @@ export default function Home() {
     startedAt: number;
   } | null>(null);
   const scrollLockFrameRef = useRef<number | null>(null);
+  const scrollPositionRef = useRef<number>(0);
 
-  const toggleExperience = (index: number, cardElement: HTMLDivElement) => {
+  const toggleExperience = (
+    index: number,
+    cardElement: HTMLDivElement,
+    event: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
+  ) => {
+    // Prevent any default scrolling behavior
+    if (event instanceof KeyboardEvent) {
+      event.preventDefault();
+    }
+
+    const initialScrollY = window.scrollY;
+    const cardTop = cardElement.getBoundingClientRect().top;
+
     scrollAnchorRef.current = {
       index,
-      top: cardElement.getBoundingClientRect().top,
+      top: cardTop,
       startedAt: performance.now(),
     };
 
     setExpandedIndex((prev) => (prev === index ? null : index));
+
+    // On mobile, immediately lock the scroll position
+    if (window.innerWidth < 768) {
+      const preventScroll = () => {
+        if (window.scrollY !== initialScrollY) {
+          window.scrollTo(0, initialScrollY);
+        }
+      };
+
+      // Lock position for the duration of the animation
+      const lockTimeout = setInterval(preventScroll, 16);
+      setTimeout(() => clearInterval(lockTimeout), EXPERIENCE_ANIMATION_LOCK_MS);
+    }
   };
 
   const handleDownloadPDF = async () => {
@@ -185,6 +211,9 @@ export default function Home() {
       return;
     }
 
+    const anchorYStart = anchor.top;
+    let lastLayoutTop = cardElement.getBoundingClientRect().top;
+
     const adjustScroll = () => {
       const activeAnchor = scrollAnchorRef.current;
 
@@ -199,11 +228,12 @@ export default function Home() {
         return;
       }
 
-      const nextTop = activeCard.getBoundingClientRect().top;
-      const offset = nextTop - activeAnchor.top;
+      const currentTop = activeCard.getBoundingClientRect().top;
+      const shift = currentTop - lastLayoutTop;
+      lastLayoutTop = currentTop;
 
-      if (Math.abs(offset) > 1) {
-        window.scrollBy(0, offset);
+      if (Math.abs(shift) > 0.5) {
+        window.scrollBy(0, shift);
       }
 
       if (
@@ -369,12 +399,11 @@ export default function Home() {
                       tabIndex={0}
                       aria-expanded={expandedIndex === index}
                       onClick={(event) =>
-                        toggleExperience(index, event.currentTarget)
+                        toggleExperience(index, event.currentTarget, event)
                       }
                       onKeyDown={(event) => {
                         if (event.key === "Enter" || event.key === " ") {
-                          event.preventDefault();
-                          toggleExperience(index, event.currentTarget);
+                          toggleExperience(index, event.currentTarget, event);
                         }
                       }}
                     >
