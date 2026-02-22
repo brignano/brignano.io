@@ -92,7 +92,21 @@ export default function Home() {
       const pdfBlobUrl = URL.createObjectURL(blob);
       const opened = window.open(pdfBlobUrl, "_blank");
 
-      if (!opened) {
+      if (opened) {
+        // After a short delay, ensure the window scrolls to the very top
+        // This prevents grey space on mobile
+        setTimeout(() => {
+          try {
+            opened.scrollTo(0, 0);
+            if (opened.document && opened.document.body) {
+              opened.document.body.style.margin = "0";
+              opened.document.body.style.padding = "0";
+            }
+          } catch (e) {
+            // Ignore cross-origin errors
+          }
+        }, 100);
+      } else {
         // Fallback to download if popup was blocked
         const link = document.createElement("a");
         link.href = pdfBlobUrl;
