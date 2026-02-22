@@ -49,6 +49,7 @@ export default function Home() {
 
     const initialScrollY = window.scrollY;
     const cardTop = cardElement.getBoundingClientRect().top;
+    const isExpanding = expandedIndex !== index;
 
     scrollAnchorRef.current = {
       index,
@@ -58,8 +59,8 @@ export default function Home() {
 
     setExpandedIndex((prev) => (prev === index ? null : index));
 
-    // On mobile, immediately lock the scroll position
-    if (window.innerWidth < 768) {
+    // On mobile, lock the scroll position only when expanding
+    if (window.innerWidth < 768 && isExpanding) {
       const preventScroll = () => {
         if (window.scrollY !== initialScrollY) {
           window.scrollTo(0, initialScrollY);
@@ -211,7 +212,13 @@ export default function Home() {
       return;
     }
 
-    const anchorYStart = anchor.top;
+    // Only apply scroll lock during expand, not collapse
+    const isExpanding = expandedIndex === anchor.index;
+    if (!isExpanding) {
+      scrollAnchorRef.current = null;
+      return;
+    }
+
     let lastLayoutTop = cardElement.getBoundingClientRect().top;
 
     const adjustScroll = () => {
