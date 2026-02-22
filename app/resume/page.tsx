@@ -41,10 +41,14 @@ export default function Home() {
       event.preventDefault();
     }
 
-    // Scroll the card to the top of the viewport
+    // Scroll the card to the top of the viewport only if it's not currently visible
     const rect = cardElement.getBoundingClientRect();
-    const scrollTop = window.scrollY + rect.top;
-    window.scrollTo(0, scrollTop);
+
+    // Only scroll if the card is out of view (above or below the viewport)
+    if (rect.top < 0 || rect.top > window.innerHeight) {
+      const scrollTop = window.scrollY + rect.top;
+      window.scrollTo(0, scrollTop);
+    }
 
     // Disable scrolling during animation
     const originalOverflow = document.body.style.overflow;
