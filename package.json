@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/postcss": "^4.2.0",
     "@types/aos": "^3.0.7",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25",
