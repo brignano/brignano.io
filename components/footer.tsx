@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { socialLinks } from "@/lib/constants";
 
 interface BuildTool {
   name: string;
@@ -53,6 +54,21 @@ export default function Footer() {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="flex items-center gap-x-4">
+          {socialLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.name}
+              className="group text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors duration-200"
+            >
+              {link.icon}
+            </Link>
+          ))}
         </div>
 
         <div className="flex flex-col lg:items-end items-center lg:text-start text-center">

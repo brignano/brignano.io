@@ -83,3 +83,8 @@
 h1 {
   font-family: var(--font-silkscreen-mono);
 }
+
+:focus-visible {
+  outline: 2px solid rgb(51, 224, 146);
+  outline-offset: 2px;
+}
