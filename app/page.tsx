@@ -336,7 +336,6 @@ export default function Home() {
               <GitHubCalendarClient
                 username="brignano"
                 initialYear={new Date().getFullYear()}
-                colorScheme="light"
               />
             </div>
           </div>

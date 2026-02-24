@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GitHubCalendar } from "react-github-calendar";
 import { event } from "@/lib/gtag";
 
 interface GitHubCalendarClientProps {
   username?: string;
   initialYear?: number | string;
-  colorScheme?: "light" | "dark";
   title?: string;
   description?: string;
   buttonSize?: "small" | "large";
@@ -17,13 +16,25 @@ interface GitHubCalendarClientProps {
 export default function GitHubCalendarClient({
   username = "brignano",
   initialYear = "last",
-  colorScheme = "light",
   title,
   description,
   buttonSize = "small",
   showDisclaimer = false,
 }: GitHubCalendarClientProps) {
   const [year, setYear] = useState<number | string>(initialYear);
+  const [colorScheme, setColorScheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const root = document.documentElement;
+    // Initialize with current theme
+    setColorScheme(root.classList.contains("dark") ? "dark" : "light");
+
+    const observer = new MutationObserver(() => {
+      setColorScheme(root.classList.contains("dark") ? "dark" : "light");
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
 
   const handleYearClick = (y: number) => {
     setYear(y);
@@ -98,7 +109,7 @@ export default function GitHubCalendarClient({
                 (buttonSize === "large"
                   ? "px-4 py-2 md:px-6 md:py-4"
                   : "px-4 py-2") +
-                " border-2 font-semibold rounded-lg transition-all duration-200" +
+                " border-2 font-semibold rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-400" +
                 " " +
                 (y === year
                   ? "bg-secondary-color dark:bg-secondary-color text-white border-transparent hover:border-transparent"

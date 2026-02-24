@@ -12,6 +12,7 @@ import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 import { siteMetadata } from "@/lib/constants";
 import ScrollToTop from "@/components/scroll-to-top";
 import AOSInit from "@/components/aos-init";
+import ToastProvider from "@/components/toast-provider";
 
 const inconsolata = Inconsolata({
   variable: "--font-inconsolata-mono",
@@ -164,10 +165,12 @@ export default function RootLayout({
             />
           </>
         )}
-        <Header />
-        <AOSInit />
-        {children}
-        <Footer />
+        <ToastProvider>
+          <Header />
+          <AOSInit />
+          {children}
+          <Footer />
+        </ToastProvider>
         <ScrollToTop />
         <SpeedInsights />
         {isProduction && GA_MEASUREMENT_ID && <GoogleAnalytics />}
