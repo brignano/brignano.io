@@ -421,6 +421,9 @@ export default async function Page() {
                             latestCommit.author_name ??
                             "author"
                           }
+                            loading="lazy"
+                            fetchPriority="low"
+                            decoding="async"
                           className="w-6 h-6 rounded-full ml-2"
                         />
                       ) : null}
