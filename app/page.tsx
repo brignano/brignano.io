@@ -124,10 +124,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div
-            style={{ opacity: "1" }}
-            className="relative left-1/2 w-[95vw] -translate-x-1/2"
-          >
+          <div style={{ opacity: "1" }} className="w-full">
             <div className="w-full">
               <HeroSVG />
             </div>
