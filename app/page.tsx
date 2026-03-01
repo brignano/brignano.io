@@ -24,7 +24,7 @@ export default function Home() {
           data-aos="fade-down"
           data-aos-duration={500}
           data-aos-once={true}
-          className="flex flex-col items-start justify-between gap-y-8 mb-16"
+          className="flex flex-col items-start justify-between gap-y-8 mb-24"
         >
           <div className="lg:max-w-2xl max-w-2xl">
             <div style={{ opacity: 1, transform: "none" }}>
@@ -133,7 +133,6 @@ export default function Home() {
 
         {/* About Section */}
         <section
-          className="md:mt-32 xl:mt-30"
           data-aos="fade-up"
           data-aos-duration={1000}
           data-aos-once={true}
