@@ -13,8 +13,10 @@ import {
 } from "@heroicons/react/24/outline";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import { useToast } from "@/components/toast-provider";
 
 export default function Header() {
+  const { showToast } = useToast();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [animateHeader, setAnimateHeader] = useState(false);
@@ -69,13 +71,10 @@ export default function Header() {
         });
       } else if (navigator?.clipboard) {
         await navigator.clipboard.writeText(url);
-        // small fallback feedback
-        // eslint-disable-next-line no-alert
-        alert("Resume link copied to clipboard");
+        showToast("Resume link copied to clipboard");
       } else {
         // last resort
-        // eslint-disable-next-line no-alert
-        alert(url);
+        showToast(url);
       }
     } catch (err) {
       // Ignore AbortError (user canceled share dialog)
@@ -212,7 +211,7 @@ export default function Header() {
           <button
             aria-label="Toggle Theme"
             onClick={() => toggleTheme()}
-            className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0"
+            className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-400"
           >
             {isDarkMode ? (
               <MoonIcon className="size-5 text-primary-color hover:text-white duration-400 cursor-pointer" />
@@ -225,7 +224,7 @@ export default function Header() {
               aria-label="Toggle Menu"
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden dark:focus:text-primary-color dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-md p-2 hover:text-zinc-900 duration-300 cursor-pointer"
+              className="lg:hidden dark:focus:text-primary-color dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-md p-2 hover:text-zinc-900 duration-300 cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-400"
             >
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="size-5" />

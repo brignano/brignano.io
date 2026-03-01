@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { GitHubCalendar } from "react-github-calendar";
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { event } from "@/lib/gtag";
+
+const GitHubCalendar = dynamic(
+  () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
+  { ssr: false }
+);
 
 interface GitHubCalendarClientProps {
   username?: string;
   initialYear?: number | string;
-  colorScheme?: "light" | "dark";
   title?: string;
   description?: string;
   buttonSize?: "small" | "large";
@@ -16,14 +20,35 @@ interface GitHubCalendarClientProps {
 
 export default function GitHubCalendarClient({
   username = "brignano",
-  initialYear = "last",
-  colorScheme = "light",
+  initialYear,
   title,
   description,
   buttonSize = "small",
   showDisclaimer = false,
 }: GitHubCalendarClientProps) {
-  const [year, setYear] = useState<number | string>(initialYear);
+  const [year, setYear] = useState<number | null>(
+    typeof initialYear === "number" ? initialYear : null
+  );
+  const [currentYear, setCurrentYear] = useState<number | null>(
+    typeof initialYear === "number" ? initialYear : null
+  );
+  const [colorScheme, setColorScheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const nowYear = new Date().getFullYear();
+    setCurrentYear((prev) => prev ?? nowYear);
+    setYear((prev) => prev ?? nowYear);
+
+    const root = document.documentElement;
+    // Initialize with current theme
+    setColorScheme(root.classList.contains("dark") ? "dark" : "light");
+
+    const observer = new MutationObserver(() => {
+      setColorScheme(root.classList.contains("dark") ? "dark" : "light");
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
 
   const handleYearClick = (y: number) => {
     setYear(y);
@@ -50,11 +75,13 @@ export default function GitHubCalendarClient({
           )}
           <div className="overflow-x-auto -mx-6 sm:-mx-8 px-6 sm:px-8 py-2">
             <div className="min-w-[320px]">
-              <GitHubCalendar
-                username={username}
-                year={Number(year)}
-                colorScheme={colorScheme}
-              />
+              {year !== null && (
+                <GitHubCalendar
+                  username={username}
+                  year={year}
+                  colorScheme={colorScheme}
+                />
+              )}
             </div>
           </div>
           {showDisclaimer && (
@@ -84,30 +111,28 @@ export default function GitHubCalendarClient({
         </div>
 
         <div className="flex justify-center xl:justify-start xl:flex-col flex-row flex-wrap gap-2">
-          {Array.from(
-            { length: 5 },
-            (_, i) => new Date().getFullYear() - i
-          ).map((y) => (
-            <button
-              key={y}
-              title={`View graph for the year ${y}`}
-              onClick={() => handleYearClick(y)}
-              className={
-                "cursor-pointer inline-flex items-center text-sm" +
-                " " +
-                (buttonSize === "large"
-                  ? "px-4 py-2 md:px-6 md:py-4"
-                  : "px-4 py-2") +
-                " border-2 font-semibold rounded-lg transition-all duration-200" +
-                " " +
-                (y === year
-                  ? "bg-secondary-color dark:bg-secondary-color text-white border-transparent hover:border-transparent"
-                  : "dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 dark:bg-transparent bg-transparent dark:text-zinc-300 text-zinc-700")
-              }
-            >
-              {y}
-            </button>
-          ))}
+          {currentYear !== null &&
+            Array.from({ length: 5 }, (_, i) => currentYear - i).map((y) => (
+              <button
+                key={y}
+                title={`View graph for the year ${y}`}
+                onClick={() => handleYearClick(y)}
+                className={
+                  "cursor-pointer inline-flex items-center text-sm" +
+                  " " +
+                  (buttonSize === "large"
+                    ? "px-4 py-2 md:px-6 md:py-4"
+                    : "px-4 py-2") +
+                  " border-2 font-semibold rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-400" +
+                  " " +
+                  (y === year
+                    ? "bg-secondary-color dark:bg-secondary-color text-white border-transparent hover:border-transparent"
+                    : "dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 dark:bg-transparent bg-transparent dark:text-zinc-300 text-zinc-700")
+                }
+              >
+                {y}
+              </button>
+            ))}
         </div>
       </div>
     </>

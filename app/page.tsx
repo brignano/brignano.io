@@ -24,7 +24,7 @@ export default function Home() {
           data-aos="fade-down"
           data-aos-duration={500}
           data-aos-once={true}
-          className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 mb-16"
+          className="flex flex-col items-start justify-between gap-y-8 mb-8 md:mb-24"
         >
           <div className="lg:max-w-2xl max-w-2xl">
             <div style={{ opacity: 1, transform: "none" }}>
@@ -38,32 +38,6 @@ export default function Home() {
 
                 {/* Primary CTAs */}
                 <div className="flex flex-wrap md:flex-nowrap gap-4 mb-10 items-center">
-                  <a
-                    href="mailto:hi@brignano.io"
-                    className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
-                    onClick={() => {
-                      event("cta_clicked", {
-                        cta: "contact",
-                        location: "hero",
-                        transport_type: "beacon",
-                      });
-                    }}
-                  >
-                    Contact Me
-                    <svg
-                      className="ml-2 w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </a>
                   <Link
                     href="/resume"
                     className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
@@ -75,7 +49,7 @@ export default function Home() {
                       });
                     }}
                   >
-                    View Resume
+                    My Resume
                     <svg
                       className="ml-2 w-4 h-4"
                       fill="none"
@@ -101,7 +75,7 @@ export default function Home() {
                       });
                     }}
                   >
-                    Coding Activity
+                    My Coding
                     <svg
                       className="ml-2 w-4 h-4"
                       fill="none"
@@ -150,8 +124,8 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div style={{ opacity: "1" }}>
-            <div>
+          <div style={{ opacity: "1" }} className="w-full">
+            <div className="w-full">
               <HeroSVG />
             </div>
           </div>
@@ -159,7 +133,6 @@ export default function Home() {
 
         {/* About Section */}
         <section
-          className="md:mt-32 xl:mt-30"
           data-aos="fade-up"
           data-aos-duration={1000}
           data-aos-once={true}
@@ -336,7 +309,6 @@ export default function Home() {
               <GitHubCalendarClient
                 username="brignano"
                 initialYear={new Date().getFullYear()}
-                colorScheme="light"
               />
             </div>
           </div>
@@ -410,7 +382,7 @@ export default function Home() {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                Email Me
+                Email
               </a>
             </div>
           </div>

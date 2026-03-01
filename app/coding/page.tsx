@@ -421,6 +421,9 @@ export default async function Page() {
                             latestCommit.author_name ??
                             "author"
                           }
+                            loading="lazy"
+                            fetchPriority="low"
+                            decoding="async"
                           className="w-6 h-6 rounded-full ml-2"
                         />
                       ) : null}
@@ -514,7 +517,7 @@ export default async function Page() {
       <>
         <BreadcrumbSchema items={CODING_BREADCRUMBS} />
         <main className="max-w-4xl mx-auto px-6 pt-0 pb-12">
-          <h1 className="prose">Coding Activity</h1>
+          <h1 className="prose">My Coding</h1>
           <p>Error loading coding statistics: {errorMessage}</p>
           <p>Ensure `WAKATIME_API_KEY` is set in your environment.</p>
         </main>

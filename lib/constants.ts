@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { GitHubIcon, LinkedinIcon, WakaTimeIcon } from "./social-icons";
+import { GitHubIcon, LinkedinIcon, EmailIcon } from "./social-icons";
 
 export interface SocialLink {
   name: string;
@@ -72,9 +72,9 @@ export const socialLinks: SocialLink[] = [
     icon: GitHubIcon,
   },
   {
-    name: "WakaTime",
-    href: "https://wakatime.com/@brignano",
-    icon: WakaTimeIcon,
+    name: "Email",
+    href: "mailto:hi@brignano.io",
+    icon: EmailIcon,
   },
   /*
   {
