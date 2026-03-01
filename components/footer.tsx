@@ -31,10 +31,10 @@ const buildTools: BuildTool[] = [
 export default function Footer() {
   return (
     <footer className="border-t dark:border-zinc-800 border-zinc-100 mt-10 sm:mt-32 lg:mt-24 lg:min-h-[250px] min-h-0 relative">
-      <div className="max-w-7xl mx-auto flex lg:flex-row flex-col items-center lg:justify-between justify-center gap-y-4 md:px-16 px-6 py-16">
-        <div className="flex md:flex-row flex-col items-center gap-x-2">
+      <div className="max-w-7xl mx-auto flex lg:flex-row flex-col items-center lg:justify-between justify-center gap-y-3 md:px-16 px-6 py-10 lg:py-16">
+        <div className="order-2 lg:order-1 flex md:flex-row flex-col items-center gap-x-2">
           <h3 className="font-inter">Built with: </h3>
-          <ul className="flex items-center gap-x-2 text-sm dark:text-zinc-400 text-zinc-500 md:mt-0 mt-3">
+          <ul className="flex items-center gap-x-2 text-sm dark:text-zinc-400 text-zinc-500 md:mt-0 mt-2">
             {buildTools.map((tool) => (
               <li key={tool.name}>
                 <Link
@@ -56,7 +56,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div className="flex items-center gap-x-4">
+        <div className="order-1 lg:order-2 flex items-center gap-x-4 mb-4 lg:mb-0">
           {socialLinks.map((link) => (
             <Link
               key={link.name}
@@ -71,7 +71,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col lg:items-end items-center lg:text-start text-center">
+        <div className="order-3 flex flex-col lg:items-end items-center lg:text-start text-center">
           <small className="text-zinc-600 dark:text-zinc-400">
             Copyright © Anthony Brignano {new Date().getFullYear()} All rights
             Reserved

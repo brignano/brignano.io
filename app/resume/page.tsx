@@ -282,6 +282,9 @@ export default function Home() {
         data-aos-once={true}
         className="mb-16"
       >
+          <p className="text-sm uppercase tracking-wide text-zinc-500 dark:text-zinc-400 mb-2">
+            Resume
+          </p>
         <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-4 lg:leading-[3.7rem] leading-tight">
           {personalInfo.name}
         </h1>
