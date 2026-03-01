@@ -5,7 +5,9 @@ export const pageview = (url: string) => {
   if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
     window.gtag("config", GA_MEASUREMENT_ID, {
       page_path: url,
-      cookie_domain: "auto",
+      cookie_domain: "none",
+      client_storage: "none",
+      anonymize_ip: true,
     });
   }
 };

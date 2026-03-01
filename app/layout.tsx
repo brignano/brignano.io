@@ -156,9 +156,17 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
+              gtag('consent', 'default', {
+                ad_storage: 'denied',
+                analytics_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied'
+              });
               gtag('config', '${GA_MEASUREMENT_ID}', {
                 page_path: window.location.pathname,
-                cookie_domain: 'auto'
+                cookie_domain: 'none',
+                client_storage: 'none',
+                anonymize_ip: true
               });
             `,
               }}
