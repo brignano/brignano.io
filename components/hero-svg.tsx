@@ -1,185 +1,61 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 export default function HeroSVG() {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (prefersReducedMotion) {
-      return;
-    }
-
-    let frameId: number | null = null;
-
-    const updateTilt = (x: number, y: number) => {
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId);
-      }
-
-      frameId = window.requestAnimationFrame(() => {
-        setTilt({ x, y });
-      });
-    };
-
-    const handleOrientation = (event: DeviceOrientationEvent) => {
-      const gamma = event.gamma ?? 0;
-      const beta = event.beta ?? 0;
-
-      const nextX = Math.max(-12, Math.min(12, (gamma / 30) * 10));
-      const nextY = Math.max(-10, Math.min(10, (-beta / 45) * 6));
-
-      updateTilt(nextX, nextY);
-    };
-
-    const startListening = () => {
-      window.addEventListener("deviceorientation", handleOrientation, true);
-    };
-
-    const OrientationEventWithPermission = DeviceOrientationEvent as typeof DeviceOrientationEvent & {
-      requestPermission?: () => Promise<PermissionState>;
-    };
-
-    const requestDeviceOrientationPermission =
-      OrientationEventWithPermission.requestPermission;
-
-    const requestPermission = () => {
-      if (typeof requestDeviceOrientationPermission !== "function") {
-        return;
-      }
-
-      requestDeviceOrientationPermission()
-        .then((permissionState: PermissionState) => {
-          if (permissionState === "granted") {
-            startListening();
-          }
-        })
-        .catch(() => undefined);
-    };
-
-    if (typeof requestDeviceOrientationPermission === "function") {
-      window.addEventListener("touchend", requestPermission, { once: true });
-      window.addEventListener("click", requestPermission, { once: true });
-    } else {
-      startListening();
-    }
-
-    return () => {
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId);
-      }
-
-      window.removeEventListener("deviceorientation", handleOrientation, true);
-      window.removeEventListener("touchend", requestPermission);
-      window.removeEventListener("click", requestPermission);
-    };
-  }, []);
-
   return (
     <svg
-      viewBox="0 0 980 520"
-      preserveAspectRatio="xMidYMid slice"
+      viewBox="0 0 1273 906"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="block w-full max-w-none h-40 sm:h-48 md:h-56 will-change-transform"
-      style={{ transform: `translate3d(${tilt.x}px, ${tilt.y}px, 0)` }}
+      className="lg:w-[450px] w-full h-full"
       aria-hidden="true"
     >
-      <g opacity="0.2">
-        <path
-          d="M30 420C200 360 260 190 430 180C650 165 710 360 950 300"
-          stroke="url(#paint-linear)"
-          strokeWidth="4"
-          strokeLinecap="round"
-          strokeDasharray="8 14"
-        />
-        <path
-          d="M40 260C180 220 260 70 420 80C600 92 700 230 930 190"
-          stroke="url(#paint-linear)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeDasharray="6 12"
-        />
-      </g>
-
       <g>
-        <circle cx="120" cy="360" r="62" fill="url(#bubble-fill)" fillOpacity="0.55">
-          <animate attributeName="cx" values="120;260;180;120" dur="18s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="360;300;250;360" dur="18s" repeatCount="indefinite" />
-          <animate attributeName="r" values="62;56;66;62" dur="18s" repeatCount="indefinite" />
-        </circle>
-
-        <circle cx="260" cy="250" r="38" fill="url(#bubble-fill)" fillOpacity="0.65">
-          <animate attributeName="cx" values="260;420;360;260" dur="14s" begin="-2.5s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="250;210;170;250" dur="14s" begin="-2.5s" repeatCount="indefinite" />
-        </circle>
-
-        <circle cx="380" cy="390" r="74" fill="url(#bubble-fill)" fillOpacity="0.52">
-          <animate attributeName="cx" values="380;560;500;380" dur="22s" begin="-6s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="390;320;270;390" dur="22s" begin="-6s" repeatCount="indefinite" />
-        </circle>
-
-        <circle cx="560" cy="240" r="46" fill="url(#bubble-fill)" fillOpacity="0.58">
-          <animate attributeName="cx" values="560;700;640;560" dur="16s" begin="-4s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="240;180;140;240" dur="16s" begin="-4s" repeatCount="indefinite" />
-        </circle>
-
-        <circle cx="700" cy="350" r="56" fill="url(#bubble-fill)" fillOpacity="0.5">
-          <animate attributeName="cx" values="700;860;790;700" dur="19s" begin="-8s" repeatCount="indefinite" />
-          <animate attributeName="cy" values="350;290;240;350" dur="19s" begin="-8s" repeatCount="indefinite" />
-          <animate attributeName="r" values="56;50;60;56" dur="19s" begin="-8s" repeatCount="indefinite" />
-        </circle>
+        <path
+          className="path"
+          d="M318.587 315.483V510.936L477.544 431.391V236.949M318.587 315.483L159.63 236.949M318.587 315.483L477.544 236.949M318.587 315.483V509.925L159.63 589.469M318.587 315.483L159.63 237.286L0.673828 315.483M318.587 315.483L159.63 394.016M477.544 236.949L318.587 158.753L159.63 236.949M477.544 236.949V432.402M477.544 236.949L318.587 158.416L477.544 80.2192L636.5 158.416L477.544 236.949ZM159.63 236.949V79.5451M159.63 589.469V394.016M159.63 589.469L0.673828 509.925V315.483M0.673828 315.483L159.63 394.016M159.63 79.5451L318.587 1.34863L477.544 79.5451L318.587 158.079L159.63 79.5451ZM795.457 395.701V237.286M795.457 237.286L636.5 159.09L477.544 237.286M795.457 237.286L636.5 315.82M477.544 237.286V431.728L601.139 491.762M477.544 237.286L636.5 315.82M636.5 315.82V472.887M954.414 668.003V473.561M954.414 473.561L795.457 395.364L636.5 473.561L795.457 552.094M954.414 473.561L795.457 552.094M954.414 473.561V669.014M954.414 473.561L795.457 395.027L954.414 316.831L1113.37 395.027L954.414 473.561ZM795.457 552.094L636.5 473.898L477.544 552.094M795.457 552.094L636.5 630.628M477.544 552.094V746.534L636.5 826.078V630.628M477.544 552.094L636.5 630.628M795.457 709.498V904.949M795.457 709.498L636.5 630.965M795.457 709.498L954.414 630.965M795.457 904.949L954.414 825.404V630.965M795.457 904.949L636.5 825.404V630.965M636.5 630.965L795.457 552.768L954.414 630.965M1113.37 552.431V747.882M1113.37 552.431L954.414 473.898M1113.37 552.431L1272.33 473.898M1113.37 747.882L1272.33 668.34V473.898M1113.37 747.882L954.414 668.34V473.898M954.414 473.898L1113.37 395.701L1272.33 473.898"
+          stroke="url(#paint-linear)"
+          strokeOpacity="0.6"
+          strokeWidth="2"
+        />
       </g>
-
-      <g opacity="0.9">
-        <circle cx="170" cy="150" r="8" fill="#27B173">
-          <animate attributeName="cy" values="150;95;150" dur="10s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="320" cy="120" r="7" fill="#27B173">
-          <animate attributeName="cy" values="120;70;120" dur="9s" begin="-3s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="510" cy="160" r="9" fill="#27B173">
-          <animate attributeName="cy" values="160;95;160" dur="11s" begin="-4.2s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="760" cy="130" r="8" fill="#27B173">
-          <animate attributeName="cy" values="130;75;130" dur="10.5s" begin="-6.1s" repeatCount="indefinite" />
-        </circle>
-      </g>
-
+      <path
+        d="M154 586C154 583.239 156.239 581 159 581V581C161.761 581 164 583.239 164 586V586C164 588.761 161.761 591 159 591V591C156.239 591 154 588.761 154 586V586Z"
+        fill="#27B173"
+      />
+      <path
+        d="M154 393C154 390.239 156.239 388 159 388V388C161.761 388 164 390.239 164 393V393C164 395.761 161.761 398 159 398V398C156.239 398 154 395.761 154 393V393Z"
+        fill="#27B173"
+      />
+      <path
+        d="M788 551C788 548.239 790.239 546 793 546V546C795.761 546 798 548.239 798 551V551C798 553.761 795.761 556 793 556V556C790.239 556 788 553.761 788 551V551Z"
+        fill="#27B173"
+      />
+      <path
+        d="M1108 551C1108 548.239 1110.24 546 1113 546V546C1115.76 546 1118 548.239 1118 551V551C1118 553.761 1115.76 556 1113 556V556C1110.24 556 1108 553.761 1108 551V551Z"
+        fill="#27B173"
+      />
+      <path
+        d="M1108 398C1108 395.239 1110.24 393 1113 393V393C1115.76 393 1118 395.239 1118 398V398C1118 400.761 1115.76 403 1113 403V403C1110.24 403 1108 400.761 1108 398V398Z"
+        fill="#27B173"
+      />
+      <path
+        d="M788 237C788 234.239 790.239 232 793 232V232C795.761 232 798 234.239 798 237V237C798 239.761 795.761 242 793 242V242C790.239 242 788 239.761 788 237V237Z"
+        fill="#27B173"
+      />
       <defs>
         <linearGradient
           id="paint-linear"
-          x1="632"
-          y1="66"
-          x2="178"
-          y2="703"
+          x1="1272.23"
+          y1="479.474"
+          x2="506.242"
+          y2="-216.277"
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#27b173" />
           <stop offset="0.619553" stopColor="#1a663f" />
           <stop offset="0.93102" stopColor="#26312d" />
         </linearGradient>
-
-        <radialGradient
-          id="bubble-fill"
-          cx="0"
-          cy="0"
-          r="1"
-          gradientUnits="userSpaceOnUse"
-          gradientTransform="translate(420 220) rotate(45) scale(520 420)"
-        >
-          <stop offset="0" stopColor="#33e092" />
-          <stop offset="0.58" stopColor="#27b173" />
-          <stop offset="1" stopColor="#1a663f" />
-        </radialGradient>
+        <clipPath>
+          <rect width="1273" height="906" fill="white" />
+        </clipPath>
       </defs>
     </svg>
   );
