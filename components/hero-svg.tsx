@@ -2,9 +2,10 @@ export default function HeroSVG() {
   return (
     <svg
       viewBox="0 0 980 520"
+      preserveAspectRatio="xMidYMid slice"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="lg:w-[450px] w-full h-full"
+      className="block w-full max-w-none h-40 sm:h-48 md:h-56"
       aria-hidden="true"
     >
       <g opacity="0.2">

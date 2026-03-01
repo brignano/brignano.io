@@ -24,7 +24,7 @@ export default function Home() {
           data-aos="fade-down"
           data-aos-duration={500}
           data-aos-once={true}
-          className="flex xl:flex-row flex-col xl:items-center items-start xl:justify-center justify-between gap-x-12 mb-16"
+          className="flex flex-col items-start justify-between gap-y-8 mb-16"
         >
           <div className="lg:max-w-2xl max-w-2xl">
             <div style={{ opacity: 1, transform: "none" }}>
@@ -124,8 +124,11 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div style={{ opacity: "1" }}>
-            <div>
+          <div
+            style={{ opacity: "1" }}
+            className="relative left-1/2 w-[95vw] -translate-x-1/2"
+          >
+            <div className="w-full">
               <HeroSVG />
             </div>
           </div>
