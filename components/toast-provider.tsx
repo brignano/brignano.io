@@ -46,15 +46,17 @@ export default function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div aria-live="polite" aria-atomic="false" className="contents">
-        {toasts.map((toast) => (
-          <Toast
-            key={toast.id}
-            message={toast.message}
-            duration={toast.duration}
-            onDismiss={() => dismiss(toast.id)}
-          />
-        ))}
+      <div aria-live="polite" aria-atomic="false">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 items-center pointer-events-none">
+          {toasts.map((toast) => (
+            <Toast
+              key={toast.id}
+              message={toast.message}
+              duration={toast.duration}
+              onDismiss={() => dismiss(toast.id)}
+            />
+          ))}
+        </div>
       </div>
     </ToastContext.Provider>
   );

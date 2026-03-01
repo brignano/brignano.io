@@ -85,6 +85,10 @@ h1 {
 }
 
 :focus-visible {
-  outline: 2px solid rgb(51, 224, 146);
+  outline: 2px solid rgb(33, 110, 57);
   outline-offset: 2px;
+}
+
+.dark :focus-visible {
+  outline-color: rgb(51, 224, 146);
 }
