@@ -1,11 +1,96 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function HeroSVG() {
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    let frameId: number | null = null;
+
+    const updateTilt = (x: number, y: number) => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        setTilt({ x, y });
+      });
+    };
+
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      const gamma = event.gamma ?? 0;
+      const beta = event.beta ?? 0;
+
+      const nextX = Math.max(-12, Math.min(12, (gamma / 30) * 10));
+      const nextY = Math.max(-10, Math.min(10, (-beta / 45) * 6));
+
+      updateTilt(nextX, nextY);
+    };
+
+    const startListening = () => {
+      window.addEventListener("deviceorientation", handleOrientation, true);
+    };
+
+    const OrientationEventWithPermission = DeviceOrientationEvent as typeof DeviceOrientationEvent & {
+      requestPermission?: () => Promise<PermissionState>;
+    };
+
+    const requestDeviceOrientationPermission =
+      OrientationEventWithPermission.requestPermission;
+
+    const requestPermission = () => {
+      if (typeof requestDeviceOrientationPermission !== "function") {
+        return;
+      }
+
+      requestDeviceOrientationPermission()
+        .then((permissionState: PermissionState) => {
+          if (permissionState === "granted") {
+            startListening();
+          }
+        })
+        .catch(() => undefined);
+    };
+
+    if (typeof requestDeviceOrientationPermission === "function") {
+      window.addEventListener("touchend", requestPermission, { once: true });
+      window.addEventListener("click", requestPermission, { once: true });
+    } else {
+      startListening();
+    }
+
+    return () => {
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId);
+      }
+
+      window.removeEventListener("deviceorientation", handleOrientation, true);
+      window.removeEventListener("touchend", requestPermission);
+      window.removeEventListener("click", requestPermission);
+    };
+  }, []);
+
   return (
     <svg
       viewBox="0 0 980 520"
       preserveAspectRatio="xMidYMid slice"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="block w-full max-w-none h-40 sm:h-48 md:h-56"
+      className="block w-full max-w-none h-40 sm:h-48 md:h-56 will-change-transform"
+      style={{ transform: `translate3d(${tilt.x}px, ${tilt.y}px, 0)` }}
       aria-hidden="true"
     >
       <g opacity="0.2">
