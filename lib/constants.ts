@@ -73,7 +73,7 @@ export const socialLinks: SocialLink[] = [
   },
   {
     name: "Email",
-    href: "mailto:anthony@brignano.io",
+    href: "mailto:hi@brignano.io",
     icon: EmailIcon,
   },
   /*
