@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -29,19 +29,41 @@ export default function Home() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const EXPERIENCE_ANIMATION_LOCK_MS = 360;
   const experienceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const scrollAnchorRef = useRef<{
-    index: number;
-    top: number;
-    startedAt: number;
-  } | null>(null);
-  const scrollLockFrameRef = useRef<number | null>(null);
+  const scrollLockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const toggleExperience = (index: number, cardElement: HTMLDivElement) => {
-    scrollAnchorRef.current = {
-      index,
-      top: cardElement.getBoundingClientRect().top,
-      startedAt: performance.now(),
-    };
+  const toggleExperience = (
+    index: number,
+    cardElement: HTMLDivElement,
+    event: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
+  ) => {
+    // Prevent any default scrolling behavior
+    if (event instanceof KeyboardEvent) {
+      event.preventDefault();
+    }
+
+    // Scroll the card into view only if it's not currently visible
+    const rect = cardElement.getBoundingClientRect();
+
+    // Only scroll if the card is out of view (above or below the viewport)
+    if (rect.top < 0 || rect.top > window.innerHeight) {
+      // Scroll with padding from the top so the header stays visible after expansion
+      const paddingFromTop = 80;
+      const scrollTop = window.scrollY + rect.top - paddingFromTop;
+      window.scrollTo(0, Math.max(0, scrollTop));
+    }
+
+    // Disable scrolling during animation
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // Re-enable scrolling after animation completes
+    if (scrollLockTimeoutRef.current) {
+      clearTimeout(scrollLockTimeoutRef.current);
+    }
+    scrollLockTimeoutRef.current = setTimeout(() => {
+      document.body.style.overflow = originalOverflow;
+      scrollLockTimeoutRef.current = null;
+    }, EXPERIENCE_ANIMATION_LOCK_MS);
 
     setExpandedIndex((prev) => (prev === index ? null : index));
   };
@@ -65,7 +87,31 @@ export default function Home() {
       const pdfBlobUrl = URL.createObjectURL(blob);
       const opened = window.open(pdfBlobUrl, "_blank");
 
-      if (!opened) {
+      if (opened) {
+        // After the PDF loads, ensure the window scrolls to the very top
+        // and remove all default margins/padding that cause grey space on mobile
+        setTimeout(() => {
+          try {
+            opened.scrollTo(0, 0);
+            if (opened.document) {
+              const html = opened.document.documentElement;
+              const body = opened.document.body;
+
+              // Reset html element
+              html.style.margin = "0";
+              html.style.padding = "0";
+              html.style.border = "none";
+
+              // Reset body element
+              body.style.margin = "0";
+              body.style.padding = "0";
+              body.style.border = "none";
+            }
+          } catch (e) {
+            // Ignore cross-origin errors (expected on some mobile browsers)
+          }
+        }, 200);
+      } else {
         // Fallback to download if popup was blocked
         const link = document.createElement("a");
         link.href = pdfBlobUrl;
@@ -171,65 +217,15 @@ export default function Home() {
     }
   }, [resumeData, expandedIndex]);
 
-  useLayoutEffect(() => {
-    const anchor = scrollAnchorRef.current;
-
-    if (!anchor) {
-      return;
-    }
-
-    const cardElement = experienceCardRefs.current[anchor.index];
-
-    if (!cardElement) {
-      scrollAnchorRef.current = null;
-      return;
-    }
-
-    const adjustScroll = () => {
-      const activeAnchor = scrollAnchorRef.current;
-
-      if (!activeAnchor) {
-        return;
-      }
-
-      const activeCard = experienceCardRefs.current[activeAnchor.index];
-
-      if (!activeCard) {
-        scrollAnchorRef.current = null;
-        return;
-      }
-
-      const nextTop = activeCard.getBoundingClientRect().top;
-      const offset = nextTop - activeAnchor.top;
-
-      if (Math.abs(offset) > 1) {
-        window.scrollBy(0, offset);
-      }
-
-      if (
-        performance.now() - activeAnchor.startedAt < EXPERIENCE_ANIMATION_LOCK_MS
-      ) {
-        scrollLockFrameRef.current = requestAnimationFrame(adjustScroll);
-      } else {
-        scrollAnchorRef.current = null;
-        scrollLockFrameRef.current = null;
-      }
-    };
-
-    if (scrollLockFrameRef.current !== null) {
-      cancelAnimationFrame(scrollLockFrameRef.current);
-      scrollLockFrameRef.current = null;
-    }
-
-    scrollLockFrameRef.current = requestAnimationFrame(adjustScroll);
-
+  // Cleanup on unmount
+  useEffect(() => {
     return () => {
-      if (scrollLockFrameRef.current !== null) {
-        cancelAnimationFrame(scrollLockFrameRef.current);
-        scrollLockFrameRef.current = null;
+      if (scrollLockTimeoutRef.current) {
+        clearTimeout(scrollLockTimeoutRef.current);
       }
+      document.body.style.overflow = "";
     };
-  }, [expandedIndex]);
+  }, []);
 
   if (loading) {
     return (
@@ -372,12 +368,11 @@ export default function Home() {
                       tabIndex={0}
                       aria-expanded={expandedIndex === index}
                       onClick={(event) =>
-                        toggleExperience(index, event.currentTarget)
+                        toggleExperience(index, event.currentTarget, event)
                       }
                       onKeyDown={(event) => {
                         if (event.key === "Enter" || event.key === " ") {
-                          event.preventDefault();
-                          toggleExperience(index, event.currentTarget);
+                          toggleExperience(index, event.currentTarget, event);
                         }
                       }}
                     >
