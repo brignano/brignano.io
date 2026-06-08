@@ -21,24 +21,24 @@ Font.register({
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
+    padding: 30,
     fontSize: 10,
     fontFamily: "Helvetica",
-    lineHeight: 1.4,
+    lineHeight: 1.3,
   },
   header: {
-    marginBottom: 20,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: "bold",
     marginBottom: 10,
   },
-  title: {
-    fontSize: 14,
+  name: {
+    fontSize: 19,
     fontWeight: "bold",
-    marginTop: 6,
-    marginBottom: 12,
+    marginBottom: 4,
+  },
+  title: {
+    fontSize: 11,
+    fontWeight: "bold",
+    marginTop: 2,
+    marginBottom: 6,
     color: "#333",
   },
   contactInfo: {
@@ -53,19 +53,19 @@ const styles = StyleSheet.create({
   contactInfoItem: {
     fontSize: 9,
     color: "#555",
-    width: "50%",
+    marginRight: 12,
     marginBottom: 2,
   },
   section: {
-    marginBottom: 16,
+    marginBottom: 9,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 12.5,
     fontWeight: "bold",
-    marginBottom: 8,
+    marginBottom: 4,
     borderBottomWidth: 1,
     borderBottomColor: "#000",
-    paddingBottom: 6,
+    paddingBottom: 2,
   },
   summaryText: {
     fontSize: 10,
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   experienceItem: {
-    marginBottom: 12,
+    marginBottom: 7,
   },
   jobHeader: {
     flexDirection: "row",
@@ -98,12 +98,6 @@ const styles = StyleSheet.create({
     color: "#555",
     textAlign: "right",
   },
-  jobSummary: {
-    fontSize: 9,
-    fontStyle: "italic",
-    marginBottom: 4,
-    color: "#444",
-  },
   highlightsList: {
     marginLeft: 12,
     marginBottom: 4,
@@ -119,19 +113,6 @@ const styles = StyleSheet.create({
   },
   highlightText: {
     flex: 1,
-  },
-  techList: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: 4,
-  },
-  techItem: {
-    fontSize: 8,
-    backgroundColor: "#f0f0f0",
-    padding: "2 6",
-    marginRight: 4,
-    marginBottom: 4,
-    borderRadius: 2,
   },
   educationItem: {
     marginBottom: 8,
@@ -155,7 +136,7 @@ const styles = StyleSheet.create({
   },
   skillCategory: {
     width: "48%",
-    marginBottom: 8,
+    marginBottom: 5,
   },
   skillCategoryTitle: {
     fontSize: 11,
@@ -279,26 +260,16 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
                     </Text>
                   </View>
                 </View>
-                {job.summary && (
-                  <Text style={styles.jobSummary}>{job.summary}</Text>
-                )}
                 <View style={styles.highlightsList}>
-                  {job.highlights.map((highlight, i) => (
-                    <View key={i} style={styles.highlight}>
-                      <Text style={styles.bullet}>•</Text>
-                      <Text style={styles.highlightText}>{highlight}</Text>
-                    </View>
-                  ))}
-                </View>
-                {job.technologies && job.technologies.length > 0 && (
-                  <View style={styles.techList}>
-                    {job.technologies.map((tech, i) => (
-                      <Text key={i} style={styles.techItem}>
-                        {tech}
-                      </Text>
+                  {job.highlights
+                    .slice(0, index === 0 ? 6 : 3)
+                    .map((highlight, i) => (
+                      <View key={i} style={styles.highlight}>
+                        <Text style={styles.bullet}>•</Text>
+                        <Text style={styles.highlightText}>{highlight}</Text>
+                      </View>
                     ))}
-                  </View>
-                )}
+                </View>
               </View>
             ))}
           </View>

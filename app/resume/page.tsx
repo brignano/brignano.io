@@ -302,7 +302,7 @@ export default function Home() {
           {personalInfo.location && <span>{personalInfo.location}</span>}
         </div>
         {/* Social Media Links */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="flex flex-wrap gap-4 mb-8" data-print-hide>
           {/* LinkedIn and GitHub */}
           {personalInfo.linkedin && (
             <a
@@ -351,7 +351,10 @@ export default function Home() {
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Experience</h2>
             <div className="relative">
-              <div className="absolute left-4 top-8 bottom-8 w-px -translate-x-1/2 dark:bg-zinc-700 bg-zinc-300" />
+              <div
+                className="absolute left-4 top-8 bottom-8 w-px -translate-x-1/2 dark:bg-zinc-700 bg-zinc-300"
+                data-print-hide
+              />
               <div className="space-y-10">
                 {experience.map((job, index) => (
                   <div key={index} className="relative">
@@ -360,6 +363,7 @@ export default function Home() {
                           ? "border-zinc-400 bg-secondary-color"
                           : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
                         }`}
+                      data-print-hide
                     />
                     <div
                       ref={(element) => {
@@ -404,7 +408,7 @@ export default function Home() {
                         </time>
                       </div>
                       <div
-                        className={`transition-all duration-300 overflow-hidden ${expandedIndex === index
+                        className={`exp-body transition-all duration-300 overflow-hidden ${expandedIndex === index
                           ? "max-h-[3000px] mt-4"
                           : "max-h-0"
                           }`}
@@ -422,7 +426,7 @@ export default function Home() {
                           ))}
                         </ul>
                         {job.technologies && (
-                          <div className="flex flex-wrap gap-2">
+                          <div className="job-tech flex flex-wrap gap-2">
                             {job.technologies.map((tech, i) => (
                               <span
                                 key={i}
@@ -453,7 +457,7 @@ export default function Home() {
           <h2 className="text-3xl mb-8 font-bold tracking-tight">
             Leadership &amp; Community
           </h2>
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+          <div className="lead-grid grid md:grid-cols-2 grid-cols-1 gap-6">
             {leadership.map((item, index) => (
               <div
                 key={index}
@@ -474,13 +478,15 @@ export default function Home() {
         </section>
       )}
 
-      {/* Education Section */}
+      {/* Education Section — hidden in print to keep the printed resume to two
+          pages (parity with the downloaded PDF, which also omits it). */}
       {education && education.length > 0 && (
         <section
           className="mb-16"
           data-aos="fade-up"
           data-aos-duration={1000}
           data-aos-once={true}
+          data-print-hide
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Education</h2>
             <div className="space-y-10">
