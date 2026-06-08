@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import GitHubCalendarClient from "@/components/github-calendar-client";
-import HeroSVG from "@/components/hero-svg";
+import HeroMotif from "@/components/hero-motif";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
-import { socialLinks, highlights, projects } from "@/lib/constants";
+import { socialLinks, highlights, projects, heroMetrics } from "@/lib/constants";
 import { event } from "@/lib/gtag";
 
 const HOME_BREADCRUMBS = [
@@ -20,114 +20,125 @@ export default function Home() {
       <BreadcrumbSchema items={HOME_BREADCRUMBS} />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
         {/* Hero Section with CTAs */}
-        <section
-          data-aos="fade-down"
-          data-aos-duration={500}
-          data-aos-once={true}
-          className="flex flex-col items-start justify-between gap-y-8 mb-8 md:mb-24"
-        >
-          <div className="lg:max-w-2xl max-w-2xl">
-            <div style={{ opacity: 1, transform: "none" }}>
-              <div>
-                <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-6 lg:leading-[3.7rem] leading-tight lg:min-w-[700px] min-w-full">
-                  I design enterprise developer platforms that help thousands of engineers ship software safely and quickly.
-                </h1>
-                <p className="text-base dark:text-zinc-400 text-zinc-600 mb-8">
-                  My work focuses on internal developer platforms, CI/CD ecosystems, and DevOps intelligence that make software delivery safer, faster, and more reliable — with a growing emphasis on AI-native tooling and intelligent automation.
-                </p>
+        <section className="relative overflow-hidden mb-8 md:mb-24">
+          <HeroMotif />
+          <div
+            data-aos="fade-down"
+            data-aos-duration={500}
+            data-aos-once={true}
+            className="relative z-10 max-w-2xl"
+          >
+            <p className="font-silkscreen-mono uppercase tracking-[0.18em] text-[11px] sm:text-xs text-primary-color mb-5">
+              Platform Engineering · DevEx · AI
+            </p>
+            <h1 className="font-incognito font-bold tracking-tight text-4xl sm:text-5xl lg:text-6xl mb-6 leading-[1.1]">
+              I build the platforms thousands of engineers ship on.
+            </h1>
+            <p className="text-base sm:text-lg dark:text-zinc-400 text-zinc-600 mb-8 max-w-xl">
+              Internal developer platforms, CI/CD ecosystems, and DevOps intelligence that make software delivery safer, faster, and more reliable — with a growing emphasis on AI-native tooling.
+            </p>
 
-                {/* Primary CTAs */}
-                <div className="flex flex-wrap md:flex-nowrap gap-4 mb-10 items-center">
+            {/* Metric strip — proof above the fold. Dividers only once the row
+                fits on one line (sm+); plain gap on mobile to avoid a dangling
+                divider when items wrap. */}
+            <dl className="flex flex-wrap gap-x-7 gap-y-4 sm:gap-x-0 mb-9">
+              {heroMetrics.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="flex flex-col sm:px-5 sm:first:pl-0 sm:border-l sm:first:border-l-0 dark:border-zinc-800 border-zinc-200"
+                >
+                  <dd className="text-xl font-bold tracking-tight">
+                    {metric.value}
+                  </dd>
+                  <dt className="text-xs dark:text-zinc-400 text-zinc-500 mt-1">
+                    {metric.label}
+                  </dt>
+                </div>
+              ))}
+            </dl>
+
+            {/* Primary CTAs — one filled, one outline (TSD §5.3) */}
+            <div className="flex flex-wrap md:flex-nowrap gap-4 mb-10 items-center">
+              <Link
+                href="/resume"
+                className="inline-flex items-center px-6 py-3 bg-violet-600 hover:bg-violet-500 text-white font-semibold rounded-lg transition-colors duration-200 md:flex-shrink-0"
+                onClick={() => {
+                  event("cta_clicked", {
+                    cta: "resume",
+                    location: "hero",
+                    transport_type: "beacon",
+                  });
+                }}
+              >
+                Resume
+                <svg
+                  className="ml-2 w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+              </Link>
+              <Link
+                href="/coding"
+                className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
+                onClick={() => {
+                  event("cta_clicked", {
+                    cta: "coding_activity",
+                    location: "hero",
+                    transport_type: "beacon",
+                  });
+                }}
+              >
+                Coding Activity
+                <svg
+                  className="ml-2 w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 18l6-6-6-6M8 6L2 12l6 6"
+                  />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Social Links */}
+            <ul className="flex items-center flex-wrap gap-x-5 gap-y-4 xl:mb-0 mb-8">
+              {socialLinks.map((link) => (
+                <li key={link.name}>
                   <Link
-                    href="/resume"
-                    className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
+                    href={link.href}
+                    target="_blank"
+                    className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
                     onClick={() => {
-                      event("cta_clicked", {
-                        cta: "resume",
-                        location: "hero",
+                      const ctaName = String(link.name)
+                        .toLowerCase()
+                        .replace(/\s+/g, "_");
+                      event("social_link_clicked", {
+                        cta: ctaName,
+                        href: link.href,
                         transport_type: "beacon",
                       });
                     }}
                   >
-                    My Resume
-                    <svg
-                      className="ml-2 w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      />
-                    </svg>
+                    {link.icon} <span className="ml-1">{link.name}</span>
                   </Link>
-                  <Link
-                    href="/coding"
-                    className="inline-flex items-center px-6 py-3 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
-                    onClick={() => {
-                      event("cta_clicked", {
-                        cta: "coding_activity",
-                        location: "hero",
-                        transport_type: "beacon",
-                      });
-                    }}
-                  >
-                    My Coding
-                    <svg
-                      className="ml-2 w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M16 18l6-6-6-6M8 6L2 12l6 6"
-                      />
-                    </svg>
-                  </Link>
-                </div>
-
-                {/* Social Links */}
-                <div style={{ opacity: 1 }}>
-                  <div>
-                    <ul className="flex items-center flex-wrap gap-x-5 gap-y-4 xl:mb-0 mb-8">
-                      {socialLinks.map((link) => (
-                        <li key={link.name}>
-                          <Link
-                            href={link.href}
-                            target="_blank"
-                            className="flex items-center border-b dark:border-b-zinc-800 border-zinc-200 group"
-                            onClick={() => {
-                              const ctaName = String(link.name)
-                                .toLowerCase()
-                                .replace(/\s+/g, "_");
-                              event("social_link_clicked", {
-                                cta: ctaName,
-                                href: link.href,
-                                transport_type: "beacon",
-                              });
-                            }}
-                          >
-                            {link.icon} <span className="ml-1">{link.name}</span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style={{ opacity: "1" }} className="w-full">
-            <div className="w-full">
-              <HeroSVG />
-            </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 

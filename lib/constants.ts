@@ -227,6 +227,19 @@ export type Project = {
   links?: { label: string; url: string }[];
 };
 
+export interface HeroMetric {
+  value: string;
+  label: string;
+}
+
+// Single source of truth for the hero proof strip. Keep these current —
+// they render directly under the hero subhead (above the fold).
+export const heroMetrics: HeroMetric[] = [
+  { value: "11,000+", label: "repos migrated" },
+  { value: "2023", label: "Enterprise Tech Award" },
+  { value: "~1.9M", label: "lines of code" },
+];
+
 export const highlights = [
   "Cloud platforms & infrastructure (AWS / GCP)",
   "Security-first software delivery (DevSecOps)",

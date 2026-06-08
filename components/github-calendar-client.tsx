@@ -9,6 +9,13 @@ const GitHubCalendar = dynamic(
   { ssr: false }
 );
 
+// Violet intensity ramp to match the site accent (replaces the default GitHub
+// green). Level 0 is a neutral empty cell; levels 1–4 climb through violet.
+const CALENDAR_THEME = {
+  light: ["#e4e4e7", "#ddd6fe", "#a78bfa", "#7c3aed", "#5b21b6"],
+  dark: ["#27272a", "#4c1d95", "#6d28d9", "#8b5cf6", "#a78bfa"],
+};
+
 interface GitHubCalendarClientProps {
   username?: string;
   initialYear?: number | string;
@@ -80,6 +87,7 @@ export default function GitHubCalendarClient({
                   username={username}
                   year={year}
                   colorScheme={colorScheme}
+                  theme={CALENDAR_THEME}
                 />
               )}
             </div>
@@ -123,7 +131,7 @@ export default function GitHubCalendarClient({
                   (buttonSize === "large"
                     ? "px-4 py-2 md:px-6 md:py-4"
                     : "px-4 py-2") +
-                  " border-2 font-semibold rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-400" +
+                  " border-2 font-semibold rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-400" +
                   " " +
                   (y === year
                     ? "bg-secondary-color dark:bg-secondary-color text-white border-transparent hover:border-transparent"

@@ -196,14 +196,14 @@ export default function Header() {
                 aria-hidden={!resumeIconsVisible}
                 className={`group dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition transform duration-300 ease-out ${resumeIconsVisible && !resumeIconsAnimatingOut ? "translate-y-0 opacity-100 scale-100 cursor-pointer" : "translate-y-1 opacity-0 scale-95 pointer-events-none"}`}
               >
-                <ArrowDownTrayIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300 group-hover:text-[rgb(33,110,57)] dark:group-hover:text-zinc-300" />
+                <ArrowDownTrayIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300 group-hover:text-violet-700 dark:group-hover:text-zinc-300" />
               </button>
             </>
           )}
           <button
             aria-label="Toggle Theme"
             onClick={() => toggleTheme()}
-            className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-400"
+            className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-400"
           >
             {isDarkMode ? (
               <MoonIcon className="size-5 text-primary-color hover:text-white duration-400 cursor-pointer" />
@@ -216,7 +216,7 @@ export default function Header() {
               aria-label="Toggle Menu"
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden dark:focus:text-primary-color dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-md p-2 hover:text-zinc-900 duration-300 cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-400"
+              className="lg:hidden dark:focus:text-primary-color dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-md p-2 hover:text-zinc-900 duration-300 cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-400"
             >
               <span className="sr-only">Open main menu</span>
               <Bars3Icon aria-hidden="true" className="size-5" />

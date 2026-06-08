@@ -2,6 +2,19 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Type system (TSD §5.2).
+   Geist is the base for body + headings; Silkscreen is a deliberate accent only
+   (eyebrow labels, /coding stat numbers). The next/font runtime variables
+   (--font-geist, --font-silkscreen) are set on <html> so these :root-scoped
+   references resolve. Generates the matching `font-sans`, `font-incognito`,
+   and `font-silkscreen-mono` utilities. */
+@theme {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-incognito: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-silkscreen-mono: var(--font-silkscreen), ui-monospace, monospace;
+}
+
 /* Chart color variables (light theme) */
 :root {
   --chart-1: #4f46e5;
@@ -82,10 +95,12 @@
   }
 }
 
+/* Accent: electric indigo/violet (TSD §10.3). Swatches chosen for WCAG AA:
+   violet-700 (#6d28d9) on light, violet-400 (#a78bfa) on dark. */
 .text-primary-color {
-  color: rgb(33, 110, 57);
+  color: #6d28d9;
   .dark & {
-    color: rgb(51, 224, 146);
+    color: #a78bfa;
   }
 }
 
@@ -95,9 +110,9 @@
 }
 
 .bg-secondary-color {
-  background-color: rgb(33, 110, 57);
+  background-color: #7c3aed;
   .dark & {
-    background-color: rgb(51, 224, 146);
+    background-color: #7c3aed;
   }
 }
 
@@ -105,15 +120,11 @@
   background-color: rgba(39, 39, 43, 0.4);
 }
 
-h1 {
-  font-family: var(--font-silkscreen-mono);
-}
-
 :focus-visible {
-  outline: 2px solid rgb(33, 110, 57);
+  outline: 2px solid #6d28d9;
   outline-offset: 2px;
 }
 
 .dark :focus-visible {
-  outline-color: rgb(51, 224, 146);
+  outline-color: #a78bfa;
 }
