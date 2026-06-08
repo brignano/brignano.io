@@ -207,10 +207,9 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
     personalInfo,
     summary,
     experience,
-    education,
+    leadership,
     skills,
     certifications,
-    projects,
   } = data;
 
   return (
@@ -300,6 +299,24 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
                     ))}
                   </View>
                 )}
+              </View>
+            ))}
+          </View>
+        )}
+
+        {/* Leadership & Community Section */}
+        {leadership && leadership.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Leadership &amp; Community</Text>
+            {leadership.map((item, index) => (
+              <View key={index} style={styles.certificationItem}>
+                <Text style={styles.certificationName}>
+                  {item.organization}
+                </Text>
+                <Text style={styles.certificationIssuer}>
+                  {item.role}
+                  {item.description && ` — ${item.description}`}
+                </Text>
               </View>
             ))}
           </View>

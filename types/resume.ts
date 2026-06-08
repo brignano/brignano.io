@@ -2,10 +2,17 @@ export interface ResumeData {
   personalInfo: PersonalInfo;
   summary: string;
   experience: Experience[];
+  leadership?: LeadershipRole[];
   education?: Education[];
   skills?: Skill[];
   certifications?: Certification[];
   projects?: Project[];
+}
+
+export interface LeadershipRole {
+  organization: string;
+  role: string;
+  description?: string;
 }
 
 export interface PersonalInfo {
