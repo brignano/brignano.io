@@ -8,11 +8,16 @@ export interface SocialLink {
   icon: ReactNode;
 }
 
+// Brand impression > keyword density in the title (the site ranks #1 on the
+// name already); keywords live in the description (TSD §5.7).
+const SITE_TITLE = "Anthony Brignano — I build platforms engineers ship on";
+const SITE_DESCRIPTION =
+  "Internal developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes developer onboarding self-service and software delivery faster and safer.";
+
 export const siteMetadata: Metadata = {
   metadataBase: new URL("https://brignano.io"),
-  title: "Anthony Brignano | Platform Engineering & DevEx",
-  description:
-    "Senior Staff Platform Engineer building internal developer platforms, CI/CD systems, DevOps intelligence, and AI-native delivery at enterprise scale.",
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   icons: {
     icon: [
       { url: "/favicon.svg" },
@@ -21,9 +26,8 @@ export const siteMetadata: Metadata = {
   },
   manifest: "/manifest.json",
   openGraph: {
-    title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
-    description:
-      "Senior Staff Platform Engineer building internal developer platforms, CI/CD ecosystems, DevOps intelligence, and AI-native software delivery at enterprise scale.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: "https://brignano.io",
     siteName: "Anthony Brignano",
     images: [
@@ -39,9 +43,8 @@ export const siteMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anthony Brignano | Platform Engineering, Developer Experience & AI",
-    description:
-      "Senior Staff Platform Engineer focused on developer experience and internal platforms—CI/CD, DevOps intelligence, and AI-native delivery at enterprise scale.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     images: ["/og.webp"],
   },
   alternates: {
@@ -234,19 +237,52 @@ export interface HeroMetric {
 
 // Single source of truth for the hero proof strip. Keep these current —
 // they render directly under the hero subhead (above the fold).
+// Integrity (TSD §5.7): 8,000+ = reach/mandate ("for" engineers, not active
+// users); 1,000+ = current 90-day active adopters. Keep the framing distinct.
 export const heroMetrics: HeroMetric[] = [
-  { value: "11,000+", label: "repos migrated" },
-  { value: "2023", label: "Enterprise Tech Award" },
-  { value: "~1.9M", label: "lines of code" },
+  { value: "8,000+", label: "enterprise developers" },
+  { value: "1,000+", label: "active in 90 days" },
+  { value: "10,000+", label: "repos migrated" },
 ];
 
-export const highlights = [
-  "Cloud platforms & infrastructure (AWS / GCP)",
-  "Security-first software delivery (DevSecOps)",
-  "CI/CD automation & developer experience",
-  "Platform engineering & internal developer platforms",
-  "Observability, reliability & platform operations",
-  "AI-native delivery & developer tooling",
+export interface Achievement {
+  outcome: string;
+  skills: string[];
+}
+
+// Tier 1 — outcome cards with skill pills (TSD §5.5b). Each leads with a
+// quantified outcome and carries the tech underneath. Public claims about a
+// named employer: 8,000+ is reach, 1,000+ is 90-day adopters, no SLAs, no
+// incident numbers (TSD §5.7 integrity rules).
+export const achievements: Achievement[] = [
+  {
+    outcome: "A unified developer platform for 8,000+ engineers",
+    skills: ["GitHub Enterprise", "Custom CLI", "IDE Extensions"],
+  },
+  {
+    outcome: "1,000+ engineers active in the first 90 days",
+    skills: ["Desktop App", "CLI", "Self-service onboarding"],
+  },
+  {
+    outcome: "One build command, any stack — local, CI, or fully remote",
+    skills: ["CI/CD", "Base-image registry", "Containers"],
+  },
+  {
+    outcome: "Real-time DevOps intelligence for engineers and AI agents",
+    skills: ["MCP", "AWS", "DynamoDB", "Snowflake"],
+  },
+];
+
+export interface NowItem {
+  label: string;
+  detail: string;
+}
+
+// Tier 2 — "Now" momentum strip (TSD §5.5b): hands-on, current personal work.
+export const nowBuilding: NowItem[] = [
+  { label: "Homelab", detail: "Proxmox · Docker · Tailscale" },
+  { label: "Local-LLM routing", detail: "Ollama · Open WebUI" },
+  { label: "AI-native tooling", detail: "Claude Code" },
 ];
 
 export const projects: Project[] = [];

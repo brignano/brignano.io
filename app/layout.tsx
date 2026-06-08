@@ -8,7 +8,7 @@ import Footer from "@/components/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from "@/components/google-analytics";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
-import { siteMetadata } from "@/lib/constants";
+import { siteMetadata, socialLinks } from "@/lib/constants";
 import ScrollToTop from "@/components/scroll-to-top";
 import ScrollReveal from "@/components/scroll-reveal";
 import ToastProvider from "@/components/toast-provider";
@@ -88,6 +88,12 @@ export default function RootLayout({
   const twitterImage =
     getFirstImageUrl(siteMetadata.twitter?.images) ?? getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og.webp";
 
+  // Derive sameAs from the single source of truth (socialLinks); only http(s)
+  // profile URLs, not mailto. (TSD §5.7 Person schema enhancements.)
+  const sameAs = socialLinks
+    .map((link) => link.href)
+    .filter((href) => /^https?:\/\//.test(href));
+
   return (
     <html
       lang="en"
@@ -138,10 +144,19 @@ export default function RootLayout({
               name: "Anthony Brignano",
               url: "https://brignano.io",
               image: "https://brignano.io/headshot.jpeg",
-              sameAs: [
-                "https://www.linkedin.com/in/brignano",
-                "https://github.com/brignano",
+              description:
+                "Senior Staff Software Engineer building internal developer platforms, CI/CD ecosystems, DevOps intelligence, and AI-native tooling at enterprise scale.",
+              knowsAbout: [
+                "Platform Engineering",
+                "Developer Experience",
+                "CI/CD",
+                "DevOps Intelligence",
+                "AI-native tooling",
+                "GitHub Enterprise",
+                "Terraform",
+                "AWS",
               ],
+              sameAs,
               jobTitle: "Senior Staff Software Engineer",
               worksFor: {
                 "@type": "Organization",

@@ -182,9 +182,6 @@ export default async function Page() {
         return "0 secs";
       })();
 
-    // Range helper text from all_time (e.g. "since Dec 11 2020")
-    const rangeText = allTime?.human_readable_range || null;
-
     // Total lines: prefer README badge fallback
     const totalLines = 0;
 
@@ -260,7 +257,7 @@ export default async function Page() {
             data-aos-delay="100"
             className="mt-1 text-xs text-zinc-500 dark:text-zinc-400 italic pl-1"
           >
-            ... {rangeText ?? "—"}
+            Tracked since Dec 2020
           </div>
 
           <div

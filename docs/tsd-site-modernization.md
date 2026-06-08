@@ -81,7 +81,7 @@ Findings from the review of the live site and source (desktop + mobile, light + 
 | Where | Current | Proposed |
 |---|---|---|
 | Hero H1 | "I design enterprise developer platforms that help thousands of engineers ship software safely and quickly." | "I build the platforms thousands of engineers ship on." |
-| Hero metrics *(new)* | — | `11,000+ repos migrated · 2023 Enterprise Tech Award · ~1.9M lines` |
+| Hero metrics *(new)* | — | `10,000+ repos migrated · 2023 Enterprise Tech Award · ~1.9M lines` *(superseded by §5.7)* |
 | CTA | "My Resume" | "Résumé" (primary, filled) |
 | CTA | "My Coding" | "Coding Activity" |
 | Heading | "Contribution Graph" | "Open-source activity" |
@@ -92,7 +92,7 @@ Findings from the review of the live site and source (desktop + mobile, light + 
 ### 5.5b Highlights — best of both (replaces the buzzword boxes)
 A two-tier block that serves execs/recruiters (proof) *and* devs (range), without two separate sections:
 
-- **Tier 1 — Achievements (outcome + tech):** each card leads with a quantified outcome headline and carries a small row of skill pills underneath. Example: **"11,000+ repos onto one paved road"** · `GitHub Enterprise` `CI/CD` `Terraform`. ~3–4 cards drawn from real outcomes (migration, incident reduction, AI/MCP layer, the 2023 award).
+- **Tier 1 — Achievements (outcome + tech):** each card leads with a quantified outcome headline and carries a small row of skill pills underneath. Example: **"10,000+ repos onto one paved road"** · `GitHub Enterprise` `CI/CD` `Terraform`. ~3–4 cards drawn from real outcomes (migration, incident reduction, AI/MCP layer, the 2023 award).
 - **Tier 2 — "Now" strip (personal + momentum):** a compact, low-effort line showing what you're currently building — signals you're hands-on and current. Drawn from real work: **homelab** (Proxmox/Docker/Tailscale), **local-LLM routing** (Ollama + Open WebUI), and **AI-native tooling with Claude Code**. One line each, no deep pages.
 
 This gives the "best of both worlds" (outcomes *and* skills) and gives your homelab / Claude Code work a home **now**, cheaply — while full write-ups stay deferred to the Work TSD (§9). Source all of it from `lib/constants.ts` so it's edit-in-one-place.
@@ -104,6 +104,47 @@ This gives the "best of both worlds" (outcomes *and* skills) and gives your home
 
 ### 5.6 Theme FOUC
 - Add a tiny **blocking inline script in `<head>`** that resolves theme from `localStorage`/`matchMedia` and sets the `dark` class before first paint. Fold the `localStorage` write into the toggle handler instead of a mount effect.
+
+### 5.7 P2 — resolved content & SEO (working session 2026-06-08)
+Decisions reached after P1; folds into the P2 PR. **Positioning shift:** lead with the *live platform suite*; the 10k-repo migration + 2023 award become **prior wins**, not the headline.
+
+**Integrity rules (non-negotiable — these are public claims about a named employer):**
+- `40+ days` is the **old onboarding baseline only**. The **1-day** target is a **CEO-sponsored *initiative/goal*** — never state it as delivered.
+- **No timeframe SLAs** in copy ("within an hour", "same-day", "first PR in 20 min" all cut — user declined that level of commitment). Make the *point* (fast, self-service onboarding) qualitatively.
+- Incident/ticket reduction is **not monitored yet** → **no hard numbers**; at most a design goal.
+- `8,000+` = **reach/mandate** (frame as "for"/"serving 8,000+ engineers", **never** "8,000 active users"). `1,000+` = current **90-day active adopters** (traction). Keep these distinct so they survive interview scrutiny.
+- **Repos migrated = `10,000+`, not 11,000+.** The Server source had ~10.3–10.5k repos; the ~500–700 that brought Cloud to 11k+ were **net-new created in Cloud**, not migrated. "Migrated/modernized" claims use **`10,000+`** (true and conservative). The 11k figure is only honest as an **end-state/scale** claim ("11,000+ repos on GitHub Enterprise Cloud"), a different verb — not used in current copy.
+
+**Hero metric strip** (replaces `~1.9M lines`; source from `lib/constants.ts` `heroMetrics`):
+> `8,000+` enterprise developers · `1,000+` active in 90 days · `10,000+` repos migrated
+
+**Homepage Current Role — curated pillars (6 + prior):**
+1. Lead the internal developer platform — single pane of glass for **8,000+ engineers** — on a CEO-sponsored initiative to cut onboarding from **40+ days**.
+2. Unified developer surface: **custom CLI, desktop app, IDE extensions**; **1,000+ active in 90 days**.
+3. **"One build command, any stack"** — context-aware builds that run identically locally / in CI / fully remote, on a custom base-image registry.
+4. **Real-time DevOps intelligence** — an event bus streaming pipeline + CLI/IDE telemetry into **AWS, DynamoDB, Snowflake** for ML analysis of developer pain points; upgraded observability (**Splunk, Dynatrace**); live platform **health status page + subscribe-able alerts**.
+5. **Native AI tooling + out-of-the-box skills** (MCP, DevOps intelligence layer) built in.
+6. Operate the enterprise **CI/CD + DevSecOps toolchain** end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx, …) keeping thousands of pipelines reliable.
+- *Prior:* migrated **10,000+ repos** → GitHub Enterprise Cloud; **2023 Enterprise Tech Award** (year reads as context here, not a headline metric).
+
+**Homepage About — add a leadership/community line** (between platform paragraph and hobbies):
+> *Beyond the platform, I lead our enterprise hackathons, mentor emerging leaders as a rotation manager in the company's Leadership Development Program, and serve on the CCSU Computer Science Industry Advisory Board.*
+- Also apply the already-staged tweak: "snowboarding the glades" → **"snowboarding through the woods"** (uncommitted in working tree as of this session).
+
+**Résumé (`app/resume/page.tsx`):**
+- Expanded Current Role bullets (comprehensive version of the 6 pillars above + virtual tasks / remote build detail that was trimmed from the homepage).
+- New **"Leadership & Community"** section: **Enterprise Hackathons** (lead/organizer) · **Leadership Development Program** — Rotation Manager · **CCSU Computer Science Industry Advisory Board** — Member.
+- **Skills/Tech** section grouped (recruiter/ATS keyword home for the full tool inventory): **CI/CD** (Jenkins, GitHub Actions, Harness, AWS CodePipeline, uDeploy) · **DevSecOps** (Checkmarx, SonarQube, NexusIQ) · **Artifact & Quality** (Nexus) · **Observability** (Splunk, Dynatrace) · **Cloud & Data** (AWS, DynamoDB, Snowflake) · **Platform/VCS** (GitHub Enterprise) · **AI** (MCP).
+
+**SEO / metadata (`lib/constants.ts` `siteMetadata` + `app/layout.tsx` Person schema):**
+- **Title:** `Anthony Brignano — I build platforms engineers ship on` (decision: brand impression > keyword density, since the site ranks #1 on the name anyway; keywords live in the description).
+- **Description:** `Internal developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes developer onboarding self-service and software delivery faster and safer.`
+- Mirror to OG + Twitter titles/descriptions.
+- **`Person` schema enhancements:** add `description`, `knowsAbout` (platform engineering, developer experience, CI/CD, DevOps intelligence, AI-native tooling, GitHub Enterprise, Terraform, AWS), and a fuller `sameAs` (pull from `socialLinks`). Off-page lever to mention to user: link brignano.io from LinkedIn + GitHub profiles.
+
+**Still in scope from original §5.4/§5.5:** footer "Built with" badge removal, `@heroicons/react` sweep (drop hand-rolled `<path>` SVGs incl. the two hero CTA icons), Highlights §5.5b redesign (outcome cards + skill pills + "Now" strip), `/coding` eyebrow copy, final CTA → "Let's build something."
+
+**Open confirmation:** ✅ **Resolved** — **CCSU** = Central Connecticut State University (confirmed against `public/resume.yml` education); spelled out once on the homepage About line and in the résumé Leadership & Community section.
 
 ## 6. Phasing
 
@@ -138,7 +179,7 @@ graph LR
 - `next build` (static export) succeeds; bundle size for `/coding` not increased.
 
 ## 9. Out of scope / future TSD: "Work" section
-The highest-impact credibility + stickiness lever is **2–3 case studies** (11k-repo migration; AI/MCP DevOps-intelligence layer; enterprise CLI) with problem → constraints → build → measurable outcome, plus a `/work` route and IA expansion. Tracked separately because it is a content effort, not a visual refresh.
+The highest-impact credibility + stickiness lever is **2–3 case studies** (10k-repo migration; AI/MCP DevOps-intelligence layer; enterprise CLI) with problem → constraints → build → measurable outcome, plus a `/work` route and IA expansion. Tracked separately because it is a content effort, not a visual refresh.
 
 ## 10. Decisions — RESOLVED
 1. **Base sans font:** ✅ **Geist Sans** (modern, self-hosted via `next/font`, memorable when paired with Silkscreen accent). §5.2

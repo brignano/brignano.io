@@ -15,25 +15,27 @@ experience:
     startDate: 2023
     endDate: Present
     summary: |
-      Technical Lead for The Hartford's enterprise developer platform and developer experience strategy, owning the architecture and evolution of CI/CD, DevOps intelligence, internal developer portals, and AI/ML delivery patterns across thousands of repositories.
+      Technical Lead for The Hartford's enterprise developer platform and developer experience strategy — the single pane of glass serving 8,000+ engineers — owning the architecture and evolution of CI/CD, DevOps intelligence, internal developer tooling, and AI-native delivery patterns across thousands of repositories.
     highlights:
-      - Led enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud, modernizing 11,000+ repositories in under 12 months
-      - Principal architect for the enterprise developer platform, defining long-term strategy for developer experience, delivery automation, and AI-native software delivery
-      - Designed and rolled out internal developer platform capabilities (standardized pipelines, self-service workflows, opinionated paved roads)
-      - Built an enterprise CLI providing a single command surface for build execution, pipeline interaction, and developer workflows
-      - Architected a unified DevOps intelligence layer aggregating SDLC signals into actionable context for developers, platforms, and AI agents
-      - Drove platform-wide developer telemetry and workflow instrumentation to improve reliability, productivity, and time-to-resolution
-      - Provided architectural leadership across a heterogeneous CI/CD ecosystem (GitHub Actions, Harness, Jenkins, AWS CodePipeline, UrbanCode Deploy)
+      - Lead the strategy, design, and delivery of the internal developer platform serving 8,000+ engineers, on a CEO-sponsored initiative to make developer onboarding self-service, down from a 40+ day baseline
+      - Shipped a unified developer surface across a custom CLI, desktop app, and IDE extensions, reaching 1,000+ active engineers in the first 90 days
+      - Designed "one build command, any stack" — context-aware builds that run identically locally, in CI, or fully remote on virtual build agents, against a custom base-image registry
+      - Architected a real-time DevOps intelligence layer — an event bus streaming pipeline plus CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points
+      - Upgraded platform observability (Splunk, Dynatrace) and stood up a live platform health status page with subscribe-able alerts
+      - Built native AI tooling into the platform — MCP servers and out-of-the-box skills that let AI agents safely query and operate enterprise CI/CD systems
+      - Operate the enterprise CI/CD and DevSecOps toolchain end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx) keeping thousands of pipelines reliable
+      - Led the enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud, modernizing 10,000+ repositories in under 12 months
       - Enabled AI/ML delivery at scale via standardized platform patterns and pipelines for Google Cloud and Vertex AI workloads
-      - Led next-generation CI/CD tooling adoption and platform governance to improve consistency without sacrificing developer autonomy
       - Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity impact
     technologies:
       - Internal Developer Platforms (IDP)
-      - CI/CD Platforms (GitHub Actions, Harness, Jenkins, AWS CodePipeline, UCD)
-      - Cloud Platforms (AWS, Google Cloud Platform)
-      - AI/ML Platforms (Vertex AI)
+      - GitHub Enterprise Cloud
+      - CI/CD (GitHub Actions, Harness, Jenkins, AWS CodePipeline, uDeploy)
+      - DevSecOps (Checkmarx, SonarQube, Nexus)
+      - Cloud & Data (AWS, DynamoDB, Snowflake, Google Cloud)
+      - Observability (Splunk, Dynatrace)
+      - AI (MCP)
       - Infrastructure as Code (Terraform)
-      - Observability & Telemetry (Dynatrace)
   - company: The Hartford
     position: Staff Software Engineer — Enterprise Quality Engineering
     location: Hartford, CT
@@ -118,6 +120,47 @@ experience:
       - Sumo Logic
       - SOAP
       - REST
+leadership:
+  - organization: Enterprise Hackathons
+    role: Lead / Organizer
+    description: Lead and organize The Hartford's enterprise hackathons.
+  - organization: Leadership Development Program
+    role: Rotation Manager
+    description: Mentor emerging leaders as a rotation manager in the company's Leadership Development Program.
+  - organization: Central Connecticut State University — Computer Science Industry Advisory Board
+    role: Member
+    description: Serve on the CCSU Computer Science Industry Advisory Board.
+skills:
+  - category: CI/CD
+    items:
+      - Jenkins
+      - GitHub Actions
+      - Harness
+      - AWS CodePipeline
+      - uDeploy
+  - category: DevSecOps
+    items:
+      - Checkmarx
+      - SonarQube
+      - NexusIQ
+  - category: Artifact & Quality
+    items:
+      - Nexus
+  - category: Observability
+    items:
+      - Splunk
+      - Dynatrace
+  - category: Cloud & Data
+    items:
+      - AWS
+      - DynamoDB
+      - Snowflake
+  - category: Platform / VCS
+    items:
+      - GitHub Enterprise
+  - category: AI
+    items:
+      - MCP
 education:
   - institution: Central Connecticut State University
     degree: Bachelor of Science

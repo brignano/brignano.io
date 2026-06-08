@@ -1,10 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import {
+  DocumentTextIcon,
+  CodeBracketIcon,
+  EnvelopeIcon,
+} from "@heroicons/react/24/outline";
 import GitHubCalendarClient from "@/components/github-calendar-client";
 import HeroMotif from "@/components/hero-motif";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
-import { socialLinks, highlights, projects, heroMetrics } from "@/lib/constants";
+import {
+  socialLinks,
+  achievements,
+  nowBuilding,
+  projects,
+  heroMetrics,
+} from "@/lib/constants";
 import { event } from "@/lib/gtag";
 
 const HOME_BREADCRUMBS = [
@@ -71,20 +82,7 @@ export default function Home() {
                 }}
               >
                 Resume
-                <svg
-                  className="ml-2 w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
+                <DocumentTextIcon className="ml-2 w-4 h-4" aria-hidden="true" />
               </Link>
               <Link
                 href="/coding"
@@ -98,20 +96,7 @@ export default function Home() {
                 }}
               >
                 Coding Activity
-                <svg
-                  className="ml-2 w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M16 18l6-6-6-6M8 6L2 12l6 6"
-                  />
-                </svg>
+                <CodeBracketIcon className="ml-2 w-4 h-4" aria-hidden="true" />
               </Link>
             </div>
 
@@ -162,7 +147,10 @@ export default function Home() {
                     My work focuses on reducing friction and turning software delivery into a repeatable, paved road through automation, strong testing, and security as first-class concerns. My work sits at the intersection of platform engineering, developer experience, and emerging technologies, including AI-enabled tooling.
                   </p>
                   <p>
-                    Outside of work, you'll usually find me climbing rocks, snowboarding the glades, or exploring new ideas.
+                    Beyond the platform, I lead our enterprise hackathons, mentor emerging leaders as a rotation manager in the company&apos;s Leadership Development Program, and serve on the Central Connecticut State University (CCSU) Computer Science Industry Advisory Board.
+                  </p>
+                  <p>
+                    Outside of work, you'll usually find me climbing rocks, snowboarding through the woods, or exploring new ideas.
                   </p>
                 </div>
               </div>
@@ -170,22 +158,54 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Highlights Strip */}
+        {/* Highlights — outcome cards + "Now" strip (TSD §5.5b) */}
         <section
           className="mb-24"
           data-aos="fade-up"
           data-aos-duration={800}
           data-aos-once={true}
         >
-          <div className="grid md:grid-cols-3 grid-cols-2 gap-4 auto-rows-fr">
-            {highlights.map((highlight, index) => (
+          {/* Tier 1 — quantified outcomes with skill pills */}
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-4 auto-rows-fr">
+            {achievements.map((achievement, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-6 py-4 shadow-sm w-full sm:w-auto text-center h-full min-h-24 flex items-center justify-center"
+                className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-6 py-5 shadow-sm h-full flex flex-col"
               >
-                <p className="text-sm font-medium">{highlight}</p>
+                <p className="text-base font-semibold tracking-tight mb-3">
+                  {achievement.outcome}
+                </p>
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {achievement.skills.map((skill) => (
+                    <span
+                      key={skill}
+                      className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* Tier 2 — what I'm building now */}
+          <div className="mt-6">
+            <p className="font-silkscreen-mono uppercase tracking-[0.18em] text-[11px] text-primary-color mb-3">
+              Now building
+            </p>
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm dark:text-zinc-400 text-zinc-600">
+              {nowBuilding.map((item) => (
+                <li key={item.label}>
+                  <span className="font-medium dark:text-zinc-200 text-zinc-800">
+                    {item.label}
+                  </span>{" "}
+                  <span className="dark:text-zinc-500 text-zinc-500">
+                    {item.detail}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -267,28 +287,35 @@ export default function Home() {
                 Senior Staff Software Engineer — Enterprise Platform Engineering
               </h3>
               <p className="text-lg dark:text-zinc-300 text-zinc-700 mb-4">
-                I lead the strategy, design, and delivery of The Hartford's internal developer platform.
+                I lead the strategy, design, and delivery of The Hartford&apos;s internal developer platform — the single pane of glass 8,000+ engineers build on.
               </p>
               <p className="text-base dark:text-zinc-400 text-zinc-600 mb-4">
-                I own large-scale platform initiatives, including the migration of 11,000+ repositories to GitHub Enterprise Cloud, the design and operation of scalable CI/CD and governance platforms, and the adoption of next-generation developer tooling. My focus is on automation, reliability, and security as first-class concerns-reducing operational friction, accelerating developer productivity, and lowering incident rates across the enterprise.
+                My focus is automation, reliability, and security as first-class concerns — reducing operational friction and accelerating developer productivity across the enterprise.
               </p>
-              <ul className="list-disc list-inside mb-4">
-                <li>Leading development of AI-native platform capabilities, including MCP servers and a unified DevOps intelligence layer that enables AI agents to safely query and operate enterprise CI/CD systems</li>
-                <li>Architecting a first-class enterprise CLI that provides a consistent command surface for build execution, pipeline interaction, and developer workflows across platforms</li>
-                <li>Led enterprise migration to GitHub Enterprise Cloud (11,000+ repositories)</li>
+              <ul className="list-disc list-inside mb-4 space-y-2">
                 <li>
-                  Built and operated CI/CD, governance, and observability
-                  platforms
+                  On a CEO-sponsored initiative to make developer onboarding self-service — down from a 40+ day baseline.
                 </li>
                 <li>
-                  Rolled out next-gen CI/CD tooling, reducing developer-reported
-                  incidents
+                  A unified developer surface — custom CLI, desktop app, and IDE extensions — with 1,000+ engineers active in the first 90 days.
                 </li>
                 <li>
-                  Recognized with the 2023 Enterprise Tech Data & Cyber Award for
-                  platform adoption and productivity
+                  &ldquo;One build command, any stack&rdquo; — context-aware builds that run identically locally, in CI, or fully remote, on a custom base-image registry.
+                </li>
+                <li>
+                  Real-time DevOps intelligence — an event bus streaming pipeline and CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points; upgraded observability (Splunk, Dynatrace) and a live platform health status page with subscribe-able alerts.
+                </li>
+                <li>
+                  Native AI tooling and out-of-the-box skills (MCP, DevOps intelligence layer) built into the platform.
+                </li>
+                <li>
+                  Operate the enterprise CI/CD and DevSecOps toolchain end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx) keeping thousands of pipelines reliable.
                 </li>
               </ul>
+              <p className="text-sm dark:text-zinc-400 text-zinc-600 mb-4">
+                <span className="font-medium dark:text-zinc-300 text-zinc-700">Prior:</span>{" "}
+                migrated 10,000+ repos to GitHub Enterprise Cloud; recognized with the 2023 Enterprise Tech Data &amp; Cyber Award.
+              </p>
               <p className="text-sm dark:text-zinc-500 text-zinc-500 mt-4">
                 For my full career history, see{" "}
                 <Link href="/resume" className="underline text-primary-color">
@@ -310,7 +337,7 @@ export default function Home() {
           <div style={{ opacity: "1" }}>
             <div className="mb-4">
               <h2 className="font-incognito text-4xl font-bold tracking-tight mb-4">
-                Contribution Graph
+                Open-source activity
               </h2>
               <p className="dark:text-zinc-400 text-zinc-600 max-w-2xl">
                 GitHub contribution activity by year.
@@ -341,37 +368,15 @@ export default function Home() {
         >
           <div className="dark:bg-primary-bg bg-zinc-50 dark:border-zinc-800 border-zinc-200 border-2 p-16 rounded-xl text-center">
             <h2 className="font-incognito text-4xl mb-6 font-bold tracking-tight">
-              Want to collaborate or chat?
+              Let&apos;s build something.
             </h2>
             <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
               If you're working on platform engineering, developer experience, or AI-native software delivery, I'd love to connect.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href="https://www.linkedin.com/in/brignano"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
-                onClick={() => {
-                  event("cta_clicked", {
-                    cta: "linkedin_bottom",
-                    location: "bottom",
-                    transport_type: "beacon",
-                  });
-                }}
-              >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M20 3H4a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM8.339 18.337H5.667v-8.59h2.672v8.59zM7.003 8.574a1.548 1.548 0 1 1 0-3.096 1.548 1.548 0 0 1 0 3.096zm11.335 9.763h-2.669V14.16c0-.996-.018-2.277-1.388-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248h-2.667v-8.59h2.56v1.174h.037c.355-.675 1.227-1.387 2.524-1.387 2.704 0 3.203 1.778 3.203 4.092v4.71z" />
-                </svg>
-                LinkedIn
-              </a>
+            <div className="flex justify-center">
               <a
                 href="mailto:hi@brignano.io"
-                className="inline-flex items-center px-8 py-4 border-2 dark:border-zinc-600 border-zinc-400 dark:hover:border-zinc-500 hover:border-zinc-500 dark:text-zinc-300 text-zinc-700 font-bold text-lg rounded-lg transition-all duration-200"
+                className="inline-flex items-center px-8 py-4 bg-violet-600 hover:bg-violet-500 text-white font-bold text-lg rounded-lg transition-colors duration-200"
                 onClick={() => {
                   event("cta_clicked", {
                     cta: "contact_bottom",
@@ -380,20 +385,8 @@ export default function Home() {
                   });
                 }}
               >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-                Email
+                <EnvelopeIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+                Get in touch
               </a>
             </div>
           </div>

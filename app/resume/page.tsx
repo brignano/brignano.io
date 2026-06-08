@@ -261,6 +261,7 @@ export default function Home() {
     personalInfo,
     summary,
     experience,
+    leadership,
     education,
     skills,
     certifications,
@@ -436,6 +437,38 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+          </div>
+        </section>
+      )}
+
+      {/* Leadership & Community Section */}
+      {leadership && leadership.length > 0 && (
+        <section
+          className="mb-16"
+          data-aos="fade-up"
+          data-aos-duration={1000}
+          data-aos-once={true}
+        >
+          <h2 className="text-3xl mb-8 font-bold tracking-tight">
+            Leadership &amp; Community
+          </h2>
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+            {leadership.map((item, index) => (
+              <div
+                key={index}
+                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+              >
+                <h3 className="text-lg font-semibold">{item.organization}</h3>
+                <p className="text-sm text-primary-color font-medium mb-2">
+                  {item.role}
+                </p>
+                {item.description && (
+                  <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                    {item.description}
+                  </p>
+                )}
+              </div>
+            ))}
           </div>
         </section>
       )}
