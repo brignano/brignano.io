@@ -3,10 +3,14 @@ const WAKATIME_API_BASE = "https://wakatime.com/api/v1";
 import type {
   WakaTimeAllTimeStats,
   WakaTimeApiResponse,
+  WakaTimeSummaries,
   WakaTimeUser,
   StatsData,
 } from "@/types/wakatime";
 import StatsPie from "../../components/stats/stats-pie";
+import StatsBar from "../../components/stats/stats-bar";
+import CodingHero from "../../components/stats/coding-hero";
+import RecentActivity from "../../components/stats/recent-activity";
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
 import GitHubCalendarClient from "../../components/github-calendar-client";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -24,7 +28,7 @@ const CODING_BREADCRUMBS = [
   },
 ];
 
-async function fetchWaka(path: string) {
+async function fetchWaka(path: string, revalidate = 60 * 5) {
   const apiKey = process.env.WAKATIME_API_KEY;
   if (!apiKey) {
     throw new Error("Missing WAKATIME_API_KEY environment variable");
@@ -36,7 +40,7 @@ async function fetchWaka(path: string) {
       Authorization: "Basic " + Buffer.from(`${apiKey}:`).toString("base64"),
       "User-Agent": "brignano.io-wakatime-stats",
     },
-    next: { revalidate: 60 * 5 },
+    next: { revalidate },
   });
 
   if (!res.ok) {
@@ -47,9 +51,9 @@ async function fetchWaka(path: string) {
   return res.json();
 }
 
-async function safeFetch<T>(path: string) {
+async function safeFetch<T>(path: string, revalidate?: number) {
   try {
-    return { data: (await fetchWaka(path)) as T, error: null };
+    return { data: (await fetchWaka(path, revalidate)) as T, error: null };
   } catch (e) {
     return { data: null, error: e as Error };
   }
@@ -66,47 +70,6 @@ function splitMessage(message?: string | null) {
   while (rest.length && rest[0].trim() === "") rest.shift();
   while (rest.length && rest[rest.length - 1].trim() === "") rest.pop();
   return { subject, bodyLines: rest };
-}
-
-async function fetchReadmeLines(): Promise<string | null> {
-  try {
-    const res = await fetch(
-      "https://raw.githubusercontent.com/brignano/brignano/main/readme.md",
-      { next: { revalidate: 60 * 60 } }
-    );
-    if (!res.ok) return null;
-    const md = await res.text();
-
-    // Try to find a human-readable "lines" phrase (e.g. "1.80 million%20lines")
-    const m = md.match(/([0-9.,]+\s*(?:%20million|k|thousand|M|K)\s*(?:%20))/i);
-    if (m) return decodeURIComponent(m[1].trim());
-
-    // Fallback: look for the shields.io badge URL and attempt to decode the badge message
-    const urlMatch = md.match(/https?:\/\/img\.shields\.io\/badge\/[^)\s]+/i);
-    if (urlMatch) {
-      try {
-        const urlStr = urlMatch[0];
-        const afterBadge = urlStr.split("/badge/")[1]?.split("?")[0];
-        if (afterBadge) {
-          const decoded = decodeURIComponent(afterBadge);
-          // Remove the trailing "-<color>" segment
-          const withoutColor = decoded.replace(/-[^-]+$/, "");
-          // The message is the substring after the last '-' (label-message-color format)
-          const lastHyphen = withoutColor.lastIndexOf("-");
-          const message =
-            lastHyphen !== -1
-              ? withoutColor.slice(lastHyphen + 1).trim()
-              : withoutColor.trim();
-          if (message) return message;
-        }
-      } catch (e) {
-        // ignore parse errors
-      }
-    }
-    return null;
-  } catch (e) {
-    return null;
-  }
 }
 
 function shortSha(sha?: string | null) {
@@ -156,6 +119,42 @@ export default async function Page() {
         }))
       : [];
 
+    // These breakdowns are already part of the stats/all_time response — surfaced
+    // at zero extra API cost. (machines/dependencies are intentionally skipped as
+    // low-signal.) Any that come back empty on the free plan self-hide below.
+    const toStats = (items?: { name: string; total_seconds?: number; seconds?: number }[]): StatsData[] =>
+      Array.isArray(items)
+        ? items.map((i) => ({
+            name: i.name,
+            seconds: i.total_seconds ?? i.seconds ?? 0,
+          }))
+        : [];
+
+    const editors = toStats(allTime?.editors);
+    const operatingSystems = toStats(allTime?.operating_systems);
+    // Projects are intentionally NOT surfaced — they include confidential
+    // private/enterprise project names that must not appear on a public page.
+    const bestDay = allTime?.best_day ?? null;
+
+    // Last-14-days daily activity (the only new API call). Free plan caps daily
+    // history at ~2 weeks, so we request exactly that and accept fewer.
+    const end = new Date();
+    const start = new Date();
+    start.setUTCDate(end.getUTCDate() - 13);
+    const fmtDate = (d: Date) => d.toISOString().slice(0, 10);
+    const summariesResp = await safeFetch<WakaTimeSummaries>(
+      `/users/current/summaries?start=${fmtDate(start)}&end=${fmtDate(end)}`,
+      60 * 60
+    );
+    const summariesRaw =
+      (summariesResp?.data as WakaTimeSummaries | null)?.data ?? [];
+    const recentActivity = Array.isArray(summariesRaw)
+      ? summariesRaw.map((s) => ({
+          date: s.range?.date,
+          hours: (s.grand_total?.total_seconds ?? 0) / 3600,
+        }))
+      : [];
+
     // Total coding time from languages (fallback if all_time endpoint provided it differently)
     const totalSecondsFromLanguages = languages.reduce(
       (s, l) => s + (l.seconds || 0),
@@ -182,11 +181,9 @@ export default async function Page() {
         return "0 secs";
       })();
 
-    // Total lines: prefer README badge fallback
-    const totalLines = 0;
+    // Range helper text from all_time (e.g. "since Dec 11 2020")
+    const rangeText = allTime?.human_readable_range || null;
 
-    // Try to read a fallback total-lines value from the repository README (badge)
-    const readmeLines = await fetchReadmeLines();
     // Compute a link to the user's WakaTime profile when available
     const wakaProfile = (() => {
       if (!user) return null;
@@ -252,35 +249,116 @@ export default async function Page() {
           </h1>
           <div
             data-aos="fade-up"
-            data-aos-duration="500"
-            data-aos-once="true"
-            data-aos-delay="100"
-            className="mt-1 text-xs text-zinc-500 dark:text-zinc-400 italic pl-1"
-          >
-            Tracked since Dec 2020
-          </div>
-
-          <div
-            data-aos="fade-up"
             data-aos-duration="600"
             data-aos-once="true"
-            data-aos-delay="150"
-            className="flex flex-col sm:flex-row gap-4 items-center my-6"
+            data-aos-delay="100"
+            className="my-6"
           >
-            <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
-              <div className="text-xs text-zinc-500">Total time coding</div>
-              <div className="text-lg font-semibold">{totalTimeText}</div>
-            </div>
+            <CodingHero
+              totalTimeText={totalTimeText}
+              dailyAverageText={dailyAverageText}
+              rangeText={rangeText}
+              bestDay={bestDay}
+            />
+          </div>
 
-            <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
-              <div className="text-xs text-zinc-500">Daily average</div>
-              <div className="text-lg font-semibold">{dailyAverageText}</div>
+          {/* WakaTime breakdowns — the bulk of the iceberg, below the waterline. */}
+          {languages.length > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-once="true"
+              data-aos-delay="150"
+              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg mb-6"
+            >
+              <StatsBar
+                data={languages}
+                title="Programming Languages"
+                description="Languages used in the IDE (when tracked by WakaTime)."
+              />
             </div>
+          )}
 
-            <div className="bg-white dark:bg-zinc-900 border dark:border-zinc-800 border-zinc-200 rounded-md px-4 py-2 shadow-sm w-full sm:w-auto text-center sm:text-left">
-              <div className="text-xs text-zinc-500">Total lines coded</div>
-              <div className="text-lg font-semibold">{readmeLines ?? "—"}</div>
+          {(editors.length > 0 || operatingSystems.length > 0) && (
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-once="true"
+              data-aos-delay="175"
+              className={`grid grid-cols-1 gap-6 mb-6 ${
+                editors.length > 0 && operatingSystems.length > 0
+                  ? "lg:grid-cols-2"
+                  : ""
+              }`}
+            >
+              {editors.length > 0 && (
+                <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
+                  <StatsBar
+                    data={editors}
+                    title="Editors"
+                    description="Editors and IDEs used (when tracked by WakaTime)."
+                  />
+                </div>
+              )}
+              {operatingSystems.length > 0 && (
+                <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
+                  <StatsBar
+                    data={operatingSystems}
+                    title="Operating Systems"
+                    description="Operating systems coded on (when tracked by WakaTime)."
+                  />
+                </div>
+              )}
             </div>
+          )}
+
+          {categories.length > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-once="true"
+              data-aos-delay="200"
+              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg mb-6"
+            >
+              <StatsPie
+                data={categories}
+                title="Activity Types"
+                description="Types of IDE activity (when tracked by WakaTime)."
+              />
+            </div>
+          )}
+
+          {recentActivity.length > 0 && (
+            <div
+              data-aos="fade-up"
+              data-aos-duration="700"
+              data-aos-once="true"
+              data-aos-delay="250"
+              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg mb-6"
+            >
+              <RecentActivity
+                data={recentActivity}
+                title="Recent Activity"
+                description="Coding time over the last 14 days (the window WakaTime's free plan exposes)."
+              />
+            </div>
+          )}
+
+          {/* The public slice — the visible tip of the iceberg. */}
+          <div
+            data-aos="fade-up"
+            data-aos-duration="700"
+            data-aos-once="true"
+            data-aos-delay="275"
+            className="mt-12"
+          >
+            <h2 className="font-incognito text-3xl font-bold tracking-tight">
+              The public slice
+            </h2>
+            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+              Everything above is tracked privately by WakaTime. Here&apos;s the
+              part that shows up on GitHub.
+            </p>
           </div>
 
           {/* Last Commit Tile (server-rendered, styled like other coding tiles) */}
@@ -289,8 +367,8 @@ export default async function Page() {
               data-aos="fade-up"
               data-aos-duration="700"
               data-aos-once="true"
-              data-aos-delay="175"
-              className="mb-6"
+              data-aos-delay="300"
+              className="mt-6 mb-6"
             >
               <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
@@ -466,35 +544,6 @@ export default async function Page() {
             />
           </div>
 
-          <section className="grid grid-cols-1 gap-8 mt-6">
-            <div
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-              data-aos-delay="250"
-              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
-            >
-              <StatsPie
-                data={languages}
-                title="Programming Languages"
-                description="Languages used in the IDE (when tracked by WakaTime)."
-              />
-            </div>
-
-            <div
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-              data-aos-delay="300"
-              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
-            >
-              <StatsPie
-                data={categories}
-                title="Activity Types"
-                description="Types of IDE activity (when tracked by WakaTime)."
-              />
-            </div>
-          </section>
           <div
             data-aos="fade-up"
             data-aos-duration="700"
