@@ -13,11 +13,31 @@ export interface WakaTimeCategory {
 export interface WakaTimeAllTimeStats {
   languages?: WakaTimeLanguage[];
   categories?: WakaTimeCategory[];
+  // Already present in the stats/all_time response — surfaced at zero extra API cost.
+  editors?: WakaTimeLanguage[];
+  operating_systems?: WakaTimeLanguage[];
+  projects?: WakaTimeLanguage[];
+  machines?: WakaTimeLanguage[];
+  dependencies?: WakaTimeLanguage[];
+  best_day?: {
+    date: string;
+    text: string;
+    total_seconds: number;
+  } | null;
   human_readable_total_including_other_language?: string;
   human_readable_daily_average_including_other_language?: string;
   human_readable_daily_average?: string;
   human_readable_range?: string;
   days_including_holidays?: number;
+}
+
+export interface WakaTimeSummariesEntry {
+  range: { date: string; text?: string };
+  grand_total: { total_seconds: number; text?: string };
+}
+
+export interface WakaTimeSummaries {
+  data: WakaTimeSummariesEntry[];
 }
 
 export interface WakaTimeUser {

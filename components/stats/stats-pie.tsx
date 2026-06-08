@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from "recharts";
 import type { StatsData } from "@/types/wakatime";
+import { CHART_COLORS as COLORS } from "./chart-colors";
 
 interface StatsPieProps {
   data: StatsData[];
@@ -14,20 +15,6 @@ interface ChartDataItem {
   value: number;
   seconds: number;
 }
-
-// Fixed palette ensures slices render with color
-const COLORS = [
-  "#4f46e5",
-  "#ef4444",
-  "#10b981",
-  "#f59e0b",
-  "#06b6d4",
-  "#a78bfa",
-  "#f97316",
-  "#ef9aa3",
-  "#60a5fa",
-  "#34d399",
-];
 
 export default function StatsPie({ data, title, description }: StatsPieProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
