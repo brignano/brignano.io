@@ -132,7 +132,8 @@ export default async function Page() {
 
     const editors = toStats(allTime?.editors);
     const operatingSystems = toStats(allTime?.operating_systems);
-    const projects = toStats(allTime?.projects);
+    // Projects are intentionally NOT surfaced — they include confidential
+    // private/enterprise project names that must not appear on a public page.
     const bestDay = allTime?.best_day ?? null;
 
     // Last-14-days daily activity (the only new API call). Free plan caps daily
@@ -323,22 +324,6 @@ export default async function Page() {
                 data={categories}
                 title="Activity Types"
                 description="Types of IDE activity (when tracked by WakaTime)."
-              />
-            </div>
-          )}
-
-          {projects.length > 0 && (
-            <div
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-              data-aos-delay="225"
-              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg mb-6"
-            >
-              <StatsBar
-                data={projects}
-                title="Top Projects"
-                description="Projects with the most tracked coding time."
               />
             </div>
           )}
