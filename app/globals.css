@@ -150,12 +150,14 @@
     color: #000 !important;
   }
 
-  /* Hide site chrome and decorative / interactive bits. */
+  /* Hide site chrome, decorative/interactive bits, and detail that's
+     redundant on paper (per-job summary line + per-job tech tags). */
   header,
   footer,
   #scroll-to-top,
   [data-print-hide],
-  .job-tech {
+  .job-tech,
+  .exp-body > p {
     display: none !important;
   }
 
@@ -169,7 +171,7 @@
   .exp-body {
     max-height: none !important;
     overflow: visible !important;
-    margin-top: 0.5rem !important;
+    margin-top: 4pt !important;
   }
 
   /* Drop site gutters and top offset; use the full page width. */
@@ -179,13 +181,51 @@
     max-width: none !important;
   }
 
-  /* Tighten section spacing (mb-16 is huge on paper) and avoid mid-card breaks. */
-  main section {
-    margin-bottom: 0.75rem !important;
+  /* Compact, print-appropriate type scale (the on-screen text-5xl/3xl is huge). */
+  main p,
+  main li,
+  main time,
+  main span {
+    font-size: 9.5pt !important;
+    line-height: 1.3 !important;
   }
-  main section > div,
-  .exp-body {
-    break-inside: avoid;
+  main h1 {
+    font-size: 22pt !important;
+    line-height: 1.1 !important;
+    margin-bottom: 2pt !important;
+  }
+  main h2 {
+    font-size: 14pt !important;
+    line-height: 1.15 !important;
+    margin-bottom: 6pt !important;
+    border-bottom: 1px solid #000;
+    padding-bottom: 2pt;
+    break-after: avoid;
+  }
+  main h3 {
+    font-size: 11pt !important;
+    line-height: 1.2 !important;
+  }
+  /* Keep the role/title line under the name a touch larger than body. */
+  main .text-2xl {
+    font-size: 13pt !important;
+  }
+
+  /* Tighten vertical rhythm (mb-16 ≈ 4rem on screen). */
+  main section {
+    margin-bottom: 7pt !important;
+  }
+
+  /* Card grids collapse to 1 column in print (paper is narrower than the `md`
+     breakpoint), which wastes vertical space — force them back to 2 columns. */
+  main .grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6pt 18pt !important;
+  }
+  /* Leadership has 3 short items — one row of 3 instead of two rows of two. */
+  main .lead-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 
   /* Flatten card chrome (border / fill / radius / padding / indent) to clean text. */
@@ -199,10 +239,33 @@
     box-shadow: none !important;
   }
 
+  /* Keep an individual job/card intact across a page break — but NOT the whole
+     list (that would overflow into blank pages). */
+  .space-y-10 > div,
+  .bg-secondary-bg {
+    break-inside: avoid;
+  }
+  .space-y-10 > div {
+    margin-bottom: 5pt !important;
+  }
+
+  /* Skills has 9 categories — give it 3 columns (vs the default 2) and tight
+     spacing so it doesn't overflow onto a third page. */
+  main .grid:has(> .skill-group) {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5pt 14pt !important;
+  }
+  .skill-group h3 {
+    margin-bottom: 2pt !important;
+  }
+  .skill-items {
+    gap: 3pt !important;
+  }
+
   /* Skill badges: transparent pills with black ink + black logos. */
   .skill-items span {
     background: transparent !important;
-    padding-left: 0 !important;
+    padding: 1pt 6pt 1pt 0 !important;
   }
   .skill-items svg {
     fill: #000 !important;

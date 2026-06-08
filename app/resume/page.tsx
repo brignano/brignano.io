@@ -457,7 +457,7 @@ export default function Home() {
           <h2 className="text-3xl mb-8 font-bold tracking-tight">
             Leadership &amp; Community
           </h2>
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+          <div className="lead-grid grid md:grid-cols-2 grid-cols-1 gap-6">
             {leadership.map((item, index) => (
               <div
                 key={index}
@@ -478,13 +478,15 @@ export default function Home() {
         </section>
       )}
 
-      {/* Education Section */}
+      {/* Education Section — hidden in print to keep the printed resume to two
+          pages (parity with the downloaded PDF, which also omits it). */}
       {education && education.length > 0 && (
         <section
           className="mb-16"
           data-aos="fade-up"
           data-aos-duration={1000}
           data-aos-once={true}
+          data-print-hide
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Education</h2>
             <div className="space-y-10">
