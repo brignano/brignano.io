@@ -131,36 +131,72 @@ leadership:
     role: Member
     description: Serve on the CCSU Computer Science Industry Advisory Board.
 skills:
-  - category: CI/CD
+  - category: Languages
+    items:
+      - TypeScript
+      - JavaScript
+      - Java
+      - C# / .NET
+      - SQL
+      - Python
+      - Bash
+  - category: Frameworks & UI
+    items:
+      - React
+      - Next.js
+      - Angular
+      - Node.js
+      - Spring Boot
+      - Tailwind CSS
+  - category: CI/CD & Delivery
     items:
       - Jenkins
       - GitHub Actions
       - Harness
       - AWS CodePipeline
-      - uDeploy
-  - category: DevSecOps
+      - UrbanCode Deploy
+  - category: IaC & Containers
+    items:
+      - Terraform
+      - Docker
+      - Proxmox
+      - Portainer
+  - category: Cloud & Data
+    items:
+      - AWS
+      - Google Cloud
+      - DynamoDB
+      - Snowflake
+      - Oracle
+      - PostgreSQL
+  - category: AI / ML
+    items:
+      - Vertex AI
+      - MCP
+      - Ollama
+      - Open WebUI
+  - category: DevSecOps & Quality
     items:
       - Checkmarx
       - SonarQube
-      - NexusIQ
-  - category: Artifact & Quality
-    items:
       - Nexus
+      - NexusIQ
+      - Playwright
+      - Selenium
+      - Cypress
+      - Maven
   - category: Observability
     items:
       - Splunk
       - Dynatrace
-  - category: Cloud & Data
-    items:
-      - AWS
-      - DynamoDB
-      - Snowflake
-  - category: Platform / VCS
+      - Sumo Logic
+      - Grafana
+      - Prometheus
+  - category: Platform, VCS & Networking
     items:
       - GitHub Enterprise
-  - category: AI
-    items:
-      - MCP
+      - Vercel
+      - Tailscale
 education:
   - institution: Central Connecticut State University
     degree: Bachelor of Science
