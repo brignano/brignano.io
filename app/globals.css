@@ -128,3 +128,92 @@
 .dark :focus-visible {
   outline-color: #a78bfa;
 }
+
+/* Print styles — make Cmd+P of /resume a clean ~2-page document.
+   The purpose-built artifact is the "Download PDF" button (components/resume-pdf.tsx);
+   this block makes the *browser print* of the live page sane and short too:
+   strips site chrome, forces every experience card open, flattens card styling
+   to plain text, goes monochrome, and caps bullets to approximate 2 pages. */
+@media print {
+  @page {
+    margin: 0.5in;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  /* All resume text prints solid black regardless of light/dark theme. */
+  main,
+  main * {
+    color: #000 !important;
+  }
+
+  /* Hide site chrome and decorative / interactive bits. */
+  header,
+  footer,
+  #scroll-to-top,
+  [data-print-hide],
+  .job-tech {
+    display: none !important;
+  }
+
+  /* Never print scroll-reveal elements while still in their hidden state. */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Force every experience card fully expanded (they collapse via max-h-0). */
+  .exp-body {
+    max-height: none !important;
+    overflow: visible !important;
+    margin-top: 0.5rem !important;
+  }
+
+  /* Drop site gutters and top offset; use the full page width. */
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  /* Tighten section spacing (mb-16 is huge on paper) and avoid mid-card breaks. */
+  main section {
+    margin-bottom: 0.75rem !important;
+  }
+  main section > div,
+  .exp-body {
+    break-inside: avoid;
+  }
+
+  /* Flatten card chrome (border / fill / radius / padding / indent) to clean text. */
+  .bg-secondary-bg,
+  main .ml-8 {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin-left: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* Skill badges: transparent pills with black ink + black logos. */
+  .skill-items span {
+    background: transparent !important;
+    padding-left: 0 !important;
+  }
+  .skill-items svg {
+    fill: #000 !important;
+  }
+
+  /* Condense to ~2 pages: cap bullets per role (mirrors the PDF).
+     Current/most-recent role (first card) keeps ~6; older roles keep ~3. */
+  .space-y-10 > div:first-child .exp-body ul li:nth-child(n + 7) {
+    display: none !important;
+  }
+  .space-y-10 > div:not(:first-child) .exp-body ul li:nth-child(n + 4) {
+    display: none !important;
+  }
+}
