@@ -58,23 +58,36 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
 
   const totalHours = chartData.reduce((s, d) => s + d.value, 0) || 1;
 
-  const renderActiveShape = (props: unknown) => {
+  // recharts v3 removed the `activeIndex`/`activeShape` props, so the active
+  // sector is now driven through the `shape` render prop. `shape` is called for
+  // every sector; we draw the base sector and add the emphasis ring when the
+  // sector's index matches our externally-controlled `displayIndex`.
+  const renderSector = (props: unknown) => {
     // Type guard to safely access props
     if (!props || typeof props !== "object") return <g />;
 
-    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, payload } =
-      props as {
-        cx: number;
-        cy: number;
-        innerRadius: number;
-        outerRadius: number;
-        startAngle: number;
-        endAngle: number;
-        payload: { name: string };
-      };
+    const {
+      cx,
+      cy,
+      innerRadius,
+      outerRadius,
+      startAngle,
+      endAngle,
+      fill,
+      index,
+    } = props as {
+      cx: number;
+      cy: number;
+      innerRadius: number;
+      outerRadius: number;
+      startAngle: number;
+      endAngle: number;
+      fill: string;
+      index: number;
+    };
 
-    const idx = chartDataSecs.findIndex((d) => d.name === payload?.name);
-    const color = COLORS[idx >= 0 ? idx % COLORS.length : 0];
+    const color = fill ?? COLORS[index % COLORS.length];
+    const isActive = index === displayIndex;
 
     return (
       <g>
@@ -87,16 +100,18 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
           endAngle={endAngle}
           fill={color}
         />
-        <Sector
-          cx={cx}
-          cy={cy}
-          startAngle={startAngle}
-          endAngle={endAngle}
-          innerRadius={(outerRadius ?? 0) + 6}
-          outerRadius={(outerRadius ?? 0) + 12}
-          fill={color}
-          opacity={0.9}
-        />
+        {isActive && (
+          <Sector
+            cx={cx}
+            cy={cy}
+            startAngle={startAngle}
+            endAngle={endAngle}
+            innerRadius={(outerRadius ?? 0) + 6}
+            outerRadius={(outerRadius ?? 0) + 12}
+            fill={color}
+            opacity={0.9}
+          />
+        )}
       </g>
     );
   };
@@ -234,8 +249,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
                 outerRadius={100}
                 innerRadius={48}
                 paddingAngle={2}
-                activeIndex={displayIndex ?? undefined}
-                activeShape={renderActiveShape}
+                shape={renderSector}
                 onMouseEnter={(_, idx) => setActiveIndex(idx)}
                 onMouseLeave={() => setActiveIndex(null)}
                 onClick={(_, idx) =>
