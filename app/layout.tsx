@@ -3,7 +3,6 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import "./globals.css";
-import "aos/dist/aos.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -11,7 +10,7 @@ import GoogleAnalytics from "@/components/google-analytics";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 import { siteMetadata } from "@/lib/constants";
 import ScrollToTop from "@/components/scroll-to-top";
-import AOSInit from "@/components/aos-init";
+import ScrollReveal from "@/components/scroll-reveal";
 import ToastProvider from "@/components/toast-provider";
 
 const inconsolata = Inconsolata({
@@ -90,8 +89,14 @@ export default function RootLayout({
     getFirstImageUrl(siteMetadata.twitter?.images) ?? getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og.webp";
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Set theme before first paint to avoid a flash of the wrong theme. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.theme;var d=t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d);}catch(e){}})();`,
+          }}
+        />
         {/* Resource hints for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -167,7 +172,7 @@ export default function RootLayout({
         )}
         <ToastProvider>
           <Header />
-          <AOSInit />
+          <ScrollReveal />
           {children}
           <Footer />
         </ToastProvider>

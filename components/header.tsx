@@ -38,21 +38,19 @@ export default function Header() {
   const pages: string[] = ["home", "resume", "coding"];
 
   useEffect(() => {
-    // Check localStorage first, then fallback to system preference
-    let isDarkDefault = false;
-    if (localStorage.theme === "dark") isDarkDefault = true;
-    else if (localStorage.theme === "light") isDarkDefault = false;
-    else {
-      // Fallback to system preference
-      isDarkDefault = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    document.documentElement.classList.toggle("dark", isDarkDefault);
-    setIsDarkMode(isDarkDefault);
+    // The theme class is set before paint by the inline script in <head>.
+    // Sync React state to whatever it decided.
+    setIsDarkMode(document.documentElement.classList.contains("dark"));
   }, []);
 
   const toggleTheme = () => {
     const newDark = !isDarkMode;
     document.documentElement.classList.toggle("dark", newDark);
+    try {
+      localStorage.setItem("theme", newDark ? "dark" : "light");
+    } catch {
+      // ignore (e.g. storage disabled)
+    }
     setIsDarkMode(newDark);
   };
 
@@ -86,12 +84,6 @@ export default function Header() {
       console.error("Share failed", err);
     }
   };
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-    }
-  }, [isDarkMode]);
 
   useEffect(() => {
     // run header drop animation on mount
