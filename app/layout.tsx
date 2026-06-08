@@ -1,4 +1,4 @@
-import { Inconsolata, Silkscreen } from "next/font/google";
+import { Geist, Silkscreen } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
@@ -13,14 +13,14 @@ import ScrollToTop from "@/components/scroll-to-top";
 import ScrollReveal from "@/components/scroll-reveal";
 import ToastProvider from "@/components/toast-provider";
 
-const inconsolata = Inconsolata({
-  variable: "--font-inconsolata-mono",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
   display: "swap",
 });
 
 const silkscreen = Silkscreen({
-  variable: "--font-silkscreen-mono",
+  variable: "--font-silkscreen",
   subsets: ["latin"],
   weight: "400",
   display: "swap",
@@ -89,7 +89,11 @@ export default function RootLayout({
     getFirstImageUrl(siteMetadata.twitter?.images) ?? getFirstImageUrl(siteMetadata.openGraph?.images) ?? "/og.webp";
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geist.variable} ${silkscreen.variable}`}
+    >
       <head>
         {/* Set theme before first paint to avoid a flash of the wrong theme. */}
         <script
@@ -121,7 +125,7 @@ export default function RootLayout({
         <meta name="twitter:image" content={twitterImage} />
       </head>
       <body
-        className={`${inconsolata.variable} ${silkscreen.variable} antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
+        className={`font-sans antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
       >
         <Script
           id="structured-data"

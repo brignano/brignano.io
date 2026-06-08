@@ -281,7 +281,7 @@ export default function Home() {
           <p className="text-sm uppercase tracking-wide text-zinc-500 dark:text-zinc-400 mb-2">
             Resume
           </p>
-        <h1 className="font-silkscreen-mono font-semibold tracking-tight text-3xl sm:text-5xl mb-4 lg:leading-[3.7rem] leading-tight">
+        <h1 className="font-incognito font-bold tracking-tight text-3xl sm:text-5xl mb-4 lg:leading-[3.7rem] leading-tight">
           {personalInfo.name}
         </h1>
         <p className="text-2xl font-semibold dark:text-zinc-300 text-zinc-800 mb-4">

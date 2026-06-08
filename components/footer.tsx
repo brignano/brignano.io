@@ -33,7 +33,7 @@ export default function Footer() {
     <footer className="border-t dark:border-zinc-800 border-zinc-100 mt-10 sm:mt-32 lg:mt-24 lg:min-h-[250px] min-h-0 relative">
       <div className="max-w-7xl mx-auto flex lg:flex-row flex-col items-center lg:justify-between justify-center gap-y-3 md:px-16 px-6 py-10 lg:py-16">
         <div className="order-2 lg:order-1 flex md:flex-row flex-col items-center gap-x-2">
-          <h3 className="font-inter">Built with: </h3>
+          <h3>Built with: </h3>
           <ul className="flex items-center gap-x-2 text-sm dark:text-zinc-400 text-zinc-500 md:mt-0 mt-2">
             {buildTools.map((tool) => (
               <li key={tool.name}>
