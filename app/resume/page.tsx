@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
+import { SkillBadge } from "@/components/skill-badge";
 import { event } from "@/lib/gtag";
 
 // `ResumePDF` and `@react-pdf/renderer` are imported dynamically in the
@@ -550,11 +551,8 @@ export default function Home() {
                 </h3>
                 <ul className="skill-items flex flex-wrap gap-2">
                   {skillGroup.items.map((skill, i) => (
-                    <li
-                      key={i}
-                      className="text-sm px-3 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
-                    >
-                      {skill}
+                    <li key={i} className="flex">
+                      <SkillBadge name={skill} />
                     </li>
                   ))}
                 </ul>
