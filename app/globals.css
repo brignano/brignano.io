@@ -48,12 +48,37 @@
   }
 }
 
+/* Scroll reveal — content is visible by default (SSR / no-JS / reduced motion).
+   The hidden-then-reveal state only applies once <ScrollReveal> adds `js-reveal`
+   to <html>, so content can never be stuck invisible if JS or IO fails. */
+.js-reveal [data-aos] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition-property: opacity, transform;
+  transition-duration: var(--reveal-duration, 600ms);
+  transition-delay: var(--reveal-delay, 0ms);
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.js-reveal [data-aos="fade-down"] {
+  transform: translateY(-16px);
+}
+.js-reveal [data-aos].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+  /* Never leave reveal elements hidden when motion is reduced. */
+  .js-reveal [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
