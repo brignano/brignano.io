@@ -302,7 +302,7 @@ export default async function Page() {
               )}
               {operatingSystems.length > 0 && (
                 <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
-                  <StatsPie
+                  <StatsBar
                     data={operatingSystems}
                     title="Operating Systems"
                     description="Operating systems coded on (when tracked by WakaTime)."
