@@ -7,6 +7,7 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import GitHubCalendarClient from "@/components/github-calendar-client";
+import LatestCommit from "@/components/latest-commit";
 import HeroMotif from "@/components/hero-motif";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import {
@@ -195,17 +196,40 @@ export default function Home() {
               Now building
             </p>
             <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm dark:text-zinc-400 text-zinc-600">
-              {nowBuilding.map((item) => (
-                <li key={item.label}>
+              {nowBuilding.map((item) => {
+                const label = (
                   <span className="font-medium dark:text-zinc-200 text-zinc-800">
                     {item.label}
-                  </span>{" "}
-                  <span className="dark:text-zinc-500 text-zinc-500">
-                    {item.detail}
                   </span>
-                </li>
-              ))}
+                );
+                return (
+                  <li key={item.label}>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-1 underline decoration-dotted decoration-zinc-300 dark:decoration-zinc-600 underline-offset-4 hover:decoration-primary-color focus-visible:decoration-primary-color transition-colors"
+                      >
+                        {label}
+                        <span
+                          aria-hidden="true"
+                          className="text-[11px] text-zinc-400 dark:text-zinc-500 transition-transform group-hover:translate-x-0.5"
+                        >
+                          ↗
+                        </span>
+                      </a>
+                    ) : (
+                      label
+                    )}{" "}
+                    <span className="dark:text-zinc-500 text-zinc-500">
+                      {item.detail}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
+            <LatestCommit />
           </div>
         </section>
 
@@ -300,7 +324,7 @@ export default function Home() {
                   A unified developer surface — custom CLI, desktop app, and IDE extensions — with 1,000+ engineers active in the first 90 days.
                 </li>
                 <li>
-                  &ldquo;One build command, any stack&rdquo; — context-aware builds that run identically locally, in CI, or fully remote, on a custom base-image registry.
+                  &ldquo;One build command, any stack&rdquo; — the same command builds any project and runs the same on your laptop, in CI, or on a remote machine. Nothing to set up per project.
                 </li>
                 <li>
                   Real-time DevOps intelligence — an event bus streaming pipeline and CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points; upgraded observability (Splunk, Dynatrace) and a live platform health status page with subscribe-able alerts.
