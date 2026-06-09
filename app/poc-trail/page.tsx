@@ -31,16 +31,18 @@ const NOW = [
   { label: "AI-native tooling", detail: "Claude Code" },
 ];
 
-// Trail anchored to the monogram (top-left), sweeping to center then switchbacks.
+// Trail lives in the LEFT GUTTER (never behind text), a gentle serpentine
+// that starts below the header (no overlap with the fixed nav).
 function buildPath(h: number, vw: number) {
-  const cx = vw / 2;
-  const amp = Math.min(Math.max(vw * 0.13, 90), 165);
-  const sx = 60, sy = 52, introEnd = 540;
-  let d = `M ${sx} ${sy} C ${sx} ${sy + 180}, ${cx - amp} ${introEnd - 160}, ${cx} ${introEnd}`;
-  const rest = h - introEnd, n = Math.max(5, Math.round(rest / 300)), step = rest / n;
-  let xprev = cx, y = introEnd;
+  const contentLeft = Math.max(24, (vw - 880) / 2);
+  const wide = contentLeft > 150;
+  const ax = wide ? Math.round(contentLeft * 0.5) : 20; // spine x within the gutter
+  const amp = wide ? Math.min(Math.round(contentLeft * 0.22), 44) : 7;
+  const top = 88; // start below the header
+  const rest = h - top, n = Math.max(4, Math.round(rest / 360)), step = rest / n;
+  let xprev = ax, y = top, d = `M ${ax} ${top}`;
   for (let i = 1; i <= n; i++) {
-    const ny = introEnd + i * step, x = i % 2 ? cx + amp : cx - amp;
+    const ny = top + i * step, x = i % 2 ? ax + amp : ax - amp;
     d += ` C ${xprev} ${y + step * 0.5}, ${x} ${ny - step * 0.5}, ${x} ${ny}`;
     xprev = x; y = ny;
   }
