@@ -7,6 +7,7 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import GitHubCalendarClient from "@/components/github-calendar-client";
+import LatestCommit from "@/components/latest-commit";
 import HeroMotif from "@/components/hero-motif";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import {
@@ -206,6 +207,7 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+            <LatestCommit />
           </div>
         </section>
 
@@ -300,7 +302,7 @@ export default function Home() {
                   A unified developer surface — custom CLI, desktop app, and IDE extensions — with 1,000+ engineers active in the first 90 days.
                 </li>
                 <li>
-                  &ldquo;One build command, any stack&rdquo; — context-aware builds that run identically locally, in CI, or fully remote, on a custom base-image registry.
+                  &ldquo;One build command, any stack&rdquo; — the same command builds any project and runs the same on your laptop, in CI, or on a remote machine. Nothing to set up per project.
                 </li>
                 <li>
                   Real-time DevOps intelligence — an event bus streaming pipeline and CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points; upgraded observability (Splunk, Dynatrace) and a live platform health status page with subscribe-able alerts.

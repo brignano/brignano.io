@@ -261,7 +261,7 @@ export const achievements: Achievement[] = [
   },
   {
     outcome: "1,000+ engineers active in the first 90 days",
-    skills: ["Desktop App", "CLI", "Self-service onboarding"],
+    skills: ["Desktop App", "Self-service onboarding"],
   },
   {
     outcome: "One build command, any stack — local, CI, or fully remote",
