@@ -115,7 +115,7 @@ flowchart LR
 | `/blog` | `app/blog/page.tsx` | Index: list of post cards (title, date, reading time, description, tag labels), newest first. Reuses `ScrollReveal`, existing card styling. |
 | `/blog/[slug]` | `app/blog/[slug]/page.tsx` | `generateStaticParams` from `getAllPosts()`. Post header (title, date, reading time, tags) + `prose` body + footer back-link. |
 
-- **Nav:** add a link (label TBD §10) to `components/header.tsx` (desktop + mobile) and optionally `footer.tsx`.
+- **Nav:** add a **"Blog"** link → `/blog` to `components/header.tsx` (desktop + mobile) and optionally `footer.tsx`. (Decided §9 — "Blog" over "Notes": unambiguous for recruiter/exec audience, and "notes" is reserved conceptually for the private `ideas/` catalog.)
 - **Tags:** rendered as **non-interactive labels** in v1 (reuse `SkillBadge` styling). Dedicated `/blog/tag/[tag]` filter pages are a **fast-follow** — empty filter pages with <10 posts hurt UX more than help.
 - **Empty/edge states:** `/blog` with zero published posts renders a graceful "Writing soon" state, not a blank list.
 
@@ -242,13 +242,13 @@ Each phase is independently shippable; P0 (a+b) alone is a usable blog with a wo
 3. **Content source:** ✅ **Separate private `brignano/blog` repo** with an `ideas/` catalog (never built) + `posts/` (built). Build-time fetch of `posts/` via GitHub using a read-only `BLOG_REPO_TOKEN`; publish triggered by a Vercel Deploy Hook from a GitHub Action. `lib/blog.ts` is the swappable content-source interface. §5.6 — *justified by the idea-catalog workflow, not deferred.*
 4. **Capture:** ✅ **Markdown files in `ideas/`** (one per idea, minimal optional frontmatter), created from **Claude Code mobile** / GitHub / any editor; research accretes in-file. §5.7
 5. **Visibility:** ✅ **Private repo** — raw backlog stays hidden; build authenticates to fetch `posts/`.
-6. **Proceed:** ✅ **TSD-first** (this doc), then implement on `feat/blog` after approval.
+6. **Nav label + URL:** ✅ **"Blog" → `/blog`.** Unambiguous for the recruiter/exec audience; "notes" is reserved conceptually for the private `ideas/` catalog. §5.3
+7. **First seed post:** ✅ **Homelab** — concrete, visual, shows range beyond the day job, deep existing material, low-stakes to ship as post #1.
+8. **Proceed:** ✅ **TSD-first** (this doc), then implement on `feat/blog` after approval.
 
-### Open questions (resolve before/at P0)
-- **Nav label + URL:** `/blog` (label "Blog") vs `/writing` ("Writing") vs `/notes` ("Notes"). Affects route folder + sitemap.
-- **MDX library:** confirm `next-mdx-remote/rsc` vs `velite`/`content-collections` after a 30-min P0 spike against Next 16 (must compose with the build-time GitHub fetch).
-- **Token mechanism:** fine-grained PAT (simplest) vs GitHub App (no expiry, more setup) for `BLOG_REPO_TOKEN`. Default to fine-grained PAT for v1.
-- **Seed posts:** which 1–2 "Now Building" topics launch first (homelab, local-LLM routing, or Claude Code tooling)?
+### Open questions (resolve at P0 — not approval-blocking)
+- **MDX library:** confirm `next-mdx-remote/rsc` vs `velite`/`content-collections` after a 30-min P0 spike against Next 16 (must compose with the build-time GitHub fetch). *I'll settle this in the spike.*
+- **Token mechanism:** fine-grained PAT (simplest) vs GitHub App (no expiry, more setup) for `BLOG_REPO_TOKEN`. *Default to fine-grained PAT for v1.*
 
 ---
 
