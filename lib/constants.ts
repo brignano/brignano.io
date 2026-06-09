@@ -276,13 +276,26 @@ export const achievements: Achievement[] = [
 export interface NowItem {
   label: string;
   detail: string;
+  href?: string;
 }
 
 // Tier 2 — "Now" momentum strip (TSD §5.5b): hands-on, current personal work.
 export const nowBuilding: NowItem[] = [
-  { label: "Homelab", detail: "Proxmox · Docker · Tailscale" },
-  { label: "Local-LLM routing", detail: "Ollama · Open WebUI" },
-  { label: "AI-native tooling", detail: "Claude Code" },
+  {
+    label: "Homelab",
+    detail: "Proxmox · Docker · Tailscale",
+    href: "https://www.github.com/brignano/homelab",
+  },
+  {
+    label: "Local-LLM routing",
+    detail: "Ollama · Open WebUI",
+    href: "https://www.github.com/brignano/homelab",
+  },
+  {
+    label: "AI-native tooling",
+    detail: "Claude Code",
+    href: "https://www.github.com/brignano/ai-tools",
+  },
 ];
 
 export const projects: Project[] = [];
