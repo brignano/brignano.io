@@ -84,52 +84,24 @@ export default function Home() {
 
       const blob = await pdf(<ResumePDF data={resumeData} />).toBlob();
 
-      // Open a preview tab for the PDF without auto-printing.
+      // Trigger an immediate download of the generated PDF.
       const pdfBlobUrl = URL.createObjectURL(blob);
-      const opened = window.open(pdfBlobUrl, "_blank");
+      const link = document.createElement("a");
+      link.href = pdfBlobUrl;
+      link.download = `${resumeData.personalInfo.name.replace(/\s+/g, "_")}_Resume.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-      if (opened) {
-        // After the PDF loads, ensure the window scrolls to the very top
-        // and remove all default margins/padding that cause grey space on mobile
-        setTimeout(() => {
-          try {
-            opened.scrollTo(0, 0);
-            if (opened.document) {
-              const html = opened.document.documentElement;
-              const body = opened.document.body;
-
-              // Reset html element
-              html.style.margin = "0";
-              html.style.padding = "0";
-              html.style.border = "none";
-
-              // Reset body element
-              body.style.margin = "0";
-              body.style.padding = "0";
-              body.style.border = "none";
-            }
-          } catch (e) {
-            // Ignore cross-origin errors (expected on some mobile browsers)
-          }
-        }, 200);
-      } else {
-        // Fallback to download if popup was blocked
-        const link = document.createElement("a");
-        link.href = pdfBlobUrl;
-        link.download = `${resumeData.personalInfo.name.replace(/\s+/g, "_")}_Resume.pdf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-
-      // Clean up object URL after a short delay
+      // Clean up object URL after a short delay (kept long enough for the
+      // browser to finish writing the file on slower mobile devices).
       setTimeout(() => {
         URL.revokeObjectURL(pdfBlobUrl);
       }, 60_000);
 
       // Track event
-      event("pdf_preview_opened", {
-        cta: "resume_preview",
+      event("pdf_downloaded", {
+        cta: "resume_download",
         origin: "resume",
         transport_type: "beacon",
       });
@@ -232,7 +204,7 @@ export default function Home() {
     return (
       <>
         <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
-        <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
+        <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
         <div className="text-center">
           <p className="text-lg dark:text-zinc-400 text-zinc-600">
             Loading resume...
@@ -247,7 +219,7 @@ export default function Home() {
     return (
       <>
         <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
-        <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20 min-h-screen">
+        <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
         <div className="text-center">
           <p className="text-lg text-red-600 dark:text-red-400">
             {error || "Failed to load resume data"}
