@@ -8,6 +8,8 @@ import {
 } from "@heroicons/react/24/outline";
 import GitHubCalendarClient from "@/components/github-calendar-client";
 import HeroMotif from "@/components/hero-motif";
+import TrailThread from "@/components/trail-thread";
+import CountUp from "@/components/count-up";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import {
   socialLinks,
@@ -29,6 +31,7 @@ export default function Home() {
   return (
     <>
       <BreadcrumbSchema items={HOME_BREADCRUMBS} />
+      <TrailThread />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
         {/* Hero Section with CTAs */}
         <section className="relative overflow-hidden mb-8 md:mb-24">
@@ -59,7 +62,7 @@ export default function Home() {
                   className="flex flex-col sm:px-5 sm:first:pl-0 sm:border-l sm:first:border-l-0 dark:border-zinc-800 border-zinc-200"
                 >
                   <dd className="text-xl font-bold tracking-tight">
-                    {metric.value}
+                    <CountUp value={metric.value} />
                   </dd>
                   <dt className="text-xs dark:text-zinc-400 text-zinc-500 mt-1">
                     {metric.label}
