@@ -10,6 +10,10 @@ export interface SocialLink {
 
 // Brand impression > keyword density in the title (the site ranks #1 on the
 // name already); keywords live in the description (TSD §5.7).
+// Exported so the generated social card (app/opengraph-image.tsx) renders the
+// same name + tagline as the site — single source of truth, no drift.
+export const SITE_NAME = "Anthony Brignano";
+export const SITE_TAGLINE = "I build the platforms thousands of engineers ship on";
 const SITE_TITLE = "Anthony Brignano — I build platforms engineers ship on";
 const SITE_DESCRIPTION =
   "Internal developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes developer onboarding self-service and software delivery faster and safer.";
@@ -25,19 +29,15 @@ export const siteMetadata: Metadata = {
     ],
   },
   manifest: "/manifest.json",
+  // The social card image (og:image / twitter:image) is supplied by the
+  // app/opengraph-image.tsx + app/twitter-image.tsx file conventions, which
+  // emit an absolute-URL PNG (via metadataBase). Don't set `images` here or
+  // Next would ship a second, conflicting og:image tag.
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     url: "https://brignano.io",
-    siteName: "Anthony Brignano",
-    images: [
-      {
-        url: "/og.webp",
-        width: 1200,
-        height: 630,
-        alt: "Anthony Brignano — Platform Engineering, DevEx & AI",
-      },
-    ],
+    siteName: SITE_NAME,
     locale: "en_US",
     type: "website",
   },
@@ -45,7 +45,6 @@ export const siteMetadata: Metadata = {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ["/og.webp"],
   },
   alternates: {
     canonical: "https://brignano.io",
