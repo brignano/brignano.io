@@ -266,13 +266,15 @@
     gap: 3pt !important;
   }
 
-  /* Skill badges: transparent pills with black ink + black logos. */
+  /* Skill badges: transparent pills with black ink, no logos. Brand icons are
+     a web-only flourish — the printed/PDF resume stays clean text so it scans
+     well for recruiters and parses cleanly for ATS, matching the PDF download. */
   .skill-items span {
     background: transparent !important;
     padding: 1pt 6pt 1pt 0 !important;
   }
   .skill-items svg {
-    fill: #000 !important;
+    display: none !important;
   }
 
   /* Condense to ~2 pages: cap bullets per role (mirrors the PDF).
