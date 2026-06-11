@@ -25,7 +25,6 @@ export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [shareSupported, setShareSupported] = useState(false);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const EXPERIENCE_ANIMATION_LOCK_MS = 360;
@@ -114,8 +113,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    setShareSupported(typeof navigator !== "undefined" && !!navigator.share);
-
     // Listen for download event from header
     const handleDownloadEvent = () => {
       handleDownloadPDF();
@@ -127,32 +124,6 @@ export default function Home() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resumeData, isGeneratingPDF]);
-
-  const handleShare = async () => {
-    const url =
-      typeof window !== "undefined" ? window.location.href : "/resume";
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: "Anthony Brignano — Resume", url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        alert("Link copied to clipboard");
-      }
-    } catch (err) {
-      console.error("Share failed", err);
-    }
-  };
-
-  const handleCopy = async () => {
-    const url =
-      typeof window !== "undefined" ? window.location.href : "/resume";
-    try {
-      await navigator.clipboard.writeText(url);
-      alert("Link copied to clipboard");
-    } catch (err) {
-      console.error("Copy failed", err);
-    }
-  };
 
   useEffect(() => {
     const fetchResume = async () => {

@@ -6,3 +6,8 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
+    ignore:
+      # eslint-config-next / eslint-plugin-react don't support ESLint 10 yet;
+      # the 9 -> 10 bump broke `npm run lint`. Re-allow once they do.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]

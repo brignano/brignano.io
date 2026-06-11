@@ -42,6 +42,9 @@ export default function GitHubCalendarClient({
   const [colorScheme, setColorScheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
+    // Initialize from browser-only sources (clock, DOM theme class) after
+    // hydration so server and client markup match.
+    /* eslint-disable react-hooks/set-state-in-effect */
     const nowYear = new Date().getFullYear();
     setCurrentYear((prev) => prev ?? nowYear);
     setYear((prev) => prev ?? nowYear);
@@ -49,6 +52,7 @@ export default function GitHubCalendarClient({
     const root = document.documentElement;
     // Initialize with current theme
     setColorScheme(root.classList.contains("dark") ? "dark" : "light");
+    /* eslint-enable react-hooks/set-state-in-effect */
 
     const observer = new MutationObserver(() => {
       setColorScheme(root.classList.contains("dark") ? "dark" : "light");
@@ -61,7 +65,7 @@ export default function GitHubCalendarClient({
     setYear(y);
     try {
       event("contribution_graph_year_changed", { year: y });
-    } catch (e) {
+    } catch {
       // noop
     }
   };
@@ -106,7 +110,7 @@ export default function GitHubCalendarClient({
                       category: "outbound",
                       label: "https://github.com/brignano",
                     });
-                  } catch (e) {
+                  } catch {
                     // noop
                   }
                 }}
