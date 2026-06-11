@@ -386,14 +386,18 @@ export default function Home() {
           </p>
         </section>
 
-        {/* Contact — the summit: a standalone full-height finale (TSD §5.1) */}
+        {/* Contact — the summit: a standalone full-height finale (TSD §5.1).
+            The trail's summit node anchors to the heading so the journey ends
+            ON the CTA, not in the gap above it. */}
         <section
-          data-trail="summit"
           className="min-h-[70vh] flex flex-col justify-center border-t dark:border-zinc-800 border-zinc-200 mt-8"
           data-aos="fade-up"
           data-aos-duration={800}
         >
-          <h2 className="font-incognito text-4xl sm:text-5xl lg:text-6xl mb-6 font-bold tracking-tight">
+          <h2
+            data-trail="summit"
+            className="font-incognito text-4xl sm:text-5xl lg:text-6xl mb-6 font-bold tracking-tight"
+          >
             Let&apos;s build something.
           </h2>
           <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl text-lg leading-relaxed">
