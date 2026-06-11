@@ -15,8 +15,14 @@ export interface SocialLink {
 export const SITE_NAME = "Anthony Brignano";
 export const SITE_TAGLINE = "I build the platforms thousands of engineers ship on";
 const SITE_TITLE = "Anthony Brignano — I build platforms engineers ship on";
+// Meta description: kept ~155 chars so Google doesn't truncate (it trims
+// around 150–160 in results).
 const SITE_DESCRIPTION =
-  "Internal developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes developer onboarding self-service and software delivery faster and safer.";
+  "I build internal developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes software delivery faster and safer.";
+// Social previews show fewer characters than search results (~125 before they
+// truncate on mobile), so the OG/Twitter description is a tighter variant.
+const SITE_OG_DESCRIPTION =
+  "Developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling for faster, safer delivery.";
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL("https://brignano.io"),
@@ -35,7 +41,7 @@ export const siteMetadata: Metadata = {
   // Next would ship a second, conflicting og:image tag.
   openGraph: {
     title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    description: SITE_OG_DESCRIPTION,
     url: "https://brignano.io",
     siteName: SITE_NAME,
     locale: "en_US",
@@ -44,7 +50,7 @@ export const siteMetadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    description: SITE_OG_DESCRIPTION,
   },
   alternates: {
     canonical: "https://brignano.io",

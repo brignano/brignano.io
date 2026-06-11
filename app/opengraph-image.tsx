@@ -43,18 +43,36 @@ export default async function Image() {
           color: TEXT,
         }}
       >
-        {/* Eyebrow */}
+        {/* Top row: eyebrow + subtle wordmark (wayfinding, not a sales CTA) */}
         <div
           style={{
             display: "flex",
-            fontSize: 26,
-            fontWeight: 700,
-            letterSpacing: 6,
-            textTransform: "uppercase",
-            color: ACCENT,
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          Platform Engineering · DevEx · AI
+          <div
+            style={{
+              display: "flex",
+              fontSize: 26,
+              fontWeight: 700,
+              letterSpacing: 6,
+              textTransform: "uppercase",
+              color: ACCENT,
+            }}
+          >
+            Platform Engineering · DevEx · AI
+          </div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 26,
+              fontWeight: 400,
+              color: MUTED,
+            }}
+          >
+            brignano.io ↗
+          </div>
         </div>
 
         {/* Name + tagline */}
