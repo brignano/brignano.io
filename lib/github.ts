@@ -41,7 +41,7 @@ export async function fetchLatestPublicCommit(): Promise<LatestCommit | null> {
       }
     }
     return null;
-  } catch (e) {
+  } catch {
     return null;
   }
 }

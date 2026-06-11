@@ -151,7 +151,7 @@ export default function Home() {
                     Beyond the platform, I lead our enterprise hackathons, mentor emerging leaders as a rotation manager in the company&apos;s Leadership Development Program, and serve on the Central Connecticut State University (CCSU) Computer Science Industry Advisory Board.
                   </p>
                   <p>
-                    Outside of work, you'll usually find me climbing rocks, snowboarding through the woods, or exploring new ideas.
+                    Outside of work, you&apos;ll usually find me climbing rocks, snowboarding through the woods, or exploring new ideas.
                   </p>
                 </div>
               </div>
@@ -395,7 +395,7 @@ export default function Home() {
               Let&apos;s build something.
             </h2>
             <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl mx-auto text-lg">
-              If you're working on platform engineering, developer experience, or AI-native software delivery, I'd love to connect.
+              If you&apos;re working on platform engineering, developer experience, or AI-native software delivery, I&apos;d love to connect.
             </p>
             <div className="flex justify-center">
               <a

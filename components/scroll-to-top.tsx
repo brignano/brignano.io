@@ -18,7 +18,7 @@ export default function ScrollToTop() {
   const handleClick = () => {
     try {
       event("scroll_to_top_clicked");
-    } catch (e) {
+    } catch {
       // noop
     }
     window.scrollTo({ top: 0, behavior: "smooth" });

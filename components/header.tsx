@@ -66,8 +66,8 @@ export default function Header() {
   const handleShare = async () => {
     const url = window?.location.href ?? "/resume";
     try {
-      if ((navigator as any)?.share) {
-        await (navigator as any).share({
+      if (navigator.share) {
+        await navigator.share({
           title: "Anthony Brignano — Resume",
           url,
         });
@@ -84,7 +84,6 @@ export default function Header() {
         return;
       }
       // Log other errors silently
-      // eslint-disable-next-line no-console
       console.error("Share failed", err);
     }
   };
@@ -108,7 +107,7 @@ export default function Header() {
             'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
           );
           first?.focus();
-        } catch (e) {
+        } catch {
           // ignore focus errors
         }
       });
@@ -117,7 +116,7 @@ export default function Header() {
       // restore focus when closing
       try {
         previousActiveElement.current?.focus?.();
-      } catch (e) {
+      } catch {
         // ignore
       }
     }
@@ -139,6 +138,8 @@ export default function Header() {
       }, RESUME_ICON_ANIM_MS);
       return () => clearTimeout(t);
     }
+    // showResumeIcons is set by this effect; including it would re-trigger the animation
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isResumePage]);
 
   return (
