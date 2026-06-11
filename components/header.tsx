@@ -197,7 +197,8 @@ export default function Header() {
               <a
                 aria-label="Download PDF"
                 href="/resume.pdf"
-                download="Anthony_Brignano_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={handleDownloadPDF}
                 aria-hidden={!resumeIconsVisible}
                 className={`group dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition transform duration-300 ease-out ${resumeIconsVisible && !resumeIconsAnimatingOut ? "translate-y-0 opacity-100 scale-100 cursor-pointer" : "translate-y-1 opacity-0 scale-95 pointer-events-none"}`}
