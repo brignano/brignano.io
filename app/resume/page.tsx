@@ -5,10 +5,9 @@ import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { SkillBadge } from "@/components/skill-badge";
-import { event } from "@/lib/gtag";
 
-// `ResumePDF` and `@react-pdf/renderer` are imported dynamically in the
-// download handler to avoid bundling or SSR issues.
+// The downloadable PDF is generated at build time by app/resume.pdf/route.ts;
+// the header's download icon links straight to /resume.pdf.
 
 const RESUME_BREADCRUMBS = [
   {
@@ -25,8 +24,6 @@ export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [shareSupported, setShareSupported] = useState(false);
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const EXPERIENCE_ANIMATION_LOCK_MS = 360;
   const experienceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -67,91 +64,6 @@ export default function Home() {
     }, EXPERIENCE_ANIMATION_LOCK_MS);
 
     setExpandedIndex((prev) => (prev === index ? null : index));
-  };
-
-  const handleDownloadPDF = async () => {
-    if (!resumeData || isGeneratingPDF) return;
-
-    setIsGeneratingPDF(true);
-    try {
-      // Dynamically import both the PDF renderer and the ResumePDF component
-      // in the browser and generate the PDF. Importing here prevents server
-      // or bundler-time errors caused by `@react-pdf/renderer`.
-      const [{ default: ResumePDF }, { pdf }] = await Promise.all([
-        import("@/components/resume-pdf"),
-        import("@react-pdf/renderer"),
-      ]);
-
-      const blob = await pdf(<ResumePDF data={resumeData} />).toBlob();
-
-      // Trigger an immediate download of the generated PDF.
-      const pdfBlobUrl = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = pdfBlobUrl;
-      link.download = `${resumeData.personalInfo.name.replace(/\s+/g, "_")}_Resume.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // Clean up object URL after a short delay (kept long enough for the
-      // browser to finish writing the file on slower mobile devices).
-      setTimeout(() => {
-        URL.revokeObjectURL(pdfBlobUrl);
-      }, 60_000);
-
-      // Track event
-      event("pdf_downloaded", {
-        cta: "resume_download",
-        origin: "resume",
-        transport_type: "beacon",
-      });
-    } catch (err) {
-      console.error("Failed to generate PDF", err);
-      alert("Failed to generate PDF. Please try again.");
-    } finally {
-      setIsGeneratingPDF(false);
-    }
-  };
-
-  useEffect(() => {
-    setShareSupported(typeof navigator !== "undefined" && !!navigator.share);
-
-    // Listen for download event from header
-    const handleDownloadEvent = () => {
-      handleDownloadPDF();
-    };
-
-    window.addEventListener("download-resume-pdf", handleDownloadEvent);
-    return () => {
-      window.removeEventListener("download-resume-pdf", handleDownloadEvent);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resumeData, isGeneratingPDF]);
-
-  const handleShare = async () => {
-    const url =
-      typeof window !== "undefined" ? window.location.href : "/resume";
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: "Anthony Brignano — Resume", url });
-      } else {
-        await navigator.clipboard.writeText(url);
-        alert("Link copied to clipboard");
-      }
-    } catch (err) {
-      console.error("Share failed", err);
-    }
-  };
-
-  const handleCopy = async () => {
-    const url =
-      typeof window !== "undefined" ? window.location.href : "/resume";
-    try {
-      await navigator.clipboard.writeText(url);
-      alert("Link copied to clipboard");
-    } catch (err) {
-      console.error("Copy failed", err);
-    }
   };
 
   useEffect(() => {
