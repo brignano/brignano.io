@@ -14,6 +14,7 @@ import {
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useToast } from "@/components/toast-provider";
+import { event } from "@/lib/gtag";
 
 export default function Header() {
   const { showToast } = useToast();
@@ -55,8 +56,11 @@ export default function Header() {
   };
 
   const handleDownloadPDF = () => {
-    // Dispatch custom event that resume page will listen to
-    window.dispatchEvent(new CustomEvent("download-resume-pdf"));
+    event("pdf_downloaded", {
+      cta: "resume_download",
+      origin: "resume",
+      transport_type: "beacon",
+    });
   };
 
   const handleShare = async () => {
@@ -190,14 +194,17 @@ export default function Header() {
               >
                 <ShareIcon className="h-5 w-5 transition-colors duration-200 text-blue-600 dark:text-blue-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300" />
               </button>
-              <button
+              <a
                 aria-label="Download PDF"
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={handleDownloadPDF}
                 aria-hidden={!resumeIconsVisible}
                 className={`group dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition transform duration-300 ease-out ${resumeIconsVisible && !resumeIconsAnimatingOut ? "translate-y-0 opacity-100 scale-100 cursor-pointer" : "translate-y-1 opacity-0 scale-95 pointer-events-none"}`}
               >
                 <ArrowDownTrayIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300 group-hover:text-violet-700 dark:group-hover:text-zinc-300" />
-              </button>
+              </a>
             </>
           )}
           <button
