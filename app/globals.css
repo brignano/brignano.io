@@ -95,6 +95,61 @@
   }
 }
 
+/* Signature trail stations (TSD §5.2 waypoints). The trail threads the left
+   gutter and "lights" a station as the scroll focus line passes each section,
+   giving tactile feedback weaving into and out of sections. Compositor-only
+   (opacity + transform); reduced motion shows a fully-lit, static trail. */
+.trail-node__ring {
+  opacity: 0.3;
+  transition: opacity 0.45s ease;
+}
+.trail-node__dot {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.trail-node__pulse {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.trail-node.on .trail-node__ring {
+  opacity: 0.85;
+}
+.trail-node.on .trail-node__dot {
+  opacity: 1;
+}
+.trail-node--summit .trail-node__ring {
+  opacity: 0.45;
+}
+.trail-node--summit.on .trail-node__ring {
+  opacity: 1;
+}
+.trail-node.pulse .trail-node__pulse {
+  animation: trail-pulse 0.7s ease-out;
+}
+@keyframes trail-pulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.6);
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trail-node__ring {
+    opacity: 0.8;
+  }
+  .trail-node__dot {
+    opacity: 1;
+  }
+  .trail-node__pulse {
+    display: none;
+  }
+}
+
 /* Accent: electric indigo/violet (TSD §10.3). Swatches chosen for WCAG AA:
    violet-700 (#6d28d9) on light, violet-400 (#a78bfa) on dark. */
 .text-primary-color {
