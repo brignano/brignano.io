@@ -202,7 +202,7 @@ export default function Home() {
 
           {/* Tier 1 — quantified outcomes with tappable skill pills that reveal
               a plain-language definition (components/highlight-card.tsx). */}
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-4 auto-rows-fr">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-4 items-start">
             {achievements.map((achievement, index) => (
               <HighlightCard
                 key={index}
