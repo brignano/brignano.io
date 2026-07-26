@@ -245,13 +245,17 @@ export interface HeroMetric {
 // Integrity (TSD §5.7): 8,000+ = reach/mandate ("for" engineers, not active
 // users); 1,000+ = current 90-day active adopters. Keep the framing distinct.
 export const heroMetrics: HeroMetric[] = [
-  { value: "8,000+", label: "enterprise developers" },
-  { value: "1,000+", label: "active in 90 days" },
-  { value: "10,000+", label: "repos migrated" },
+  { value: "8,000+", label: "engineers supported" },
+  { value: "1,000+", label: "picked it up in 90 days" },
+  { value: "10,000+", label: "code projects moved" },
 ];
 
 export interface Achievement {
   outcome: string;
+  // Plain-language line under the headline: says what it means for real people
+  // before the skill pills show the tech (TSD §5.7 — lead human, keep the
+  // jargon as a receipt, not the explanation).
+  detail: string;
   skills: string[];
 }
 

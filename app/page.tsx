@@ -44,7 +44,7 @@ export default function Home() {
               data-aos-duration={500}
               className="font-silkscreen-mono uppercase tracking-[0.18em] text-[11px] sm:text-xs text-primary-color mb-5"
             >
-              Platform Engineering · DevEx · AI
+              Senior Staff Software Engineer · The Hartford
             </p>
             <h1
               data-aos="fade-up"
@@ -60,7 +60,7 @@ export default function Home() {
               data-aos-delay={180}
               className="text-base sm:text-lg dark:text-zinc-400 text-zinc-600 mb-8 max-w-xl leading-relaxed"
             >
-              Internal developer platforms, CI/CD ecosystems, and DevOps intelligence that make software delivery safer, faster, and more reliable — with a growing emphasis on AI-native tooling.
+              I build the shared tools and automation they rely on to ship software — faster, safer, and more consistently. Think of it as building the factory, not the products that roll off it. Increasingly, that means baking AI right into those tools.
             </p>
 
             {/* Metric strip — proof above the fold. Dividers only once the row
@@ -168,10 +168,10 @@ export default function Home() {
           </h2>
           <div className="max-w-3xl space-y-4 text-base sm:text-lg dark:text-zinc-400 text-zinc-600 leading-relaxed">
             <p>
-              I design and scale enterprise developer platforms that are easy to operate, hard to break, and built to grow with the teams that use them.
+              I design and scale the systems big engineering teams build on — easy to operate, hard to break, and built to grow with the teams that use them.
             </p>
             <p>
-              My work focuses on reducing friction and turning software delivery into a repeatable, paved road through automation, strong testing, and security as first-class concerns. My work sits at the intersection of platform engineering, developer experience, and emerging technologies, including AI-enabled tooling.
+              In practice, that means taking the slow, repetitive, mistake-prone parts of building software and making them automatic and safe — the behind-the-scenes plumbing most people never see but every engineer relies on. Increasingly, that means building AI directly into those everyday tools.
             </p>
             <p>
               Beyond the platform, I lead our enterprise hackathons, mentor emerging leaders as a rotation manager in the company&apos;s Leadership Development Program, and serve on the Central Connecticut State University (CCSU) Computer Science Industry Advisory Board.
@@ -334,19 +334,19 @@ export default function Home() {
               Senior Staff Software Engineer — Enterprise Platform Engineering
             </h3>
             <p className="text-lg dark:text-zinc-300 text-zinc-700 mb-4 leading-relaxed">
-              I lead the strategy, design, and delivery of The Hartford&apos;s internal developer platform — the single pane of glass 8,000+ engineers build on.
+              I lead the strategy, design, and delivery of The Hartford&apos;s developer platform — the one place 8,000+ engineers go to build, ship, and run their software.
             </p>
             <p className="text-base dark:text-zinc-400 text-zinc-600 mb-6 leading-relaxed">
-              My focus is automation, reliability, and security as first-class concerns — reducing operational friction and accelerating developer productivity across the enterprise.
+              My focus is making the whole thing automatic, reliable, and secure by default — so engineers hit fewer roadblocks and spend more time on the work that matters.
             </p>
             <ul className="space-y-3 mb-6">
               {[
-                "On a CEO-sponsored initiative to make developer onboarding self-service — down from a 40+ day baseline.",
-                "A unified developer surface — custom CLI, desktop app, and IDE extensions — with 1,000+ engineers active in the first 90 days.",
-                "“One build command, any stack” — the same command builds any project and runs the same on your laptop, in CI, or on a remote machine. Nothing to set up per project.",
-                "Real-time DevOps intelligence — an event bus streaming pipeline and CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points; upgraded observability (Splunk, Dynatrace) and a live platform health status page with subscribe-able alerts.",
-                "Native AI tooling and out-of-the-box skills (MCP, DevOps intelligence layer) built into the platform.",
-                "Operate the enterprise CI/CD and DevSecOps toolchain end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx) keeping thousands of pipelines reliable.",
+                "Leading a CEO-sponsored push to make setup self-service for new engineers — down from a 40+ day wait.",
+                "One consistent set of tools — a command-line app, a desktop app, and editor add-ons — that 1,000+ engineers adopted in the first 90 days.",
+                "One command builds any project — and runs the same on your laptop, in the cloud, or on a remote machine. Nothing to set up per project.",
+                "Live insight into where engineers lose time: the platform watches its own tools, surfaces the biggest slow-downs, and posts a public health status page anyone can subscribe to.",
+                "AI help built right in — ready-to-use skills and assistants that plug into the platform's own data.",
+                "Keeping the automated build-test-release systems running reliably across thousands of projects.",
               ].map((item) => (
                 <li
                   key={item}
@@ -356,11 +356,36 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+
+            {/* Depth on demand — the dense toolchain lives behind one click so
+                the bullets above stay readable for non-specialists, while
+                engineers who want the stack can expand it. */}
+            <details className="group mb-6 rounded-lg border dark:border-zinc-800 border-zinc-200 bg-white/60 dark:bg-zinc-900/40 px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-medium">
+                <span>The stack behind it</span>
+                <span
+                  aria-hidden="true"
+                  className="font-silkscreen-mono text-[10px] uppercase tracking-[0.14em] text-primary-color transition-transform group-open:rotate-180"
+                >
+                  ▾
+                </span>
+              </summary>
+              <p className="mt-3 border-t border-dashed dark:border-zinc-800 border-zinc-200 pt-3 text-sm dark:text-zinc-400 text-zinc-600 leading-relaxed">
+                Under the hood: a real-time event pipeline (AWS, DynamoDB,
+                Snowflake) with ML analysis of developer pain points;
+                observability through Splunk and Dynatrace; and an end-to-end
+                CI/CD and DevSecOps toolchain — Jenkins, GitHub Actions,
+                Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx — keeping
+                thousands of pipelines reliable. AI features ship as MCP-based
+                skills.
+              </p>
+            </details>
+
             <p className="text-sm dark:text-zinc-400 text-zinc-600 mb-4">
               <span className="font-medium dark:text-zinc-300 text-zinc-700">
                 Prior:
               </span>{" "}
-              migrated 10,000+ repos to GitHub Enterprise Cloud; recognized with the 2023 Enterprise Tech Data &amp; Cyber Award.
+              migrated 10,000+ code repositories to GitHub Enterprise Cloud; recognized with the 2023 Enterprise Tech Data &amp; Cyber Award.
             </p>
             <p className="text-sm dark:text-zinc-500 text-zinc-500">
               For my full career history, see{" "}
@@ -426,7 +451,7 @@ export default function Home() {
             Let&apos;s build something.
           </h2>
           <p className="dark:text-zinc-400 text-zinc-600 mb-10 max-w-2xl text-lg leading-relaxed">
-            If you&apos;re working on platform engineering, developer experience, or AI-native software delivery, I&apos;d love to connect.
+            If you&apos;re building tools that make engineering teams faster — or just want to talk shop about platforms, developer experience, or AI — I&apos;d love to connect.
           </p>
           <div>
             <a
