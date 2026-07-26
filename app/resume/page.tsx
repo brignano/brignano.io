@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -24,46 +24,24 @@ export default function Home() {
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const EXPERIENCE_ANIMATION_LOCK_MS = 360;
-  const experienceCardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const scrollLockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [expandedIndices, setExpandedIndices] = useState<Set<number>>(
+    new Set()
+  );
 
-  const toggleExperience = (
-    index: number,
-    cardElement: HTMLDivElement,
-    event: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
-  ) => {
-    // Prevent any default scrolling behavior
-    if (event instanceof KeyboardEvent) {
-      event.preventDefault();
-    }
-
-    // Scroll the card into view only if it's not currently visible
-    const rect = cardElement.getBoundingClientRect();
-
-    // Only scroll if the card is out of view (above or below the viewport)
-    if (rect.top < 0 || rect.top > window.innerHeight) {
-      // Scroll with padding from the top so the header stays visible after expansion
-      const paddingFromTop = 80;
-      const scrollTop = window.scrollY + rect.top - paddingFromTop;
-      window.scrollTo(0, Math.max(0, scrollTop));
-    }
-
-    // Disable scrolling during animation
-    const originalOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    // Re-enable scrolling after animation completes
-    if (scrollLockTimeoutRef.current) {
-      clearTimeout(scrollLockTimeoutRef.current);
-    }
-    scrollLockTimeoutRef.current = setTimeout(() => {
-      document.body.style.overflow = originalOverflow;
-      scrollLockTimeoutRef.current = null;
-    }, EXPERIENCE_ANIMATION_LOCK_MS);
-
-    setExpandedIndex((prev) => (prev === index ? null : index));
+  // Each card toggles independently. Because nothing above a tapped card
+  // changes size, its position never shifts — no manual scroll or body-scroll
+  // lock is needed (those caused the card to fly off-screen on mobile when an
+  // accordion collapsed the taller card above it).
+  const toggleExperience = (index: number) => {
+    setExpandedIndices((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) {
+        next.delete(index);
+      } else {
+        next.add(index);
+      }
+      return next;
+    });
   };
 
   useEffect(() => {
@@ -92,25 +70,16 @@ export default function Home() {
     fetchResume();
   }, []);
 
+  // Expand the current ("present") role by default, once, after the data loads.
   useEffect(() => {
-    if (!resumeData || expandedIndex !== null) return;
+    if (!resumeData) return;
     const presentIndex = resumeData.experience?.findIndex(
       (job) => String(job.endDate).toLowerCase() === "present"
     );
     if (presentIndex !== undefined && presentIndex >= 0) {
-      setExpandedIndex(presentIndex);
+      setExpandedIndices((prev) => (prev.size > 0 ? prev : new Set([presentIndex])));
     }
-  }, [resumeData, expandedIndex]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (scrollLockTimeoutRef.current) {
-        clearTimeout(scrollLockTimeoutRef.current);
-      }
-      document.body.style.overflow = "";
-    };
-  }, []);
+  }, [resumeData]);
 
   if (loading) {
     return (
@@ -243,26 +212,22 @@ export default function Home() {
                 {experience.map((job, index) => (
                   <div key={index} className="relative">
                     <div
-                      className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${expandedIndex === index
+                      className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${expandedIndices.has(index)
                           ? "border-zinc-400 bg-secondary-color"
                           : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
                         }`}
                       data-print-hide
                     />
                     <div
-                      ref={(element) => {
-                        experienceCardRefs.current[index] = element;
-                      }}
-                      className={`ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg ${expandedIndex === index ? "cursor-default" : "cursor-pointer"}`}
+                      className="ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer"
                       role="button"
                       tabIndex={0}
-                      aria-expanded={expandedIndex === index}
-                      onClick={(event) =>
-                        toggleExperience(index, event.currentTarget, event)
-                      }
+                      aria-expanded={expandedIndices.has(index)}
+                      onClick={() => toggleExperience(index)}
                       onKeyDown={(event) => {
                         if (event.key === "Enter" || event.key === " ") {
-                          toggleExperience(index, event.currentTarget, event);
+                          event.preventDefault();
+                          toggleExperience(index);
                         }
                       }}
                     >
@@ -292,7 +257,7 @@ export default function Home() {
                         </time>
                       </div>
                       <div
-                        className={`exp-body transition-all duration-300 overflow-hidden ${expandedIndex === index
+                        className={`exp-body transition-all duration-300 overflow-hidden ${expandedIndices.has(index)
                           ? "max-h-[3000px] mt-4"
                           : "max-h-0"
                           }`}
