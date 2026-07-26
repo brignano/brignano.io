@@ -7,6 +7,7 @@ import {
   EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import HomeContributions from "@/components/home-contributions";
+import HighlightCard from "@/components/highlight-card";
 import TrailThread from "@/components/trail-thread";
 import CountUp from "@/components/count-up";
 import LatestCommit from "@/components/latest-commit";
@@ -187,35 +188,27 @@ export default function Home() {
           <h2
             data-aos="fade-up"
             data-aos-duration={600}
-            className="font-incognito text-3xl sm:text-4xl mb-8 font-bold tracking-tight"
+            className="font-incognito text-3xl sm:text-4xl mb-3 font-bold tracking-tight"
           >
             Highlights
           </h2>
+          <p
+            data-aos="fade-up"
+            data-aos-duration={600}
+            className="text-sm dark:text-zinc-500 text-zinc-500 mb-8"
+          >
+            New to the jargon? Tap any tag to see what it means in plain English.
+          </p>
 
-          {/* Tier 1 — quantified outcomes with skill pills */}
+          {/* Tier 1 — quantified outcomes with tappable skill pills that reveal
+              a plain-language definition (components/highlight-card.tsx). */}
           <div className="grid md:grid-cols-2 grid-cols-1 gap-4 auto-rows-fr">
             {achievements.map((achievement, index) => (
-              <div
+              <HighlightCard
                 key={index}
-                data-aos="fade-up"
-                data-aos-duration={600}
-                data-aos-delay={index * 70}
-                className="bg-white/70 dark:bg-zinc-900/50 backdrop-blur-sm border dark:border-zinc-800 border-zinc-200 rounded-xl px-6 py-5 shadow-sm h-full flex flex-col"
-              >
-                <p className="text-base font-semibold tracking-tight mb-3">
-                  {achievement.outcome}
-                </p>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {achievement.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="text-xs px-2.5 py-1 rounded-full border dark:border-zinc-700 border-zinc-300 dark:text-zinc-400 text-zinc-600"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                achievement={achievement}
+                index={index}
+              />
             ))}
           </div>
 
