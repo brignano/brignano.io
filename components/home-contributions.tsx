@@ -16,12 +16,13 @@ const CALENDAR_THEME = {
 };
 
 /**
- * Calm, restrained contribution preview for the homepage. Uses a **trailing
- * 12-month window** (`year="last"`) rather than the calendar year so the grid
- * ends on the most recent activity instead of trailing into empty future
- * months — keeps the section feeling current for bursty / mid-year activity.
- * Real data only; the year selector, legend, and color legend chrome live on
- * the full /coding calendar this funnels to.
+ * Calm, restrained contribution preview for the homepage. Uses the **current
+ * calendar year** (matching the full /coding calendar) rather than a trailing
+ * 12-month window: most public activity lands in the current year, so this puts
+ * the active months on the left where the overflow container shows them first,
+ * instead of leading with last year's empty months (work commits live on a
+ * private GitHub Enterprise that never reaches this public graph). Real data
+ * only; the year selector, legend, and color legend chrome live on /coding.
  */
 export default function HomeContributions({
   username = "brignano",
@@ -29,12 +30,16 @@ export default function HomeContributions({
   username?: string;
 }) {
   const [mounted, setMounted] = useState(false);
+  const [year, setYear] = useState<number | null>(null);
   const [colorScheme, setColorScheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect --
        client-only mount gate + theme sync, same as github-calendar-client */
     setMounted(true);
+    // Resolve the year from the browser clock after mount so server and client
+    // markup match (the calendar is client-only via the mounted gate anyway).
+    setYear(new Date().getFullYear());
 
     const root = document.documentElement;
     setColorScheme(root.classList.contains("dark") ? "dark" : "light");
@@ -49,17 +54,17 @@ export default function HomeContributions({
   return (
     <div className="overflow-x-auto -mx-1 px-1 py-1">
       <div className="min-w-[320px]">
-        {mounted && (
+        {mounted && year !== null && (
           <GitHubCalendar
             username={username}
-            year="last"
+            year={year}
             colorScheme={colorScheme}
             theme={CALENDAR_THEME}
             blockSize={11}
             blockMargin={4}
             fontSize={12}
             showColorLegend={false}
-            labels={{ totalCount: "{{count}} contributions in the last year" }}
+            labels={{ totalCount: "{{count}} contributions in {{year}}" }}
           />
         )}
       </div>
