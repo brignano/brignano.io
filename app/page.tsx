@@ -334,7 +334,7 @@ export default function Home() {
             </p>
             <ul className="space-y-3 mb-6">
               {[
-                "Leading a CEO-sponsored push to make setup self-service for new engineers — down from a 40+ day wait.",
+                "Leading a CEO-sponsored push to make new-engineer setup self-service — the platform already gets a fresh machine productive in hours, down from a 40+ day wait, as it rolls out team-wide.",
                 "One consistent set of tools — a command-line app, a desktop app, and editor add-ons — that 1,000+ engineers adopted in the first 90 days.",
                 "One command builds any project — and runs the same on your laptop, in the cloud, or on a remote machine. Nothing to set up per project.",
                 "Live insight into where engineers lose time: the platform watches its own tools, surfaces the biggest slow-downs, and posts a public health status page anyone can subscribe to.",
