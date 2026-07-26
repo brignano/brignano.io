@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -259,13 +259,19 @@ export default function Home() {
                           </time>
                           {/* Explicit expand/collapse affordance — a cursor
                               change alone was invisible on touch, so people did
-                              not realize these cards open. */}
+                              not realize these cards open. Plus/minus (not a
+                              chevron) so it does not read as a second copy of
+                              the up-chevron scroll-to-top button. */}
                           <span
                             aria-hidden="true"
                             data-print-hide
-                            className={`inline-flex items-center justify-center rounded-full border dark:border-zinc-700 border-zinc-300 dark:bg-zinc-900/40 bg-white/60 p-1.5 text-zinc-500 dark:text-zinc-400 transition-transform duration-300 ${expandedIndices.has(index) ? "rotate-180" : ""}`}
+                            className="inline-flex items-center justify-center rounded-full border dark:border-zinc-700 border-zinc-300 dark:bg-zinc-900/40 bg-white/60 p-1.5 text-zinc-500 dark:text-zinc-400"
                           >
-                            <ChevronDownIcon className="h-4 w-4" />
+                            {expandedIndices.has(index) ? (
+                              <MinusIcon className="h-4 w-4" />
+                            ) : (
+                              <PlusIcon className="h-4 w-4" />
+                            )}
                           </span>
                         </div>
                       </div>
