@@ -245,13 +245,17 @@ export interface HeroMetric {
 // Integrity (TSD §5.7): 8,000+ = reach/mandate ("for" engineers, not active
 // users); 1,000+ = current 90-day active adopters. Keep the framing distinct.
 export const heroMetrics: HeroMetric[] = [
-  { value: "8,000+", label: "enterprise developers" },
-  { value: "1,000+", label: "active in 90 days" },
-  { value: "10,000+", label: "repos migrated" },
+  { value: "8,000+", label: "engineers supported" },
+  { value: "1,000+", label: "picked it up in 90 days" },
+  { value: "10,000+", label: "code projects moved" },
 ];
 
 export interface Achievement {
   outcome: string;
+  // Plain-language line under the headline: says what it means for real people
+  // before the skill pills show the tech (TSD §5.7 — lead human, keep the
+  // jargon as a receipt, not the explanation).
+  detail: string;
   skills: string[];
 }
 
@@ -261,22 +265,61 @@ export interface Achievement {
 // incident numbers (TSD §5.7 integrity rules).
 export const achievements: Achievement[] = [
   {
-    outcome: "A unified developer platform for 8,000+ engineers",
+    outcome: "One place for 8,000+ engineers to build",
+    detail:
+      "Before, everyone set up their tools differently — slow and easy to break. Now it's one shared, consistent setup.",
     skills: ["GitHub Enterprise", "Custom CLI", "IDE Extensions"],
   },
   {
-    outcome: "1,000+ engineers active in the first 90 days",
+    outcome: "1,000+ engineers chose it in the first 90 days",
+    detail:
+      "New tools inside big companies usually get ignored. This one caught on fast.",
     skills: ["Desktop App", "Self-service onboarding"],
   },
   {
-    outcome: "One build command, any stack — local, CI, or fully remote",
+    outcome: "One command builds any project — laptop, cloud, anywhere",
+    detail:
+      "The same result every time, with no fiddly setup to do per project.",
     skills: ["CI/CD", "Base-image registry", "Containers"],
   },
   {
-    outcome: "Real-time DevOps intelligence for engineers and AI agents",
+    outcome: "The platform spots where engineers get stuck — live",
+    detail:
+      "So we fix the real slow-downs instead of guessing. AI assistants can read it too.",
     skills: ["MCP", "AWS", "DynamoDB", "Snowflake"],
   },
 ];
+
+// Plain-language definitions for the skill pills, surfaced on click so a
+// non-technical reader can decode a buzzword without the page assuming it
+// (TSD §5.7 voice: explain the term, don't lead with it). One jargon-free
+// sentence each; every skill used in `achievements` must have an entry.
+export const glossary: Record<string, string> = {
+  "GitHub Enterprise":
+    "GitHub's business edition — where a company privately stores and collaborates on all its code.",
+  "Custom CLI":
+    "A command-line tool (you type commands instead of clicking) built specifically for our engineers.",
+  "IDE Extensions":
+    "Add-ons for the code editor engineers use all day, so the platform's features live right where they work.",
+  "Desktop App":
+    "A normal installable app that puts the platform's tools in one window.",
+  "Self-service onboarding":
+    "New engineers get themselves set up on their own — no waiting on a person or a ticket.",
+  "CI/CD":
+    "The automated assembly line that tests new code and ships it — short for Continuous Integration / Continuous Delivery.",
+  "Base-image registry":
+    "A shared library of pre-built starting points, so every project begins from the same trusted setup.",
+  Containers:
+    "Lightweight, self-contained boxes that package software so it runs the same on any machine.",
+  MCP:
+    "Model Context Protocol — a common way for AI assistants to plug into tools and data.",
+  AWS:
+    "Amazon Web Services — Amazon's cloud, where the software actually runs.",
+  DynamoDB:
+    "A fast cloud database from Amazon for storing and looking up data at scale.",
+  Snowflake:
+    "A cloud data warehouse — a huge, queryable store for analyzing large amounts of data.",
+};
 
 export interface NowItem {
   label: string;
