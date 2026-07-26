@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -219,7 +220,7 @@ export default function Home() {
                       data-print-hide
                     />
                     <div
-                      className="ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer"
+                      className="ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer transition-colors hover:border-violet-400/70 dark:hover:border-violet-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
                       role="button"
                       tabIndex={0}
                       aria-expanded={expandedIndices.has(index)}
@@ -243,18 +244,30 @@ export default function Home() {
                             {job.location}
                           </p>
                         </div>
-                        <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
-                          {String(job.startDate).toUpperCase()} -{" "}
+                        <div className="flex flex-col items-end gap-2.5 shrink-0">
+                          <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
+                            {String(job.startDate).toUpperCase()} -{" "}
+                            <span
+                              className={
+                                String(job.endDate).toLowerCase() === "present"
+                                  ? "text-primary-color"
+                                  : ""
+                              }
+                            >
+                              {String(job.endDate).toUpperCase()}
+                            </span>
+                          </time>
+                          {/* Explicit expand/collapse affordance — a cursor
+                              change alone was invisible on touch, so people did
+                              not realize these cards open. */}
                           <span
-                            className={
-                              String(job.endDate).toLowerCase() === "present"
-                                ? "text-primary-color"
-                                : ""
-                            }
+                            aria-hidden="true"
+                            data-print-hide
+                            className={`inline-flex items-center justify-center rounded-full border dark:border-zinc-700 border-zinc-300 dark:bg-zinc-900/40 bg-white/60 p-1.5 text-zinc-500 dark:text-zinc-400 transition-transform duration-300 ${expandedIndices.has(index) ? "rotate-180" : ""}`}
                           >
-                            {String(job.endDate).toUpperCase()}
+                            <ChevronDownIcon className="h-4 w-4" />
                           </span>
-                        </time>
+                        </div>
                       </div>
                       <div
                         className={`exp-body transition-all duration-300 overflow-hidden ${expandedIndices.has(index)
