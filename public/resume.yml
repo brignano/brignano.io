@@ -17,7 +17,7 @@ experience:
     summary: |
       Technical Lead for The Hartford's enterprise developer platform and developer experience strategy — the single pane of glass serving 8,000+ engineers — owning the architecture and evolution of CI/CD, DevOps intelligence, internal developer tooling, and AI-native delivery patterns across thousands of repositories.
     highlights:
-      - Lead the strategy, design, and delivery of the internal developer platform serving 8,000+ engineers, on a CEO-sponsored initiative to make developer onboarding self-service, down from a 40+ day baseline
+      - Lead the strategy, design, and delivery of the internal developer platform serving 8,000+ engineers, including a CEO-sponsored initiative making developer onboarding self-service — the platform provisions a new machine to productive in hours, down from a 40+ day baseline, now rolling out org-wide
       - Shipped a unified developer surface across a custom CLI, desktop app, and IDE extensions, reaching 1,000+ active engineers in the first 90 days
       - Designed "one build command, any stack" — context-aware builds that run identically locally, in CI, or fully remote on virtual build agents, against a custom base-image registry
       - Architected a real-time DevOps intelligence layer — an event bus streaming pipeline plus CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points
