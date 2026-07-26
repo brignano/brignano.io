@@ -61,7 +61,7 @@ export default function Home() {
               data-aos-delay={180}
               className="text-base sm:text-lg dark:text-zinc-400 text-zinc-600 mb-8 max-w-xl leading-relaxed"
             >
-              I build the shared tools and automation they rely on to ship software — faster, safer, and more consistently. Think of it as building the factory, not the products that roll off it. Increasingly, that means baking AI right into those tools.
+              I build the shared tools and automation engineers rely on to ship software — faster, safer, and more consistently. Think of it as building the factory, not the products that roll off it. Increasingly, that means baking AI right into those tools.
             </p>
 
             {/* Metric strip — proof above the fold. Dividers only once the row
