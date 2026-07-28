@@ -423,15 +423,14 @@ export default function Home() {
         </section>
       )}
 
-      {/* Education Section — hidden in print to keep the printed resume to two
-          pages (parity with the downloaded PDF, which also omits it). */}
+      {/* Education prints and is in the downloaded PDF — a resume that omits it
+          reads as a gap, and there is room on page two for it. */}
       {education && education.length > 0 && (
         <section
           className="mb-16"
           data-aos="fade-up"
           data-aos-duration={1000}
           data-aos-once={true}
-          data-print-hide
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Education</h2>
             <div className="space-y-10">

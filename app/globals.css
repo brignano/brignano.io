@@ -332,12 +332,13 @@
     display: none !important;
   }
 
-  /* Condense to ~2 pages: cap bullets per role (mirrors the PDF).
-     Current/most-recent role (first card) keeps ~6; older roles keep ~3. */
-  .space-y-10 > div:first-child .exp-body ul li:nth-child(n + 7) {
+  /* Condense to ~2 pages: cap bullets per role. These MUST mirror the slice()
+     in components/resume-pdf.tsx — current/most-recent role keeps 8, older
+     roles keep 4. Change both together. */
+  .space-y-10 > div:first-child .exp-body ul li:nth-child(n + 9) {
     display: none !important;
   }
-  .space-y-10 > div:not(:first-child) .exp-body ul li:nth-child(n + 4) {
+  .space-y-10 > div:not(:first-child) .exp-body ul li:nth-child(n + 5) {
     display: none !important;
   }
 }
