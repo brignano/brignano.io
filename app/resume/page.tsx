@@ -210,20 +210,38 @@ export default function Home() {
                 data-print-hide
               />
               <div className="space-y-10">
-                {experience.map((job, index) => (
+                {experience.map((job, index) => {
+                  const isOpen = expandedIndices.has(index);
+                  const ToggleIcon = isOpen ? MinusIcon : PlusIcon;
+                  const dateLine = (className: string) => (
+                    <time className={className}>
+                      {String(job.startDate).toUpperCase()} -{" "}
+                      <span
+                        className={
+                          String(job.endDate).toLowerCase() === "present"
+                            ? "text-primary-color"
+                            : ""
+                        }
+                      >
+                        {String(job.endDate).toUpperCase()}
+                      </span>
+                    </time>
+                  );
+
+                  return (
                   <div key={index} className="relative">
                     <div
-                      className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${expandedIndices.has(index)
+                      className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${isOpen
                           ? "border-zinc-400 bg-secondary-color"
                           : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
                         }`}
                       data-print-hide
                     />
                     <div
-                      className="ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer transition-colors hover:border-violet-400/70 dark:hover:border-violet-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+                      className="group ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer transition-colors hover:border-violet-400/70 dark:hover:border-violet-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
                       role="button"
                       tabIndex={0}
-                      aria-expanded={expandedIndices.has(index)}
+                      aria-expanded={isOpen}
                       onClick={() => toggleExperience(index)}
                       onKeyDown={(event) => {
                         if (event.key === "Enter" || event.key === " ") {
@@ -232,48 +250,41 @@ export default function Home() {
                         }
                       }}
                     >
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
-                            {job.position}
-                          </h3>
-                          <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
-                            {job.company}
-                          </p>
-                          <p className="text-sm dark:text-zinc-400 text-zinc-600">
-                            {job.location}
-                          </p>
-                        </div>
-                        <div className="flex flex-col items-end gap-2.5 shrink-0">
-                          <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
-                            {String(job.startDate).toUpperCase()} -{" "}
-                            <span
-                              className={
-                                String(job.endDate).toLowerCase() === "present"
-                                  ? "text-primary-color"
-                                  : ""
-                              }
-                            >
-                              {String(job.endDate).toUpperCase()}
-                            </span>
-                          </time>
-                          {/* Explicit expand/collapse affordance — a cursor
-                              change alone was invisible on touch, so people did
-                              not realize these cards open. Plus/minus (not a
-                              chevron) so it does not read as a second copy of
-                              the up-chevron scroll-to-top button. */}
-                          <span
-                            aria-hidden="true"
-                            data-print-hide
-                            className="inline-flex items-center justify-center rounded-full border dark:border-zinc-700 border-zinc-300 dark:bg-zinc-900/40 bg-white/60 p-1.5 text-zinc-500 dark:text-zinc-400"
-                          >
-                            {expandedIndices.has(index) ? (
-                              <MinusIcon className="h-4 w-4" />
-                            ) : (
-                              <PlusIcon className="h-4 w-4" />
-                            )}
-                          </span>
-                        </div>
+                      {/* One left-aligned column with the date demoted to a meta
+                          line. The date used to sit in its own right-hand
+                          column, which stole ~90px from every title and pushed
+                          them to 3-4 wrapped lines on mobile. */}
+                      <div className="mb-3">
+                        {dateLine(
+                          "block mb-1.5 text-xs text-zinc-600 dark:text-zinc-400 tracking-widest uppercase"
+                        )}
+                        <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
+                          {job.position}
+                        </h3>
+                        <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
+                          {job.company}
+                        </p>
+                        <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                          {job.location}
+                        </p>
+                      </div>
+                      {/* Disclosure row on the seam where the body opens. A
+                          cursor change alone was invisible on touch, so people
+                          did not realize these cards open; naming the payoff
+                          ("10 highlights") beats a bare glyph at saying what
+                          opening one gets you. Plus/minus, not a chevron, so it
+                          does not read as a second copy of the up-chevron
+                          scroll-to-top button. No rule above it — six dividers
+                          down a column of six cards was pure noise. */}
+                      <div
+                        aria-hidden="true"
+                        data-print-hide
+                        className="mt-3 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 group-hover:text-primary-color transition-colors"
+                      >
+                        <ToggleIcon className="h-4 w-4" />
+                        {isOpen
+                          ? "Hide details"
+                          : `${job.highlights.length} highlights`}
                       </div>
                       <div
                         className={`exp-body transition-all duration-300 overflow-hidden ${expandedIndices.has(index)
@@ -308,7 +319,8 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
           </div>
         </section>
