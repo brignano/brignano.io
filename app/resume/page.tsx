@@ -1,14 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownTrayIcon,
+  MinusIcon,
+  PlusIcon,
+  ShareIcon,
+} from "@heroicons/react/24/outline";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { SkillBadge } from "@/components/skill-badge";
+import { useToast } from "@/components/toast-provider";
+import { event } from "@/lib/gtag";
 
 // The downloadable PDF is generated at build time by app/resume.pdf/route.ts;
-// the header's download icon links straight to /resume.pdf.
+// the hero's download button links straight to /resume.pdf.
 
 const RESUME_BREADCRUMBS = [
   {
@@ -22,12 +29,46 @@ const RESUME_BREADCRUMBS = [
 ];
 
 export default function Home() {
+  const { showToast } = useToast();
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedIndices, setExpandedIndices] = useState<Set<number>>(
     new Set()
   );
+
+  const handleDownloadPDF = () => {
+    event("pdf_downloaded", {
+      cta: "resume_download",
+      origin: "resume",
+      transport_type: "beacon",
+    });
+  };
+
+  const handleShare = async () => {
+    const url = window?.location.href ?? "/resume";
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "Anthony Brignano — Resume",
+          url,
+        });
+      } else if (navigator?.clipboard) {
+        await navigator.clipboard.writeText(url);
+        showToast("Resume link copied to clipboard");
+      } else {
+        // last resort
+        showToast(url);
+      }
+    } catch (err) {
+      // Ignore AbortError (user canceled share dialog)
+      if (err instanceof Error && err.name === "AbortError") {
+        return;
+      }
+      // Log other errors silently
+      console.error("Share failed", err);
+    }
+  };
 
   // Each card toggles independently. Because nothing above a tapped card
   // changes size, its position never shifts — no manual scroll or body-scroll
@@ -155,9 +196,33 @@ export default function Home() {
           {personalInfo.phone && <span>{personalInfo.phone}</span>}
           {personalInfo.location && <span>{personalInfo.location}</span>}
         </div>
-        {/* Social Media Links */}
+        {/* Page actions live here, not in the site header. They used to mount
+            and animate into the global header on /resume only, so the chrome
+            changed shape as you navigated, and two unlabeled icons in the
+            navigation strip read as chrome rather than as things this page
+            offers. Labeled, next to the profile links, they are discoverable
+            and sit beside the content they act on. */}
         <div className="flex flex-wrap gap-4 mb-8" data-print-hide>
-          {/* LinkedIn and GitHub */}
+          <a
+            aria-label="Download resume as PDF"
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleDownloadPDF}
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-transparent bg-secondary-color text-white font-semibold rounded-lg hover:bg-violet-800 transition-colors duration-200"
+          >
+            <ArrowDownTrayIcon className="h-5 w-5" />
+            Download PDF
+          </a>
+          <button
+            type="button"
+            aria-label="Share resume"
+            onClick={handleShare}
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 cursor-pointer"
+          >
+            <ShareIcon className="h-5 w-5" />
+            Share
+          </button>
           {personalInfo.linkedin && (
             <a
               href={personalInfo.linkedin}
