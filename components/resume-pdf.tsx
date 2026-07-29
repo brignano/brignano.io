@@ -22,9 +22,28 @@ Font.register({
 const styles = StyleSheet.create({
   page: {
     padding: 30,
+    // Room for the fixed footer so body text never runs under it.
+    paddingBottom: 44,
     fontSize: 10,
     fontFamily: "Helvetica",
     lineHeight: 1.3,
+  },
+  // Fixed on every page: a detached page 2 is otherwise anonymous, and this is
+  // where the URL to send someone lives once the file has left the site.
+  //
+  // No "Page N of M" here on purpose. That needs @react-pdf's `render` prop,
+  // which silently produces nothing whenever the Page style carries a
+  // lineHeight (4.3.2) — the render function runs, its output never lays out.
+  // Moving lineHeight off the Page fixes the footer but reflows the document
+  // from two pages to three, which is a worse trade than losing page numbers.
+  footer: {
+    position: "absolute",
+    bottom: 22,
+    left: 30,
+    right: 30,
+    fontSize: 8,
+    color: "#777",
+    textAlign: "center",
   },
   header: {
     marginBottom: 10,
@@ -189,13 +208,24 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
     summary,
     experience,
     leadership,
+    education,
     skills,
     certifications,
   } = data;
 
+  // "https://brignano.io" -> "brignano.io/resume"
+  const resumeUrl = `${(personalInfo.website ?? "brignano.io").replace(/^https?:\/\//, "").replace(/\/$/, "")}/resume`;
+
   return (
-    <Document>
+    <Document
+      title={`${personalInfo.name} — Resume`}
+      author={personalInfo.name}
+      subject={personalInfo.title}
+    >
       <Page size="A4" style={styles.page}>
+        <Text style={styles.footer} fixed>
+          {personalInfo.name}  ·  {resumeUrl}
+        </Text>
         {/* Header Section */}
         <View style={styles.header}>
           <Text style={styles.name}>{personalInfo.name}</Text>
@@ -244,8 +274,11 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
         {experience && experience.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Experience</Text>
+            {/* wrap={false} keeps a role's heading with its bullets — without
+                it a page break can strand a lone bullet at the top of page 2,
+                detached from the job it belongs to. */}
             {experience.map((job, index) => (
-              <View key={index} style={styles.experienceItem}>
+              <View key={index} style={styles.experienceItem} wrap={false}>
                 <View style={styles.jobHeader}>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.jobPosition}>{job.position}</Text>
@@ -261,8 +294,10 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
                   </View>
                 </View>
                 <View style={styles.highlightsList}>
+                  {/* Caps keep this to two pages. Mirrored by the browser-print
+                      rules in globals.css — change both together. */}
                   {job.highlights
-                    .slice(0, index === 0 ? 6 : 3)
+                    .slice(0, index === 0 ? 8 : 4)
                     .map((highlight, i) => (
                       <View key={i} style={styles.highlight}>
                         <Text style={styles.bullet}>•</Text>
@@ -293,7 +328,30 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
           </View>
         )}
 
-        {/* Education Section intentionally omitted in PDF to keep it to 2 pages */}
+        {/* Education */}
+        {education && education.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Education</Text>
+            {education.map((edu, index) => (
+              <View key={index} style={styles.educationItem} wrap={false}>
+                <Text style={styles.degree}>
+                  {edu.degree}
+                  {edu.field && ` — ${edu.field}`}
+                </Text>
+                <Text style={styles.institution}>{edu.institution}</Text>
+                <Text style={styles.educationDetails}>
+                  {[
+                    [edu.startDate, edu.endDate].filter(Boolean).join(" - "),
+                    edu.gpa && `GPA: ${edu.gpa}`,
+                    edu.honors?.join(", "),
+                  ]
+                    .filter(Boolean)
+                    .join("  ·  ")}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
 
         {/* Skills Section */}
         {skills && skills.length > 0 && (

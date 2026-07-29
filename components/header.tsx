@@ -1,90 +1,61 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Dialog, DialogPanel } from "@headlessui/react";
-import {
-  XMarkIcon,
-  MoonIcon,
-  SunIcon,
-  ArrowDownTrayIcon,
-  ShareIcon,
-} from "@heroicons/react/24/outline";
-import { Bars3Icon } from "@heroicons/react/24/solid";
+import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useToast } from "@/components/toast-provider";
-import { event } from "@/lib/gtag";
+
+// Nav is inline at every width. A slide-in dialog to reveal three links cost
+// two taps and an overlay to show what fits on one line, so the drawer, the
+// hamburger, and their animation state are gone.
+const PAGES = ["home", "resume", "coding"] as const;
+
+// Don't start hiding until the header has scrolled its own height away, and
+// ignore deltas smaller than this so momentum jitter and iOS rubber-band
+// overscroll don't flap the header open and shut.
+const HIDE_AFTER_PX = 80;
+const MIN_DELTA_PX = 6;
+
+// The `dark` class on <html> is the source of truth — an inline script in
+// <head> sets it before paint. Subscribing to it rather than mirroring it into
+// state keeps the toggle in sync with anything else that changes the class, and
+// avoids a setState-in-effect on mount. The server snapshot is light; the class
+// the script picked wins on the first client render after hydration.
+const subscribeToTheme = (onChange: () => void) => {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+  return () => observer.disconnect();
+};
 
 export default function Header() {
-  const { showToast } = useToast();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const isDarkMode = useSyncExternalStore(
+    subscribeToTheme,
+    () => document.documentElement.classList.contains("dark"),
+    () => false
+  );
   const [animateHeader, setAnimateHeader] = useState(false);
-  const [animateSidenav, setAnimateSidenav] = useState(false);
-  const panelRef = useRef<HTMLDivElement | null>(null);
-  const previousActiveElement = useRef<HTMLElement | null>(null);
-  const [showResumeIcons, setShowResumeIcons] = useState(false);
-  const [resumeIconsAnimatingOut, setResumeIconsAnimatingOut] = useState(false);
-  const RESUME_ICON_ANIM_MS = 300;
-  const [resumeIconsVisible, setResumeIconsVisible] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
   const pathname = usePathname();
-  const isResumePage = pathname === "/resume";
   const currentPage = (() => {
     if (!pathname || pathname === "/") return "home";
     const seg = pathname.split("/")[1];
     return seg || "home";
   })();
 
-  const pages: string[] = ["home", "resume", "coding"];
-
-  useEffect(() => {
-    // The theme class is set before paint by the inline script in <head>.
-    // Sync React state to whatever it decided.
-    setIsDarkMode(document.documentElement.classList.contains("dark"));
-  }, []);
-
   const toggleTheme = () => {
     const newDark = !isDarkMode;
+    // Flipping the class notifies the store above, which re-renders the icon.
     document.documentElement.classList.toggle("dark", newDark);
     try {
       localStorage.setItem("theme", newDark ? "dark" : "light");
     } catch {
       // ignore (e.g. storage disabled)
-    }
-    setIsDarkMode(newDark);
-  };
-
-  const handleDownloadPDF = () => {
-    event("pdf_downloaded", {
-      cta: "resume_download",
-      origin: "resume",
-      transport_type: "beacon",
-    });
-  };
-
-  const handleShare = async () => {
-    const url = window?.location.href ?? "/resume";
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: "Anthony Brignano — Resume",
-          url,
-        });
-      } else if (navigator?.clipboard) {
-        await navigator.clipboard.writeText(url);
-        showToast("Resume link copied to clipboard");
-      } else {
-        // last resort
-        showToast(url);
-      }
-    } catch (err) {
-      // Ignore AbortError (user canceled share dialog)
-      if (err instanceof Error && err.name === "AbortError") {
-        return;
-      }
-      // Log other errors silently
-      console.error("Share failed", err);
     }
   };
 
@@ -93,61 +64,34 @@ export default function Header() {
     requestAnimationFrame(() => setAnimateHeader(true));
   }, []);
 
+  // Hide on scroll down, reveal on scroll up: the content gets the full screen
+  // while reading, and nav is one flick away instead of a scroll to the top.
   useEffect(() => {
-    if (mobileMenuOpen) {
-      // reset then trigger so CSS transition runs on open
-      setAnimateSidenav(false);
+    const onScroll = () => {
+      if (ticking.current) return;
+      ticking.current = true;
       requestAnimationFrame(() => {
-        setAnimateSidenav(true);
-        // save focus and move to first focusable element in the panel
-        try {
-          previousActiveElement.current =
-            document.activeElement as HTMLElement | null;
-          const first = panelRef.current?.querySelector<HTMLElement>(
-            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
-          );
-          first?.focus();
-        } catch {
-          // ignore focus errors
+        const y = window.scrollY;
+        const delta = y - lastScrollY.current;
+        if (Math.abs(delta) > MIN_DELTA_PX) {
+          setHidden(delta > 0 && y > HIDE_AFTER_PX);
+          lastScrollY.current = y;
         }
+        ticking.current = false;
       });
-    } else {
-      setAnimateSidenav(false);
-      // restore focus when closing
-      try {
-        previousActiveElement.current?.focus?.();
-      } catch {
-        // ignore
-      }
-    }
-  }, [mobileMenuOpen]);
-
-  useEffect(() => {
-    if (isResumePage) {
-      setResumeIconsAnimatingOut(false);
-      setShowResumeIcons(true);
-      setResumeIconsVisible(false);
-      requestAnimationFrame(() => setResumeIconsVisible(true));
-    } else if (showResumeIcons) {
-      // animate out, then unmount
-      setResumeIconsAnimatingOut(true);
-      setResumeIconsVisible(false);
-      const t = setTimeout(() => {
-        setShowResumeIcons(false);
-        setResumeIconsAnimatingOut(false);
-      }, RESUME_ICON_ANIM_MS);
-      return () => clearTimeout(t);
-    }
-    // showResumeIcons is set by this effect; including it would re-trigger the animation
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isResumePage]);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 z-30 lg:mb-28 mb-10">
+    <header
+      className={`sticky top-0 z-30 text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 dark:bg-zinc-900/80 bg-zinc-100/80 backdrop-blur-md lg:mb-28 mb-10 transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:translate-y-0 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+    >
       <div
-        className={`max-w-6xl mx-auto flex items-center justify-between relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}
+        className={`max-w-6xl mx-auto flex items-center justify-between gap-x-4 relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}
       >
-        <Link href="/" className="cursor-pointer">
+        <Link href="/" className="cursor-pointer shrink-0">
           <span className="sr-only">Anthony Brignano</span>
           <Image
             alt="icon"
@@ -157,16 +101,18 @@ export default function Header() {
             height={35}
           />
         </Link>
-        <nav className="hidden lg:block lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:transform">
-          <ul className="flex items-center gap-x-8">
-            {pages?.map((page) => {
+        {/* Centered on large screens via absolute positioning; on small screens
+            it sits in the flex row between the logo and the theme toggle. */}
+        <nav className="lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:transform">
+          <ul className="flex items-center gap-x-5 sm:gap-x-8">
+            {PAGES.map((page) => {
               const isActive = currentPage === page;
               const label = page.charAt(0).toUpperCase() + page.slice(1);
               return (
                 <li key={page}>
                   {isActive ? (
                     <span
-                      className="text-zinc-400 dark:text-zinc-500 text-base cursor-default"
+                      className="text-zinc-900 dark:text-white text-sm sm:text-base font-medium cursor-default border-b-2 border-violet-600 dark:border-violet-400 pb-1"
                       aria-current="page"
                     >
                       {label}
@@ -174,7 +120,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={page === "home" ? "/" : `/${page}`}
-                      className="text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-white text-base cursor-pointer"
+                      className="text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white text-sm sm:text-base cursor-pointer border-b-2 border-transparent pb-1 transition-colors"
                     >
                       {label}
                     </Link>
@@ -184,114 +130,18 @@ export default function Header() {
             })}
           </ul>
         </nav>
-        <div className="flex items-center gap-x-4">
-          {showResumeIcons && (
-            <>
-              <button
-                aria-label="Share Resume"
-                onClick={handleShare}
-                aria-hidden={!isResumePage}
-                className={`group print:hidden dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition transform duration-300 ease-out ${resumeIconsVisible && !resumeIconsAnimatingOut ? "translate-y-0 opacity-100 scale-100 cursor-pointer" : "translate-y-1 opacity-0 scale-95 pointer-events-none"}`}
-              >
-                <ShareIcon className="h-5 w-5 transition-colors duration-200 text-blue-600 dark:text-blue-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-300" />
-              </button>
-              <a
-                aria-label="Download PDF"
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleDownloadPDF}
-                aria-hidden={!resumeIconsVisible}
-                className={`group dark:bg-primary-bg bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition transform duration-300 ease-out ${resumeIconsVisible && !resumeIconsAnimatingOut ? "translate-y-0 opacity-100 scale-100 cursor-pointer" : "translate-y-1 opacity-0 scale-95 pointer-events-none"}`}
-              >
-                <ArrowDownTrayIcon className="h-5 w-5 transition-colors duration-200 text-zinc-600 dark:text-zinc-300 group-hover:text-violet-700 dark:group-hover:text-zinc-300" />
-              </a>
-            </>
-          )}
-          <button
-            aria-label="Toggle Theme"
-            onClick={() => toggleTheme()}
-            className="dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-400"
-          >
-            {isDarkMode ? (
-              <MoonIcon className="size-5 text-primary-color hover:text-white duration-400 cursor-pointer" />
-            ) : (
-              <SunIcon className="size-5 text-yellow-600 hover:text-zinc-500 duration-400 cursor-pointer" />
-            )}
-          </button>
-          {pages.length > 0 && (
-            <button
-              aria-label="Toggle Menu"
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden dark:focus:text-primary-color dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-md p-2 hover:text-zinc-900 duration-300 cursor-pointer focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-400"
-            >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon aria-hidden="true" className="size-5" />
-            </button>
-          )}
-        </div>
-      </div>
-      {mobileMenuOpen && (
-        <Dialog
-          as="div"
-          className="lg:hidden"
-          open={mobileMenuOpen}
-          onClose={setMobileMenuOpen}
+        <button
+          aria-label="Toggle Theme"
+          onClick={() => toggleTheme()}
+          className="shrink-0 dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-400"
         >
-          <div
-            className={`fixed inset-0 z-40 bg-black/20 transition-opacity duration-300 ${animateSidenav ? "opacity-100" : "opacity-0 pointer-events-none"}`}
-          />
-
-          <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm">
-            <DialogPanel
-              ref={panelRef}
-              className={`h-full overflow-y-auto dark:bg-zinc-900 bg-zinc-100 px-6 py-6 shadow-xl transform transition-transform transition-opacity duration-300 ease-out ${animateSidenav ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
-            >
-              <div className="flex items-center justify-between">
-                <button
-                  aria-label="Close menu"
-                  type="button"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="ml-auto dark:bg-primary-bg dark:hover:text-primary-color bg-zinc-100 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 hover:text-zinc-900"
-                >
-                  <span className="sr-only">Close menu</span>
-                  <XMarkIcon aria-hidden="true" className="size-5" />
-                </button>
-              </div>
-              <div className="mt-6 flow-root flex-grow flex items-center">
-                <div className="-my-6 divide-y divide-gray-500/10 w-full">
-                  <div className="space-y-6 w-full py-6 flex flex-col items-center">
-                    {pages?.map((page) => {
-                      const isActive = currentPage === page;
-                      const label =
-                        page.charAt(0).toUpperCase() + page.slice(1);
-                      return isActive ? (
-                        <div
-                          key={page}
-                          className="w-full text-center text-base font-medium text-zinc-400 dark:text-zinc-500 cursor-default"
-                          aria-current="page"
-                        >
-                          {label}
-                        </div>
-                      ) : (
-                        <Link
-                          key={page}
-                          href={page === "home" ? "/" : `/${page}`}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className="w-full text-center px-3 py-2 text-base font-medium text-zinc-600 dark:text-white hover:text-zinc-900 dark:hover:text-white cursor-pointer"
-                        >
-                          {label}
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </DialogPanel>
-          </div>
-        </Dialog>
-      )}
+          {isDarkMode ? (
+            <MoonIcon className="size-5 text-primary-color hover:text-white duration-400 cursor-pointer" />
+          ) : (
+            <SunIcon className="size-5 text-yellow-600 hover:text-zinc-500 duration-400 cursor-pointer" />
+          )}
+        </button>
+      </div>
     </header>
   );
 }

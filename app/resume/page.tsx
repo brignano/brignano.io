@@ -1,14 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownTrayIcon,
+  MinusIcon,
+  PlusIcon,
+  ShareIcon,
+} from "@heroicons/react/24/outline";
 import yaml from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { SkillBadge } from "@/components/skill-badge";
+import { useToast } from "@/components/toast-provider";
+import { event } from "@/lib/gtag";
 
 // The downloadable PDF is generated at build time by app/resume.pdf/route.ts;
-// the header's download icon links straight to /resume.pdf.
+// the hero's download button links straight to /resume.pdf.
 
 const RESUME_BREADCRUMBS = [
   {
@@ -22,12 +29,46 @@ const RESUME_BREADCRUMBS = [
 ];
 
 export default function Home() {
+  const { showToast } = useToast();
   const [resumeData, setResumeData] = useState<ResumeData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedIndices, setExpandedIndices] = useState<Set<number>>(
     new Set()
   );
+
+  const handleDownloadPDF = () => {
+    event("pdf_downloaded", {
+      cta: "resume_download",
+      origin: "resume",
+      transport_type: "beacon",
+    });
+  };
+
+  const handleShare = async () => {
+    const url = window?.location.href ?? "/resume";
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: "Anthony Brignano — Resume",
+          url,
+        });
+      } else if (navigator?.clipboard) {
+        await navigator.clipboard.writeText(url);
+        showToast("Resume link copied to clipboard");
+      } else {
+        // last resort
+        showToast(url);
+      }
+    } catch (err) {
+      // Ignore AbortError (user canceled share dialog)
+      if (err instanceof Error && err.name === "AbortError") {
+        return;
+      }
+      // Log other errors silently
+      console.error("Share failed", err);
+    }
+  };
 
   // Each card toggles independently. Because nothing above a tapped card
   // changes size, its position never shifts — no manual scroll or body-scroll
@@ -155,9 +196,33 @@ export default function Home() {
           {personalInfo.phone && <span>{personalInfo.phone}</span>}
           {personalInfo.location && <span>{personalInfo.location}</span>}
         </div>
-        {/* Social Media Links */}
+        {/* Page actions live here, not in the site header. They used to mount
+            and animate into the global header on /resume only, so the chrome
+            changed shape as you navigated, and two unlabeled icons in the
+            navigation strip read as chrome rather than as things this page
+            offers. Labeled, next to the profile links, they are discoverable
+            and sit beside the content they act on. */}
         <div className="flex flex-wrap gap-4 mb-8" data-print-hide>
-          {/* LinkedIn and GitHub */}
+          <a
+            aria-label="Download resume as PDF"
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={handleDownloadPDF}
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-transparent bg-secondary-color text-white font-semibold rounded-lg hover:bg-violet-800 transition-colors duration-200"
+          >
+            <ArrowDownTrayIcon className="h-5 w-5" />
+            Download PDF
+          </a>
+          <button
+            type="button"
+            aria-label="Share resume"
+            onClick={handleShare}
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 cursor-pointer"
+          >
+            <ShareIcon className="h-5 w-5" />
+            Share
+          </button>
           {personalInfo.linkedin && (
             <a
               href={personalInfo.linkedin}
@@ -210,20 +275,38 @@ export default function Home() {
                 data-print-hide
               />
               <div className="space-y-10">
-                {experience.map((job, index) => (
+                {experience.map((job, index) => {
+                  const isOpen = expandedIndices.has(index);
+                  const ToggleIcon = isOpen ? MinusIcon : PlusIcon;
+                  const dateLine = (className: string) => (
+                    <time className={className}>
+                      {String(job.startDate).toUpperCase()} -{" "}
+                      <span
+                        className={
+                          String(job.endDate).toLowerCase() === "present"
+                            ? "text-primary-color"
+                            : ""
+                        }
+                      >
+                        {String(job.endDate).toUpperCase()}
+                      </span>
+                    </time>
+                  );
+
+                  return (
                   <div key={index} className="relative">
                     <div
-                      className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${expandedIndices.has(index)
+                      className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${isOpen
                           ? "border-zinc-400 bg-secondary-color"
                           : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
                         }`}
                       data-print-hide
                     />
                     <div
-                      className="ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer transition-colors hover:border-violet-400/70 dark:hover:border-violet-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+                      className="group ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer transition-colors hover:border-violet-400/70 dark:hover:border-violet-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
                       role="button"
                       tabIndex={0}
-                      aria-expanded={expandedIndices.has(index)}
+                      aria-expanded={isOpen}
                       onClick={() => toggleExperience(index)}
                       onKeyDown={(event) => {
                         if (event.key === "Enter" || event.key === " ") {
@@ -232,48 +315,41 @@ export default function Home() {
                         }
                       }}
                     >
-                      <div className="flex justify-between items-start mb-3">
-                        <div>
-                          <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
-                            {job.position}
-                          </h3>
-                          <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
-                            {job.company}
-                          </p>
-                          <p className="text-sm dark:text-zinc-400 text-zinc-600">
-                            {job.location}
-                          </p>
-                        </div>
-                        <div className="flex flex-col items-end gap-2.5 shrink-0">
-                          <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
-                            {String(job.startDate).toUpperCase()} -{" "}
-                            <span
-                              className={
-                                String(job.endDate).toLowerCase() === "present"
-                                  ? "text-primary-color"
-                                  : ""
-                              }
-                            >
-                              {String(job.endDate).toUpperCase()}
-                            </span>
-                          </time>
-                          {/* Explicit expand/collapse affordance — a cursor
-                              change alone was invisible on touch, so people did
-                              not realize these cards open. Plus/minus (not a
-                              chevron) so it does not read as a second copy of
-                              the up-chevron scroll-to-top button. */}
-                          <span
-                            aria-hidden="true"
-                            data-print-hide
-                            className="inline-flex items-center justify-center rounded-full border dark:border-zinc-700 border-zinc-300 dark:bg-zinc-900/40 bg-white/60 p-1.5 text-zinc-500 dark:text-zinc-400"
-                          >
-                            {expandedIndices.has(index) ? (
-                              <MinusIcon className="h-4 w-4" />
-                            ) : (
-                              <PlusIcon className="h-4 w-4" />
-                            )}
-                          </span>
-                        </div>
+                      {/* One left-aligned column with the date demoted to a meta
+                          line. The date used to sit in its own right-hand
+                          column, which stole ~90px from every title and pushed
+                          them to 3-4 wrapped lines on mobile. */}
+                      <div className="mb-3">
+                        {dateLine(
+                          "block mb-1.5 text-xs text-zinc-600 dark:text-zinc-400 tracking-widest uppercase"
+                        )}
+                        <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
+                          {job.position}
+                        </h3>
+                        <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
+                          {job.company}
+                        </p>
+                        <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                          {job.location}
+                        </p>
+                      </div>
+                      {/* Disclosure row on the seam where the body opens. A
+                          cursor change alone was invisible on touch, so people
+                          did not realize these cards open; naming the payoff
+                          ("10 highlights") beats a bare glyph at saying what
+                          opening one gets you. Plus/minus, not a chevron, so it
+                          does not read as a second copy of the up-chevron
+                          scroll-to-top button. No rule above it — six dividers
+                          down a column of six cards was pure noise. */}
+                      <div
+                        aria-hidden="true"
+                        data-print-hide
+                        className="mt-3 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 group-hover:text-primary-color transition-colors"
+                      >
+                        <ToggleIcon className="h-4 w-4" />
+                        {isOpen
+                          ? "Hide details"
+                          : `${job.highlights.length} highlights`}
                       </div>
                       <div
                         className={`exp-body transition-all duration-300 overflow-hidden ${expandedIndices.has(index)
@@ -308,7 +384,8 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
           </div>
         </section>
@@ -346,15 +423,14 @@ export default function Home() {
         </section>
       )}
 
-      {/* Education Section — hidden in print to keep the printed resume to two
-          pages (parity with the downloaded PDF, which also omits it). */}
+      {/* Education prints and is in the downloaded PDF — a resume that omits it
+          reads as a gap, and there is room on page two for it. */}
       {education && education.length > 0 && (
         <section
           className="mb-16"
           data-aos="fade-up"
           data-aos-duration={1000}
           data-aos-once={true}
-          data-print-hide
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Education</h2>
             <div className="space-y-10">
