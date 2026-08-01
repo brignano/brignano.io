@@ -33,6 +33,9 @@ export const siteMetadata: Metadata = {
       { url: "/favicon.svg" },
       { url: "/favicon-dark.svg", media: "(prefers-color-scheme: dark)" },
     ],
+    // Apple surfaces (share sheet, iMessage previews, home-screen bookmarks)
+    // ignore SVG favicons and want a PNG apple-touch-icon.
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   manifest: "/manifest.json",
   // The social card image (og:image / twitter:image) is supplied by the
