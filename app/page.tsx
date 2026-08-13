@@ -175,7 +175,7 @@ export default function Home() {
               In practice, that means taking the slow, repetitive, mistake-prone parts of building software and making them automatic and safe — the behind-the-scenes plumbing most people never see but every engineer relies on. Increasingly, that means building AI directly into those everyday tools.
             </p>
             <p>
-              Beyond the platform, I lead our enterprise hackathons, mentor emerging leaders as a rotation manager in the company&apos;s Leadership Development Program, and serve on the Central Connecticut State University (CCSU) Computer Science Industry Advisory Board.
+              Beyond the platform, I lead our enterprise hackathons, mentor emerging leaders as a rotation manager and career coach in the company&apos;s Leadership Development Program, and serve on the Central Connecticut State University (CCSU) Computer Science Industry Advisory Board.
             </p>
             <p>
               Outside of work, you&apos;ll usually find me climbing rocks, snowboarding through the woods, or exploring new ideas.
