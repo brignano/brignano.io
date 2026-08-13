@@ -286,6 +286,14 @@
   main .lead-grid {
     grid-template-columns: repeat(3, 1fr) !important;
   }
+  /* Drop the long web copy for the one-liner; the row of 3 has no room for it,
+     and the PDF (resume-pdf.tsx) prints the same short `description`. */
+  main .lead-detail {
+    display: none !important;
+  }
+  main .lead-summary {
+    display: block !important;
+  }
 
   /* Flatten card chrome (border / fill / radius / padding / indent) to clean text. */
   .bg-secondary-bg,

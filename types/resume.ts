@@ -12,7 +12,10 @@ export interface ResumeData {
 export interface LeadershipRole {
   organization: string;
   role: string;
+  /** One-liner. Goes everywhere, including the two-page PDF and browser print. */
   description?: string;
+  /** Long form for the web card only — print falls back to `description`. */
+  details?: string;
 }
 
 export interface PersonalInfo {

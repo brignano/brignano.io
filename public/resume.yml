@@ -123,13 +123,15 @@ experience:
 leadership:
   - organization: Enterprise Hackathons
     role: Lead / Organizer
-    description: Lead and organize The Hartford's enterprise hackathons.
+    description: Lead and organize The Hartford's enterprise hackathons, drawing hundreds of engineers each year.
+    details: Lead and organize The Hartford's enterprise hackathons, drawing hundreds of engineers each year. Every event takes months of planning — authoring the challenges, standing up environments and starter tooling, setting scoring criteria and prepping judges, and running the logistics of space, food, and prizes.
   - organization: Leadership Development Program
     role: Rotation Manager & Career Coach
     description: Mentor emerging leaders in the company's Tech & Operations Leadership Development Program — managing rotational assignments and coaching associates on long-term career growth.
   - organization: Central Connecticut State University — Computer Science Industry Advisory Board
     role: Member
-    description: Serve on the CCSU Computer Science Industry Advisory Board.
+    description: Judge senior projects each semester and help shape the computer science curriculum.
+    details: Judge student senior projects every semester and work with faculty to refine the computer science curriculum, keeping coursework aligned with current industry practice and the tools graduates will use on the job.
 skills:
   - category: Languages
     items:

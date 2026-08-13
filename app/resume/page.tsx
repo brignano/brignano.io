@@ -412,8 +412,18 @@ export default function Home() {
                 <p className="text-sm text-primary-color font-medium mb-2">
                   {item.role}
                 </p>
+                {/* Screen shows the long form; print swaps in the one-liner so
+                    the cards stay a single row (globals.css) and the PDF stays
+                    two pages (resume-pdf.tsx). */}
+                {item.details && (
+                  <p className="lead-detail text-sm dark:text-zinc-400 text-zinc-600">
+                    {item.details}
+                  </p>
+                )}
                 {item.description && (
-                  <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                  <p
+                    className={`lead-summary text-sm dark:text-zinc-400 text-zinc-600 ${item.details ? "hidden" : ""}`}
+                  >
                     {item.description}
                   </p>
                 )}
