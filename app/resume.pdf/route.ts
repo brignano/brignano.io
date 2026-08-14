@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { createElement, type ReactElement } from "react";
-import yaml from "js-yaml";
+import { load as parseYaml } from "js-yaml";
 import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import ResumePDF from "@/components/resume-pdf";
 import type { ResumeData } from "@/types/resume";
@@ -17,7 +17,7 @@ export async function GET() {
     path.join(process.cwd(), "public", "resume.yml"),
     "utf8"
   );
-  const data = yaml.load(yamlText) as ResumeData;
+  const data = parseYaml(yamlText) as ResumeData;
   const buffer = await renderToBuffer(
     createElement(ResumePDF, { data }) as ReactElement<DocumentProps>
   );

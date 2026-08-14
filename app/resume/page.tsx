@@ -7,7 +7,7 @@ import {
   PlusIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
-import yaml from "js-yaml";
+import { load as parseYaml } from "js-yaml";
 import type { ResumeData } from "@/types/resume";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { SkillBadge } from "@/components/skill-badge";
@@ -99,7 +99,7 @@ export default function Home() {
         }
 
         const yamlText = await response.text();
-        const data = yaml.load(yamlText) as ResumeData;
+        const data = parseYaml(yamlText) as ResumeData;
         setResumeData(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load resume");
