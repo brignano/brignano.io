@@ -77,7 +77,7 @@ experience:
     highlights:
       - Developed Java microservices and Angular-based frontend features supporting quoting and issuance
       - Integrated Oracle databases and third-party services for pricing and issuance
-      - Supported scalable production deployments and reliability initiatives
+      - Resolved nearly 3,000 production defects while sustaining continuous availability of the quoting and issuance platform
     technologies:
       - Java
       - Angular
