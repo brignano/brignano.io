@@ -20,12 +20,10 @@ experience:
       - Lead the strategy, design, and delivery of the internal developer platform serving 8,000+ engineers, including a CEO-sponsored initiative making developer onboarding self-service — the platform provisions a new machine to productive in hours, down from a 40+ day baseline, now rolling out org-wide
       - Shipped a unified developer surface across a custom CLI, desktop app, and IDE extensions, reaching 1,000+ active engineers in the first 90 days
       - Designed "one build command, any stack" — context-aware builds that run identically locally, in CI, or fully remote on virtual build agents, against a custom base-image registry
-      - Architected a real-time DevOps intelligence layer — an event bus streaming pipeline plus CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points
-      - Upgraded platform observability (Splunk, Dynatrace) and stood up a live platform health status page with subscribe-able alerts
-      - Built native AI tooling into the platform — MCP servers and out-of-the-box skills that let AI agents safely query and operate enterprise CI/CD systems
+      - Architected a real-time DevOps intelligence layer — an event bus streaming pipeline plus CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points — and upgraded platform observability (Splunk, Dynatrace) behind a live health status page with subscribe-able alerts
+      - Made the platform AI-native — MCP servers and out-of-the-box skills that let AI agents safely query and operate enterprise CI/CD systems, plus standardized patterns and pipelines carrying Google Cloud and Vertex AI workloads to production
       - Operate the enterprise CI/CD and DevSecOps toolchain end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx) keeping thousands of pipelines reliable
       - Led the enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud, modernizing 10,000+ repositories in under 12 months
-      - Enabled AI/ML delivery at scale via standardized platform patterns and pipelines for Google Cloud and Vertex AI workloads
       - Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity impact
     technologies:
       - Internal Developer Platforms (IDP)
@@ -79,7 +77,7 @@ experience:
     highlights:
       - Developed Java microservices and Angular-based frontend features supporting quoting and issuance
       - Integrated Oracle databases and third-party services for pricing and issuance
-      - Supported scalable production deployments and reliability initiatives
+      - Resolved nearly 3,000 production defects while sustaining continuous availability of the quoting and issuance platform
     technologies:
       - Java
       - Angular

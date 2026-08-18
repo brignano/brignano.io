@@ -8,6 +8,7 @@ import {
   Font,
 } from "@react-pdf/renderer";
 import type { ResumeData } from "@/types/resume";
+import { groupExperienceByCompany } from "@/lib/experience";
 
 // Register fonts (optional - using built-in fonts for simplicity)
 Font.register({
@@ -93,6 +94,23 @@ const styles = StyleSheet.create({
   },
   experienceItem: {
     marginBottom: 7,
+  },
+  // One header per employer; the roles beneath it are indented under it so the
+  // grouping is legible without a rule or box. See lib/experience.ts.
+  companyGroup: {
+    marginBottom: 8,
+  },
+  companyHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 4,
+  },
+  companyName: {
+    fontSize: 12.5,
+    fontWeight: "bold",
+  },
+  companyRoles: {
+    marginLeft: 10,
   },
   jobHeader: {
     flexDirection: "row",
@@ -274,36 +292,61 @@ const ResumePDF: React.FC<ResumePDFProps> = ({ data }) => {
         {experience && experience.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Experience</Text>
-            {/* wrap={false} keeps a role's heading with its bullets — without
-                it a page break can strand a lone bullet at the top of page 2,
-                detached from the job it belongs to. */}
-            {experience.map((job, index) => (
-              <View key={index} style={styles.experienceItem} wrap={false}>
-                <View style={styles.jobHeader}>
+            {/* Grouped by employer so a long tenure reads as one run of
+                promotions rather than N separate jobs (lib/experience.ts).
+                The group itself must stay wrappable — six roles under one
+                header will not fit on a single page. */}
+            {groupExperienceByCompany(experience).map((group) => (
+              <View
+                key={`${group.company}-${group.endDate}`}
+                style={styles.companyGroup}
+              >
+                <View style={styles.companyHeader} wrap={false}>
                   <View style={{ flex: 1 }}>
-                    <Text style={styles.jobPosition}>{job.position}</Text>
-                    <Text style={styles.jobCompany}>{job.company}</Text>
-                    {job.location && (
-                      <Text style={styles.jobLocation}>{job.location}</Text>
+                    <Text style={styles.companyName}>{group.company}</Text>
+                    {group.location && (
+                      <Text style={styles.jobLocation}>{group.location}</Text>
                     )}
                   </View>
                   <View>
                     <Text style={styles.jobDates}>
-                      {job.startDate} - {job.endDate}
+                      {group.startDate} - {group.endDate}
                     </Text>
                   </View>
                 </View>
-                <View style={styles.highlightsList}>
-                  {/* Caps keep this to two pages. Mirrored by the browser-print
-                      rules in globals.css — change both together. */}
-                  {job.highlights
-                    .slice(0, index === 0 ? 8 : 4)
-                    .map((highlight, i) => (
-                      <View key={i} style={styles.highlight}>
-                        <Text style={styles.bullet}>•</Text>
-                        <Text style={styles.highlightText}>{highlight}</Text>
+                <View style={styles.companyRoles}>
+                  {/* wrap={false} keeps a role's heading with its bullets —
+                      without it a page break can strand a lone bullet at the
+                      top of page 2, detached from the job it belongs to. */}
+                  {group.roles.map(({ job, index }) => (
+                    <View key={index} style={styles.experienceItem} wrap={false}>
+                      <View style={styles.jobHeader}>
+                        <View style={{ flex: 1 }}>
+                          <Text style={styles.jobPosition}>{job.position}</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.jobDates}>
+                            {job.startDate} - {job.endDate}
+                          </Text>
+                        </View>
                       </View>
-                    ))}
+                      <View style={styles.highlightsList}>
+                        {/* Caps keep this to two pages. Mirrored by the
+                            browser-print rules in globals.css — change both
+                            together. */}
+                        {job.highlights
+                          .slice(0, index === 0 ? 8 : 4)
+                          .map((highlight, i) => (
+                            <View key={i} style={styles.highlight}>
+                              <Text style={styles.bullet}>•</Text>
+                              <Text style={styles.highlightText}>
+                                {highlight}
+                              </Text>
+                            </View>
+                          ))}
+                      </View>
+                    </View>
+                  ))}
                 </View>
               </View>
             ))}

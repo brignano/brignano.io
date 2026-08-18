@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { load as parseYaml } from "js-yaml";
 import type { ResumeData } from "@/types/resume";
+import { groupExperienceByCompany } from "@/lib/experience";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { SkillBadge } from "@/components/skill-badge";
 import { useToast } from "@/components/toast-provider";
@@ -269,13 +270,42 @@ export default function Home() {
           data-aos-once={true}
         >
           <h2 className="text-3xl mb-8 font-bold tracking-tight">Experience</h2>
+          {/* Roles are grouped under one header per employer — see
+              lib/experience.ts for why. */}
+          <div className="space-y-12">
+            {groupExperienceByCompany(experience).map((group) => (
+              <div key={`${group.company}-${group.endDate}`}>
+                <div className="mb-6">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                    <h3 className="text-2xl font-bold tracking-tight">
+                      {group.company}
+                    </h3>
+                    <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase">
+                      {String(group.startDate).toUpperCase()} -{" "}
+                      <span
+                        className={
+                          String(group.endDate).toLowerCase() === "present"
+                            ? "text-primary-color"
+                            : ""
+                        }
+                      >
+                        {String(group.endDate).toUpperCase()}
+                      </span>
+                    </time>
+                  </div>
+                  <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                    {group.location}
+                    {group.roles.length > 1 &&
+                      ` · ${group.roles.length} roles`}
+                  </p>
+                </div>
             <div className="relative">
               <div
                 className="absolute left-4 top-8 bottom-8 w-px -translate-x-1/2 dark:bg-zinc-700 bg-zinc-300"
                 data-print-hide
               />
               <div className="space-y-10">
-                {experience.map((job, index) => {
+                {group.roles.map(({ job, index }) => {
                   const isOpen = expandedIndices.has(index);
                   const ToggleIcon = isOpen ? MinusIcon : PlusIcon;
                   const dateLine = (className: string) => (
@@ -294,7 +324,15 @@ export default function Home() {
                   );
 
                   return (
-                  <div key={index} className="relative">
+                  <div
+                    key={index}
+                    className="relative"
+                    /* Print caps bullets off this rank instead of nth-child,
+                       so grouping can't hand a second group's first role the
+                       current role's larger allowance. Mirrors the
+                       `index === 0` slice in components/resume-pdf.tsx. */
+                    data-role-rank={index === 0 ? "primary" : "secondary"}
+                  >
                     <div
                       className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${isOpen
                           ? "border-zinc-400 bg-secondary-color"
@@ -323,15 +361,12 @@ export default function Home() {
                         {dateLine(
                           "block mb-1.5 text-xs text-zinc-600 dark:text-zinc-400 tracking-widest uppercase"
                         )}
-                        <h3 className="text-xl font-semibold hover:text-primary-color transition-colors">
+                        {/* Company and location live on the group header now —
+                            repeating them on every card was the redundancy
+                            that made one tenure look like six jobs. */}
+                        <h4 className="text-xl font-semibold hover:text-primary-color transition-colors">
                           {job.position}
-                        </h3>
-                        <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
-                          {job.company}
-                        </p>
-                        <p className="text-sm dark:text-zinc-400 text-zinc-600">
-                          {job.location}
-                        </p>
+                        </h4>
                       </div>
                       {/* Disclosure row on the seam where the body opens. A
                           cursor change alone was invisible on touch, so people
@@ -387,6 +422,9 @@ export default function Home() {
                   );
                 })}
               </div>
+            </div>
+              </div>
+            ))}
           </div>
         </section>
       )}

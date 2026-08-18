@@ -261,12 +261,19 @@
     padding-bottom: 2pt;
     break-after: avoid;
   }
+  /* h3 is the employer header, h4 the role title under it. */
   main h3 {
+    font-size: 12pt !important;
+    line-height: 1.2 !important;
+  }
+  main h4 {
     font-size: 11pt !important;
     line-height: 1.2 !important;
   }
-  /* Keep the role/title line under the name a touch larger than body. */
-  main .text-2xl {
+  /* Keep the role/title line under the name a touch larger than body. Scoped to
+     the hero's <p> so it doesn't also catch the employer <h3>, which shares the
+     text-2xl class but wants the heading scale above. */
+  main p.text-2xl {
     font-size: 13pt !important;
   }
 
@@ -342,11 +349,13 @@
 
   /* Condense to ~2 pages: cap bullets per role. These MUST mirror the slice()
      in components/resume-pdf.tsx — current/most-recent role keeps 8, older
-     roles keep 4. Change both together. */
-  .space-y-10 > div:first-child .exp-body ul li:nth-child(n + 9) {
+     roles keep 4. Change both together. Keyed off data-role-rank (set from the
+     role's index in the full list) rather than :first-child, so grouping roles
+     under an employer header doesn't promote each group's first card. */
+  [data-role-rank="primary"] .exp-body ul li:nth-child(n + 9) {
     display: none !important;
   }
-  .space-y-10 > div:not(:first-child) .exp-body ul li:nth-child(n + 5) {
+  [data-role-rank="secondary"] .exp-body ul li:nth-child(n + 5) {
     display: none !important;
   }
 }
