@@ -8,7 +8,6 @@ import {
 } from "@heroicons/react/24/outline";
 import HomeContributions from "@/components/home-contributions";
 import HighlightCard from "@/components/highlight-card";
-import TrailThread from "@/components/trail-thread";
 import CountUp from "@/components/count-up";
 import LatestCommit from "@/components/latest-commit";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -32,14 +31,18 @@ export default function Home() {
   return (
     <>
       <BreadcrumbSchema items={HOME_BREADCRUMBS} />
-      <TrailThread />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16">
-        {/* Hero — full-height trailhead with a staggered reveal (TSD §5.1) */}
-        <section
-          data-trail
-          className="relative overflow-hidden min-h-[86vh] flex flex-col justify-center mb-8 md:mb-16"
-        >
-          <div className="relative z-10 max-w-2xl">
+        {/* Hero — full-height, staggered reveal (TSD §5.1) */}
+        <section className="relative min-h-[86vh] flex flex-col justify-center mb-8 md:mb-16">
+          {/* Two columns at lg. The hero previously used 672px of a 1152px
+              container and left ~624px of the fold empty on the right, which is
+              where the signature was meant to go. Rather than fill it with
+              decoration, the proof metrics move there at full size — the
+              strongest credibility signal for this audience, in the fold.
+              Three grid children keep the mobile order copy -> proof -> actions
+              without duplicating the markup. */}
+          <div className="relative z-10 grid gap-y-9 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-16 lg:items-center">
+            <div className="max-w-2xl lg:col-start-1 lg:row-start-1">
             <p
               data-aos="fade-up"
               data-aos-duration={500}
@@ -63,30 +66,32 @@ export default function Home() {
             >
               I build the shared tools and automation engineers rely on to ship software — faster, safer, and more consistently. Think of it as building the factory, not the products that roll off it. Increasingly, that means baking AI right into those tools.
             </p>
+            </div>
 
-            {/* Metric strip — proof above the fold. Dividers only once the row
-                fits on one line (sm+); plain gap on mobile to avoid a dangling
-                divider when items wrap. */}
+            {/* Proof panel. A row of three small numbers on mobile; a stacked
+                panel at lg where it has real room. */}
             <dl
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={260}
-              className="flex flex-wrap gap-x-7 gap-y-4 sm:gap-x-0 mb-9"
+              className="flex flex-wrap gap-x-7 gap-y-4 sm:gap-x-0 lg:flex-col lg:gap-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:rounded-lg lg:border lg:border-line lg:bg-card lg:p-7 lg:shadow-1"
             >
               {heroMetrics.map((metric) => (
                 <div
                   key={metric.label}
-                  className="flex flex-col sm:px-5 sm:first:pl-0 sm:border-l sm:first:border-l-0 dark:border-zinc-800 border-zinc-200"
+                  className="flex flex-col sm:px-5 sm:first:pl-0 sm:border-l sm:first:border-l-0 dark:border-zinc-800 border-zinc-200 lg:px-0 lg:border-l-0 lg:border-t lg:first:border-t-0 lg:border-line lg:py-4 lg:first:pt-0 lg:last:pb-0"
                 >
-                  <dd className="text-xl font-bold tracking-tight">
+                  <dd className="text-xl lg:text-3xl font-bold tracking-tight">
                     <CountUp value={metric.value} />
                   </dd>
-                  <dt className="text-xs dark:text-zinc-400 text-zinc-500 mt-1">
+                  <dt className="text-xs lg:text-sm dark:text-zinc-400 text-zinc-500 mt-1">
                     {metric.label}
                   </dt>
                 </div>
               ))}
             </dl>
+
+            <div className="lg:col-start-1 lg:row-start-2">
 
             {/* Primary CTAs — one filled, one outline (TSD §5.3) */}
             <div
@@ -154,12 +159,12 @@ export default function Home() {
                 </li>
               ))}
             </ul>
+            </div>
           </div>
         </section>
 
         {/* About Section */}
         <section
-          data-trail
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -184,7 +189,7 @@ export default function Home() {
         </section>
 
         {/* Highlights — outcome cards + "Now" strip (TSD §5.5b) */}
-        <section data-trail className="py-16 md:py-24">
+        <section className="py-16 md:py-24">
           <h2
             data-aos="fade-up"
             data-aos-duration={600}
@@ -314,7 +319,6 @@ export default function Home() {
 
         {/* Work Experience (Current Position Only) */}
         <section
-          data-trail
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -392,7 +396,6 @@ export default function Home() {
 
         {/* Open-source activity — calm real-data preview that funnels to /coding */}
         <section
-          data-trail
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -429,16 +432,13 @@ export default function Home() {
           </p>
         </section>
 
-        {/* Contact — the summit: a standalone full-height finale (TSD §5.1).
-            The trail's summit node anchors to the heading so the journey ends
-            ON the CTA, not in the gap above it. */}
+        {/* Contact — a standalone full-height finale (TSD §5.1). */}
         <section
           className="min-h-[70vh] flex flex-col justify-center border-t dark:border-zinc-800 border-zinc-200 mt-8"
           data-aos="fade-up"
           data-aos-duration={800}
         >
           <h2
-            data-trail="summit"
             className="font-incognito text-4xl sm:text-5xl lg:text-6xl mb-6 font-bold tracking-tight"
           >
             Let&apos;s build something.
