@@ -52,6 +52,10 @@ export default function Header() {
     const newDark = !isDarkMode;
     // Flipping the class notifies the store above, which re-renders the icon.
     document.documentElement.classList.toggle("dark", newDark);
+    // Keep data-theme in sync with the class: Tailwind reads `.dark`, the
+    // design tokens read [data-theme]. If these drift, the page renders one
+    // theme's tokens under the other theme's utilities.
+    document.documentElement.setAttribute("data-theme", newDark ? "dark" : "light");
     try {
       localStorage.setItem("theme", newDark ? "dark" : "light");
     } catch {
@@ -112,7 +116,7 @@ export default function Header() {
                 <li key={page}>
                   {isActive ? (
                     <span
-                      className="text-zinc-900 dark:text-white text-sm sm:text-base font-medium cursor-default border-b-2 border-violet-600 dark:border-violet-400 pb-1"
+                      className="text-zinc-900 dark:text-white text-sm sm:text-base font-medium cursor-default border-b-2 border-interactive pb-1"
                       aria-current="page"
                     >
                       {label}
@@ -133,7 +137,7 @@ export default function Header() {
         <button
           aria-label="Toggle Theme"
           onClick={() => toggleTheme()}
-          className="shrink-0 dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-400"
+          className="shrink-0 dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
         >
           {isDarkMode ? (
             <MoonIcon className="size-5 text-primary-color hover:text-white duration-400 cursor-pointer" />

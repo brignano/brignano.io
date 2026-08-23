@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { StatsData } from "@/types/wakatime";
-import { CHART_COLORS as COLORS } from "./chart-colors";
+import { chartColors, colorFor } from "./chart-colors";
 
 interface StatsBarProps {
   data: StatsData[];
@@ -14,6 +14,18 @@ interface StatsBarProps {
 // (better than a donut for many-item lists like languages/editors/projects).
 export default function StatsBar({ data, title, description }: StatsBarProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  // Resolve the palette from the design tokens after hydration. The server has
+  // no document, so chartColors() returns the light-mode fallbacks there; the
+  // gate keeps the first client render identical before swapping to the real
+  // (theme-aware) values.
+  const [tokensReady, setTokensReady] = useState(false);
+  useEffect(() => setTokensReady(true), []);
+  const palette = useMemo(
+    () => chartColors(),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- re-read once mounted
+    [tokensReady],
+  );
+
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const displayIndex = selectedIndex ?? activeIndex;
 
@@ -80,7 +92,7 @@ export default function StatsBar({ data, title, description }: StatsBarProps) {
         {rows.map((d, idx) => {
           const isActive = displayIndex === idx;
           const dim = displayIndex !== null && !isActive;
-          const color = COLORS[idx % COLORS.length];
+          const color = colorFor(d.name, palette);
           const barWidth = Math.max((d.seconds / maxSeconds) * 100, 2);
 
           return (

@@ -66,10 +66,10 @@ export default function HighlightCard({
                   });
                 }
               }}
-              className={`text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 ${
+              className={`text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink ${
                 isOpen
-                  ? "border-violet-500 bg-violet-50 text-violet-700 dark:border-violet-400/60 dark:bg-violet-400/10 dark:text-violet-300"
-                  : "dark:border-zinc-700 border-zinc-300 dark:text-zinc-400 text-zinc-600 hover:border-violet-400 hover:text-violet-700 dark:hover:border-violet-400/60 dark:hover:text-violet-300"
+                  ? "border-interactive bg-interactive-surface text-interactive-ink"
+                  : "dark:border-zinc-700 border-zinc-300 dark:text-zinc-400 text-zinc-600 hover:border-interactive hover:text-interactive-ink"
               }`}
             >
               {skill}

@@ -49,7 +49,7 @@ export default function CodingHero({
       <div className="text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
         Total time coding
       </div>
-      <div className="font-incognito text-5xl md:text-6xl font-bold tracking-tight text-primary-color mt-1">
+      <div className="font-incognito text-5xl md:text-6xl font-bold tracking-tight mt-1">
         {totalTimeText}
       </div>
       <p className="mt-4 max-w-2xl text-sm md:text-base text-zinc-600 dark:text-zinc-300 leading-relaxed">

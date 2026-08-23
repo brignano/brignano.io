@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* ── Design system ──────────────────────────────────────────────────────
+   Single source of truth for colour, type, space, shape and motion, shared
+   with `life` and every tool. Never hardcode a hex in this file or in a
+   component — change it in design/tokens.css and every surface picks it up.
+
+   design/ is a temporary vendored copy; see design/README.md. */
+@import "../design/tokens.css";
+@import "../design/tokens.chart.css";
+@import "../design/tailwind.css";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Type system (TSD §5.2).
@@ -15,33 +25,6 @@
   --font-silkscreen-mono: var(--font-silkscreen), ui-monospace, monospace;
 }
 
-/* Chart color variables (light theme) */
-:root {
-  --chart-1: #4f46e5;
-  --chart-2: #ef4444;
-  --chart-3: #10b981;
-  --chart-4: #f59e0b;
-  --chart-5: #06b6d4;
-  --chart-6: #a78bfa;
-  --chart-7: #f97316;
-  --chart-8: #ef9aa3;
-  --chart-9: #60a5fa;
-  --chart-10: #34d399;
-}
-
-/* Dark theme overrides for chart variables */
-.dark {
-  --chart-1: #8b5cf6;
-  --chart-2: #fb7185;
-  --chart-3: #34d399;
-  --chart-4: #fbbf24;
-  --chart-5: #2dd4bf;
-  --chart-6: #c4b5fd;
-  --chart-7: #fb923c;
-  --chart-8: #fca5a5;
-  --chart-9: #60a5fa;
-  --chart-10: #86efac;
-}
 
 @keyframes wave {
   0% {
@@ -150,13 +133,10 @@
   }
 }
 
-/* Accent: electric indigo/violet (TSD §10.3). Swatches chosen for WCAG AA:
-   violet-700 (#6d28d9) on light, violet-400 (#a78bfa) on dark. */
+/* Accent text -> the INTERACTIVE token (ADR-0001). Both themes come from
+   tokens.css, so there is no longer a per-theme override here. */
 .text-primary-color {
-  color: #6d28d9;
-  .dark & {
-    color: #a78bfa;
-  }
+  color: var(--i-ink);
 }
 
 .dark button > svg:hover {
@@ -164,11 +144,12 @@
   color: rgb(255, 255, 255);
 }
 
+/* Filled control surface. The old value was the same in both themes, which
+   is why the dark CTA sat at 5.70:1 against its own ground rather than the
+   8.6:1 the token gives it. */
 .bg-secondary-color {
-  background-color: #7c3aed;
-  .dark & {
-    background-color: #7c3aed;
-  }
+  background-color: var(--i);
+  color: var(--on-i);
 }
 
 :is(.dark .dark\:bg-primary-bg) {
@@ -176,12 +157,8 @@
 }
 
 :focus-visible {
-  outline: 2px solid #6d28d9;
+  outline: 2px solid var(--i-ink);
   outline-offset: 2px;
-}
-
-.dark :focus-visible {
-  outline-color: #a78bfa;
 }
 
 /* Print styles — make Cmd+P of /resume a clean ~2-page document.

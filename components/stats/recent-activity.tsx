@@ -1,4 +1,6 @@
 "use client";
+import { useState, useEffect, useMemo } from "react";
+import { readToken } from "@/lib/design-tokens";
 import {
   BarChart,
   Bar,
@@ -20,7 +22,9 @@ interface RecentActivityProps {
   description?: string;
 }
 
-const BAR_COLOR = "#10b981";
+// A single series takes the first categorical slot. Read from the tokens so it
+// tracks the theme; the literal is the SSR fallback (design/tokens.chart.css).
+const BAR_FALLBACK = "#2a78d6";
 
 function shortDate(date: string): string {
   const d = new Date(date);
@@ -66,6 +70,13 @@ export default function RecentActivity({
   title,
   description,
 }: RecentActivityProps) {
+  const [tokensReady, setTokensReady] = useState(false);
+  useEffect(() => setTokensReady(true), []);
+  const barColor = useMemo(
+    () => readToken("--chart-1", BAR_FALLBACK),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- re-read once mounted
+    [tokensReady],
+  );
   const total = (data || []).reduce((s, d) => s + (d.hours || 0), 0);
   if (!data || data.length === 0 || total <= 0) return null;
 
@@ -111,7 +122,7 @@ export default function RecentActivity({
             />
             <Bar dataKey="hours" radius={[3, 3, 0, 0]}>
               {chartData.map((_, idx) => (
-                <Cell key={`cell-${idx}`} fill={BAR_COLOR} />
+                <Cell key={`cell-${idx}`} fill={barColor} />
               ))}
             </Bar>
           </BarChart>

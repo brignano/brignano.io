@@ -2,18 +2,13 @@
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useCalendarTheme } from "@/lib/use-calendar-theme";
 
 const GitHubCalendar = dynamic(
   () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
   { ssr: false }
 );
 
-// Same violet intensity ramp as the full /coding calendar, so the homepage
-// preview and the detailed page read as one system.
-const CALENDAR_THEME = {
-  light: ["#e4e4e7", "#ddd6fe", "#a78bfa", "#7c3aed", "#5b21b6"],
-  dark: ["#27272a", "#4c1d95", "#6d28d9", "#8b5cf6", "#a78bfa"],
-};
 
 /**
  * Calm, restrained contribution preview for the homepage. Uses the **current
@@ -32,6 +27,7 @@ export default function HomeContributions({
   const [mounted, setMounted] = useState(false);
   const [year, setYear] = useState<number | null>(null);
   const [colorScheme, setColorScheme] = useState<"light" | "dark">("light");
+  const calendarTheme = useCalendarTheme(mounted, colorScheme);
 
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect --
@@ -59,7 +55,7 @@ export default function HomeContributions({
             username={username}
             year={year}
             colorScheme={colorScheme}
-            theme={CALENDAR_THEME}
+            theme={calendarTheme}
             blockSize={11}
             blockMargin={4}
             fontSize={12}

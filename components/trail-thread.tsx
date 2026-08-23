@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
  * final contact CTA — the journey has an ending.
  *
  * Decorative only (`aria-hidden`): lives in the margin, never behind text; themes
- * via `.text-primary-color` (currentColor); renders fully-drawn + all stations lit
+ * via `text-mark` (currentColor) — the trail is identity, not a control; renders fully-drawn + all stations lit
  * and static under `prefers-reduced-motion`; hidden on narrow viewports (no gutter).
  *
  * Stations come from `[data-trail]` elements in the page; `data-trail="summit"`
@@ -175,7 +175,7 @@ export default function TrailThread() {
   return (
     <svg
       aria-hidden
-      className="absolute top-0 left-0 z-0 pointer-events-none text-primary-color"
+      className="absolute top-0 left-0 z-0 pointer-events-none text-mark"
       width={w}
       height={h}
       viewBox={`0 0 ${w} ${h}`}

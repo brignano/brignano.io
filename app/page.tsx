@@ -43,7 +43,7 @@ export default function Home() {
             <p
               data-aos="fade-up"
               data-aos-duration={500}
-              className="font-silkscreen-mono uppercase tracking-[0.18em] text-[11px] sm:text-xs text-primary-color mb-5"
+              className="font-silkscreen-mono uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-5"
             >
               Senior Staff Software Engineer · The Hartford
             </p>
@@ -97,7 +97,7 @@ export default function Home() {
             >
               <Link
                 href="/resume"
-                className="inline-flex items-center px-6 py-3 bg-violet-600 hover:bg-violet-500 text-white font-semibold rounded-lg transition-colors duration-200 md:flex-shrink-0"
+                className="inline-flex items-center px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold rounded-lg transition-colors duration-200 md:flex-shrink-0"
                 onClick={() => {
                   event("cta_clicked", {
                     cta: "resume",
@@ -219,7 +219,7 @@ export default function Home() {
             className="mt-8 pt-6 border-t dark:border-zinc-800 border-zinc-200"
           >
             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              <p className="font-silkscreen-mono uppercase tracking-[0.18em] text-[11px] text-primary-color">
+              <p className="font-silkscreen-mono uppercase tracking-[0.18em] text-[11px] text-slate">
                 Now building
               </p>
               <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm dark:text-zinc-400 text-zinc-600">
@@ -449,7 +449,7 @@ export default function Home() {
           <div>
             <a
               href="mailto:hi@brignano.io"
-              className="inline-flex items-center px-8 py-4 bg-violet-600 hover:bg-violet-500 text-white font-bold text-lg rounded-lg transition-colors duration-200"
+              className="inline-flex items-center px-8 py-4 bg-interactive hover:bg-interactive-hover text-on-interactive font-bold text-lg rounded-lg transition-colors duration-200"
               onClick={() => {
                 event("cta_clicked", {
                   cta: "contact_bottom",
