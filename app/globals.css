@@ -5,10 +5,10 @@
    with `life` and every tool. Never hardcode a hex in this file or in a
    component — change it in design/tokens.css and every surface picks it up.
 
-   design/ is a temporary vendored copy; see design/README.md. */
-@import "../design/tokens.css";
-@import "../design/tokens.chart.css";
-@import "../design/tailwind.css";
+   Pinned in package.json; bump deliberately. */
+@import "@brignano/design/tokens.css";
+@import "@brignano/design/tokens.chart.css";
+@import "@brignano/design/tailwind.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
