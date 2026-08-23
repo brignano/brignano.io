@@ -156,9 +156,20 @@ Notes:
 
 ## 🏗️ Infrastructure
 
-Infrastructure-as-code (IaC) for this site is maintained in a separate repository:
+There is no infrastructure-as-code for this site. Everything is managed through
+provider dashboards.
 
-- `brignano/aws` — contains Terraform/CloudFormation and deployment configuration used to provision cloud resources for this site and related projects. See https://github.com/brignano/aws for details.
+| Concern | Where | Notes |
+|---|---|---|
+| **Hosting** | Vercel | Static Next.js export (`output: "export"`), auto-deployed on push to `main`. Headers and CSP in [`vercel.json`](vercel.json). |
+| **DNS** | Cloudflare (free) | `brignano.io` and `anthonybrignano.com`. **All records are DNS-only (grey cloud)** — proxying breaks Vercel's certificate issuance. |
+| **Email** | Cloudflare Email Routing | `hi@brignano.io` forwards to Gmail. SPF, DKIM and DMARC configured. |
+| **Registration** | AWS Route 53 Domains | Registration only — nameservers point at Cloudflare. |
+
+DNS and email ran on AWS (Route 53 + SES → S3 → Lambda) until 2026-08-23. That stack
+was decommissioned; the migration record lives in
+[`brignano/aws`](https://github.com/brignano/aws/blob/main/docs/tsd-domain-migration-cloudflare.md),
+which is now a documentation-only archive.
 
 ### Environment Variables
 
