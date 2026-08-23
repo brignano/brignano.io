@@ -2,20 +2,21 @@ import { readTokens, readToken } from "@/lib/design-tokens";
 
 /**
  * Categorical chart palette — see design/tokens.chart.css and DECISIONS.md
- * ADR-0002 for why these specific values and this specific order.
+ * ADR-0002 for why these values and this order.
  *
- * Two rules this module exists to enforce, both of which the previous
- * implementation broke:
+ * Two rules this module enforces:
  *
- *  1. FIXED ORDER, NEVER CYCLED. The old code did `COLORS[i % COLORS.length]`,
- *     which silently reuses hues once you pass the end of the palette — two
- *     different series rendered identically. There is no 9th colour: anything
- *     past slot 8 is "Other".
+ *  1. FIXED ORDER, NEVER CYCLED. No `COLORS[i % COLORS.length]` — that
+ *     silently reuses hues past the end of the palette, drawing two different
+ *     series identically. There is no 9th colour; past slot 8 is "Other".
  *
- *  2. COLOUR FOLLOWS THE ENTITY, NOT ITS RANK. The old index came from the
- *     sorted position, so any data shift — a new week, a filter — repainted
- *     every series and the chart appeared to change meaning. Slots are now
- *     assigned per entity name on first sight and held for the session.
+ *  2. COLOUR FOLLOWS THE ENTITY, NOT ITS RANK. Slots are assigned from the
+ *     chart's own full series list, so hiding or reordering series leaves
+ *     every survivor's colour alone.
+ *
+ * Slots are assigned PER CHART. An earlier version kept one module-level map
+ * shared by every chart on the page; the first chart consumed all 8 slots and
+ * every chart below it rendered entirely in the neutral "Other" grey.
  */
 
 /** SSR fallbacks. Must match design/tokens.chart.css (light mode). */
@@ -42,28 +43,26 @@ export function chartOther(): string {
   return readToken("--chart-other", "#8a8a8f");
 }
 
+export type ChartPalette = (name: string) => string;
+
 /**
- * Stable entity -> slot assignment, first-seen order, held for the session.
- * A filter that drops a series therefore leaves every survivor's colour alone.
+ * Build a colour lookup for ONE chart.
+ *
+ * `names` should be the chart's complete series list (before any display
+ * filtering), so the mapping stays put when the visible set changes. Names
+ * past slot 8, and the literal "Other" bucket, get the neutral.
  */
-const slots = new Map<string, number>();
-
-export function slotFor(name: string): number | null {
-  if (name === "Other") return null;
-  const existing = slots.get(name);
-  if (existing !== undefined) return existing;
-  if (slots.size >= SLOT_COUNT) return null; // past slot 8 -> Other
-  const next = slots.size;
-  slots.set(name, next);
-  return next;
+export function buildPalette(names: readonly string[]): ChartPalette {
+  const colors = chartColors();
+  const other = chartOther();
+  const slots = new Map<string, number>();
+  for (const n of names) {
+    if (n === "Other" || slots.has(n)) continue;
+    if (slots.size >= SLOT_COUNT) break;
+    slots.set(n, slots.size);
+  }
+  return (name: string) => {
+    const i = slots.get(name);
+    return i === undefined ? other : colors[i];
+  };
 }
-
-/** Colour for a named series. Anything unslotted gets the neutral bucket. */
-export function colorFor(name: string, palette?: string[]): string {
-  const p = palette ?? chartColors();
-  const i = slotFor(name);
-  return i === null ? chartOther() : p[i];
-}
-
-/** @deprecated Use colorFor(name) — indexing by position repaints on filter. */
-export const CHART_COLORS = SLOT_TOKENS.map(([, hex]) => hex);

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
 import type { StatsData } from "@/types/wakatime";
-import { chartColors, colorFor } from "./chart-colors";
+import { buildPalette } from "./chart-colors";
 
 interface StatsBarProps {
   data: StatsData[];
@@ -20,10 +20,13 @@ export default function StatsBar({ data, title, description }: StatsBarProps) {
   // (theme-aware) values.
   const [tokensReady, setTokensReady] = useState(false);
   useEffect(() => setTokensReady(true), []);
+  // Built from THIS chart's own series list, so slots are not shared with any
+  // other chart on the page and the visible subset can change without
+  // repainting survivors.
   const palette = useMemo(
-    () => chartColors(),
+    () => buildPalette((data || []).map((d) => d.name)),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- re-read once mounted
-    [tokensReady],
+    [tokensReady, data],
   );
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -92,7 +95,7 @@ export default function StatsBar({ data, title, description }: StatsBarProps) {
         {rows.map((d, idx) => {
           const isActive = displayIndex === idx;
           const dim = displayIndex !== null && !isActive;
-          const color = colorFor(d.name, palette);
+          const color = palette(d.name);
           const barWidth = Math.max((d.seconds / maxSeconds) * 100, 2);
 
           return (

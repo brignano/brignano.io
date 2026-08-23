@@ -2,7 +2,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from "recharts";
 import type { StatsData } from "@/types/wakatime";
-import { chartColors, colorFor } from "./chart-colors";
+import { buildPalette } from "./chart-colors";
 
 interface StatsPieProps {
   data: StatsData[];
@@ -26,10 +26,13 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
   // (theme-aware) values.
   const [tokensReady, setTokensReady] = useState(false);
   useEffect(() => setTokensReady(true), []);
+  // Built from THIS chart's own series list, so slots are not shared with any
+  // other chart on the page and the visible subset can change without
+  // repainting survivors.
   const palette = useMemo(
-    () => chartColors(),
+    () => buildPalette((data || []).map((d) => d.name)),
     // eslint-disable-next-line react-hooks/exhaustive-deps -- re-read once mounted
-    [tokensReady],
+    [tokensReady, data],
   );
 
 
@@ -98,7 +101,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
       index: number;
     };
 
-    const color = fill ?? colorFor(chartData[index]?.name ?? "Other", palette);
+    const color = fill ?? palette(chartData[index]?.name ?? "Other");
     const isActive = index === displayIndex;
 
     return (
@@ -196,7 +199,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
                       className={`inline-block rounded-sm transition-all duration-100 ${
                         isActive ? "w-[14px] h-[14px]" : "w-3 h-3"
                       }`}
-                      style={{ background: colorFor(d.name, palette) }}
+                      style={{ background: palette(d.name) }}
                     />
                     <span
                       className={`text-sm ${
@@ -271,7 +274,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
                 {chartDataSecs.map((seg, idx) => (
                   <Cell
                     key={`cell-${idx}`}
-                    fill={colorFor(seg.name, palette)}
+                    fill={palette(seg.name)}
                     style={{ cursor: "pointer" }}
                   />
                 ))}
