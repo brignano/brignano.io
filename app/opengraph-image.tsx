@@ -18,8 +18,10 @@ const BG = "#0d0d0f"; // --n-0 (dark)
 // The social card is IDENTITY, not UI — so it wears --mark, the one place the
 // design system spends a colour on being recognisable rather than informative.
 // Literal because satori renders server-side with no CSS custom properties;
-// keep in sync with design/tokens.css --mark.
-const ACCENT = "#b4741f";
+// keep in sync with design/tokens.css --mark. The card's ground is the dark
+// one, so this is the DARK step: the light #b4741f sits at ~3:1 on #0d0d0f,
+// which is why tokens.css lifts the mark in dark rather than inverting it.
+const ACCENT = "#e0a44f"; // --mark (dark)
 const TEXT = "#f2f2f0"; // --n-900 (dark)
 const MUTED = "#a8a8b0"; // --n-700 (dark)
 const HAIRLINE = "#2a2a2f"; // --n-200 (dark)

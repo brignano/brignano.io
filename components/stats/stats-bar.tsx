@@ -82,12 +82,12 @@ export default function StatsBar({ data, title, description }: StatsBarProps) {
   return (
     <div className="w-full">
       {title && (
-        <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">
+        <h3 className="font-sans text-2xl font-bold tracking-tight mb-2">
           {title}
         </h3>
       )}
       {description && (
-        <p className="text-sm dark:text-zinc-500 text-zinc-500 mb-4">
+        <p className="text-sm text-slate mb-4">
           {description}
         </p>
       )}
@@ -148,7 +148,7 @@ export default function StatsBar({ data, title, description }: StatsBarProps) {
                     {d.name}
                   </span>
                 </div>
-                <div className="text-sm text-zinc-500 dark:text-zinc-400 text-right whitespace-nowrap">
+                <div className="text-sm text-slate text-right whitespace-nowrap">
                   {d.hours} hours
                   <span className="hidden sm:inline">
                     {" "}
@@ -156,7 +156,7 @@ export default function StatsBar({ data, title, description }: StatsBarProps) {
                   </span>
                 </div>
               </div>
-              <div className="h-2 w-full rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-surface-active overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-300"
                   style={{ width: `${barWidth}%`, background: color }}

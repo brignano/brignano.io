@@ -73,14 +73,14 @@ export default function GitHubCalendarClient({
   return (
     <>
       <div className="flex xl:flex-row flex-col gap-4 items-center">
-        <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 sm:p-8 rounded-lg w-full overflow-hidden">
+        <div className="bg-card border border-line p-6 sm:p-8 rounded-lg w-full overflow-hidden">
           {title && (
-            <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">
+            <h3 className="font-sans text-2xl font-bold tracking-tight mb-2">
               {title}
             </h3>
           )}
           {description && (
-            <p className="text-sm dark:text-zinc-500 text-zinc-500 mb-4">
+            <p className="text-sm text-slate mb-4">
               {description}
             </p>
           )}
@@ -97,7 +97,7 @@ export default function GitHubCalendarClient({
             </div>
           </div>
           {showDisclaimer && (
-            <div className="w-full mt-3 text-sm text-zinc-500 dark:text-zinc-500 italic">
+            <div className="w-full mt-3 text-sm text-slate italic">
               View more information on{" "}
               <a
                 href="https://github.com/brignano"
@@ -138,8 +138,8 @@ export default function GitHubCalendarClient({
                   " border-2 font-semibold rounded-lg transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink" +
                   " " +
                   (y === year
-                    ? "bg-secondary-color dark:bg-secondary-color text-white border-transparent hover:border-transparent"
-                    : "dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 dark:bg-transparent bg-transparent dark:text-zinc-300 text-zinc-700")
+                    ? "bg-interactive text-on-interactive border-transparent hover:border-transparent"
+                    : "border-line-strong hover:border-interactive bg-transparent text-ink-soft")
                 }
               >
                 {y}

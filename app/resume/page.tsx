@@ -130,7 +130,7 @@ export default function Home() {
         <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
         <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
         <div className="text-center">
-          <p className="text-lg dark:text-zinc-400 text-zinc-600">
+          <p className="text-lg text-ink-soft">
             Loading resume...
           </p>
         </div>
@@ -145,7 +145,7 @@ export default function Home() {
         <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
         <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-32 mt-20">
         <div className="text-center">
-          <p className="text-lg text-red-600 dark:text-red-400">
+          <p className="text-lg text-danger-ink">
             {error || "Failed to load resume data"}
           </p>
         </div>
@@ -176,20 +176,20 @@ export default function Home() {
         data-aos-once={true}
         className="mb-16"
       >
-          <p className="text-sm uppercase tracking-wide text-zinc-500 dark:text-zinc-400 mb-2">
+          <p className="text-sm uppercase tracking-wide text-slate mb-2">
             Resume
           </p>
-        <h1 className="font-incognito font-bold tracking-tight text-3xl sm:text-5xl mb-4 lg:leading-[3.7rem] leading-tight">
+        <h1 className="font-sans font-bold tracking-tight text-3xl sm:text-5xl mb-4 lg:leading-[3.7rem] leading-tight">
           {personalInfo.name}
         </h1>
-        <p className="text-2xl font-semibold dark:text-zinc-300 text-zinc-800 mb-4">
+        <p className="text-2xl font-semibold text-ink mb-4">
           {personalInfo.title}
         </p>
-        <div className="flex flex-wrap gap-4 text-base dark:text-zinc-400 text-zinc-600 mb-6">
+        <div className="flex flex-wrap gap-4 text-base text-ink-soft mb-6">
           {personalInfo.email && (
             <a
               href={`mailto:${personalInfo.email}`}
-              className="hover:text-primary-color transition-colors"
+              className="hover:text-interactive-ink transition-colors"
             >
               {personalInfo.email}
             </a>
@@ -210,7 +210,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleDownloadPDF}
-            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-transparent bg-secondary-color text-on-interactive font-semibold rounded-lg hover:bg-interactive-hover transition-colors duration-200"
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-transparent bg-interactive text-on-interactive font-semibold rounded-lg hover:bg-interactive-hover transition-colors duration-200"
           >
             <ArrowDownTrayIcon className="h-5 w-5" />
             Download PDF
@@ -219,7 +219,7 @@ export default function Home() {
             type="button"
             aria-label="Share resume"
             onClick={handleShare}
-            className="inline-flex items-center gap-2 px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200 cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200 cursor-pointer"
           >
             <ShareIcon className="h-5 w-5" />
             Share
@@ -229,7 +229,7 @@ export default function Home() {
               href={personalInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-4 py-2 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200"
             >
               LinkedIn
             </a>
@@ -239,7 +239,7 @@ export default function Home() {
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 border-2 dark:border-zinc-700 border-zinc-300 dark:hover:border-zinc-500 hover:border-zinc-400 font-semibold rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-4 py-2 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200"
             >
               GitHub
             </a>
@@ -256,7 +256,7 @@ export default function Home() {
         className="mb-16"
       >
         <h2 className="text-3xl mb-6 font-bold tracking-tight">Summary</h2>
-        <p className="text-base dark:text-zinc-400 text-zinc-600 max-w-3xl">
+        <p className="text-base text-ink-soft max-w-3xl">
           {summary}
         </p>
       </section>
@@ -280,12 +280,12 @@ export default function Home() {
                     <h3 className="text-2xl font-bold tracking-tight">
                       {group.company}
                     </h3>
-                    <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase">
+                    <time className="text-sm text-ink-soft tracking-widest uppercase">
                       {String(group.startDate).toUpperCase()} -{" "}
                       <span
                         className={
                           String(group.endDate).toLowerCase() === "present"
-                            ? "text-attention-ink"
+                            ? "text-ink"
                             : ""
                         }
                       >
@@ -293,7 +293,7 @@ export default function Home() {
                       </span>
                     </time>
                   </div>
-                  <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                  <p className="text-sm text-ink-soft">
                     {group.location}
                     {group.roles.length > 1 &&
                       ` · ${group.roles.length} roles`}
@@ -301,7 +301,7 @@ export default function Home() {
                 </div>
             <div className="relative">
               <div
-                className="absolute left-4 top-8 bottom-8 w-px -translate-x-1/2 dark:bg-zinc-700 bg-zinc-300"
+                className="absolute left-4 top-8 bottom-8 w-px -translate-x-1/2 bg-line-strong"
                 data-print-hide
               />
               <div className="space-y-10">
@@ -314,7 +314,7 @@ export default function Home() {
                       <span
                         className={
                           String(job.endDate).toLowerCase() === "present"
-                            ? "text-attention-ink"
+                            ? "text-ink"
                             : ""
                         }
                       >
@@ -335,13 +335,13 @@ export default function Home() {
                   >
                     <div
                       className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${isOpen
-                          ? "border-zinc-400 bg-secondary-color"
-                          : "dark:border-zinc-400 border-zinc-400 dark:bg-zinc-900 bg-zinc-100"
+                          ? "border-line-strong bg-interactive"
+                          : "border-line-strong bg-bg"
                         }`}
                       data-print-hide
                     />
                     <div
-                      className="group ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer transition-colors hover:border-interactive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                      className="group ml-8 relative bg-card border border-line p-6 rounded-lg cursor-pointer transition-colors hover:border-interactive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
                       role="button"
                       tabIndex={0}
                       aria-expanded={isOpen}
@@ -359,12 +359,12 @@ export default function Home() {
                           them to 3-4 wrapped lines on mobile. */}
                       <div className="mb-3">
                         {dateLine(
-                          "block mb-1.5 text-xs text-zinc-600 dark:text-zinc-400 tracking-widest uppercase"
+                          "block mb-1.5 text-xs text-ink-soft tracking-widest uppercase"
                         )}
                         {/* Company and location live on the group header now —
                             repeating them on every card was the redundancy
                             that made one tenure look like six jobs. */}
-                        <h4 className="text-xl font-semibold hover:text-primary-color transition-colors">
+                        <h4 className="text-xl font-semibold hover:text-interactive-ink transition-colors">
                           {job.position}
                         </h4>
                       </div>
@@ -379,7 +379,7 @@ export default function Home() {
                       <div
                         aria-hidden="true"
                         data-print-hide
-                        className="mt-3 flex items-center gap-2 text-sm text-zinc-500 dark:text-zinc-400 group-hover:text-primary-color transition-colors"
+                        className="mt-3 flex items-center gap-2 text-sm text-slate group-hover:text-interactive-ink transition-colors"
                       >
                         <ToggleIcon className="h-4 w-4" />
                         {isOpen
@@ -393,11 +393,11 @@ export default function Home() {
                           }`}
                       >
                         {job.summary && (
-                          <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
+                          <p className="tracking-tight text-ink-soft mb-4 italic">
                             {job.summary}
                           </p>
                         )}
-                        <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
+                        <ul className="list-disc list-inside text-ink-soft space-y-2 mb-4">
                           {job.highlights.map((highlight, i) => (
                             <li key={i} className="text-sm">
                               {highlight}
@@ -409,7 +409,7 @@ export default function Home() {
                             {job.technologies.map((tech, i) => (
                               <span
                                 key={i}
-                                className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
+                                className="text-xs px-2 py-1 bg-surface-active rounded"
                               >
                                 {tech}
                               </span>
@@ -444,7 +444,7 @@ export default function Home() {
             {leadership.map((item, index) => (
               <div
                 key={index}
-                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+                className="bg-card border border-line p-6 rounded-lg"
               >
                 <h3 className="text-lg font-semibold">{item.organization}</h3>
                 <p className="text-sm text-ink-soft font-medium mb-2">
@@ -454,13 +454,13 @@ export default function Home() {
                     the cards stay a single row (globals.css) and the PDF stays
                     two pages (resume-pdf.tsx). */}
                 {item.details && (
-                  <p className="lead-detail text-sm dark:text-zinc-400 text-zinc-600">
+                  <p className="lead-detail text-sm text-ink-soft">
                     {item.details}
                   </p>
                 )}
                 {item.description && (
                   <p
-                    className={`lead-summary text-sm dark:text-zinc-400 text-zinc-600 ${item.details ? "hidden" : ""}`}
+                    className={`lead-summary text-sm text-ink-soft ${item.details ? "hidden" : ""}`}
                   >
                     {item.description}
                   </p>
@@ -485,22 +485,22 @@ export default function Home() {
             {education.map((edu, index) => (
               <div
                 key={index}
-                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+                className="bg-card border border-line p-6 rounded-lg"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="text-xl font-semibold">{edu.degree}</h3>
                     {edu.field && (
-                      <p className="text-lg font-medium dark:text-zinc-300 text-zinc-700">
+                      <p className="text-lg font-medium text-ink-soft">
                         {edu.field}
                       </p>
                     )}
-                    <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                    <p className="text-sm text-ink-soft">
                       {edu.institution}
                     </p>
                   </div>
                   {(edu.startDate || edu.endDate) && (
-                    <time className="text-sm text-zinc-600 dark:text-zinc-400 tracking-widest uppercase whitespace-nowrap">
+                    <time className="text-sm text-ink-soft tracking-widest uppercase whitespace-nowrap">
                       {edu.startDate && edu.endDate
                         ? `${String(edu.startDate).toUpperCase()} - ${String(edu.endDate).toUpperCase()}`
                         : String(edu.startDate ?? edu.endDate ?? "").toUpperCase()}
@@ -508,12 +508,12 @@ export default function Home() {
                   )}
                 </div>
                 {edu.gpa && (
-                  <p className="tracking-tight dark:text-zinc-400 text-zinc-600 mb-4 italic">
+                  <p className="tracking-tight text-ink-soft mb-4 italic">
                     GPA: {edu.gpa}
                   </p>
                 )}
                 {edu.honors && edu.honors.length > 0 && (
-                  <ul className="list-disc list-inside dark:text-zinc-400 text-zinc-600 space-y-2 mb-4">
+                  <ul className="list-disc list-inside text-ink-soft space-y-2 mb-4">
                     {edu.honors.map((honor, i) => (
                       <li key={i} className="text-sm">
                         {honor}
@@ -542,7 +542,7 @@ export default function Home() {
             {skills.map((skillGroup, index) => (
               <div
                 key={index}
-                className="skill-group dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+                className="skill-group bg-card border border-line p-6 rounded-lg"
               >
                 <h3 className="text-lg font-semibold mb-3">
                   {skillGroup.category}
@@ -573,17 +573,17 @@ export default function Home() {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+                className="bg-card border border-line p-6 rounded-lg"
               >
                 <h3 className="text-xl font-semibold mb-3">{project.name}</h3>
-                <p className="dark:text-zinc-400 text-zinc-600 mb-4">
+                <p className="text-ink-soft mb-4">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.map((tech, i) => (
                     <span
                       key={i}
-                      className="text-xs px-2 py-1 dark:bg-zinc-800 bg-zinc-200 rounded"
+                      className="text-xs px-2 py-1 bg-surface-active rounded"
                     >
                       {tech}
                     </span>
@@ -596,7 +596,7 @@ export default function Home() {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-primary-color hover:underline"
+                        className="text-sm text-interactive-ink hover:underline"
                       >
                         View Project →
                       </a>
@@ -606,7 +606,7 @@ export default function Home() {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-primary-color hover:underline"
+                        className="text-sm text-interactive-ink hover:underline"
                       >
                         GitHub →
                       </a>
@@ -634,24 +634,24 @@ export default function Home() {
             {certifications.map((cert, index) => (
               <div
                 key={index}
-                className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
+                className="bg-card border border-line p-6 rounded-lg"
               >
                 <h3 className="text-lg font-semibold">{cert.name}</h3>
-                <p className="dark:text-zinc-400 text-zinc-600">
+                <p className="text-ink-soft">
                   {cert.issuer}
                 </p>
                 {cert.date && (
-                  <p className="text-sm dark:text-zinc-400 text-zinc-600 mt-2">
+                  <p className="text-sm text-ink-soft mt-2">
                     Issued: {cert.date}
                   </p>
                 )}
                 {cert.expirationDate && (
-                  <p className="text-sm dark:text-zinc-400 text-zinc-600">
+                  <p className="text-sm text-ink-soft">
                     Expires: {cert.expirationDate}
                   </p>
                 )}
                 {cert.credentialId && (
-                  <p className="text-xs dark:text-zinc-500 text-zinc-500 mt-2">
+                  <p className="text-xs text-slate mt-2">
                     ID: {cert.credentialId}
                   </p>
                 )}

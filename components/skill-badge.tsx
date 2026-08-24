@@ -117,7 +117,7 @@ export function SkillBadge({ name }: SkillBadgeProps) {
   const useBrandColor = icon ? lum > 0.22 && lum < 0.92 : false;
 
   return (
-    <span className="inline-flex items-center gap-1.5 text-sm px-3 py-1 dark:bg-zinc-800 bg-zinc-200 rounded">
+    <span className="inline-flex items-center gap-1.5 text-sm px-3 py-1 bg-surface-active rounded">
       {icon && (
         <svg
           role="img"

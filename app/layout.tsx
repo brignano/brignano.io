@@ -1,4 +1,4 @@
-import { Geist, Silkscreen } from "next/font/google";
+import { Geist, IBM_Plex_Mono, Silkscreen } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
@@ -19,6 +19,13 @@ const geist = Geist({
   display: "swap",
 });
 
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+});
+
 const silkscreen = Silkscreen({
   variable: "--font-silkscreen",
   subsets: ["latin"],
@@ -32,6 +39,9 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  // Browser chrome behind the page. Literal because a <meta> tag cannot read a
+  // CSS custom property; these are --bg in each theme (tokens.css --n-25/--n-0)
+  // and must move with it.
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fafafa" },
     { media: "(prefers-color-scheme: dark)", color: "#0d0d0f" },
@@ -57,7 +67,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geist.variable} ${silkscreen.variable} tier-marketing`}
+      className={`${geist.variable} ${plexMono.variable} ${silkscreen.variable} tier-marketing`}
     >
       <head>
         {/* Set theme before first paint to avoid a flash of the wrong theme. */}
@@ -83,7 +93,7 @@ export default function RootLayout({
         */}
       </head>
       <body
-        className={`font-sans antialiased dark:bg-zinc-900 bg-zinc-100 dark:text-white text-zinc-700 transition-colors`}
+        className={`font-sans antialiased bg-bg text-ink-soft transition-colors`}
       >
         <Script
           id="structured-data"

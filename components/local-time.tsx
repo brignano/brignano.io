@@ -35,11 +35,7 @@ export default function LocalTime({ iso }: Props) {
   });
 
   return (
-    <time
-      dateTime={iso}
-      title={title}
-      className="ml-2 text-xs text-zinc-500 dark:text-zinc-500"
-    >
+    <time dateTime={iso} title={title} className="ml-2 text-xs text-slate">
       {relative}
     </time>
   );

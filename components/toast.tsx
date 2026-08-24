@@ -27,7 +27,7 @@ export default function Toast({ message, duration = 3000, onDismiss }: ToastProp
 
   return (
     <div
-      className={`relative z-50 px-5 py-3 rounded-lg shadow-lg text-sm font-medium transition-all duration-300 dark:bg-zinc-800 bg-white dark:text-zinc-100 text-zinc-800 border dark:border-zinc-700 border-zinc-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
+      className={`relative z-50 px-5 py-3 rounded-lg shadow-lg text-sm font-medium transition-all duration-300 bg-card text-ink border border-line ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
     >
       {message}
     </div>

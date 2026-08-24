@@ -90,7 +90,7 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-30 text-sm py-6 md:px-16 px-6 border-b dark:border-zinc-800 border-zinc-200 dark:bg-zinc-900/80 bg-zinc-100/80 backdrop-blur-md lg:mb-28 mb-10 transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:translate-y-0 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+      className={`sticky top-0 z-30 text-sm py-6 md:px-16 px-6 border-b border-line bg-bg/80 backdrop-blur-md lg:mb-28 mb-10 transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:translate-y-0 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
     >
       <div
         className={`max-w-6xl mx-auto flex items-center justify-between gap-x-4 relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}
@@ -116,7 +116,7 @@ export default function Header() {
                 <li key={page}>
                   {isActive ? (
                     <span
-                      className="text-zinc-900 dark:text-white text-sm sm:text-base font-medium cursor-default border-b-2 border-interactive pb-1"
+                      className="text-ink text-sm sm:text-base font-medium cursor-default border-b-2 border-interactive pb-1"
                       aria-current="page"
                     >
                       {label}
@@ -124,7 +124,7 @@ export default function Header() {
                   ) : (
                     <Link
                       href={page === "home" ? "/" : `/${page}`}
-                      className="text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white text-sm sm:text-base cursor-pointer border-b-2 border-transparent pb-1 transition-colors"
+                      className="text-ink-soft hover:text-ink text-sm sm:text-base cursor-pointer border-b-2 border-transparent pb-1 transition-colors"
                     >
                       {label}
                     </Link>
@@ -137,12 +137,12 @@ export default function Header() {
         <button
           aria-label="Toggle Theme"
           onClick={() => toggleTheme()}
-          className="shrink-0 dark:bg-primary-bg hover:text-zinc-500 dark:text-primary-color bg-zinc-100 text-zinc-500 border dark:border-zinc-700 border-zinc-200 rounded-full p-2 transition-transform rotate-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+          className="shrink-0 bg-card text-ink-soft hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full p-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
         >
           {isDarkMode ? (
-            <MoonIcon className="size-5 text-primary-color hover:text-white duration-400 cursor-pointer" />
+            <MoonIcon className="size-5 cursor-pointer" />
           ) : (
-            <SunIcon className="size-5 text-yellow-600 hover:text-zinc-500 duration-400 cursor-pointer" />
+            <SunIcon className="size-5 cursor-pointer" />
           )}
         </button>
       </div>

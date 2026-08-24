@@ -12,17 +12,26 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Type system (TSD §5.2).
-   Geist is the base for body + headings; Silkscreen is a deliberate accent only
-   (eyebrow labels, /coding stat numbers). The next/font runtime variables
-   (--font-geist, --font-silkscreen) are set on <html> so these :root-scoped
-   references resolve. Generates the matching `font-sans`, `font-incognito`,
-   and `font-silkscreen-mono` utilities. */
-@theme {
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system,
+/* Type — the three roles from DESIGN.md §5, and nothing else:
+     --sans     Geist          body and headings
+     --mono     IBM Plex Mono  data that must read precise (commit SHAs, stats)
+     --display  Silkscreen     marketing tier only — eyebrows, the monogram
+
+   tokens.css names the families; this block says which loaded file each name
+   resolves to. `next/font` hashes its family names, so the design system's
+   literal "Geist" / "IBM Plex Mono" / "Silkscreen" would never match the faces
+   actually served — the --font-* variables set on <html> in app/layout.tsx are
+   the real handles. Redeclaring the tokens (rather than adding a parallel
+   @theme font) keeps `font-sans` / `font-mono` / `font-display` as the single
+   set of names for the three roles. */
+:root {
+  --sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
-  --font-incognito: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-silkscreen-mono: var(--font-silkscreen), ui-monospace, monospace;
+  --mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+.tier-marketing {
+  --display: var(--font-silkscreen), var(--mono);
 }
 
 
@@ -79,29 +88,11 @@
 }
 
 
-/* Accent text -> the INTERACTIVE token (ADR-0001). Both themes come from
-   tokens.css, so there is no longer a per-theme override here. */
-.text-primary-color {
-  color: var(--i-ink);
-}
-
-.dark button > svg:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255, 255, 255);
-}
-
-/* Filled control surface. The old value was the same in both themes, which
-   is why the dark CTA sat at 5.70:1 against its own ground rather than the
-   8.6:1 the token gives it. */
-.bg-secondary-color {
-  background-color: var(--i);
-  color: var(--on-i);
-}
-
-:is(.dark .dark\:bg-primary-bg) {
-  background-color: rgba(39, 39, 43, 0.4);
-}
-
+/* Focus is always visible, on every surface, and never removed (DESIGN.md §4).
+   The bespoke `.text-primary-color` / `.bg-secondary-color` / `.dark:bg-primary-bg`
+   shims that used to live here are gone: components now wear the utilities the
+   design system generates (`text-interactive-ink`, `bg-interactive`, `bg-card`),
+   so there is one name per job instead of a local alias per job. */
 :focus-visible {
   outline: 2px solid var(--i-ink);
   outline-offset: 2px;
@@ -226,7 +217,7 @@
   }
 
   /* Flatten card chrome (border / fill / radius / padding / indent) to clean text. */
-  .bg-secondary-bg,
+  .bg-card,
   main .ml-8 {
     background: transparent !important;
     border: none !important;
@@ -239,7 +230,7 @@
   /* Keep an individual job/card intact across a page break — but NOT the whole
      list (that would overflow into blank pages). */
   .space-y-10 > div,
-  .bg-secondary-bg {
+  .bg-card {
     break-inside: avoid;
   }
   .space-y-10 > div {
