@@ -11,11 +11,12 @@ import HighlightCard from "@/components/highlight-card";
 import CountUp from "@/components/count-up";
 import LatestCommit from "@/components/latest-commit";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
+import ProjectCard from "@/components/project-card";
 import {
   socialLinks,
   achievements,
   nowBuilding,
-  projects,
+  featuredProjects,
   heroMetrics,
 } from "@/lib/constants";
 import { event } from "@/lib/gtag";
@@ -266,52 +267,29 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Projects Section - Only show if projects exist */}
-        {projects.length > 0 && (
+        {/* Projects — homepage shows only the featured few and hands off to
+            /projects for the full list. Keeping one array in constants.ts as the
+            source of truth means adding a project never touches this file. */}
+        {featuredProjects.length > 0 && (
           <section
             className="py-16 md:py-24"
             data-aos="fade-up"
             data-aos-duration={1000}
           >
-            <h2 className="font-sans text-3xl sm:text-4xl mb-8 font-bold tracking-tight">
-              Projects
-            </h2>
+            <div className="flex flex-wrap items-baseline justify-between gap-4 mb-8">
+              <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">
+                Projects
+              </h2>
+              <Link
+                href="/projects"
+                className="text-sm text-interactive-ink hover:underline"
+              >
+                All projects →
+              </Link>
+            </div>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-              {projects.map((project, index) => (
-                <div
-                  key={index}
-                  className="bg-card/70 backdrop-blur-sm border border-line rounded-xl px-6 py-4 shadow-sm"
-                >
-                  <h3 className="text-xl font-semibold mb-3">{project.title}</h3>
-                  <p className="text-ink-soft mb-4">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-xs px-2.5 py-1 rounded-full border border-line-strong text-ink-soft"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  {project.links && project.links.length > 0 && (
-                    <div className="flex gap-3">
-                      {project.links.map((link, i) => (
-                        <Link
-                          key={i}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-interactive-ink hover:underline"
-                        >
-                          {link.label} →
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
+              {featuredProjects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
               ))}
             </div>
           </section>

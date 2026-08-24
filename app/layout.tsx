@@ -2,6 +2,7 @@ import { Geist, IBM_Plex_Mono, Silkscreen } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
+import ThemeSync from "@/components/theme-sync";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -95,6 +96,8 @@ export default function RootLayout({
       <body
         className={`font-sans antialiased bg-bg text-ink-soft transition-colors`}
       >
+        {/* Restores the theme class React drops while hydrating <html>. */}
+        <ThemeSync />
         <Script
           id="structured-data"
           type="application/ld+json"

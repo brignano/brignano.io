@@ -231,10 +231,27 @@ export const socialLinks: SocialLink[] = [
   */
 ];
 
+/** Where a project actually is, stated plainly. Overselling a proof of
+ *  concept is the fastest way to make the honest entries unreadable too. */
+export type ProjectStatus = "live" | "active" | "proof of concept";
+
+/** `product` is something a visitor can use. `practice` is how the work gets
+ *  done — real and public, but nobody is installing my homelab. They render in
+ *  separate groups so the second kind doesn't dilute the first. */
+export type ProjectKind = "product" | "practice";
+
 export type Project = {
+  /** Stable key: React list key, analytics label, and the detail-page route
+   *  segment if the project ever earns one. */
+  slug: string;
   title: string;
   description: string;
   tech: string[];
+  status: ProjectStatus;
+  kind: ProjectKind;
+  /** Surfaced on the homepage. Keep this to three — the homepage is a preview
+   *  of /projects, not a second copy of it. */
+  featured?: boolean;
   links?: { label: string; url: string }[];
 };
 
@@ -349,4 +366,89 @@ export const nowBuilding: NowItem[] = [
   },
 ];
 
-export const projects: Project[] = [];
+// Ordered most-compelling first: /projects renders this array as-is and the
+// homepage takes the `featured` ones. Adding a project is one entry here.
+//
+// Private repos are deliberately absent. A card whose link goes nowhere is
+// worse than no card — the visitor reaches for it, finds nothing, and leaves
+// with a worse impression than if it had never been listed.
+export const projects: Project[] = [
+  {
+    slug: "hoststats",
+    title: "HostStats",
+    description:
+      "Airbnb hosts upload their CSV exports and get occupancy, booking trends and earnings back as charts. Every file is parsed in the browser — no account, no upload, and no server that could leak a year of someone's bookings.",
+    tech: ["Next.js", "TypeScript", "Cloudflare Workers", "Tailwind"],
+    status: "live",
+    kind: "product",
+    featured: true,
+    links: [
+      { label: "Open HostStats", url: "https://hoststats.brignano.io" },
+      { label: "Source", url: "https://github.com/brignano/hoststats" },
+    ],
+  },
+  {
+    slug: "driftwood",
+    title: "driftwood",
+    description:
+      "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts.",
+    tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
+    status: "proof of concept",
+    kind: "product",
+    featured: true,
+    links: [
+      { label: "npm", url: "https://www.npmjs.com/package/@brignano/driftwood" },
+      { label: "Source", url: "https://github.com/brignano/driftwood" },
+    ],
+  },
+  {
+    slug: "card",
+    title: "npx brignano",
+    description:
+      "An interactive terminal business card. Gradient ASCII intro, live GitHub stats fetched on a 1.5-second leash so it never hangs, and quick actions to copy my email, open my socials or save a vCard.",
+    tech: ["Node", "TypeScript", "npm"],
+    status: "live",
+    kind: "product",
+    featured: true,
+    links: [
+      { label: "Run it", url: "https://www.npmjs.com/package/brignano" },
+      { label: "Source", url: "https://github.com/brignano/card" },
+    ],
+  },
+  {
+    slug: "design",
+    title: "@brignano/design",
+    description:
+      "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. DECISIONS.md records why each value is what it is.",
+    tech: ["CSS", "Design tokens", "npm"],
+    status: "active",
+    kind: "product",
+    links: [
+      { label: "npm", url: "https://www.npmjs.com/package/@brignano/design" },
+      { label: "Source", url: "https://github.com/brignano/design" },
+    ],
+  },
+  {
+    slug: "ai-tools",
+    title: "ai-tools",
+    description:
+      "One source of truth for my AI-agent setup — context, slash commands, output styles, permissions and MCP servers — symlinked into place by an installer so every machine I work on behaves the same way.",
+    tech: ["Shell", "PowerShell", "Claude Code", "MCP"],
+    status: "active",
+    kind: "practice",
+    links: [{ label: "Source", url: "https://github.com/brignano/ai-tools" }],
+  },
+  {
+    slug: "homelab",
+    title: "homelab",
+    description:
+      "A mini PC running Proxmox, Docker and Tailscale, with Prometheus and Grafana for metrics and Ollama plus Open WebUI for local inference. Documented well enough that I could rebuild the whole thing from the repo.",
+    tech: ["Proxmox", "Docker", "Tailscale", "Prometheus", "Grafana", "Ollama"],
+    status: "active",
+    kind: "practice",
+    links: [{ label: "Source", url: "https://github.com/brignano/homelab" }],
+  },
+];
+
+/** The homepage preview. Deliberately capped — see `featured` above. */
+export const featuredProjects = projects.filter((p) => p.featured);
