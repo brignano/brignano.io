@@ -9,7 +9,7 @@ import Link from "next/link";
 // Nav is inline at every width. A slide-in dialog to reveal three links cost
 // two taps and an overlay to show what fits on one line, so the drawer, the
 // hamburger, and their animation state are gone.
-const PAGES = ["home", "resume", "coding"] as const;
+const PAGES = ["home", "projects", "resume", "coding"] as const;
 
 // Don't start hiding until the header has scrolled its own height away, and
 // ignore deltas smaller than this so momentum jitter and iOS rubber-band
