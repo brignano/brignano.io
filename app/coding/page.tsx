@@ -3,14 +3,12 @@ const WAKATIME_API_BASE = "https://wakatime.com/api/v1";
 import type {
   WakaTimeAllTimeStats,
   WakaTimeApiResponse,
-  WakaTimeSummaries,
   WakaTimeUser,
   StatsData,
 } from "@/types/wakatime";
 import StatsPie from "../../components/stats/stats-pie";
 import StatsBar from "../../components/stats/stats-bar";
 import CodingHero from "../../components/stats/coding-hero";
-import RecentActivity from "../../components/stats/recent-activity";
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
 import GitHubCalendarClient from "../../components/github-calendar-client";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
@@ -135,25 +133,6 @@ export default async function Page() {
     // Projects are intentionally NOT surfaced — they include confidential
     // private/enterprise project names that must not appear on a public page.
     const bestDay = allTime?.best_day ?? null;
-
-    // Last-14-days daily activity (the only new API call). Free plan caps daily
-    // history at ~2 weeks, so we request exactly that and accept fewer.
-    const end = new Date();
-    const start = new Date();
-    start.setUTCDate(end.getUTCDate() - 13);
-    const fmtDate = (d: Date) => d.toISOString().slice(0, 10);
-    const summariesResp = await safeFetch<WakaTimeSummaries>(
-      `/users/current/summaries?start=${fmtDate(start)}&end=${fmtDate(end)}`,
-      60 * 60
-    );
-    const summariesRaw =
-      (summariesResp?.data as WakaTimeSummaries | null)?.data ?? [];
-    const recentActivity = Array.isArray(summariesRaw)
-      ? summariesRaw.map((s) => ({
-          date: s.range?.date,
-          hours: (s.grand_total?.total_seconds ?? 0) / 3600,
-        }))
-      : [];
 
     // Total coding time from languages (fallback if all_time endpoint provided it differently)
     const totalSecondsFromLanguages = languages.reduce(
@@ -328,21 +307,6 @@ export default async function Page() {
             </div>
           )}
 
-          {recentActivity.length > 0 && (
-            <div
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-              data-aos-delay="250"
-              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg mb-6"
-            >
-              <RecentActivity
-                data={recentActivity}
-                title="Recent Activity"
-                description="Coding time over the last 14 days (the window WakaTime's free plan exposes)."
-              />
-            </div>
-          )}
 
           {/* The public slice — the visible tip of the iceberg. */}
           <div

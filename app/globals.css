@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* ── Design system ──────────────────────────────────────────────────────
+   Single source of truth for colour, type, space, shape and motion, shared
+   with `life` and every tool. Never hardcode a hex in this file or in a
+   component — change it in design/tokens.css and every surface picks it up.
+
+   Pinned in package.json; bump deliberately. */
+@import "@brignano/design/tokens.css";
+@import "@brignano/design/tokens.chart.css";
+@import "@brignano/design/tailwind.css";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Type system (TSD §5.2).
@@ -15,33 +25,6 @@
   --font-silkscreen-mono: var(--font-silkscreen), ui-monospace, monospace;
 }
 
-/* Chart color variables (light theme) */
-:root {
-  --chart-1: #4f46e5;
-  --chart-2: #ef4444;
-  --chart-3: #10b981;
-  --chart-4: #f59e0b;
-  --chart-5: #06b6d4;
-  --chart-6: #a78bfa;
-  --chart-7: #f97316;
-  --chart-8: #ef9aa3;
-  --chart-9: #60a5fa;
-  --chart-10: #34d399;
-}
-
-/* Dark theme overrides for chart variables */
-.dark {
-  --chart-1: #8b5cf6;
-  --chart-2: #fb7185;
-  --chart-3: #34d399;
-  --chart-4: #fbbf24;
-  --chart-5: #2dd4bf;
-  --chart-6: #c4b5fd;
-  --chart-7: #fb923c;
-  --chart-8: #fca5a5;
-  --chart-9: #60a5fa;
-  --chart-10: #86efac;
-}
 
 @keyframes wave {
   0% {
@@ -95,68 +78,11 @@
   }
 }
 
-/* Signature trail stations (TSD §5.2 waypoints). The trail threads the left
-   gutter and "lights" a station as the scroll focus line passes each section,
-   giving tactile feedback weaving into and out of sections. Compositor-only
-   (opacity + transform); reduced motion shows a fully-lit, static trail. */
-.trail-node__ring {
-  opacity: 0.3;
-  transition: opacity 0.45s ease;
-}
-.trail-node__dot {
-  opacity: 0;
-  transition: opacity 0.45s ease;
-}
-.trail-node__pulse {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-.trail-node.on .trail-node__ring {
-  opacity: 0.85;
-}
-.trail-node.on .trail-node__dot {
-  opacity: 1;
-}
-.trail-node--summit .trail-node__ring {
-  opacity: 0.45;
-}
-.trail-node--summit.on .trail-node__ring {
-  opacity: 1;
-}
-.trail-node.pulse .trail-node__pulse {
-  animation: trail-pulse 0.7s ease-out;
-}
-@keyframes trail-pulse {
-  0% {
-    opacity: 0.5;
-    transform: scale(0.6);
-  }
-  70%,
-  100% {
-    opacity: 0;
-    transform: scale(2.6);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .trail-node__ring {
-    opacity: 0.8;
-  }
-  .trail-node__dot {
-    opacity: 1;
-  }
-  .trail-node__pulse {
-    display: none;
-  }
-}
 
-/* Accent: electric indigo/violet (TSD §10.3). Swatches chosen for WCAG AA:
-   violet-700 (#6d28d9) on light, violet-400 (#a78bfa) on dark. */
+/* Accent text -> the INTERACTIVE token (ADR-0001). Both themes come from
+   tokens.css, so there is no longer a per-theme override here. */
 .text-primary-color {
-  color: #6d28d9;
-  .dark & {
-    color: #a78bfa;
-  }
+  color: var(--i-ink);
 }
 
 .dark button > svg:hover {
@@ -164,11 +90,12 @@
   color: rgb(255, 255, 255);
 }
 
+/* Filled control surface. The old value was the same in both themes, which
+   is why the dark CTA sat at 5.70:1 against its own ground rather than the
+   8.6:1 the token gives it. */
 .bg-secondary-color {
-  background-color: #7c3aed;
-  .dark & {
-    background-color: #7c3aed;
-  }
+  background-color: var(--i);
+  color: var(--on-i);
 }
 
 :is(.dark .dark\:bg-primary-bg) {
@@ -176,12 +103,8 @@
 }
 
 :focus-visible {
-  outline: 2px solid #6d28d9;
+  outline: 2px solid var(--i-ink);
   outline-offset: 2px;
-}
-
-.dark :focus-visible {
-  outline-color: #a78bfa;
 }
 
 /* Print styles — make Cmd+P of /resume a clean ~2-page document.

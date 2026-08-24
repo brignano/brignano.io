@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from "recharts";
 import type { StatsData } from "@/types/wakatime";
-import { CHART_COLORS as COLORS } from "./chart-colors";
+import { buildPalette } from "./chart-colors";
 
 interface StatsPieProps {
   data: StatsData[];
@@ -20,6 +20,21 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const displayIndex = selectedIndex ?? activeIndex;
+  // Resolve the palette from the design tokens after hydration. The server has
+  // no document, so chartColors() returns the light-mode fallbacks there; the
+  // gate keeps the first client render identical before swapping to the real
+  // (theme-aware) values.
+  const [tokensReady, setTokensReady] = useState(false);
+  useEffect(() => setTokensReady(true), []);
+  // Built from THIS chart's own series list, so slots are not shared with any
+  // other chart on the page and the visible subset can change without
+  // repainting survivors.
+  const palette = useMemo(
+    () => buildPalette((data || []).map((d) => d.name)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- re-read once mounted
+    [tokensReady, data],
+  );
+
 
   const MIN_HOURS = 0.1;
   const filtered = (data || []).filter((d) => d.seconds >= MIN_HOURS * 3600);
@@ -86,7 +101,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
       index: number;
     };
 
-    const color = fill ?? COLORS[index % COLORS.length];
+    const color = fill ?? palette(chartData[index]?.name ?? "Other");
     const isActive = index === displayIndex;
 
     return (
@@ -184,7 +199,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
                       className={`inline-block rounded-sm transition-all duration-100 ${
                         isActive ? "w-[14px] h-[14px]" : "w-3 h-3"
                       }`}
-                      style={{ background: COLORS[idx % COLORS.length] }}
+                      style={{ background: palette(d.name) }}
                     />
                     <span
                       className={`text-sm ${
@@ -256,10 +271,10 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
                   setSelectedIndex(idx === selectedIndex ? null : idx)
                 }
               >
-                {chartDataSecs.map((_, idx) => (
+                {chartDataSecs.map((seg, idx) => (
                   <Cell
                     key={`cell-${idx}`}
-                    fill={COLORS[idx % COLORS.length] as string}
+                    fill={palette(seg.name)}
                     style={{ cursor: "pointer" }}
                   />
                 ))}

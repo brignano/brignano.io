@@ -14,11 +14,15 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 // Brand palette (matches the site / web manifest).
-const BG = "#18181b"; // zinc-900
-const ACCENT = "#a78bfa"; // violet-400
-const TEXT = "#fafafa"; // zinc-50
-const MUTED = "#a1a1aa"; // zinc-400
-const HAIRLINE = "#27272a"; // zinc-800
+const BG = "#0d0d0f"; // --n-0 (dark)
+// The social card is IDENTITY, not UI — so it wears --mark, the one place the
+// design system spends a colour on being recognisable rather than informative.
+// Literal because satori renders server-side with no CSS custom properties;
+// keep in sync with design/tokens.css --mark.
+const ACCENT = "#b4741f";
+const TEXT = "#f2f2f0"; // --n-900 (dark)
+const MUTED = "#a8a8b0"; // --n-700 (dark)
+const HAIRLINE = "#2a2a2f"; // --n-200 (dark)
 
 export default async function Image() {
   const [geistRegular, geistBold] = await Promise.all([

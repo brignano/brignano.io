@@ -10,6 +10,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@brignano/design": "github:brignano/design#82b571bb4ce6ebf80c55e3310a05e70b8a8c97be",
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "@react-pdf/renderer": "^4.6.0",

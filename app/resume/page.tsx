@@ -210,7 +210,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleDownloadPDF}
-            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-transparent bg-secondary-color text-white font-semibold rounded-lg hover:bg-violet-800 transition-colors duration-200"
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-transparent bg-secondary-color text-on-interactive font-semibold rounded-lg hover:bg-interactive-hover transition-colors duration-200"
           >
             <ArrowDownTrayIcon className="h-5 w-5" />
             Download PDF
@@ -285,7 +285,7 @@ export default function Home() {
                       <span
                         className={
                           String(group.endDate).toLowerCase() === "present"
-                            ? "text-primary-color"
+                            ? "text-attention-ink"
                             : ""
                         }
                       >
@@ -314,7 +314,7 @@ export default function Home() {
                       <span
                         className={
                           String(job.endDate).toLowerCase() === "present"
-                            ? "text-primary-color"
+                            ? "text-attention-ink"
                             : ""
                         }
                       >
@@ -341,7 +341,7 @@ export default function Home() {
                       data-print-hide
                     />
                     <div
-                      className="group ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer transition-colors hover:border-violet-400/70 dark:hover:border-violet-500/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400"
+                      className="group ml-8 relative dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg cursor-pointer transition-colors hover:border-interactive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
                       role="button"
                       tabIndex={0}
                       aria-expanded={isOpen}
@@ -447,7 +447,7 @@ export default function Home() {
                 className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg"
               >
                 <h3 className="text-lg font-semibold">{item.organization}</h3>
-                <p className="text-sm text-primary-color font-medium mb-2">
+                <p className="text-sm text-ink-soft font-medium mb-2">
                   {item.role}
                 </p>
                 {/* Screen shows the long form; print swaps in the one-liner so
