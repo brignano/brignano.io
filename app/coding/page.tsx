@@ -222,7 +222,7 @@ export default async function Page() {
             data-aos="fade-up"
             data-aos-duration="600"
             data-aos-once="true"
-            className="font-incognito text-4xl font-bold tracking-tight"
+            className="font-sans text-4xl font-bold tracking-tight"
           >
             Coding Activity
           </h1>
@@ -248,7 +248,7 @@ export default async function Page() {
               data-aos-duration="700"
               data-aos-once="true"
               data-aos-delay="150"
-              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg mb-6"
+              className="bg-card border border-line p-6 rounded-lg mb-6"
             >
               <StatsBar
                 data={languages}
@@ -271,7 +271,7 @@ export default async function Page() {
               }`}
             >
               {editors.length > 0 && (
-                <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
+                <div className="bg-card border border-line p-6 rounded-lg">
                   <StatsBar
                     data={editors}
                     title="Editors"
@@ -280,7 +280,7 @@ export default async function Page() {
                 </div>
               )}
               {operatingSystems.length > 0 && (
-                <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
+                <div className="bg-card border border-line p-6 rounded-lg">
                   <StatsBar
                     data={operatingSystems}
                     title="Operating Systems"
@@ -297,7 +297,7 @@ export default async function Page() {
               data-aos-duration="700"
               data-aos-once="true"
               data-aos-delay="200"
-              className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg mb-6"
+              className="bg-card border border-line p-6 rounded-lg mb-6"
             >
               <StatsPie
                 data={categories}
@@ -316,10 +316,10 @@ export default async function Page() {
             data-aos-delay="275"
             className="mt-12"
           >
-            <h2 className="font-incognito text-3xl font-bold tracking-tight">
+            <h2 className="font-sans text-3xl font-bold tracking-tight">
               The public slice
             </h2>
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="mt-1 text-sm text-slate">
               Everything above is tracked privately by WakaTime. Here&apos;s the
               part that shows up on GitHub.
             </p>
@@ -334,21 +334,21 @@ export default async function Page() {
               data-aos-delay="300"
               className="mt-6 mb-6"
             >
-              <div className="dark:bg-primary-bg bg-secondary-bg border dark:border-zinc-800 border-zinc-200 p-6 rounded-lg">
+              <div className="bg-card border border-line p-6 rounded-lg">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-incognito text-2xl font-bold tracking-tight">
+                  <h3 className="font-sans text-2xl font-bold tracking-tight">
                     Last Commit
                   </h3>
                   <a
                     href={`https://github.com/${latestCommit.repo}/tree/${latestCommit.sha}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-1.5 border rounded bg-zinc-100 dark:bg-zinc-800 text-sm font-medium hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                    className="inline-flex items-center px-4 py-1.5 border rounded bg-surface-hover text-sm font-medium hover:bg-surface-active"
                   >
                     <svg
                       aria-hidden="true"
                       focusable="false"
-                      className="octicon octicon-file-code w-4 h-4 mr-2 text-zinc-700 dark:text-zinc-200"
+                      className="octicon octicon-file-code w-4 h-4 mr-2 text-ink-soft"
                       viewBox="0 0 16 16"
                       width="16"
                       height="16"
@@ -364,24 +364,24 @@ export default async function Page() {
                     Browse files
                   </a>
                 </div>
-                <p className="text-sm dark:text-zinc-500 text-zinc-500 mb-4">
+                <p className="text-sm text-slate mb-4">
                   Most recent public commit on GitHub.
                 </p>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
                       <div className="flex flex-col gap-2">
                       {commitSubject && (
-                          <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+                          <div className="text-sm font-semibold text-ink">
                           {commitSubject}
                         </div>
                       )}
                       {commitBody && (
-                          <div className="text-sm text-zinc-600 dark:text-zinc-400 whitespace-pre-wrap">
+                          <div className="text-sm text-ink-soft whitespace-pre-wrap">
                           {commitBody}
                         </div>
                       )}
                     </div>
-                    <div className="mt-2 text-sm dark:text-zinc-400 text-zinc-600 flex items-center gap-2 flex-wrap">
+                    <div className="mt-2 text-sm text-ink-soft flex items-center gap-2 flex-wrap">
                       <a
                         href={`https://github.com/${latestCommit.repo}`}
                         target="_blank"
@@ -396,11 +396,11 @@ export default async function Page() {
                         href={String(latestCommit.url)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center font-mono text-xs bg-zinc-100 dark:bg-zinc-800 px-2 py-1 rounded"
+                        className="inline-flex items-center font-mono text-xs bg-surface-hover px-2 py-1 rounded"
                       >
                         <span>{shortSha(latestCommit.sha)}</span>
                         <svg
-                          className="w-3 h-3 ml-2 text-zinc-700 dark:text-zinc-300"
+                          className="w-3 h-3 ml-2 text-ink-soft"
                           viewBox="0 0 24 24"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
@@ -442,10 +442,10 @@ export default async function Page() {
                           <>
                             <span className="mx-1 md:mx-2">•</span>
 
-                            <span className="ml-2 text-green-600 dark:text-green-400 font-semibold">
+                            <span className="ml-2 text-success-ink font-semibold">
                               +{latestCommit.additions}
                             </span>
-                            <span className="ml-2 text-red-600 dark:text-red-400 font-semibold">
+                            <span className="ml-2 text-danger-ink font-semibold">
                               −{latestCommit.deletions}
                             </span>
                           </>
@@ -472,7 +472,7 @@ export default async function Page() {
                           href={`https://github.com/${latestCommit.author_login}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="ml-2 font-medium text-primary-color hover:underline"
+                          className="ml-2 font-medium text-interactive-ink hover:underline"
                         >
                           {latestCommit.author_login}
                         </a>
@@ -513,7 +513,7 @@ export default async function Page() {
             data-aos-duration="700"
             data-aos-once="true"
             data-aos-delay="350"
-            className="mt-6 text-sm text-zinc-600 dark:text-zinc-400 flex justify-start"
+            className="mt-6 text-sm text-ink-soft flex justify-start"
           >
             <WakaTimeDisclaimer url={wakaProfile} />
           </div>

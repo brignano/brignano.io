@@ -134,12 +134,12 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
   return (
     <div className="w-full pb-6 md:pb-0 overflow-auto">
       {title && (
-        <h3 className="font-incognito text-2xl font-bold tracking-tight mb-2">
+        <h3 className="font-sans text-2xl font-bold tracking-tight mb-2">
           {title}
         </h3>
       )}
       {description && (
-        <p className="text-sm dark:text-zinc-500 text-zinc-500 mb-4">
+        <p className="text-sm text-slate mb-4">
           {description}
         </p>
       )}
@@ -209,7 +209,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
                       {d.name}
                     </span>
                   </div>
-                  <div className="text-sm text-zinc-500 dark:text-zinc-400 text-right w-32">
+                  <div className="text-sm text-slate text-right w-32">
                     {d.value} hours
                     <span className="hidden sm:inline">
                       {" "}

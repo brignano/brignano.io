@@ -59,17 +59,17 @@ export default function LatestCommit() {
   const repo = commit.repo?.split("/")[1] ?? commit.repo;
 
   return (
-    <p className="mt-4 text-sm dark:text-zinc-500 text-zinc-500">
+    <p className="mt-4 text-sm text-slate">
       Latest commit:{" "}
       <a
         href={commit.url ?? "#"}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-primary-color hover:underline"
+        className="text-interactive-ink hover:underline"
       >
         {short}
       </a>{" "}
-      <span className="dark:text-zinc-600 text-zinc-400">
+      <span className="text-slate">
         in {repo}
         {commit.date ? ` · ${timeAgo(commit.date)}` : ""}
       </span>

@@ -20,6 +20,20 @@ Font.register({
   ],
 });
 
+// The neutral ramp, mirrored from design/tokens.css (light theme). @react-pdf
+// lays out off-DOM and cannot read a CSS custom property, so the values are
+// literal here — the same exception app/opengraph-image.tsx takes. This is the
+// one place in the file they appear; every style below reads from INK.
+//
+// Paper has no dark theme, so only the light steps exist. Each is at least as
+// dark as the ad-hoc grey it replaced, so print contrast holds or improves.
+const INK = {
+  n900: "#111111", // --n-900  rules, strongest text
+  n800: "#33333a", // --n-800  headings, employer names
+  n700: "#52525b", // --n-700  body copy
+  n600: "#6b6b73", // --n-600  captions, the footer
+} as const;
+
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -43,7 +57,7 @@ const styles = StyleSheet.create({
     left: 30,
     right: 30,
     fontSize: 8,
-    color: "#777",
+    color: INK.n600,
     textAlign: "center",
   },
   header: {
@@ -59,11 +73,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 2,
     marginBottom: 6,
-    color: "#333",
+    color: INK.n800,
   },
   contactInfo: {
     fontSize: 9,
-    color: "#555",
+    color: INK.n700,
   },
   contactInfoRow: {
     flexDirection: "row",
@@ -72,7 +86,7 @@ const styles = StyleSheet.create({
   },
   contactInfoItem: {
     fontSize: 9,
-    color: "#555",
+    color: INK.n700,
     marginRight: 12,
     marginBottom: 2,
   },
@@ -84,7 +98,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 4,
     borderBottomWidth: 1,
-    borderBottomColor: "#000",
+    borderBottomColor: INK.n900,
     paddingBottom: 2,
   },
   summaryText: {
@@ -124,15 +138,15 @@ const styles = StyleSheet.create({
   jobCompany: {
     fontSize: 11,
     fontWeight: "bold",
-    color: "#333",
+    color: INK.n800,
   },
   jobLocation: {
     fontSize: 9,
-    color: "#555",
+    color: INK.n700,
   },
   jobDates: {
     fontSize: 9,
-    color: "#555",
+    color: INK.n700,
     textAlign: "right",
   },
   highlightsList: {
@@ -160,11 +174,11 @@ const styles = StyleSheet.create({
   },
   institution: {
     fontSize: 10,
-    color: "#333",
+    color: INK.n800,
   },
   educationDetails: {
     fontSize: 9,
-    color: "#555",
+    color: INK.n700,
   },
   skillsGrid: {
     flexDirection: "row",
@@ -182,7 +196,7 @@ const styles = StyleSheet.create({
   },
   skillItems: {
     fontSize: 9,
-    color: "#444",
+    color: INK.n700,
   },
   projectsGrid: {
     flexDirection: "row",
@@ -201,7 +215,7 @@ const styles = StyleSheet.create({
   projectDescription: {
     fontSize: 9,
     marginBottom: 4,
-    color: "#444",
+    color: INK.n700,
   },
   certificationItem: {
     marginBottom: 6,
@@ -212,7 +226,7 @@ const styles = StyleSheet.create({
   },
   certificationIssuer: {
     fontSize: 9,
-    color: "#555",
+    color: INK.n700,
   },
 });
 

@@ -265,7 +265,6 @@ Optional:
 ├── eslint.config.mjs       # ESLint configuration
 ├── next.config.ts          # Next.js configuration
 ├── postcss.config.mjs      # PostCSS configuration
-├── tailwind.config.ts      # TailwindCSS configuration
 └── tsconfig.json           # TypeScript configuration
 ```
 

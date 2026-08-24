@@ -5,7 +5,7 @@ import { socialLinks } from "@/lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="border-t dark:border-zinc-800 border-zinc-100 mt-10 sm:mt-32 lg:mt-24 lg:min-h-[250px] min-h-0 relative">
+    <footer className="border-t border-line mt-10 sm:mt-32 lg:mt-24 lg:min-h-[250px] min-h-0 relative">
       <div className="max-w-7xl mx-auto flex lg:flex-row flex-col items-center lg:justify-between justify-center gap-y-4 md:px-16 px-6 py-10 lg:py-16">
         <div className="order-1 lg:order-2 flex items-center gap-x-4">
           {socialLinks.map((link) => (
@@ -15,7 +15,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={link.name}
-              className="group text-zinc-500 hover:text-zinc-800 dark:hover:text-white transition-colors duration-200"
+              className="group text-slate hover:text-ink transition-colors duration-200"
             >
               {link.icon}
             </Link>
@@ -23,7 +23,7 @@ export default function Footer() {
         </div>
 
         <div className="order-2 lg:order-1 flex flex-col lg:items-start items-center lg:text-start text-center">
-          <small className="text-zinc-600 dark:text-zinc-400">
+          <small className="text-ink-soft">
             Copyright © Anthony Brignano {new Date().getFullYear()} All rights
             Reserved
           </small>

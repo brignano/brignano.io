@@ -25,12 +25,12 @@ export default function HighlightCard({
       data-aos="fade-up"
       data-aos-duration={600}
       data-aos-delay={index * 70}
-      className="bg-white/70 dark:bg-zinc-900/50 backdrop-blur-sm border dark:border-zinc-800 border-zinc-200 rounded-xl px-6 py-5 shadow-sm flex flex-col"
+      className="bg-card/70 backdrop-blur-sm border border-line rounded-xl px-6 py-5 shadow-sm flex flex-col"
     >
       <p className="text-base font-semibold tracking-tight mb-2">
         {achievement.outcome}
       </p>
-      <p className="text-sm dark:text-zinc-400 text-zinc-500 mb-4 leading-relaxed">
+      <p className="text-sm text-slate mb-4 leading-relaxed">
         {achievement.detail}
       </p>
 
@@ -43,7 +43,7 @@ export default function HighlightCard({
             return (
               <span
                 key={skill}
-                className="text-xs px-2.5 py-1 rounded-full border dark:border-zinc-700 border-zinc-300 dark:text-zinc-400 text-zinc-600"
+                className="text-xs px-2.5 py-1 rounded-full border border-line-strong text-ink-soft"
               >
                 {skill}
               </span>
@@ -69,7 +69,7 @@ export default function HighlightCard({
               className={`text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink ${
                 isOpen
                   ? "border-interactive bg-interactive-surface text-interactive-ink"
-                  : "dark:border-zinc-700 border-zinc-300 dark:text-zinc-400 text-zinc-600 hover:border-interactive hover:text-interactive-ink"
+                  : "border-line-strong text-ink-soft hover:border-interactive hover:text-interactive-ink"
               }`}
             >
               {skill}
@@ -81,7 +81,7 @@ export default function HighlightCard({
       {definition && (
         <div
           role="note"
-          className="mt-3 rounded-lg border border-dashed dark:border-zinc-700 border-zinc-300 bg-white/60 dark:bg-zinc-900/40 px-3.5 py-3 text-sm dark:text-zinc-300 text-zinc-700 leading-relaxed"
+          className="mt-3 rounded-lg border border-dashed border-line-strong bg-card/60 px-3.5 py-3 text-sm text-ink-soft leading-relaxed"
         >
           <span className="font-semibold">{openSkill}</span> — {definition}
         </div>
