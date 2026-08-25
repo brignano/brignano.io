@@ -309,7 +309,7 @@ export default function Home() {
               Senior Staff Software Engineer — Enterprise Platform Engineering
             </h3>
             <p className="text-lg text-ink-soft mb-4 leading-relaxed">
-              I lead the strategy, design, and delivery of The Hartford&apos;s developer platform — the one place 8,000+ engineers go to build, ship, and run their software.
+              I lead the strategy, design, and delivery of The Hartford&apos;s developer platform — the one place 4,000+ engineers go to build, ship, and run their software, on its way to the full 8,000-engineer organization.
             </p>
             <p className="text-base text-ink-soft mb-6 leading-relaxed">
               My focus is making the whole thing automatic, reliable, and secure by default — so engineers hit fewer roadblocks and spend more time on the work that matters.
@@ -351,8 +351,8 @@ export default function Home() {
                 observability through Splunk and Dynatrace; and an end-to-end
                 CI/CD and DevSecOps toolchain — Jenkins, GitHub Actions,
                 Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx — keeping
-                thousands of pipelines reliable. AI features ship as MCP-based
-                skills.
+                60,000+ pipelines reliable across 70,000+ runs a week. AI
+                features ship as MCP-based skills.
               </p>
             </details>
 
