@@ -18,11 +18,11 @@ const SITE_TITLE = "Anthony Brignano — I build platforms engineers ship on";
 // Meta description: kept ~155 chars so Google doesn't truncate (it trims
 // around 150–160 in results).
 const SITE_DESCRIPTION =
-  "I build internal developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes software delivery faster and safer.";
+  "I build internal developer platforms for 4,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes software delivery faster and safer.";
 // Social previews show fewer characters than search results (~125 before they
 // truncate on mobile), so the OG/Twitter description is a tighter variant.
 const SITE_OG_DESCRIPTION =
-  "Developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling for faster, safer delivery.";
+  "Developer platforms for 4,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling for faster, safer delivery.";
 
 export const siteMetadata: Metadata = {
   metadataBase: new URL("https://brignano.io"),
@@ -262,11 +262,15 @@ export interface HeroMetric {
 
 // Single source of truth for the hero proof strip. Keep these current —
 // they render directly under the hero subhead (above the fold).
-// Integrity (TSD §5.7): 8,000+ = reach/mandate ("for" engineers, not active
-// users); 1,000+ = current 90-day active adopters. Keep the framing distinct.
+// Integrity (TSD §5.7): every figure here is CURRENT AND DOCUMENTED, never a
+// forecast. 4,000+ = engineers actually on the platform today (8,000 is the
+// full-org target — trajectory, not a claim). 60,000+ = pipelines under
+// management today (100k+ is post-backfill forecast — not claimed).
+// 10,000+ = repos migrated to GHEC. 1,000+ 90-day adopters lives on the
+// achievement card below rather than here, to keep this strip to three.
 export const heroMetrics: HeroMetric[] = [
-  { value: "8,000+", label: "engineers supported" },
-  { value: "1,000+", label: "picked it up in 90 days" },
+  { value: "4,000+", label: "engineers on the platform" },
+  { value: "60,000+", label: "pipelines under management" },
   { value: "10,000+", label: "code projects moved" },
 ];
 
@@ -281,11 +285,12 @@ export interface Achievement {
 
 // Tier 1 — outcome cards with skill pills (TSD §5.5b). Each leads with a
 // quantified outcome and carries the tech underneath. Public claims about a
-// named employer: 8,000+ is reach, 1,000+ is 90-day adopters, no SLAs, no
-// incident numbers (TSD §5.7 integrity rules).
+// named employer: 4,000+ is engineers on the platform today, 1,000+ is 90-day
+// adopters, no forecasts stated as fact, no SLAs, no incident numbers
+// (TSD §5.7 integrity rules).
 export const achievements: Achievement[] = [
   {
-    outcome: "One place for 8,000+ engineers to build",
+    outcome: "One place for 4,000+ engineers to build",
     detail:
       "Before, everyone set up their tools differently — slow and easy to break. Now it's one shared, consistent setup.",
     skills: ["GitHub Enterprise", "Custom CLI", "IDE Extensions"],

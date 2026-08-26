@@ -112,14 +112,21 @@ Decisions reached after P1; folds into the P2 PR. **Positioning shift:** lead wi
 - `40+ days` is the **old onboarding baseline only**. The **1-day** target is a **CEO-sponsored *initiative/goal*** — never state it as delivered.
 - **No timeframe SLAs** in copy ("within an hour", "same-day", "first PR in 20 min" all cut — user declined that level of commitment). Make the *point* (fast, self-service onboarding) qualitatively.
 - Incident/ticket reduction is **not monitored yet** → **no hard numbers**; at most a design goal.
-- `8,000+` = **reach/mandate** (frame as "for"/"serving 8,000+ engineers", **never** "8,000 active users"). `1,000+` = current **90-day active adopters** (traction). Keep these distinct so they survive interview scrutiny.
+- **No forecast may be stated as a current fact.** This is the rule the 8,000 figure broke (corrected 2026-08-25). Revised guidance:
+  - `4,000+` = engineers **actually on the platform today** (documented). This is the number all copy uses.
+  - `8,000` = the **full engineering organization** the rollout is heading toward. Only ever appears as trajectory — "on its way to", "rolling out toward" — **never** as "serving 8,000+" or "8,000 engineers supported", and never as a standalone metric.
+  - `1,000+` = **90-day active adopters** of the unified surface (traction). Still distinct from both of the above.
+  - Rationale: a defensible number beats a larger one that needs qualifying. "How many are actually on it?" is the first question an interviewer asks, and 4,000-with-a-growth-story survives it where 8,000-as-reach does not.
+- **Pipelines: `60,000+` under management, `70,000+` runs per week** (both documented). `100,000+` is the **post-backfill forecast** — same category as the 8,000, so it is **not claimed**. Keep pipelines (inventory) and runs (throughput) distinct; the pair is what shows the system is both large and live.
 - **Repos migrated = `10,000+`, not 11,000+.** The Server source had ~10.3–10.5k repos; the ~500–700 that brought Cloud to 11k+ were **net-new created in Cloud**, not migrated. "Migrated/modernized" claims use **`10,000+`** (true and conservative). The 11k figure is only honest as an **end-state/scale** claim ("11,000+ repos on GitHub Enterprise Cloud"), a different verb — not used in current copy.
 
 **Hero metric strip** (replaces `~1.9M lines`; source from `lib/constants.ts` `heroMetrics`):
-> `8,000+` enterprise developers · `1,000+` active in 90 days · `10,000+` repos migrated
+> `4,000+` engineers on the platform · `60,000+` pipelines under management · `10,000+` repos migrated
+
+(`1,000+` active in 90 days moved to the achievement cards so the strip stays at three.)
 
 **Homepage Current Role — curated pillars (6 + prior):**
-1. Lead the internal developer platform — single pane of glass for **8,000+ engineers** — on a CEO-sponsored initiative to cut onboarding from **40+ days**.
+1. Lead the internal developer platform — single pane of glass for **4,000+ engineers today**, rolling out toward the full **8,000-engineer org** — on a CEO-sponsored initiative to cut onboarding from **40+ days**.
 2. Unified developer surface: **custom CLI, desktop app, IDE extensions**; **1,000+ active in 90 days**.
 3. **"One build command, any stack"** — context-aware builds that run identically locally / in CI / fully remote, on a custom base-image registry.
 4. **Real-time DevOps intelligence** — an event bus streaming pipeline + CLI/IDE telemetry into **AWS, DynamoDB, Snowflake** for ML analysis of developer pain points; upgraded observability (**Splunk, Dynatrace**); live platform **health status page + subscribe-able alerts**.
@@ -138,7 +145,7 @@ Decisions reached after P1; folds into the P2 PR. **Positioning shift:** lead wi
 
 **SEO / metadata (`lib/constants.ts` `siteMetadata` + `app/layout.tsx` Person schema):**
 - **Title:** `Anthony Brignano — I build platforms engineers ship on` (decision: brand impression > keyword density, since the site ranks #1 on the name anyway; keywords live in the description).
-- **Description:** `Internal developer platforms for 8,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes developer onboarding self-service and software delivery faster and safer.`
+- **Description:** `Internal developer platforms for 4,000+ engineers — CI/CD, DevOps intelligence, and AI-native tooling that makes developer onboarding self-service and software delivery faster and safer.` (was `8,000+`; corrected 2026-08-25 per the no-forecast rule above)
 - Mirror to OG + Twitter titles/descriptions.
 - **`Person` schema enhancements:** add `description`, `knowsAbout` (platform engineering, developer experience, CI/CD, DevOps intelligence, AI-native tooling, GitHub Enterprise, Terraform, AWS), and a fuller `sameAs` (pull from `socialLinks`). Off-page lever to mention to user: link brignano.io from LinkedIn + GitHub profiles.
 
