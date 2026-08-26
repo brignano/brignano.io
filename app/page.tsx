@@ -350,9 +350,10 @@ export default function Home() {
                 Snowflake) with ML analysis of developer pain points;
                 observability through Splunk and Dynatrace; and an end-to-end
                 CI/CD and DevSecOps toolchain — Jenkins, GitHub Actions,
-                Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx — keeping
-                60,000+ pipelines reliable across 70,000+ runs a week. AI
-                features ship as MCP-based skills.
+                Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx —
+                supporting 60,000+ pipelines across 70,000+ runs a week, with a
+                unified pipeline model designed to consolidate them onto
+                platform tooling. AI features ship as MCP-based skills.
               </p>
             </details>
 
