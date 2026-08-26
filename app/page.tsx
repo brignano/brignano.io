@@ -42,12 +42,12 @@ export default function Home() {
               strongest credibility signal for this audience, in the fold.
               Three grid children keep the mobile order copy -> proof -> actions
               without duplicating the markup. */}
-          <div className="relative z-10 grid gap-y-9 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-16 lg:items-center">
+          <div className="relative z-10 grid gap-y-4 sm:gap-y-9 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-16 lg:items-center">
             <div className="max-w-2xl lg:col-start-1 lg:row-start-1">
             <p
               data-aos="fade-up"
               data-aos-duration={500}
-              className="font-display uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-5"
+              className="font-display uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-3 sm:mb-5"
             >
               Senior Staff Software Engineer · The Hartford
             </p>
@@ -55,7 +55,7 @@ export default function Home() {
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={80}
-              className="font-sans font-bold tracking-tight text-4xl sm:text-5xl lg:text-6xl mb-6 leading-[1.05]"
+              className="font-sans font-bold tracking-tight text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-6 lg:mb-5 leading-[1.05]"
             >
               I build the platforms thousands of engineers ship on.
             </h1>
@@ -63,7 +63,7 @@ export default function Home() {
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={180}
-              className="text-base sm:text-lg text-ink-soft mb-8 max-w-xl leading-relaxed"
+              className="text-base sm:text-lg text-ink-soft mb-5 sm:mb-8 lg:mb-6 max-w-xl leading-relaxed"
             >
               I build the shared tools and automation engineers rely on to ship software — faster, safer, and more consistently. Think of it as building the factory, not the products that roll off it. Increasingly, that means baking AI right into those tools.
             </p>
@@ -75,12 +75,12 @@ export default function Home() {
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={260}
-              className="flex flex-wrap gap-x-7 gap-y-4 sm:gap-x-0 lg:flex-col lg:gap-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:rounded-lg lg:border lg:border-line lg:bg-card lg:p-7 lg:shadow-1"
+              className="flex flex-wrap gap-x-7 gap-y-4 sm:gap-x-0 lg:flex-col lg:gap-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:rounded-lg lg:border lg:border-line lg:bg-card lg:p-5 lg:shadow-1"
             >
               {heroMetrics.map((metric) => (
                 <div
                   key={metric.label}
-                  className="flex flex-col sm:px-5 sm:first:pl-0 sm:border-l sm:first:border-l-0 border-line lg:px-0 lg:border-l-0 lg:border-t lg:first:border-t-0 lg:border-line lg:py-4 lg:first:pt-0 lg:last:pb-0"
+                  className="flex flex-col sm:px-5 sm:first:pl-0 sm:border-l sm:first:border-l-0 border-line lg:px-0 lg:border-l-0 lg:border-t lg:first:border-t-0 lg:border-line lg:py-3 lg:first:pt-0 lg:last:pb-0"
                 >
                   <dd className="text-xl lg:text-3xl font-bold tracking-tight">
                     <CountUp value={metric.value} />
@@ -99,11 +99,13 @@ export default function Home() {
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={340}
-              className="flex flex-wrap md:flex-nowrap gap-4 mb-10 items-center"
+              /* No bottom margin below `sm` — the social row underneath is
+                 hidden there, so this is the last thing in the hero. */
+              className="flex flex-wrap md:flex-nowrap gap-3 sm:gap-4 mb-0 sm:mb-8 lg:mb-6 items-center"
             >
               <Link
                 href="/resume"
-                className="inline-flex items-center px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold rounded-lg transition-colors duration-200 md:flex-shrink-0"
+                className="inline-flex items-center px-4 sm:px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold rounded-lg transition-colors duration-200 md:flex-shrink-0"
                 onClick={() => {
                   event("cta_clicked", {
                     cta: "resume",
@@ -117,7 +119,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/coding"
-                className="inline-flex items-center px-6 py-3 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
+                className="inline-flex items-center px-4 sm:px-6 py-3 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                 onClick={() => {
                   event("cta_clicked", {
                     cta: "coding_activity",
@@ -131,16 +133,22 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Social Links — last thing in the hero, so no trailing margin.
-                It used to carry `mb-8` below xl, which both added 32px to a
-                section already fighting for room on the first screen and
-                pulled the visually-centred content up off centre. The gap to
-                what follows is the section's own `mb-8 md:mb-16`. */}
+            {/* Social Links — hidden below `sm`, where the fold is the scarce
+                resource and these three are the weakest claim on it: the exact
+                same three links, with icons, sit in the footer of every page.
+                Cutting them here is what buys the headline, the paragraph, the
+                metrics and both CTAs a place on a phone's first screen without
+                touching the copy.
+
+                Last thing in the hero, so no trailing margin either. It used to
+                carry `mb-8` below xl, which both added 32px to a section already
+                fighting for room and pulled the centred content off centre; the
+                gap to what follows is the section's own `mb-8 md:mb-16`. */}
             <ul
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={420}
-              className="flex items-center flex-wrap gap-x-5 gap-y-4"
+              className="hidden sm:flex items-center flex-wrap gap-x-5 gap-y-4"
             >
               {socialLinks.map((link) => (
                 <li key={link.name}>
