@@ -117,13 +117,19 @@ Decisions reached after P1; folds into the P2 PR. **Positioning shift:** lead wi
   - `8,000` = the **full engineering organization** the rollout is heading toward. Only ever appears as trajectory — "on its way to", "rolling out toward" — **never** as "serving 8,000+" or "8,000 engineers supported", and never as a standalone metric.
   - `1,000+` = **90-day active adopters** of the unified surface (traction). Still distinct from both of the above.
   - Rationale: a defensible number beats a larger one that needs qualifying. "How many are actually on it?" is the first question an interviewer asks, and 4,000-with-a-growth-story survives it where 8,000-as-reach does not.
-- **Pipelines: `60,000+` under management, `70,000+` runs per week** (both documented). `100,000+` is the **post-backfill forecast** — same category as the 8,000, so it is **not claimed**. Keep pipelines (inventory) and runs (throughput) distinct; the pair is what shows the system is both large and live.
+- **Pipelines: `60,000+` supported, `70,000+` runs per week** (both documented). `100,000+` is the **post-backfill forecast** — same category as the 8,000, so it is **not claimed**. Keep pipelines (inventory) and runs (throughput) distinct; the pair is what shows the system is both large and live.
+- **The verb carries as much risk as the number** (added 2026-08-26). Three different relationships exist and must not be blurred:
+  - **Supported** — we keep it running where it lives. True of the 60,000+ pipelines. **Not** "managed": consolidating them onto platform tooling via a unified pipeline model is *planned*, so "managed"/"instrumented" would be a forecast wearing a present-tense verb.
+  - **Tracked** — the platform has visibility. True of the `12,000+` repositories today. CI/CD instrumentation across brownfield apps is still rolling out, so "under platform management" would overstate it.
+  - **Moved / migrated** — a completed action. True of the `10,000+` repos to GHEC.
+  - Test to apply: *if the rollout stopped tomorrow, would this sentence still be true?* If not, the verb is describing a plan.
+- **Repos migrated stays `10,000+`, not `11,000+` or `12,000+`.** Three separate populations, easy to conflate: ~11k **in** GHEC, of which `10,000+` were **migrated** (the rest net-new in Cloud); `12,000+` currently **tracked** by the platform; and a much smaller set actually **instrumented** with platform CI/CD tooling — which is not claimed at all until the rollout lands.
 - **Repos migrated = `10,000+`, not 11,000+.** The Server source had ~10.3–10.5k repos; the ~500–700 that brought Cloud to 11k+ were **net-new created in Cloud**, not migrated. "Migrated/modernized" claims use **`10,000+`** (true and conservative). The 11k figure is only honest as an **end-state/scale** claim ("11,000+ repos on GitHub Enterprise Cloud"), a different verb — not used in current copy.
 
 **Hero metric strip** (replaces `~1.9M lines`; source from `lib/constants.ts` `heroMetrics`):
-> `4,000+` engineers on the platform · `60,000+` pipelines under management · `10,000+` repos migrated
+> `4,000+` engineers on the platform · `60,000+` pipelines supported · `12,000+` repositories tracked · `10,000+` repos migrated
 
-(`1,000+` active in 90 days moved to the achievement cards so the strip stays at three.)
+(`1,000+` active in 90 days lives on the achievement cards. The homepage strip wraps to four; **`opengraph-image.tsx` renders only the first three** — fixed 1200×630, no wrap, and four labels overflow the usable width. `heroMetrics` is ordered so the current-state numbers lead and the migration is what drops off the social card.)
 
 **Homepage Current Role — curated pillars (6 + prior):**
 1. Lead the internal developer platform — single pane of glass for **4,000+ engineers today**, rolling out toward the full **8,000-engineer org** — on a CEO-sponsored initiative to cut onboarding from **40+ days**.

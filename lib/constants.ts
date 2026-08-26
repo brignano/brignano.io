@@ -263,14 +263,25 @@ export interface HeroMetric {
 // Single source of truth for the hero proof strip. Keep these current —
 // they render directly under the hero subhead (above the fold).
 // Integrity (TSD §5.7): every figure here is CURRENT AND DOCUMENTED, never a
-// forecast. 4,000+ = engineers actually on the platform today (8,000 is the
-// full-org target — trajectory, not a claim). 60,000+ = pipelines under
-// management today (100k+ is post-backfill forecast — not claimed).
-// 10,000+ = repos migrated to GHEC. 1,000+ 90-day adopters lives on the
-// achievement card below rather than here, to keep this strip to three.
+// forecast, and the VERB matters as much as the number:
+//   4,000+ engineers  — actually on the platform (8,000 full-org = trajectory)
+//   60,000+ pipelines — "supported", not "managed". We support them where they
+//                       run; consolidating them onto platform tooling via a
+//                       unified pipeline model is PLANNED, so any claim of
+//                       managing/instrumenting them would be a forecast.
+//   12,000+ repos     — "tracked". The platform has visibility across them;
+//                       CI/CD instrumentation across brownfield apps is still
+//                       rolling out, so "under management" would overstate.
+//   10,000+ repos     — "moved". Migration to GHEC, a completed prior win.
+//                       Stays 10,000+ not 11,000+ (see §5.7: ~500-700 of the
+//                       ~11k in Cloud were net-new there, not migrated).
+// Order matters: opengraph-image.tsx renders only the first three (fixed-width
+// card, no wrap), so the current-state metrics lead and the migration trails.
+// 1,000+ 90-day adopters lives on the achievement card below.
 export const heroMetrics: HeroMetric[] = [
   { value: "4,000+", label: "engineers on the platform" },
-  { value: "60,000+", label: "pipelines under management" },
+  { value: "60,000+", label: "pipelines supported" },
+  { value: "12,000+", label: "repositories tracked" },
   { value: "10,000+", label: "code projects moved" },
 ];
 

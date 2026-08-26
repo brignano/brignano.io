@@ -109,7 +109,12 @@ export default async function Image() {
           </div>
         </div>
 
-        {/* Proof metrics strip */}
+        {/* Proof metrics strip — first three only. This card is a fixed
+            1200x630 with no flex-wrap, and four labels plus gaps overflow the
+            1040px of usable width. heroMetrics is ordered so the three
+            current-state numbers lead; the migration (a prior win) is the one
+            that drops off here, which is the right trade for a social preview.
+            The homepage renders all four — it wraps. */}
         <div
           style={{
             display: "flex",
@@ -118,7 +123,7 @@ export default async function Image() {
             borderTop: `2px solid ${HAIRLINE}`,
           }}
         >
-          {heroMetrics.map((m) => (
+          {heroMetrics.slice(0, 3).map((m) => (
             <div
               key={m.label}
               style={{ display: "flex", flexDirection: "column" }}
