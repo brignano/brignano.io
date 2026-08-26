@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { applyTheme } from "@/lib/theme";
 
 // Nav is inline at every width. A slide-in dialog to reveal three links cost
 // two taps and an overlay to show what fits on one line, so the drawer, the
@@ -51,11 +52,13 @@ export default function Header() {
   const toggleTheme = () => {
     const newDark = !isDarkMode;
     // Flipping the class notifies the store above, which re-renders the icon.
-    document.documentElement.classList.toggle("dark", newDark);
-    // Keep data-theme in sync with the class: Tailwind reads `.dark`, the
-    // design tokens read [data-theme]. If these drift, the page renders one
-    // theme's tokens under the other theme's utilities.
-    document.documentElement.setAttribute("data-theme", newDark ? "dark" : "light");
+    // `applyTheme` moves the three things that must never drift together:
+    // `.dark` (Tailwind's variant), `data-theme` (the design tokens), and
+    // <meta name="theme-color"> (the browser's own chrome and overscroll
+    // gutter). If these drift, the page renders one theme's tokens under
+    // another theme's utilities — or, for the meta tag, inside another theme's
+    // browser chrome.
+    applyTheme(newDark);
     try {
       localStorage.setItem("theme", newDark ? "dark" : "light");
     } catch {

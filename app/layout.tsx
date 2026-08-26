@@ -10,6 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import GoogleAnalytics from "@/components/google-analytics";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 import { siteMetadata, socialLinks } from "@/lib/constants";
+import { THEME_COLORS } from "@/lib/theme";
 import ScrollToTop from "@/components/scroll-to-top";
 import ScrollReveal from "@/components/scroll-reveal";
 import ToastProvider from "@/components/toast-provider";
@@ -40,13 +41,12 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  // Browser chrome behind the page. Literal because a <meta> tag cannot read a
-  // CSS custom property; these are --bg in each theme (tokens.css --n-25/--n-0)
-  // and must move with it.
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
-    { media: "(prefers-color-scheme: dark)", color: "#0d0d0f" },
-  ],
+  // No `themeColor` here on purpose. The Metadata API can only express it as a
+  // `prefers-color-scheme` pair, which tracks the OS rather than the in-page
+  // toggle — the mismatch a phone shows as differently-coloured browser chrome
+  // and overscroll gutter at the top and bottom of the page. The tags are
+  // written by hand below instead, ahead of the pre-paint script that resolves
+  // them (see lib/theme.ts).
 };
 
 const isProduction =
@@ -71,10 +71,33 @@ export default function RootLayout({
       className={`${geist.variable} ${plexMono.variable} ${silkscreen.variable} tier-marketing`}
     >
       <head>
-        {/* Set theme before first paint to avoid a flash of the wrong theme. */}
+        {/*
+          Browser chrome behind the page — the iOS Safari toolbars and the
+          rubber-band overscroll gutter you expose by scrolling to the bottom.
+          These two are the no-JS / never-toggled default; the script below
+          rewrites them to the *resolved* theme so a visitor who toggled against
+          their OS doesn't get the other theme's colour in the gutter. Declared
+          here rather than via `viewport.themeColor` so they are guaranteed to
+          exist in the DOM by the time that script runs.
+        */}
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: light)"
+          content={THEME_COLORS.light}
+          suppressHydrationWarning
+        />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content={THEME_COLORS.dark}
+          suppressHydrationWarning
+        />
+        {/* Set theme before first paint to avoid a flash of the wrong theme.
+            Mirrors lib/theme.ts `applyTheme` — inline because it must run
+            before hydration, so it cannot import. Keep the two in sync. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.theme;var d=t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches);var r=document.documentElement;r.classList.toggle("dark",d);r.setAttribute("data-theme",d?"dark":"light");}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.theme;var d=t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches);var r=document.documentElement;r.classList.toggle("dark",d);r.setAttribute("data-theme",d?"dark":"light");var c=d?${JSON.stringify(THEME_COLORS.dark)}:${JSON.stringify(THEME_COLORS.light)};var m=document.querySelectorAll('meta[name="theme-color"]');for(var i=0;i<m.length;i++){m[i].removeAttribute("media");m[i].setAttribute("content",c);}}catch(e){}})();`,
           }}
         />
         {/* Resource hints for performance */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect } from "react";
+import { applyTheme, resolveTheme } from "@/lib/theme";
 
 // `useLayoutEffect` runs after React's DOM mutations but *before* the browser
 // paints, so restoring the class here never shows a light frame. It warns when
@@ -20,21 +21,13 @@ const useIsomorphicLayoutEffect =
  * variant stayed light.
  *
  * This must stay in sync with the inline script in `app/layout.tsx` — that one
- * prevents the flash, this one survives hydration. Neither is redundant.
+ * prevents the flash, this one survives hydration. Neither is redundant. Both
+ * go through `applyTheme`, which also repoints <meta name="theme-color"> at the
+ * resolved theme so the browser's own chrome matches the page (lib/theme.ts).
  */
 export default function ThemeSync() {
   useIsomorphicLayoutEffect(() => {
-    try {
-      const stored = localStorage.theme;
-      const dark =
-        stored === "dark" ||
-        (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches);
-      const root = document.documentElement;
-      root.classList.toggle("dark", dark);
-      root.setAttribute("data-theme", dark ? "dark" : "light");
-    } catch {
-      /* Private mode / storage disabled — the media query still paints tokens. */
-    }
+    applyTheme(resolveTheme());
   }, []);
 
   return null;
