@@ -127,9 +127,13 @@ Decisions reached after P1; folds into the P2 PR. **Positioning shift:** lead wi
 - **Repos migrated = `10,000+`, not 11,000+.** The Server source had ~10.3–10.5k repos; the ~500–700 that brought Cloud to 11k+ were **net-new created in Cloud**, not migrated. "Migrated/modernized" claims use **`10,000+`** (true and conservative). The 11k figure is only honest as an **end-state/scale** claim ("11,000+ repos on GitHub Enterprise Cloud"), a different verb — not used in current copy.
 
 **Hero metric strip** (replaces `~1.9M lines`; source from `lib/constants.ts` `heroMetrics`):
-> `4,000+` engineers on the platform · `60,000+` pipelines supported · `12,000+` repositories tracked · `10,000+` repos migrated
+> `4,000+` engineers on the platform · `60,000+` pipelines supported · `12,000+` repositories tracked
 
-(`1,000+` active in 90 days lives on the achievement cards. The homepage strip wraps to four; **`opengraph-image.tsx` renders only the first three** — fixed 1200×630, no wrap, and four labels overflow the usable width. `heroMetrics` is ordered so the current-state numbers lead and the migration is what drops off the social card.)
+**Three metrics, all current-state.** Two deliberate exclusions:
+- `10,000+` **repos migrated** is not in the strip. Two repo counts side by side made readers stop to reconcile them, and at `10,000` next to `12,000` a year-long migration read as the *smaller* achievement. It appears in prose instead — the homepage **"Prior:"** line and the résumé bullet — where the context (under 12 months, the 2023 award) does the work a bare number can't.
+- `1,000+` active in 90 days lives on the achievement cards.
+
+Keep the strip at **three**: `opengraph-image.tsx` is a fixed 1200×630 with no `flex-wrap`, and a fourth label overflows the 1040px of usable width. Adding one means slicing there.
 
 **Homepage Current Role — curated pillars (6 + prior):**
 1. Lead the internal developer platform — single pane of glass for **4,000+ engineers today**, rolling out toward the full **8,000-engineer org** — on a CEO-sponsored initiative to cut onboarding from **40+ days**.

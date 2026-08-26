@@ -272,17 +272,17 @@ export interface HeroMetric {
 //   12,000+ repos     — "tracked". The platform has visibility across them;
 //                       CI/CD instrumentation across brownfield apps is still
 //                       rolling out, so "under management" would overstate.
-//   10,000+ repos     — "moved". Migration to GHEC, a completed prior win.
-//                       Stays 10,000+ not 11,000+ (see §5.7: ~500-700 of the
-//                       ~11k in Cloud were net-new there, not migrated).
-// Order matters: opengraph-image.tsx renders only the first three (fixed-width
-// card, no wrap), so the current-state metrics lead and the migration trails.
-// 1,000+ 90-day adopters lives on the achievement card below.
+// Deliberately three, all current-state. The 10,000+ GHEC migration is NOT
+// here: two repo counts side by side made readers stop and reconcile them,
+// and at 10,000 next to 12,000 a year-long migration read as the smaller
+// achievement. It already appears twice in prose — the homepage "Prior:" line
+// and the resume bullet — where it carries the context (under 12 months, the
+// 2023 award) that a bare number in a strip cannot.
+// 1,000+ 90-day adopters likewise lives on the achievement card below.
 export const heroMetrics: HeroMetric[] = [
   { value: "4,000+", label: "engineers on the platform" },
   { value: "60,000+", label: "pipelines supported" },
   { value: "12,000+", label: "repositories tracked" },
-  { value: "10,000+", label: "code projects moved" },
 ];
 
 export interface Achievement {
