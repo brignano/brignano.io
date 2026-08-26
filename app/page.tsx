@@ -34,7 +34,7 @@ export default function Home() {
       <BreadcrumbSchema items={HOME_BREADCRUMBS} />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16">
         {/* Hero — full-height, staggered reveal (TSD §5.1) */}
-        <section className="relative min-h-[86vh] flex flex-col justify-center mb-8 md:mb-16">
+        <section className="relative fold-fit flex flex-col justify-center mb-8 md:mb-16">
           {/* Two columns at lg. The hero previously used 672px of a 1152px
               container and left ~624px of the fold empty on the right, which is
               where the signature was meant to go. Rather than fill it with
@@ -131,12 +131,16 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Social Links */}
+            {/* Social Links — last thing in the hero, so no trailing margin.
+                It used to carry `mb-8` below xl, which both added 32px to a
+                section already fighting for room on the first screen and
+                pulled the visually-centred content up off centre. The gap to
+                what follows is the section's own `mb-8 md:mb-16`. */}
             <ul
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={420}
-              className="flex items-center flex-wrap gap-x-5 gap-y-4 xl:mb-0 mb-8"
+              className="flex items-center flex-wrap gap-x-5 gap-y-4"
             >
               {socialLinks.map((link) => (
                 <li key={link.name}>

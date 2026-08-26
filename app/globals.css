@@ -49,6 +49,39 @@ html {
   transition: background-color 150ms;
 }
 
+/* First-screen sizing ──────────────────────────────────────────────────────
+   A hero sized at a percentage of `100vh` overshoots, because it does not
+   start at the top of the viewport: the sticky header and the collapsed margin
+   between it and <main> stand above it. `min-h-[86vh]` asked for 86% of the
+   whole screen on top of that ~151px of chrome, so the first screen needed
+   ~114% of itself and the hero's own CTAs landed below the fold on every
+   laptop and phone. `--fold-offset` is what stands above the hero; `.fold-fit`
+   is "whatever is left of the first screen".
+
+   `svh` is the mobile half of the same problem: `vh` resolves to the
+   toolbars-*retracted* height, which is taller than what a phone shows on
+   load, so a vh-sized hero overflows the moment it renders and only fits once
+   you scroll. `svh` is the toolbars-shown height — it fits on arrival and
+   gains slack as they retract. The `vh` line above is the fallback for
+   browsers without `svh`; declaration order does the switching. */
+:root {
+  /* Sticky header (py-6 + its tallest child + the 1px rule ≈ 87px, rounded up
+     to 5.5rem so drift up there only ever makes the hero shorter, never taller
+     than the fold) + the header/<main> margin, which collapses to the larger
+     of header `mb-10` and main `mt-16`. */
+  --fold-offset: calc(5.5rem + 4rem);
+}
+@media (min-width: 64rem) {
+  /* lg: the collapsed margin becomes the header's `mb-28`, which now wins. */
+  :root {
+    --fold-offset: calc(5.5rem + 7rem);
+  }
+}
+.fold-fit {
+  min-height: calc(100vh - var(--fold-offset));
+  min-height: calc(100svh - var(--fold-offset));
+}
+
 @keyframes wave {
   0% {
     transform: rotate(0deg);
