@@ -35,6 +35,20 @@
 }
 
 
+/* The page background belongs to the ROOT element, not just <body>.
+   <body> carries `bg-bg`, and CSS propagates that to the canvas only while
+   <html> has no background of its own — a rule that quietly stops applying if
+   anything ever paints the root. What it paints is the strip past the end of
+   the document: the rubber-band overscroll gutter you pull open by scrolling
+   to the bottom on a phone, and the gap under a page shorter than the viewport.
+   Pinning `--bg` here means that gutter can never come out a different colour
+   than the page it belongs to. `transition` matches <body>'s `transition-colors`
+   so both halves cross-fade together on a theme toggle instead of one snapping. */
+html {
+  background-color: var(--bg);
+  transition: background-color 150ms;
+}
+
 @keyframes wave {
   0% {
     transform: rotate(0deg);
