@@ -14,6 +14,10 @@ export interface SocialLink {
 // same name + tagline as the site — single source of truth, no drift.
 export const SITE_NAME = "Anthony Brignano";
 export const SITE_TAGLINE = "I build the platforms thousands of engineers ship on";
+// The hero eyebrow. Lives here for the same reason the tagline does: the social
+// card reproduces the landing-page fold, and the two drifted apart last time
+// this string only existed inside app/page.tsx.
+export const SITE_ROLE = "Senior Staff Software Engineer · The Hartford";
 const SITE_TITLE = "Anthony Brignano — I build platforms engineers ship on";
 // Meta description: kept ~155 chars so Google doesn't truncate (it trims
 // around 150–160 in results).

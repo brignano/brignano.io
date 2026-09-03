@@ -18,6 +18,8 @@ import {
   nowBuilding,
   featuredProjects,
   heroMetrics,
+  SITE_ROLE,
+  SITE_TAGLINE,
 } from "@/lib/constants";
 import { event } from "@/lib/gtag";
 
@@ -49,7 +51,7 @@ export default function Home() {
               data-aos-duration={500}
               className="font-display uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-3 sm:mb-5"
             >
-              Senior Staff Software Engineer · The Hartford
+              {SITE_ROLE}
             </p>
             <h1
               data-aos="fade-up"
@@ -57,7 +59,7 @@ export default function Home() {
               data-aos-delay={80}
               className="font-sans font-bold tracking-tight text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-6 lg:mb-5 leading-[1.05]"
             >
-              I build the platforms thousands of engineers ship on.
+              {SITE_TAGLINE}.
             </h1>
             <p
               data-aos="fade-up"
