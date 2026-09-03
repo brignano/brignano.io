@@ -15,14 +15,14 @@ experience:
     startDate: 2023
     endDate: Present
     summary: |
-      Technical Lead for The Hartford's enterprise developer platform and developer experience strategy — the single pane of glass for 4,000+ engineers today, rolling out toward the full 8,000-engineer organization — owning the architecture and evolution of CI/CD, DevOps intelligence, internal developer tooling, and AI-native delivery patterns across the 12,000+ repositories the platform tracks.
+      Technical Lead for The Hartford's enterprise developer platform and developer experience strategy — the single pane of glass for 4,000+ engineers today, rolling out toward the full 8,000-engineer organization — owning the architecture and evolution of CI/CD, DevOps intelligence, internal developer tooling, and AI-native delivery patterns across the 13,000+ repositories the platform tracks.
     highlights:
       - Lead the strategy, design, and delivery of the internal developer platform used by 4,000+ engineers today and rolling out toward the full 8,000-engineer organization, including a CEO-sponsored initiative making developer onboarding self-service — the platform provisions a new machine to productive in hours, down from a 40+ day baseline
       - Shipped a unified developer surface across a custom CLI, desktop app, and IDE extensions, reaching 1,000+ active engineers in the first 90 days
       - Designed "one build command, any stack" — context-aware builds that run identically locally, in CI, or fully remote on virtual build agents, against a custom base-image registry
       - Architected a real-time DevOps intelligence layer — an event bus streaming pipeline plus CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points — and upgraded platform observability (Splunk, Dynatrace) behind a live health status page with subscribe-able alerts
       - Made the platform AI-native — MCP servers and out-of-the-box skills that let AI agents safely query and operate enterprise CI/CD systems, plus standardized patterns and pipelines carrying Google Cloud and Vertex AI workloads to production
-      - Operate the enterprise CI/CD and DevSecOps toolchain end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx), supporting 60,000+ pipelines across 70,000+ runs a week, with a unified pipeline model designed to consolidate them onto platform tooling
+      - Operate the enterprise CI/CD and DevSecOps toolchain end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx), supporting 64,000+ pipelines across 70,000+ runs a week, with a unified pipeline model designed to consolidate them onto platform tooling
       - Led the enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud, modernizing 10,000+ repositories in under 12 months
       - Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity impact
     technologies:

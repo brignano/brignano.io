@@ -365,7 +365,7 @@ export default function Home() {
                 observability through Splunk and Dynatrace; and an end-to-end
                 CI/CD and DevSecOps toolchain — Jenkins, GitHub Actions,
                 Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx —
-                supporting 60,000+ pipelines across 70,000+ runs a week, with a
+                supporting 64,000+ pipelines across 70,000+ runs a week, with a
                 unified pipeline model designed to consolidate them onto
                 platform tooling. AI features ship as MCP-based skills.
               </p>
