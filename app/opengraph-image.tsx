@@ -13,6 +13,16 @@ import {
 // committed font files from disk.
 // Generate the card once at build time and emit it as a static PNG file
 // (required by `output: "export"`).
+//
+// CACHE-BUSTING, AND ITS ONE BLIND SPOT. Next appends a `?<contenthash>` to
+// og:image / twitter:image, which is what makes a redesigned card reach Teams,
+// LinkedIn and iMessage instead of their cached copy. That hash is
+// `interpolateName(this, "[contenthash]", { content })` over THIS FILE'S source
+// only — not over the rendered PNG, and not over anything it imports. So an
+// edit to a heroMetrics value in lib/constants.ts produces a different image at
+// an identical URL. `vercel.json` therefore does NOT serve this route
+// `immutable`: the header is what lets a data-only change be re-fetched, and
+// the two must be changed together.
 export const dynamic = "force-static";
 export const alt = `${SITE_NAME} — ${SITE_TAGLINE}`;
 export const size = { width: 1200, height: 630 };

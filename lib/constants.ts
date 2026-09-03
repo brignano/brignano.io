@@ -269,24 +269,24 @@ export interface HeroMetric {
 // Integrity (TSD §5.7): every figure here is CURRENT AND DOCUMENTED, never a
 // forecast, and the VERB matters as much as the number:
 //   4,000+ engineers  — actually on the platform (8,000 full-org = trajectory)
-//   60,000+ pipelines — "supported", not "managed". We support them where they
+//   64,000+ pipelines — "supported", not "managed". We support them where they
 //                       run; consolidating them onto platform tooling via a
 //                       unified pipeline model is PLANNED, so any claim of
 //                       managing/instrumenting them would be a forecast.
-//   12,000+ repos     — "tracked". The platform has visibility across them;
+//   13,000+ repos     — "tracked". The platform has visibility across them;
 //                       CI/CD instrumentation across brownfield apps is still
 //                       rolling out, so "under management" would overstate.
 // Deliberately three, all current-state. The 10,000+ GHEC migration is NOT
 // here: two repo counts side by side made readers stop and reconcile them,
-// and at 10,000 next to 12,000 a year-long migration read as the smaller
+// and at 10,000 next to 13,000 a year-long migration read as the smaller
 // achievement. It already appears twice in prose — the homepage "Prior:" line
 // and the resume bullet — where it carries the context (under 12 months, the
 // 2023 award) that a bare number in a strip cannot.
 // 1,000+ 90-day adopters likewise lives on the achievement card below.
 export const heroMetrics: HeroMetric[] = [
   { value: "4,000+", label: "engineers on the platform" },
-  { value: "60,000+", label: "pipelines supported" },
-  { value: "12,000+", label: "repositories tracked" },
+  { value: "64,000+", label: "pipelines supported" },
+  { value: "13,000+", label: "repositories tracked" },
 ];
 
 export interface Achievement {
