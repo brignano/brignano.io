@@ -2,10 +2,23 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    dependency-type: "production"
     schedule:
       interval: "weekly"
       day: "monday"
+    # Batch everything into one PR per stream instead of one PR per package.
+    # `groups` only covers version updates by default, so security updates get
+    # their own group — otherwise Dependabot alerts still arrive one PR each.
+    # If a major ever blocks the batch, split it out with a third group scoped to
+    # `update-types: ["major"]`.
+    groups:
+      npm-dependencies:
+        applies-to: version-updates
+        patterns:
+          - "*"
+      npm-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
     ignore:
       # eslint-config-next / eslint-plugin-react don't support ESLint 10 yet;
       # the 9 -> 10 bump broke `npm run lint`. Re-allow once they do.
