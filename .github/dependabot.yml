@@ -24,3 +24,10 @@ updates:
       # the 9 -> 10 bump broke `npm run lint`. Re-allow once they do.
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
+      # typescript-eslint doesn't support TS 7 yet; the 6 -> 7 bump makes
+      # `npm run lint` fail to start, though `next build` still passes — so CI
+      # stays green and the breakage only shows up locally. TS 6 is the highest
+      # version that lints. Drop this once typescript-eslint ships TS 7 support:
+      # https://github.com/typescript-eslint/typescript-eslint/issues/10940
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
