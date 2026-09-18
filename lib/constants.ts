@@ -269,7 +269,7 @@ export interface HeroMetric {
 // Integrity (TSD §5.7): every figure here is CURRENT AND DOCUMENTED, never a
 // forecast, and the VERB matters as much as the number:
 //   4,000+ engineers  — actually on the platform (8,000 full-org = trajectory)
-//   64,000+ pipelines — "supported", not "managed". We support them where they
+//   67,000+ pipelines — "supported", not "managed". We support them where they
 //                       run; consolidating them onto platform tooling via a
 //                       unified pipeline model is PLANNED, so any claim of
 //                       managing/instrumenting them would be a forecast.
@@ -285,7 +285,7 @@ export interface HeroMetric {
 // 1,000+ 90-day adopters likewise lives on the achievement card below.
 export const heroMetrics: HeroMetric[] = [
   { value: "4,000+", label: "engineers on the platform" },
-  { value: "64,000+", label: "pipelines supported" },
+  { value: "67,000+", label: "pipelines supported" },
   { value: "13,000+", label: "repositories tracked" },
 ];
 
