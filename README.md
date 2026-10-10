@@ -96,7 +96,9 @@ The floating chat widget (`components/chat-widget.tsx`) posts to `app/api/chat/r
 - `lib/constants.ts` - the projects list
 - `lib/chat/about-me.md` - extra context in my own words (HTML comments are stripped before it reaches the model)
 
-It needs an `ANTHROPIC_API_KEY` environment variable (set it in the Vercel project settings, or `.env.local` for `npm run dev`). Without one, the widget shows a "not configured" message. Set a monthly spend limit in the Anthropic Console as a backstop; the route also caps message length, conversation length, and per-IP request rate.
+It needs an `ANTHROPIC_API_KEY` environment variable (set it in the Vercel project settings, or `.env.local` for `npm run dev`). Without one, the widget shows a "not configured" message. Set a monthly spend limit in the Anthropic Console as a backstop; the route also caps message length, conversation length, reply length, and per-IP request rate.
+
+The route also enforces a site-wide daily request budget (`CHAT_DAILY_LIMIT`, default 300). Once it's used up, the widget asks visitors to email instead until the next UTC day. To share the count across all function instances, connect an Upstash Redis store (Vercel Marketplace → Upstash), which sets `KV_REST_API_URL`/`KV_REST_API_TOKEN` (or `UPSTASH_REDIS_REST_URL`/`UPSTASH_REDIS_REST_TOKEN`). Without one, each instance counts on its own.
 
 ## 🚢 Deployment on Vercel
 
