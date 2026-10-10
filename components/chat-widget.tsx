@@ -116,6 +116,8 @@ export default function ChatWidget() {
 
   useEffect(() => {
     if (open) inputRef.current?.focus();
+    // Lets globals.css hide the scroll-to-top button, which the panel covers.
+    document.documentElement.toggleAttribute("data-chat-open", open);
   }, [open]);
 
   useEffect(() => {

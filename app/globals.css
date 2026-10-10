@@ -150,6 +150,12 @@ html {
    this block makes the *browser print* of the live page sane and short too:
    strips site chrome, forces every experience card open, flattens card styling
    to plain text, goes monochrome, and caps bullets to approximate 2 pages. */
+/* The open chat panel covers the scroll-to-top button; take it out of the tab
+   order too. */
+html[data-chat-open] #scroll-to-top {
+  display: none;
+}
+
 @media print {
   @page {
     margin: 0.5in;
@@ -171,6 +177,8 @@ html {
   header,
   footer,
   #scroll-to-top,
+  #chat-toggle,
+  #chat-panel,
   [data-print-hide],
   .job-tech,
   .exp-body > p {
