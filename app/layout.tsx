@@ -14,6 +14,7 @@ import { THEME_COLORS } from "@/lib/theme";
 import ScrollToTop from "@/components/scroll-to-top";
 import ScrollReveal from "@/components/scroll-reveal";
 import ToastProvider from "@/components/toast-provider";
+import ChatWidget from "@/components/chat-widget";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -184,6 +185,7 @@ export default function RootLayout({
           <Footer />
         </ToastProvider>
         <ScrollToTop />
+        <ChatWidget />
         <SpeedInsights />
         {isProduction && GA_MEASUREMENT_ID && <GoogleAnalytics />}
         <Analytics />

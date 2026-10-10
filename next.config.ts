@@ -2,11 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /**
-   * Enable static exports.
+   * The chat assistant's API route (app/api/chat) reads these at request time,
+   * so they have to ship inside its serverless function.
    *
-   * @see https://nextjs.org/docs/app/building-your-application/deploying/static-exports
+   * @see https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats
    */
-  output: "export",
+  outputFileTracingIncludes: {
+    "/api/chat": ["./public/resume.yml", "./lib/chat/about-me.md"],
+  },
 
   /**
    * Set base path. This is usually the slug of your repository.
@@ -16,8 +19,7 @@ const nextConfig: NextConfig = {
   basePath: "",
 
   /**
-   * Disable server-based image optimization. Next.js does not support
-   * dynamic features with static exports.
+   * Serve images as-is rather than through Vercel's image optimizer.
    *
    * @see https://nextjs.org/docs/pages/api-reference/components/image#unoptimized
    */

@@ -6,7 +6,8 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 
 ## 🚀 Features
 
-- **Next.js 16** with App Router and static export support
+- **Next.js 16** with App Router; pages are prerendered and the chat API runs as a Vercel function
+- **AI chat assistant** that answers visitors' questions about my experience and projects (Claude Haiku)
 - **React 19** with modern hooks and components
 - **TailwindCSS 4** for styling
 - **TypeScript** for type safety
@@ -70,24 +71,32 @@ The resume is integrated directly into the application and accessible at `/resum
 - Responsive design
 - Clean, professional layout
 
-The PDF generation is handled entirely on the client-side, allowing the application to maintain its static export configuration while providing dynamic PDF download capabilities.
+The PDF is rendered once at build time by the `app/resume.pdf` route, so the download is a plain static file.
 
 ### Available Scripts
 
 - `npm run dev` - Start the development server with Turbopack
-- `npm run build` - Build the application for production (static export to `out/` directory)
-- `npm run start` - Start Next.js production server (not used for static exports; serve the `out/` directory with a static file server instead)
+- `npm run build` - Build the application for production
+- `npm run start` - Start the Next.js production server
 - `npm run lint` - Run ESLint to check code quality
 
 ## 📦 Building for Production
-
-Next.js is configured with static exports to ensure compatibility with various hosting platforms:
 
 ```bash
 npm run build
 ```
 
-The build output will be in the `out/` directory.
+Every page is still prerendered at build time; the only server code is the chat assistant's `/api/chat` route.
+
+### Chat assistant
+
+The floating chat widget (`components/chat-widget.tsx`) posts to `app/api/chat/route.ts`, which streams answers from Claude Haiku. Its context is built in `lib/chat/system-prompt.ts` from:
+
+- `public/resume.yml` - the resume, picked up automatically
+- `lib/constants.ts` - the projects list
+- `lib/chat/about-me.md` - extra context in my own words (HTML comments are stripped before it reaches the model)
+
+It needs an `ANTHROPIC_API_KEY` environment variable (set it in the Vercel project settings, or `.env.local` for `npm run dev`). Without one, the widget shows a "not configured" message. Set a monthly spend limit in the Anthropic Console as a backstop; the route also caps message length, conversation length, and per-IP request rate.
 
 ## 🚢 Deployment on Vercel
 
@@ -280,10 +289,8 @@ Optional:
 
 ### Next.js Config
 
-The `next.config.ts` is configured for static exports:
-
-- `output: "export"` - Enables static HTML export
-- `images.unoptimized: true` - Disables server-side image optimization
+- `outputFileTracingIncludes` - Ships `resume.yml` and `about-me.md` with the chat API function
+- `images.unoptimized: true` - Serves images as-is
 - `basePath: ""` - Set to your repository slug if deploying to a subdirectory
 
 ### Vercel Analytics

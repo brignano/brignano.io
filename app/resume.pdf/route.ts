@@ -6,7 +6,7 @@ import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import ResumePDF from "@/components/resume-pdf";
 import type { ResumeData } from "@/types/resume";
 
-// Rendered once at build time (output: "export") into a static /resume.pdf.
+// Rendered once at build time (force-static) into a static /resume.pdf.
 // Generating the PDF here instead of in the browser keeps @react-pdf/renderer
 // out of the client bundle and makes the download a plain file request, which
 // works in mobile browsers and in-app webviews that block blob: downloads.
