@@ -62,31 +62,55 @@ function saveMessages(messages: ChatMessage[]) {
   }
 }
 
-// URLs, email addresses, and the site's own paths become links.
+// Markdown links, [text](href), limited to web URLs, the site's own paths, and
+// mailto: so a reply can never produce a javascript: or protocol-relative link.
+const MARKDOWN_LINK_PATTERN =
+  /\[([^\]\n]+)\]\((https?:\/\/[^\s()<>]+|\/(?!\/)[^\s()<>]*|mailto:[^\s()<>]+)\)/g;
+
+// Bare URLs, email addresses, and the site's own paths also become links.
 const LINK_PATTERN =
   /(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"]|[\w.+-]+@[\w-]+(?:\.[\w-]+)+|(?<![\w/])\/(?:resume|projects|coding)\b)/g;
 
-function Linkified({ text }: { text: string }) {
-  const parts = text.split(LINK_PATTERN);
+function ChatLink({ href, children }: { href: string; children: string }) {
+  const external = href.startsWith("http");
   return (
-    <>
-      {parts.map((part, i) => {
-        if (i % 2 === 0) return <Fragment key={i}>{part}</Fragment>;
-        const href = part.startsWith("/") || part.startsWith("http") ? part : `mailto:${part}`;
-        const external = part.startsWith("http");
-        return (
-          <a
-            key={i}
-            href={href}
-            className="underline underline-offset-2 text-interactive-ink break-words"
-            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-          >
-            {part}
-          </a>
-        );
-      })}
-    </>
+    <a
+      href={href}
+      className="underline underline-offset-2 text-interactive-ink break-words"
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      {children}
+    </a>
   );
+}
+
+function BareLinks({ text }: { text: string }) {
+  return text.split(LINK_PATTERN).map((part, i) => {
+    if (i % 2 === 0) return <Fragment key={i}>{part}</Fragment>;
+    const href = part.startsWith("/") || part.startsWith("http") ? part : `mailto:${part}`;
+    return (
+      <ChatLink key={i} href={href}>
+        {part}
+      </ChatLink>
+    );
+  });
+}
+
+function Linkified({ text }: { text: string }) {
+  // split() with two capture groups yields [text, label, href, text, ...].
+  const parts = text.split(MARKDOWN_LINK_PATTERN);
+  const nodes = [];
+  for (let i = 0; i < parts.length; i += 3) {
+    nodes.push(<BareLinks key={i} text={parts[i]} />);
+    if (i + 2 < parts.length) {
+      nodes.push(
+        <ChatLink key={i + 1} href={parts[i + 2]}>
+          {parts[i + 1]}
+        </ChatLink>
+      );
+    }
+  }
+  return <>{nodes}</>;
 }
 
 export default function ChatWidget() {
