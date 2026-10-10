@@ -17,6 +17,50 @@ const SUGGESTIONS = [
 // Mirrors the server's limits in app/api/chat/route.ts.
 const MAX_INPUT_CHARS = 1000;
 const MAX_HISTORY = 19;
+// Show a character count once the visitor gets close to the limit.
+const COUNTER_FROM = 800;
+
+// The conversation survives page reloads for the rest of the browser session.
+const STORAGE_KEY = "chat:messages";
+// How close to the bottom (px) still counts as "following" a streaming reply.
+const STICK_THRESHOLD = 40;
+
+function track(action: string, params?: Record<string, unknown>) {
+  try {
+    event(action, params);
+  } catch {
+    // noop
+  }
+}
+
+function loadMessages(): ChatMessage[] {
+  try {
+    const raw = JSON.parse(sessionStorage.getItem(STORAGE_KEY) ?? "[]");
+    if (!Array.isArray(raw)) return [];
+    const valid = raw.every(
+      (m, i) =>
+        m?.role === (i % 2 === 0 ? "user" : "assistant") &&
+        typeof m.content === "string" &&
+        m.content
+    );
+    // A saved conversation always ends on a reply.
+    return valid && raw.length % 2 === 0 ? raw : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveMessages(messages: ChatMessage[]) {
+  try {
+    if (messages.length) {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    } else {
+      sessionStorage.removeItem(STORAGE_KEY);
+    }
+  } catch {
+    // noop
+  }
+}
 
 // URLs, email addresses, and the site's own paths become links.
 const LINK_PATTERN =
@@ -51,9 +95,24 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Finished replies, for screen readers; streamed text isn't announced.
+  const [announcement, setAnnouncement] = useState("");
+  const [restored, setRestored] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const stickToBottomRef = useRef(true);
+
+  // Read storage after mount so the server and client render the same thing.
+  useEffect(() => {
+    setMessages(loadMessages());
+    setRestored(true);
+  }, []);
+
+  useEffect(() => {
+    if (restored && !pending) saveMessages(messages);
+  }, [messages, pending, restored]);
 
   useEffect(() => {
     if (open) inputRef.current?.focus();
@@ -61,13 +120,21 @@ export default function ChatWidget() {
 
   useEffect(() => {
     const list = listRef.current;
-    if (list) list.scrollTop = list.scrollHeight;
-  }, [messages, pending]);
+    if (list && stickToBottomRef.current) list.scrollTop = list.scrollHeight;
+  }, [messages, pending, open]);
+
+  const close = () => {
+    setOpen(false);
+    toggleRef.current?.focus();
+  };
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: globalThis.KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -76,19 +143,26 @@ export default function ChatWidget() {
   useEffect(() => () => abortRef.current?.abort(), []);
 
   const toggle = () => {
-    setOpen((was) => {
-      if (!was) {
-        try {
-          event("chat_opened");
-        } catch {
-          // noop
-        }
-      }
-      return !was;
-    });
+    if (!open) {
+      track("chat_opened");
+      stickToBottomRef.current = true;
+    }
+    setOpen(!open);
   };
 
-  async function send(text: string) {
+  const onListScroll = () => {
+    const list = listRef.current;
+    if (!list) return;
+    stickToBottomRef.current =
+      list.scrollHeight - list.scrollTop - list.clientHeight < STICK_THRESHOLD;
+  };
+
+  const stop = () => {
+    abortRef.current?.abort();
+    track("chat_stopped");
+  };
+
+  async function send(text: string, suggested = false) {
     const content = text.trim();
     if (!content || pending) return;
 
@@ -100,10 +174,14 @@ export default function ChatWidget() {
     setMessages([...messages, { role: "user", content }]);
     setInput("");
     setError(null);
+    setAnnouncement("");
     setPending(true);
+    stickToBottomRef.current = true;
+    track("chat_message_sent", { suggested });
 
     const controller = new AbortController();
     abortRef.current = controller;
+    let reply = "";
 
     try {
       const res = await fetch("/api/chat", {
@@ -115,6 +193,7 @@ export default function ChatWidget() {
 
       if (!res.ok || !res.body) {
         const data = await res.json().catch(() => null);
+        track("chat_error", { status: res.status });
         throw new Error(data?.error ?? "Something went wrong. Please try again.");
       }
 
@@ -125,6 +204,7 @@ export default function ChatWidget() {
         const { done, value } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value, { stream: true });
+        reply += chunk;
         setMessages((prev) => {
           const next = [...prev];
           const last = next[next.length - 1];
@@ -132,14 +212,18 @@ export default function ChatWidget() {
           return next;
         });
       }
+      setAnnouncement(reply);
     } catch (err) {
+      // Keep a partial reply. Otherwise take the unanswered question back out
+      // (the server needs the conversation to alternate) so it can be retried.
+      if (!reply.trim()) {
+        setMessages((prev) => {
+          const last = prev[prev.length - 1];
+          return last?.role === "assistant" ? prev.slice(0, -2) : prev.slice(0, -1);
+        });
+        setInput(content);
+      }
       if (controller.signal.aborted) return;
-      // Take the unanswered question back out so the visitor can retry it.
-      setMessages((prev) => {
-        const last = prev[prev.length - 1];
-        return last?.role === "assistant" && last.content === "" ? prev.slice(0, -2) : prev.slice(0, -1);
-      });
-      setInput(content);
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setPending(false);
@@ -162,6 +246,11 @@ export default function ChatWidget() {
   // Covers both the wait for the response and for its first streamed token.
   const lastMessage = messages[messages.length - 1];
   const waitingForReply = pending && (lastMessage?.role === "user" || lastMessage?.content === "");
+  // Suggestions the visitor hasn't asked yet, offered between turns.
+  const remainingSuggestions = SUGGESTIONS.filter(
+    (s) => !messages.some((m) => m.role === "user" && m.content === s)
+  );
+  const showSuggestions = !pending && (!lastMessage || lastMessage.role === "assistant");
 
   return (
     <>
@@ -179,7 +268,7 @@ export default function ChatWidget() {
             </div>
             <button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={close}
               aria-label="Close chat"
               className="cursor-pointer p-1.5 rounded-md text-ink-soft hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink"
             >
@@ -189,25 +278,10 @@ export default function ChatWidget() {
             </button>
           </div>
 
-          <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 text-sm" aria-live="polite">
+          <div ref={listRef} onScroll={onListScroll} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 text-sm">
             <div className="max-w-[85%] rounded-2xl rounded-bl-sm px-3.5 py-2.5 bg-bg text-ink border border-line">
               {GREETING}
             </div>
-
-            {messages.length === 0 && (
-              <div className="flex flex-wrap gap-2 pt-1">
-                {SUGGESTIONS.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => send(s)}
-                    className="cursor-pointer text-xs px-3 py-1.5 rounded-full border border-line-strong text-ink hover:bg-surface-hover focus-visible:ring-2 focus-visible:ring-interactive-ink"
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            )}
 
             {messages.map((m, i) =>
               m.role === "user" ? (
@@ -224,6 +298,21 @@ export default function ChatWidget() {
                   <Linkified text={m.content} />
                 </div>
               ) : null
+            )}
+
+            {showSuggestions && remainingSuggestions.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {remainingSuggestions.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => send(s, true)}
+                    className="cursor-pointer text-xs px-3 py-1.5 rounded-full border border-line-strong text-ink hover:bg-surface-hover focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             )}
 
             {waitingForReply && (
@@ -245,37 +334,68 @@ export default function ChatWidget() {
             )}
           </div>
 
+          <p className="sr-only" aria-live="polite">
+            {announcement}
+          </p>
+
           <form onSubmit={onSubmit} className="flex items-end gap-2 p-3 border-t border-line">
             <label htmlFor="chat-input" className="sr-only">
               Your question
             </label>
-            <textarea
-              id="chat-input"
-              ref={inputRef}
-              rows={1}
-              value={input}
-              maxLength={MAX_INPUT_CHARS}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={onKeyDown}
-              placeholder="Ask a question…"
-              className="flex-1 resize-none max-h-28 rounded-xl border border-line-strong bg-bg px-3 py-2 text-sm text-ink placeholder:text-ink-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
-            />
-            <button
-              type="submit"
-              disabled={pending || !input.trim()}
-              aria-label="Send"
-              className="cursor-pointer shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-interactive text-on-interactive hover:bg-interactive-hover disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </button>
+            <div className="flex-1 flex flex-col gap-1">
+              <textarea
+                id="chat-input"
+                ref={inputRef}
+                rows={1}
+                value={input}
+                maxLength={MAX_INPUT_CHARS}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={onKeyDown}
+                placeholder="Ask a question…"
+                aria-describedby={input.length >= COUNTER_FROM ? "chat-input-count" : undefined}
+                // 16px on phones: iOS Safari zooms the page into smaller inputs.
+                className="w-full resize-none field-sizing-content min-h-9 max-h-28 rounded-xl border border-line-strong bg-bg px-3 py-2 text-[16px] sm:text-sm text-ink placeholder:text-ink-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+              />
+              {input.length >= COUNTER_FROM && (
+                <p id="chat-input-count" className="text-xs text-ink-soft text-right">
+                  {input.length}/{MAX_INPUT_CHARS}
+                </p>
+              )}
+            </div>
+            {pending ? (
+              // Separate keys so React swaps the element: reusing it would turn the
+              // Stop click into a submit once the button flips back to Send.
+              <button
+                key="stop"
+                type="button"
+                onClick={stop}
+                aria-label="Stop"
+                className="cursor-pointer shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-interactive text-on-interactive hover:bg-interactive-hover focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <rect x="5" y="5" width="14" height="14" rx="2" />
+                </svg>
+              </button>
+            ) : (
+              <button
+                key="send"
+                type="submit"
+                disabled={!input.trim()}
+                aria-label="Send"
+                className="cursor-pointer shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-interactive text-on-interactive hover:bg-interactive-hover disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </button>
+            )}
           </form>
         </div>
       )}
 
       <button
         id="chat-toggle"
+        ref={toggleRef}
         type="button"
         onClick={toggle}
         aria-expanded={open}
