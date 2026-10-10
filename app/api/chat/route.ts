@@ -1,21 +1,25 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { takeFromDailyBudget } from "@/lib/chat/budget";
 import { getSystemPrompt } from "@/lib/chat/system-prompt";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
 const MODEL = "claude-haiku-5-5";
-const MAX_TOKENS = 2048;
+// The system prompt asks for 2–5 sentence replies; this is the ceiling.
+const MAX_TOKENS = 512;
 
 // Request shape limits. The widget sends the whole conversation each turn, so
 // these bound what one request can cost no matter what a client sends.
+// MAX_ASSISTANT_CHARS leaves room for a full MAX_TOKENS reply plus a fallback
+// note, so a real conversation is never rejected on its next turn.
 const MAX_MESSAGES = 20;
 const MAX_USER_CHARS = 1000;
-const MAX_ASSISTANT_CHARS = 6000;
+const MAX_ASSISTANT_CHARS = 3000;
 
 // Best-effort per-IP limit. It lives in one function instance's memory, so a
-// burst spread across instances can exceed it — the Anthropic Console spend
-// limit is the hard backstop.
+// burst spread across instances can exceed it — the site-wide daily budget
+// (lib/chat/budget.ts) and the Anthropic Console spend limit back it up.
 const RATE_LIMIT = 20;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const hits = new Map<string, number[]>();
@@ -107,6 +111,13 @@ export async function POST(request: Request) {
   }
   if (!messages) {
     return errorResponse(400, "That message couldn't be sent.");
+  }
+
+  if (!(await takeFromDailyBudget())) {
+    return errorResponse(
+      503,
+      "The assistant has answered all the questions it can for today — please email hi@brignano.io instead."
+    );
   }
 
   const system = await getSystemPrompt();
