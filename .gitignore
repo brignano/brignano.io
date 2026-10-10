@@ -23,6 +23,10 @@
 # misc
 .DS_Store
 *.pem
+# Except Tesla's Fleet API public key, which must be served publicly from this
+# domain so Tesla can verify the homelab's Home Assistant integration. Public
+# by design; the private half never leaves Home Assistant.
+!public/.well-known/appspecific/com.tesla.3p.public-key.pem
 
 # claude code
 .claude/
