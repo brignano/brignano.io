@@ -391,7 +391,9 @@ export const nowBuilding: NowItem[] = [
 //
 // Private repos are deliberately absent. A card whose link goes nowhere is
 // worse than no card — the visitor reaches for it, finds nothing, and leaves
-// with a worse impression than if it had never been listed.
+// with a worse impression than if it had never been listed. A project with
+// private source but a published package (guidebook) is listed by its public
+// link alone; add the Source link if the repo goes public.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -447,6 +449,16 @@ export const projects: Project[] = [
       { label: "npm", url: "https://www.npmjs.com/package/@brignano/design" },
       { label: "Source", url: "https://github.com/brignano/design" },
     ],
+  },
+  {
+    slug: "guidebook",
+    title: "Guidebook",
+    description:
+      "Product tours written as Markdown, kept in the repo, and checked in CI. A headless browser walks every step on each pull request, so a UI change that breaks a tour fails the build instead of confusing users.",
+    tech: ["TypeScript", "Playwright", "Markdown", "npm"],
+    status: "proof of concept",
+    kind: "product",
+    links: [{ label: "npm", url: "https://www.npmjs.com/package/@brignano/guidebook" }],
   },
   {
     slug: "ai-tools",
