@@ -8,11 +8,10 @@ import {
   heroMetrics,
 } from "@/lib/constants";
 
-// Route segment config — runs at build time under `output: "export"`. Keep the
+// Route segment config — runs at build time. Keep the
 // default Node.js runtime (do NOT set runtime = "edge") so we can read the
 // committed font files from disk.
-// Generate the card once at build time and emit it as a static PNG file
-// (required by `output: "export"`).
+// Generate the card once at build time and emit it as a static PNG file.
 //
 // CACHE-BUSTING, AND ITS ONE BLIND SPOT. Next appends a `?<contenthash>` to
 // og:image / twitter:image, which is what makes a redesigned card reach Teams,

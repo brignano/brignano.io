@@ -31,7 +31,7 @@ export default function ScrollToTop() {
       id="scroll-to-top"
       aria-label="Scroll to top"
       onClick={handleClick}
-      className="fixed bottom-6 right-6 z-50 cursor-pointer inline-flex items-center justify-center p-3 border-2 rounded-full shadow-lg transition-all duration-200 bg-card border-line-strong hover:scale-105 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+      className="fixed bottom-24 right-6 z-40 cursor-pointer inline-flex items-center justify-center p-3 border-2 rounded-full shadow-lg transition-all duration-200 bg-card border-line-strong hover:scale-105 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
     >
       <svg
         className="w-5 h-5 text-ink"
