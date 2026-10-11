@@ -130,6 +130,8 @@ export default function ChatWidget() {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const stickToBottomRef = useRef(true);
+  // Set when the panel closes, so focus can go back to the launcher once it's shown again.
+  const refocusToggleRef = useRef(false);
 
   // Read storage after mount so the server and client render the same thing.
   useEffect(() => {
@@ -148,6 +150,9 @@ export default function ChatWidget() {
       // Focus the panel instead; tapping the input brings the keyboard up.
       if (window.matchMedia("(pointer: coarse)").matches) panelRef.current?.focus();
       else inputRef.current?.focus();
+    } else if (refocusToggleRef.current) {
+      refocusToggleRef.current = false;
+      toggleRef.current?.focus();
     }
     // Lets globals.css hide the scroll-to-top button, which the panel covers.
     document.documentElement.toggleAttribute("data-chat-open", open);
@@ -182,16 +187,16 @@ export default function ChatWidget() {
   }, [messages, pending, open, keyboardFit]);
 
   const close = () => {
+    refocusToggleRef.current = true;
     setOpen(false);
-    toggleRef.current?.focus();
   };
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Escape") {
+        refocusToggleRef.current = true;
         setOpen(false);
-        toggleRef.current?.focus();
       }
     };
     window.addEventListener("keydown", onKey);
@@ -200,12 +205,10 @@ export default function ChatWidget() {
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
-  const toggle = () => {
-    if (!open) {
-      track("chat_opened");
-      stickToBottomRef.current = true;
-    }
-    setOpen(!open);
+  const openChat = () => {
+    track("chat_opened");
+    stickToBottomRef.current = true;
+    setOpen(true);
   };
 
   const onListScroll = () => {
@@ -320,7 +323,7 @@ export default function ChatWidget() {
           aria-label="Chat with Anthony's AI assistant"
           tabIndex={-1}
           style={keyboardFit ? { top: keyboardFit.top, bottom: "auto", height: keyboardFit.height } : undefined}
-          className="fixed z-50 bottom-24 right-4 left-4 sm:left-auto sm:right-6 sm:w-96 h-[min(32rem,calc(100svh-8rem))] flex flex-col rounded-2xl border border-line-strong bg-card shadow-2xl overflow-hidden focus:outline-none"
+          className="fixed z-50 bottom-6 right-4 left-4 sm:left-auto sm:right-6 sm:w-96 h-[min(32rem,calc(100svh-3rem))] flex flex-col rounded-2xl border border-line-strong bg-card shadow-2xl overflow-hidden focus:outline-none"
         >
           <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-line">
             <div>
@@ -454,30 +457,24 @@ export default function ChatWidget() {
         </div>
       )}
 
+      {/* Hidden while the panel is open: its header has the close button, and on
+          phones this one would sit on top of the input. */}
       <button
         id="chat-toggle"
         ref={toggleRef}
         type="button"
-        onClick={toggle}
-        aria-expanded={open}
-        aria-controls="chat-panel"
-        aria-label={open ? "Close chat" : "Chat with Anthony's AI assistant"}
-        className="fixed bottom-6 right-6 z-50 cursor-pointer inline-flex items-center justify-center p-3 border-2 rounded-full shadow-lg transition-all duration-200 bg-card border-line-strong hover:scale-105 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+        onClick={openChat}
+        aria-label="Chat with Anthony's AI assistant"
+        className={`${open ? "hidden" : "inline-flex"} fixed bottom-6 right-6 z-50 cursor-pointer items-center justify-center p-3 border-2 rounded-full shadow-lg transition-all duration-200 bg-card border-line-strong hover:scale-105 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink`}
       >
-        {open ? (
-          <svg className="w-5 h-5 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <svg className="w-5 h-5 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-            />
-          </svg>
-        )}
+        <svg className="w-5 h-5 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.86 9.86 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+          />
+        </svg>
       </button>
     </>
   );
