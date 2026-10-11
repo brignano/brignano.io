@@ -392,8 +392,9 @@ export const nowBuilding: NowItem[] = [
 // Private repos are deliberately absent. A card whose link goes nowhere is
 // worse than no card — the visitor reaches for it, finds nothing, and leaves
 // with a worse impression than if it had never been listed. A project with
-// private source but a published package (guidebook) is listed by its public
-// link alone; add the Source link if the repo goes public.
+// private source but a published package is listed by its public link alone.
+// guidebook is out for now: its repo is private and its npm package was
+// unpublished, so it has no public link at all. Re-add it when either returns.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -451,14 +452,17 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "guidebook",
-    title: "Guidebook",
+    slug: "poker-helper",
+    title: "Poker Helper",
     description:
-      "Product tours written as Markdown, kept in the repo, and checked in CI. A headless browser walks every step on each pull request, so a UI change that breaks a tour fails the build instead of confusing users.",
-    tech: ["TypeScript", "Playwright", "Markdown", "npm"],
-    status: "proof of concept",
+      "A desktop pot-odds calculator for Texas Hold'em. Enter the pot and the bet, optionally your cards and the board, and it gives pot odds, your chance of hitting your outs, and showdown equity from 5,000 simulated hands — then a call-or-fold verdict. Windows and Mac downloads, nothing to install.",
+    tech: ["Python", "Tkinter", "PyInstaller", "GitHub Actions"],
+    status: "live",
     kind: "product",
-    links: [{ label: "npm", url: "https://www.npmjs.com/package/@brignano/guidebook" }],
+    links: [
+      { label: "Download", url: "https://github.com/brignano/poker-helper/releases/latest" },
+      { label: "Source", url: "https://github.com/brignano/poker-helper" },
+    ],
   },
   {
     slug: "ai-tools",
