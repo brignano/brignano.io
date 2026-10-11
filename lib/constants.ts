@@ -393,8 +393,8 @@ export const nowBuilding: NowItem[] = [
 // worse than no card — the visitor reaches for it, finds nothing, and leaves
 // with a worse impression than if it had never been listed. A project with
 // private source but a published package is listed by its public link alone.
-// guidebook is out for now: its repo is private and its npm package was
-// unpublished, so it has no public link at all. Re-add it when either returns.
+// guidebook is the one exception: private and unpublished, so it renders with
+// no links at all rather than a dead one. Add a link when either goes public.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -450,6 +450,15 @@ export const projects: Project[] = [
       { label: "npm", url: "https://www.npmjs.com/package/@brignano/design" },
       { label: "Source", url: "https://github.com/brignano/design" },
     ],
+  },
+  {
+    slug: "guidebook",
+    title: "Guidebook",
+    description:
+      "Step-by-step help on any website, for people new to computers. A browser extension highlights each thing to click and says in plain words what to do, playing guides written by a Claude skill or recorded by doing the task once. App teams can embed the same engine and check every guide in CI.",
+    tech: ["TypeScript", "Browser extension", "Claude", "Playwright"],
+    status: "proof of concept",
+    kind: "product",
   },
   {
     slug: "poker-helper",
