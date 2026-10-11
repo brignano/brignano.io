@@ -122,6 +122,9 @@ export default function ChatWidget() {
   // Finished replies, for screen readers; streamed text isn't announced.
   const [announcement, setAnnouncement] = useState("");
   const [restored, setRestored] = useState(false);
+  // Where the panel fits while an on-screen keyboard covers part of the page.
+  const [keyboardFit, setKeyboardFit] = useState<{ top: number; height: number } | null>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -139,15 +142,44 @@ export default function ChatWidget() {
   }, [messages, pending, restored]);
 
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (open) {
+      // On touch screens, focusing the input pops up the keyboard, which pushes
+      // the top of the panel off screen before the visitor has read anything.
+      // Focus the panel instead; tapping the input brings the keyboard up.
+      if (window.matchMedia("(pointer: coarse)").matches) panelRef.current?.focus();
+      else inputRef.current?.focus();
+    }
     // Lets globals.css hide the scroll-to-top button, which the panel covers.
     document.documentElement.toggleAttribute("data-chat-open", open);
+  }, [open]);
+
+  // Keep the panel inside the visible area while an on-screen keyboard is up:
+  // fixed positioning follows the layout viewport, which the keyboard doesn't
+  // shrink, so the panel would otherwise sit partly under it or above the screen.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!open || !vv) return;
+    const MARGIN = 8;
+    const update = () => {
+      const covered = window.innerHeight - vv.height;
+      setKeyboardFit(
+        covered > 100 ? { top: vv.offsetTop + MARGIN, height: vv.height - 2 * MARGIN } : null
+      );
+    };
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+      setKeyboardFit(null);
+    };
   }, [open]);
 
   useEffect(() => {
     const list = listRef.current;
     if (list && stickToBottomRef.current) list.scrollTop = list.scrollHeight;
-  }, [messages, pending, open]);
+  }, [messages, pending, open, keyboardFit]);
 
   const close = () => {
     setOpen(false);
@@ -283,9 +315,12 @@ export default function ChatWidget() {
       {open && (
         <div
           id="chat-panel"
+          ref={panelRef}
           role="dialog"
           aria-label="Chat with Anthony's AI assistant"
-          className="fixed z-50 bottom-24 right-4 left-4 sm:left-auto sm:right-6 sm:w-96 h-[min(32rem,calc(100svh-8rem))] flex flex-col rounded-2xl border border-line-strong bg-card shadow-2xl overflow-hidden"
+          tabIndex={-1}
+          style={keyboardFit ? { top: keyboardFit.top, bottom: "auto", height: keyboardFit.height } : undefined}
+          className="fixed z-50 bottom-24 right-4 left-4 sm:left-auto sm:right-6 sm:w-96 h-[min(32rem,calc(100svh-8rem))] flex flex-col rounded-2xl border border-line-strong bg-card shadow-2xl overflow-hidden focus:outline-none"
         >
           <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-line">
             <div>
