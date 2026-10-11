@@ -269,7 +269,7 @@ export interface HeroMetric {
 // Integrity (TSD §5.7): every figure here is CURRENT AND DOCUMENTED, never a
 // forecast, and the VERB matters as much as the number:
 //   4,000+ engineers  — actually on the platform (8,000 full-org = trajectory)
-//   70,000+ pipelines — "supported", not "managed". We support them where they
+//   78,000+ pipelines — "supported", not "managed". We support them where they
 //                       run; consolidating them onto platform tooling via a
 //                       unified pipeline model is PLANNED, so any claim of
 //                       managing/instrumenting them would be a forecast.
@@ -285,7 +285,7 @@ export interface HeroMetric {
 // 1,000+ 90-day adopters likewise lives on the achievement card below.
 export const heroMetrics: HeroMetric[] = [
   { value: "4,000+", label: "engineers on the platform" },
-  { value: "70,000+", label: "pipelines supported" },
+  { value: "78,000+", label: "pipelines supported" },
   { value: "13,000+", label: "repositories tracked" },
 ];
 
@@ -392,8 +392,9 @@ export const nowBuilding: NowItem[] = [
 // Private repos are deliberately absent. A card whose link goes nowhere is
 // worse than no card — the visitor reaches for it, finds nothing, and leaves
 // with a worse impression than if it had never been listed. A project with
-// private source but a published package (guidebook) is listed by its public
-// link alone; add the Source link if the repo goes public.
+// private source but a published package is listed by its public link alone.
+// guidebook is the one exception: private and unpublished, so it renders with
+// no links at all rather than a dead one. Add a link when either goes public.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -454,11 +455,23 @@ export const projects: Project[] = [
     slug: "guidebook",
     title: "Guidebook",
     description:
-      "Product tours written as Markdown, kept in the repo, and checked in CI. A headless browser walks every step on each pull request, so a UI change that breaks a tour fails the build instead of confusing users.",
-    tech: ["TypeScript", "Playwright", "Markdown", "npm"],
+      "Step-by-step help on any website, for people new to computers. A browser extension highlights each thing to click and says in plain words what to do, playing guides written by a Claude skill or recorded by doing the task once. App teams can embed the same engine and check every guide in CI.",
+    tech: ["TypeScript", "Browser extension", "Claude", "Playwright"],
     status: "proof of concept",
     kind: "product",
-    links: [{ label: "npm", url: "https://www.npmjs.com/package/@brignano/guidebook" }],
+  },
+  {
+    slug: "poker-helper",
+    title: "Poker Helper",
+    description:
+      "A desktop pot-odds calculator for Texas Hold'em. Enter the pot and the bet, optionally your cards and the board, and it gives pot odds, your chance of hitting your outs, and showdown equity from 5,000 simulated hands — then a call-or-fold verdict. Windows and Mac downloads, nothing to install.",
+    tech: ["Python", "Tkinter", "PyInstaller", "GitHub Actions"],
+    status: "live",
+    kind: "product",
+    links: [
+      { label: "Download", url: "https://github.com/brignano/poker-helper/releases/latest" },
+      { label: "Source", url: "https://github.com/brignano/poker-helper" },
+    ],
   },
   {
     slug: "ai-tools",
