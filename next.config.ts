@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withBotId } from "botid/next/config";
 
 const nextConfig: NextConfig = {
   /**
@@ -28,4 +29,10 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+/**
+ * BotID's client script and its challenge requests are proxied through
+ * same-origin rewrites, which keeps them inside the CSP's 'self' sources.
+ *
+ * @see https://vercel.com/docs/botid
+ */
+export default withBotId(nextConfig);
