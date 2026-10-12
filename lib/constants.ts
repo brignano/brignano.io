@@ -455,7 +455,7 @@ export const projects: Project[] = [
     slug: "guidebook",
     title: "Guidebook",
     description:
-      "Step-by-step help on any website, for people new to computers. A browser extension highlights each thing to click and says in plain words what to do, playing guides written by a Claude skill or recorded by doing the task once. App teams can embed the same engine and check every guide in CI.",
+      "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A browser extension highlights each thing to click and says in plain words what to do, playing guides written by a Claude skill or recorded by doing the task once. App teams can embed the same engine and check every guide in CI.",
     tech: ["TypeScript", "Browser extension", "Claude", "Playwright"],
     status: "proof of concept",
     kind: "product",
