@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import { checkBotId } from "botid/server";
 import { takeFromDailyBudget } from "@/lib/chat/budget";
 import { getSystemPrompt } from "@/lib/chat/system-prompt";
 
@@ -89,6 +90,12 @@ export async function POST(request: Request) {
     return errorResponse(503, "The chat assistant isn't configured yet.");
   }
   if (!isSameOrigin(request)) {
+    return errorResponse(403, "Forbidden.");
+  }
+  // Invisible bot check (instrumentation-client.ts attaches the token). It
+  // replaces the site-wide Bot Protection challenge, which also blocked
+  // iMessage/Slack link-preview fetchers from reading the social card.
+  if ((await checkBotId()).isBot) {
     return errorResponse(403, "Forbidden.");
   }
 
