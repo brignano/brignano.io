@@ -393,8 +393,8 @@ export const nowBuilding: NowItem[] = [
 // worse than no card — the visitor reaches for it, finds nothing, and leaves
 // with a worse impression than if it had never been listed. A project with
 // private source but a published package is listed by its public link alone.
-// guidebook is the one exception: private and unpublished, so it renders with
-// no links at all rather than a dead one. Add a link when either goes public.
+// guidebook's source is private and its package unpublished, so it links to
+// its public landing page only. Add a Source link if the repo goes public.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -459,6 +459,7 @@ export const projects: Project[] = [
     tech: ["TypeScript", "Browser extension", "Claude", "Playwright"],
     status: "proof of concept",
     kind: "product",
+    links: [{ label: "Get early access", url: "https://guidebook.brignano.io" }],
   },
   {
     slug: "poker-helper",
