@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",
-    "@brignano/design": "^0.1.2",
+    "@brignano/design": "^0.2.0",
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
     "@react-pdf/renderer": "^4.9.0",
