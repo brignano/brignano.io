@@ -52,21 +52,19 @@ export default function CodingHero({
       <div className="font-sans text-5xl md:text-6xl font-bold tracking-tight mt-1">
         {totalTimeText}
       </div>
-      {/* Past tense on purpose: collection has stopped, so this is a closed
-          record rather than a live feed. Saying so is better than letting a
-          reader assume the numbers are current and quietly stale. */}
       <p className="mt-4 max-w-2xl text-sm md:text-base text-ink-soft leading-relaxed">
-        My public GitHub shows only a few hundred commits — but WakaTime quietly
-        tracked every keystroke
-        {trackingSince ? ` from ${trackingSince}` : ""}, across every editor and
-        machine, including thousands of private and enterprise commits that
-        never appear publicly. The contribution graph below is just the tip of
-        the iceberg.
+        My public GitHub shows only a few hundred commits — but WakaTime has
+        tracked my editor time{trackingSince ? ` since ${trackingSince}` : ""},
+        across every editor and machine, including thousands of private commits
+        that never appear publicly. The contribution graph below is just the tip
+        of the iceberg.
       </p>
+      {/* Say plainly why the numbers have slowed down, so a reader doesn't
+          take the flatter recent stretch as less coding. */}
       <p className="mt-3 max-w-2xl text-sm text-slate leading-relaxed">
-        Editor tracking is no longer running, so these totals are a complete
-        archive rather than a live counter. Current work happens on an
-        enterprise GitHub that never reaches this page.
+        These days the totals mostly grow from personal projects, and much of
+        my coding happens alongside AI agents like Claude Code, so editor hours
+        tell less of the story than they used to.
       </p>
 
       <div className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-4">
