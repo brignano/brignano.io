@@ -55,9 +55,9 @@ export default function CodingHero({
       <p className="mt-4 max-w-2xl text-sm md:text-base text-ink-soft leading-relaxed">
         My public GitHub shows only a few hundred commits — but WakaTime has
         tracked my editor time{trackingSince ? ` since ${trackingSince}` : ""},
-        across every editor and machine, including thousands of private and
-        enterprise commits that never appear publicly. The contribution graph
-        below is just the tip of the iceberg.
+        across every editor and machine, including thousands of private commits
+        that never appear publicly. The contribution graph below is just the tip
+        of the iceberg.
       </p>
       {/* Say plainly why the numbers have slowed down, so a reader doesn't
           take the flatter recent stretch as less coding. */}
