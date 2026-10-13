@@ -62,11 +62,9 @@ export default function CodingHero({
       {/* Say plainly why the numbers have slowed down, so a reader doesn't
           take the flatter recent stretch as less coding. */}
       <p className="mt-3 max-w-2xl text-sm text-slate leading-relaxed">
-        Since fall 2026 a corporate firewall blocks editor extensions on my
-        work machine, so these totals now grow from personal projects only.
-        And most of my coding today happens alongside AI agents like Claude
-        Code rather than keystroke by keystroke in an IDE, so editor hours tell
-        less of the story than they used to.
+        These days the totals mostly grow from personal projects, and much of
+        my coding happens alongside AI agents like Claude Code, so editor hours
+        tell less of the story than they used to.
       </p>
 
       <div className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-4">
