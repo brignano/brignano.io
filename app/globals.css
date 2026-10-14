@@ -47,6 +47,13 @@
 html {
   background-color: var(--bg);
   transition: background-color 150ms;
+  /* Even with the root painted, desktop Chrome on macOS composites the
+     rubber-band bounce at the end of the page with darker tiles than the page
+     itself, so the content and gutter flash a different shade until it
+     settles. There is nothing to pull in at either end of this site, so turn
+     the root bounce off rather than chase the compositor. Scrolling inside the
+     chat panel is unaffected. */
+  overscroll-behavior-y: none;
 }
 
 /* First-screen sizing ──────────────────────────────────────────────────────
