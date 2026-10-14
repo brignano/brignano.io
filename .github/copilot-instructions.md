@@ -105,7 +105,7 @@ This is a personal portfolio website built with Next.js 16, React 19, and Tailwi
 
 ### Environment Variables
 
-- `GA_MEASUREMENT_ID` - Google Analytics tracking ID (optional, has default)
+- `GA_MEASUREMENT_ID` - Google Analytics 4 measurement ID (optional; GA is not loaded without it)
 - `WAKATIME_API_KEY` - Required for coding statistics page
 - `VERCEL_ENV` - Automatically set by Vercel (production/preview/development)
 - `NODE_ENV` - Node environment (production/development)

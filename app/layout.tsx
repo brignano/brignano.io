@@ -7,7 +7,6 @@ import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import GoogleAnalytics from "@/components/google-analytics";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 import { siteMetadata, socialLinks } from "@/lib/constants";
 import { THEME_COLORS } from "@/lib/theme";
@@ -158,21 +157,18 @@ export default function RootLayout({
         {isProduction && GA_MEASUREMENT_ID && (
           <>
             <Script
-              strategy="lazyOnload"
+              strategy="afterInteractive"
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
             />
             <Script
               id="gtag-init"
-              strategy="lazyOnload"
+              strategy="afterInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${GA_MEASUREMENT_ID}', {
-                page_path: window.location.pathname,
-                anonymize_ip: true
-              });
+              gtag('config', '${GA_MEASUREMENT_ID}');
             `,
               }}
             />
@@ -187,7 +183,6 @@ export default function RootLayout({
         <ScrollToTop />
         <ChatWidget />
         <SpeedInsights />
-        {isProduction && GA_MEASUREMENT_ID && <GoogleAnalytics />}
         <Analytics />
       </body>
     </html>

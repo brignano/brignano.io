@@ -1,16 +1,12 @@
-export const GA_MEASUREMENT_ID = String(process.env.GA_MEASUREMENT_ID);
+// Read on the server only (app/layout.tsx). Not NEXT_PUBLIC_, so client
+// bundles see it as undefined — keep client code on `event()` below, which
+// doesn't need the ID.
+export const GA_MEASUREMENT_ID = process.env.GA_MEASUREMENT_ID ?? "";
 
-// https://developers.google.com/analytics/devguides/collection/gtagjs/pages
-export const pageview = (url: string) => {
-  if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
-    window.gtag("config", GA_MEASUREMENT_ID, {
-      page_path: url,
-      anonymize_ip: true,
-    });
-  }
-};
+// Page views (including client-side navigations) are recorded by GA4's
+// enhanced measurement, so there is no manual pageview helper.
 
-// https://developers.google.com/analytics/devguides/collection/gtagjs/events
+// https://developers.google.com/analytics/devguides/collection/ga4/events
 export const event = (action: string, params?: Record<string, unknown>) => {
   if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
     window.gtag("event", action, params);

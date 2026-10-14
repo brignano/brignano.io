@@ -192,14 +192,15 @@ If you need environment variables for your deployment:
 
 ### Analytics (gtag)
 
-This site sends events via Google Analytics using the helper in `lib/gtag.ts` and the `GA_MEASUREMENT_ID` constant. The file is located at `lib/gtag.ts` and the `event()` helper is used throughout the codebase to send analytics events (e.g. contribution graph interactions).
+This site sends events to Google Analytics 4 using the `event()` helper in `lib/gtag.ts` (e.g. CTA clicks, project links, résumé downloads, chat usage).
 
-Notes about the default analytics setup:
+Notes about the analytics setup:
 
-- `lib/gtag.ts` currently provides a default, hardcoded `GA_MEASUREMENT_ID` value. You do not need to configure Google Analytics to run or build the site locally — the hardcoded ID will be used by default.
-- If you want to use your own Google Analytics property, either set `GA_MEASUREMENT_ID` in Vercel environment variables or add it to a local `.env.local` file (example below).
+- The GA4 tag only loads in production (`VERCEL_ENV === 'production'`) and only when `GA_MEASUREMENT_ID` is set. There is no default ID — without it, nothing is sent.
+- Page views, including client-side navigations, come from GA4's **enhanced measurement** ("Page changes based on browser history events"), which is on by default for a web data stream. Keep it on; there is no manual pageview code.
+- Custom events show up in GA under Reports → Engagement → Events.
 
-To enable your own Google Analytics (optional):
+To enable Google Analytics:
 
 ```env
 GA_MEASUREMENT_ID=G-YOURIDHERE
@@ -252,7 +253,7 @@ Required variables for development:
 
 Optional:
 
-- `GA_MEASUREMENT_ID` — only necessary if you want analytics sent to your own Google Analytics property; otherwise the default hardcoded value will be used.
+- `GA_MEASUREMENT_ID` — your GA4 measurement ID (`G-…`). Without it, Google Analytics is not loaded.
 
 ## 🏗️ Project Structure
 
@@ -302,7 +303,7 @@ Vercel Analytics and Speed Insights are already integrated via:
 - `@vercel/analytics`
 - `@vercel/speed-insights`
 
-These packages are automatically enabled when deployed on Vercel.
+Both also have to be enabled per project in the Vercel dashboard (Project → Analytics → Enable, and Project → Speed Insights → Enable); until then the scripts load but no data is collected.
 
 ## 🤝 Contributing
 
