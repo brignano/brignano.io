@@ -1,5 +1,3 @@
-import Script from "next/script";
-
 interface BreadcrumbItem {
   name: string;
   url: string;
@@ -9,6 +7,13 @@ interface BreadcrumbSchemaProps {
   items: BreadcrumbItem[];
 }
 
+/**
+ * Breadcrumb structured data for search results. A plain <script> (not
+ * next/script) so the JSON-LD is in the server-rendered HTML that crawlers
+ * read first, instead of being injected after hydration.
+ *
+ * @see https://nextjs.org/docs/app/guides/json-ld
+ */
 export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
   const breadcrumbList = {
     "@context": "https://schema.org",
@@ -22,12 +27,11 @@ export default function BreadcrumbSchema({ items }: BreadcrumbSchemaProps) {
   };
 
   return (
-    <Script
-      id={`breadcrumb-schema-${items.length > 0 ? items[items.length - 1].name.toLowerCase().replace(/\s+/g, "-") : "home"}`}
+    <script
       type="application/ld+json"
-      strategy="afterInteractive"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(breadcrumbList),
+        // Escape "<" so the JSON can never close the script tag early.
+        __html: JSON.stringify(breadcrumbList).replace(/</g, "\\u003c"),
       }}
     />
   );
