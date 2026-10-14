@@ -1,6 +1,5 @@
 import { Geist, IBM_Plex_Mono, Silkscreen } from "next/font/google";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import ThemeSync from "@/components/theme-sync";
 import "./globals.css";
@@ -183,7 +182,6 @@ export default function RootLayout({
         <ScrollToTop />
         <ChatWidget />
         <SpeedInsights />
-        <Analytics />
       </body>
     </html>
   );

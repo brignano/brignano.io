@@ -81,7 +81,7 @@ This is a personal portfolio website built with Next.js 16, React 19, and Tailwi
 - Google Analytics is configured via `lib/gtag.ts`
 - Use `GA_MEASUREMENT_ID` constant for the tracking ID
 - Analytics only load in production (`VERCEL_ENV === 'production'`)
-- Vercel Analytics and Speed Insights are enabled
+- Visitor analytics are Google Analytics only; Vercel Speed Insights measures page performance
 
 ### Navigation
 
