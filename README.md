@@ -11,7 +11,7 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 - **React 19** with modern hooks and components
 - **TailwindCSS 4** for styling
 - **TypeScript** for type safety
-- **Vercel Analytics** and **Speed Insights** integration
+- **Google Analytics 4** and **Vercel Speed Insights** integration
 - **GitHub Calendar** visualization
 - **AOS** (Animate On Scroll) animations
 - **Resume Integration** at `/resume` path with YAML-based data and PDF download functionality
@@ -125,7 +125,7 @@ Vercel will automatically:
 - Deploy to a global CDN
 - Provide automatic HTTPS
 - Set up preview deployments for pull requests
-- Enable Vercel Analytics and Speed Insights (already configured)
+- Enable Speed Insights (already configured)
 
 ### Deploying with Vercel CLI
 
@@ -296,14 +296,9 @@ Optional:
 - `images.unoptimized: true` - Serves images as-is
 - `basePath: ""` - Set to your repository slug if deploying to a subdirectory
 
-### Vercel Analytics
+### Speed Insights
 
-Vercel Analytics and Speed Insights are already integrated via:
-
-- `@vercel/analytics`
-- `@vercel/speed-insights`
-
-Both also have to be enabled per project in the Vercel dashboard (Project → Analytics → Enable, and Project → Speed Insights → Enable); until then the scripts load but no data is collected.
+Visitor analytics come from Google Analytics (see [Analytics (gtag)](#analytics-gtag)). Page-load performance comes from Vercel Speed Insights via `@vercel/speed-insights`, which only collects data once it is enabled for the project in the Vercel dashboard (Project → Speed Insights → Enable).
 
 ## 🤝 Contributing
 
