@@ -376,7 +376,11 @@ export default async function Page() {
               </p>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <div className="flex flex-col gap-2">
+                    {/* `break-words` + `min-w-0`: a commit body can carry an
+                        unbreakable token (a session URL, a long path) that
+                        would otherwise make the whole page scroll sideways on
+                        a phone. The fold check in CI caught exactly that. */}
+                    <div className="flex min-w-0 flex-col gap-2 break-words">
                     {commitSubject && (
                         <div className="text-sm font-semibold text-ink">
                         {commitSubject}
