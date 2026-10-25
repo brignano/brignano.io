@@ -39,11 +39,11 @@ export const caseStudies: CaseStudy[] = [
     eyebrow: "Case study · Source control",
     lede: "Every active repository at The Hartford moved from a self-hosted GitHub Enterprise Server to GitHub Enterprise Cloud, in waves ordered by impact, with thousands of engineers shipping the whole time.",
     description:
-      "How The Hartford moved 10,000+ repositories from GitHub Enterprise Server to GitHub Enterprise Cloud in under 12 months of execution, in impact-ordered waves, with the platform team owning the integrations.",
+      "How The Hartford moved 10,000+ repositories from GitHub Enterprise Server to GitHub Enterprise Cloud in under 12 months of execution, in impact-ordered waves, with 50+ integration points running against both.",
     facts: [
       { label: "Repositories migrated", value: "10,000+" },
       { label: "Execution, after planning", value: "Under 12 months" },
-      { label: "Engineers affected", value: "Thousands" },
+      { label: "Integration points", value: "50+" },
       { label: "Cutover", value: "Waves, by impact" },
     ],
     sections: [
@@ -66,7 +66,7 @@ export const caseStudies: CaseStudy[] = [
         paragraphs: [
           "Repositories moved in waves ordered by impact: the least-referenced ones first, the ones everything else depended on last. That proved the integrations on low-stakes repositories before the high-stakes ones moved, and it kept each hard deadline survivable.",
           "GitHub's own importer did the moving, wrapped in custom scripts that fit it to the enterprise's organization, team and permission model. A contracted vendor executed the migration itself and was accountable for it end to end. The scope was active repositories; whether an inactive one was archived instead was left to the application team that owned it, and few were.",
-          "I led the program. The hardest part, and the part my engineers owned, was not moving repositories. It was every auxiliary integration around them, and designing the patterns that let GitHub Enterprise Server and GitHub Enterprise Cloud work together seamlessly while both were live.",
+          "I led the program. The hardest part, and the part my engineers owned, was not moving repositories. GitHub Enterprise Server had more than fifty integration points, from the CI/CD toolchain to security scanning to the internal tools that read from it, and every one had to be designed to work against both Server and Cloud while the waves ran, then cut over cleanly once the last wave landed.",
           "Planning took its time. The execution, from the first wave to the last, ran in under twelve months.",
         ],
       },
@@ -81,7 +81,7 @@ export const caseStudies: CaseStudy[] = [
         heading: "What I would tell the next person",
         paragraphs: [
           "Order the waves by blast radius, not by convenience. Moving the quiet repositories first buys you the evidence you need before the loud ones move.",
-          "The migration is the easy part. Budget for the integrations around the repositories, and for the period when both platforms are live, because that is where the engineering is.",
+          "The migration is the easy part. Count the integration points before you plan anything else, and budget for the period when both platforms are live, because that is where the engineering is.",
           "Let a hard deadline do some of the work. The secrets cutover dates were a constraint, and they were also the thing that kept the program from drifting.",
         ],
       },
@@ -101,7 +101,7 @@ export const caseStudies: CaseStudy[] = [
     eyebrow: "Case study · Developer platform",
     lede: "Telemetry was built into The Hartford's developer platform from the first day, so the platform team works from usage data instead of guesses, the whole company has one status page to look at, and AI agents can read the same data.",
     description:
-      "How The Hartford's developer platform streams pipeline and tooling telemetry through EventBridge into AWS, DynamoDB and Snowflake, with an in-house status page and MCP access for AI agents.",
+      "How The Hartford's developer platform streams pipeline and tooling telemetry through EventBridge and Firehose into DynamoDB and Snowflake, with an in-house status page and MCP access for AI agents.",
     facts: [
       { label: "Engineers on the platform", value: "4,000+" },
       { label: "Pipelines supported", value: "95,000+" },
@@ -120,7 +120,7 @@ export const caseStudies: CaseStudy[] = [
         heading: "What I built",
         paragraphs: [
           "Telemetry was a first-class part of the platform from the start, not an afterthought: the CLI shipped with OpenTelemetry instrumentation on day one, the IDE extensions followed early, and the desktop app after that. So the platform has had monitoring dashboards and usage statistics for as long as it has had users.",
-          "Pipeline events and that CLI, IDE and desktop telemetry flow through Amazon EventBridge into AWS. DynamoDB holds the live, lookup-shaped data the dashboards and status page read. The pipeline that lands the full history in Snowflake is being stood up now; its purpose is ML analysis of where developers lose time, and that analysis has not produced findings yet. It is the next step, not a result.",
+          "Pipeline events and that CLI, IDE and desktop telemetry flow through Amazon EventBridge into AWS. DynamoDB holds the live, lookup-shaped data the dashboards and status page read. The Firehose delivery that lands the full history in Snowflake is being stood up now; its purpose is ML analysis of where developers lose time, and that analysis has not produced findings yet. It is the next step, not a result.",
           "The health status page is built in-house, in the style of Statuspage but covering internal and external tools alike and fully customizable, with alerts anyone in the company can subscribe to. A platform problem announces itself before the tickets do.",
           "And because the same data is useful to an assistant as to a dashboard, the platform ships MCP servers and out-of-the-box skills that let AI agents query and operate the enterprise CI/CD systems safely.",
         ],
@@ -129,7 +129,8 @@ export const caseStudies: CaseStudy[] = [
         heading: "What changed",
         paragraphs: [
           "Decisions about the platform are made from usage data rather than loud pain, and have been since launch. The unified developer surface the telemetry comes from reached 1,000+ active engineers in its first 90 days, and the status page gave the whole organization one place to look when something is wrong.",
-          "What it has not produced yet is a reduction number. Incident and ticket reduction is not instrumented end to end, so there is no figure here, and I would rather leave the gap than invent one. The same rule applies to everything on this site.",
+          "What it has not produced yet is a reduction number. Incident and ticket reduction is not instrumented directly, so there is no figure here, and I would rather leave the gap than invent one. The same rule applies to everything on this site.",
+          "The data has found a use the platform team did not build, though: another team's tool for triaging and root-causing incidents in real time reads the platform's data to add context to each incident and to show the engineers involved what happened and why.",
         ],
       },
       {
@@ -144,6 +145,7 @@ export const caseStudies: CaseStudy[] = [
     stack: [
       "OpenTelemetry",
       "Amazon EventBridge",
+      "Amazon Data Firehose",
       "AWS",
       "DynamoDB",
       "Snowflake",
