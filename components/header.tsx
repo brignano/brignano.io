@@ -100,9 +100,12 @@ export default function Header() {
       >
         <Link href="/" className="cursor-pointer shrink-0">
           <span className="sr-only">Anthony Brignano</span>
+          {/* Absolute path: a relative `favicon.svg` resolved against the
+              current directory, so it 404ed on the first nested route
+              (/work/<slug>). */}
           <Image
             alt="icon"
-            src="favicon.svg"
+            src="/favicon.svg"
             className="h-8 w-auto invert-0 dark:invert"
             width={35}
             height={35}
