@@ -39,12 +39,12 @@ export const caseStudies: CaseStudy[] = [
     eyebrow: "Case study · Source control",
     lede: "Every active repository at The Hartford moved from a self-hosted GitHub Enterprise Server to GitHub Enterprise Cloud, in waves ordered by impact, with thousands of engineers shipping the whole time.",
     description:
-      "How The Hartford moved 10,000+ repositories from GitHub Enterprise Server to GitHub Enterprise Cloud in impact-ordered waves, with a vendor executing and the platform team owning the integrations.",
+      "How The Hartford moved 10,000+ repositories from GitHub Enterprise Server to GitHub Enterprise Cloud in under 12 months of execution, in impact-ordered waves, with the platform team owning the integrations.",
     facts: [
       { label: "Repositories migrated", value: "10,000+" },
+      { label: "Execution, after planning", value: "Under 12 months" },
       { label: "Engineers affected", value: "Thousands" },
       { label: "Cutover", value: "Waves, by impact" },
-      { label: "Why", value: "Cost, and AI-first tooling" },
     ],
     sections: [
       {
@@ -67,12 +67,13 @@ export const caseStudies: CaseStudy[] = [
           "Repositories moved in waves ordered by impact: the least-referenced ones first, the ones everything else depended on last. That proved the integrations on low-stakes repositories before the high-stakes ones moved, and it kept each hard deadline survivable.",
           "GitHub's own importer did the moving, wrapped in custom scripts that fit it to the enterprise's organization, team and permission model. A contracted vendor executed the migration itself and was accountable for it end to end. The scope was active repositories; whether an inactive one was archived instead was left to the application team that owned it, and few were.",
           "I led the program. The hardest part, and the part my engineers owned, was not moving repositories. It was every auxiliary integration around them, and designing the patterns that let GitHub Enterprise Server and GitHub Enterprise Cloud work together seamlessly while both were live.",
+          "Planning took its time. The execution, from the first wave to the last, ran in under twelve months.",
         ],
       },
       {
         heading: "What changed",
         paragraphs: [
-          "The company's code lives on GitHub Enterprise Cloud, with GitHub Actions a first-class part of the toolchain rather than a wish-list item, and the self-hosted install and its maintenance are gone.",
+          "The company's code lives on GitHub Enterprise Cloud. The self-hosted install and its maintenance are gone, and the rest of GitHub's roadmap, Copilot and the AI-first tooling included, is now something the platform can offer rather than wait for.",
           "The migration is the foundation the developer platform stands on: the single pane of glass used by 4,000+ engineers tracks 13,000+ repositories today, a number that only exists because they are all in one place.",
         ],
       },

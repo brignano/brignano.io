@@ -417,7 +417,7 @@ export default function Home() {
               </span>{" "}
               migrated 10,000+ code repositories to GitHub Enterprise Cloud
               (<Link href="/work/github-enterprise-cloud-migration" className="underline text-interactive-ink">case study</Link>);
-              recognized with the 2023 Enterprise Tech Data &amp; Cyber Award.
+              recognized with the 2023 Enterprise Tech Data &amp; Cyber Award for the enterprise GitHub Actions implementation.
             </p>
             <p className="text-sm text-slate">
               For my full career history, see{" "}

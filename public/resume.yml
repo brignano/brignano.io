@@ -24,7 +24,7 @@ experience:
       - Made the platform AI-native — MCP servers and out-of-the-box skills that let AI agents safely query and operate enterprise CI/CD systems, plus standardized patterns and pipelines carrying Google Cloud and Vertex AI workloads to production
       - Operate the enterprise CI/CD and DevSecOps toolchain end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx), supporting 95,000+ pipelines, with a unified pipeline model designed to consolidate them onto platform tooling
       - Led the enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud, modernizing 10,000+ repositories in under 12 months
-      - Recognized with the 2023 Enterprise Tech Data & Cyber Award for platform adoption and productivity impact
+      - Recognized with the 2023 Enterprise Tech Data & Cyber Award for the enterprise GitHub Actions implementation and its adoption
     technologies:
       - Internal Developer Platforms (IDP)
       - GitHub Enterprise Cloud
