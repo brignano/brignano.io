@@ -315,7 +315,7 @@ export default function Home() {
             The problem, the constraints, what I built, and what changed.
             Nothing stated that isn&apos;t documented and current.
           </p>
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
             {caseStudies.map((study) => (
               <CaseStudyCard key={study.slug} study={study} />
             ))}
@@ -373,7 +373,7 @@ export default function Home() {
               {[
                 "Leading a CEO-sponsored push to make new-engineer setup self-service — the platform already gets a fresh machine productive in hours, down from a 40+ day wait, as it rolls out team-wide.",
                 "One consistent set of tools — a command-line app, a desktop app, and editor add-ons — that 1,000+ engineers adopted in the first 90 days.",
-                "One command builds any project — and runs the same on your laptop, in the cloud, or on a remote machine. Nothing to set up per project.",
+                "One command builds any project, the same way on every laptop, with nothing to set up per project. Running that same build on platform compute instead of the laptop is in progress.",
                 "Live insight into where engineers lose time: the platform watches its own tools, surfaces the biggest slow-downs, and posts a public health status page anyone can subscribe to.",
                 "AI help built right in — ready-to-use skills and assistants that plug into the platform's own data.",
                 "Keeping the automated build-test-release systems running reliably across thousands of projects.",

@@ -34,6 +34,68 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "atlas-developer-platform",
+    title: "ATLAS: one platform for 4,000+ engineers",
+    eyebrow: "Case study · Developer platform",
+    lede: "The Hartford's developer platform is a CLI, a desktop agent and IDE extensions that put onboarding, builds, policy and AI tooling in one place for 4,000+ engineers. The next step is one build and pipeline system in place of seven.",
+    description:
+      "ATLAS, The Hartford's developer platform: a CLI on 4,000+ machines, a desktop agent on 2,000+, guided onboarding, a catalog of 120+ skills and MCP servers, policy-as-config, and a plan to replace seven pipeline tools with one.",
+    facts: [
+      { label: "Engineers using the CLI", value: "4,000+" },
+      { label: "Devices running the desktop agent", value: "2,000+" },
+      { label: "Skills, MCP servers and agents in the catalog", value: "140+" },
+      { label: "Pipeline tools today", value: "7" },
+    ],
+    sections: [
+      {
+        heading: "The problem",
+        paragraphs: [
+          "Before the platform, a new engineer's first useful commit was 40+ days away, and most of that time was setup: the right tools, the right versions, the right access, learned from whoever sat nearest. The company's tooling was discovered in a browser, installed from a wiki, and run in a terminal, and nothing connected the three.",
+          "Delivery had the same shape. Pipelines ran across seven tools (uDeploy, Ansible, Terraform, AWS CodePipeline, Jenkins, GitHub Actions and Harness), each with its own templates. When the company moved from on-premises Checkmarx to Checkmarx One, the platform team updated template after template and then worked with application teams to update thousands of individual pipelines. One change, multiplied by seven tools and every pipeline built on them.",
+        ],
+      },
+      {
+        heading: "What ATLAS is today",
+        paragraphs: [
+          "A CLI, the HIG CLI, in use on 4,000+ machines, and a desktop agent active on 2,000+ devices. The agent connects the browser to the CLI: a button on the platform's site runs a native command on the engineer's machine. Both ship as a standard software package.",
+          "Guided onboarding that never leaves the browser until it needs to. Three built-in walkthroughs: one sets up the machine with the CLI in a terminal embedded in the site, one prompts Copilot in a read-only assistant window, and one opens VS Code and walks through the extension and the parts of the editor that matter on day one. Beginner and advanced CLI walkthroughs follow, refined and certified by the platform's team in India, and the AI-first engineering team is writing new ones for enterprise AI tools such as the AWS and Jenkins MCP servers as they are onboarded.",
+          "A local setup catalog where engineers install what the company has already vetted: 120+ skills, 10+ MCP servers and 10+ agents, discoverable in one place instead of in someone's chat history.",
+          "Policy as configuration. OPA-backed policy decides which tool versions run on which CI platform and which scans run where, so compliance is a config change rather than a template edit. And one build command that builds any project the same way locally. The build system was my manager's design, and the platform is built around it.",
+        ],
+      },
+      {
+        heading: "How it was adopted",
+        paragraphs: [
+          "The unified surface reached 1,000+ active engineers in its first 90 days. The desktop agent reached the same number in a day, because it shipped to everyone who already had the CLI. A new machine now goes from unboxed to productive in hours, against the 40+ day baseline.",
+        ],
+      },
+      {
+        heading: "Where it is going",
+        paragraphs: [
+          "This section is plans, not results. The remote build server is in progress: the same build command with a --remote flag will run on platform compute instead of the laptop, and on every push and pull request for real-time feedback and analysis.",
+          "That is the path off the seven pipeline tools. With builds on platform compute and policy already in configuration, pipelines consolidate onto one platform with OPA controls built in. The Checkmarx One migration is the kind of change that would then be a reconfiguration in the CLI, applied once, rather than a campaign across tools and teams. The 95,000+ pipelines the platform supports today are the population this is designed for; none of it is claimed until it lands.",
+        ],
+      },
+      {
+        heading: "What I would tell the next person",
+        paragraphs: [
+          "Ship the next surface to the people who already have the last one. The desktop agent got a quarter's adoption in a day because it did not ask anyone to start over.",
+          "Put policy in configuration before you consolidate anything. Once tool versions and scans are config, the tools underneath become replaceable.",
+          "Make discovery a product surface. A catalog of 140+ vetted skills, servers and agents is the difference between AI tooling that exists and AI tooling that gets used.",
+        ],
+      },
+    ],
+    stack: [
+      "TypeScript",
+      "GitHub Enterprise Cloud",
+      "GitHub Actions",
+      "Open Policy Agent",
+      "MCP",
+      "VS Code",
+      "AWS",
+    ],
+  },
+  {
     slug: "github-enterprise-cloud-migration",
     title: "10,000+ repositories to GitHub Enterprise Cloud",
     eyebrow: "Case study · Source control",
@@ -100,7 +162,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "devops-intelligence",
     title: "A platform that can see where engineers get stuck",
-    eyebrow: "Case study · Developer platform",
+    eyebrow: "Case study · DevOps intelligence",
     lede: "Telemetry was built into ATLAS, The Hartford's developer platform, from the first day, so the platform team works from usage data instead of guesses, the whole company has one status page to look at, and AI agents can read the same data.",
     description:
       "How The Hartford's developer platform streams pipeline and tooling telemetry through EventBridge and Firehose into DynamoDB and Snowflake, with an in-house status page and MCP access for AI agents.",
