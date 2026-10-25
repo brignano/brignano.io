@@ -393,8 +393,8 @@ export const nowBuilding: NowItem[] = [
 // worse than no card — the visitor reaches for it, finds nothing, and leaves
 // with a worse impression than if it had never been listed. A project with
 // private source but a published package is listed by its public link alone.
-// guidebook's source is private and its package unpublished, so it links to
-// its public landing page only. Add a Source link if the repo goes public.
+// guidebook's source is private, so it links to its public site and its Chrome
+// Web Store listing only. Add a Source link if the repo goes public.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -455,11 +455,17 @@ export const projects: Project[] = [
     slug: "guidebook",
     title: "Guidebook",
     description:
-      "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A browser extension highlights each thing to click and says in plain words what to do, playing guides written by a Claude skill or recorded by doing the task once. App teams can embed the same engine and check every guide in CI.",
-    tech: ["TypeScript", "Browser extension", "Claude", "Playwright"],
-    status: "proof of concept",
+      "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A Chrome extension highlights each thing to click and says in plain words what to do. Record a guide by doing the task once, share it with a link, or browse the guide library. App teams can embed the same engine and check every guide in CI.",
+    tech: ["TypeScript", "Browser extension", "Claude", "Playwright", "Supabase"],
+    status: "live",
     kind: "product",
-    links: [{ label: "Get early access", url: "https://guidebook.brignano.io" }],
+    links: [
+      { label: "Try the demo", url: "https://guidebook.brignano.io" },
+      {
+        label: "Chrome Web Store",
+        url: "https://chromewebstore.google.com/detail/kagfmiadbbingdaehochbgliomjdhfae",
+      },
+    ],
   },
   {
     slug: "poker-helper",
