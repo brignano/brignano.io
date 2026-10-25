@@ -20,7 +20,7 @@ const PAGES = [
   ["case-study", "/work/github-enterprise-cloud-migration"],
   ["projects", "/projects"],
   ["blog", "/blog"],
-  ["post", "/blog/a-job-cannot-report-its-own-death"],
+  ["post", "/blog/building-my-homelab"],
   ["resume", "/resume"],
   ["coding", "/coding"],
   ["not-found", "/this-page-does-not-exist"],

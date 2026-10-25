@@ -1,0 +1,163 @@
+---
+title: "Building my homelab: from a wiped mini PC to running the house"
+description: "How one 16 GB mini PC became a Proxmox homelab with local AI, real certificates, a Discord assistant and the house's DNS, and what 117 setup-log entries taught me."
+date: 2026-10-25
+tags: ["homelab", "platform-engineering", "self-hosting", "local-llm"]
+published: true
+---
+
+The homelab started as a repository before it was a machine. On 2026-06-06 I
+created [`brignano/homelab`](https://github.com/brignano/homelab) with three
+Docker Compose stacks (monitoring, core services, local AI), a bootstrap
+script, and a setup log. The hardware arrived the next day.
+
+Four and a half months later that log has 117 entries, and the box runs the
+house's DNS, its media, its smart-home bridge, and an assistant I talk to in
+Discord. This is how it got there.
+
+## The hardware, and the first real decision
+
+It is one mini PC, a GMKtec M5 Ultra: a Ryzen 7 7730U (8 cores, 16 threads),
+16 GB of RAM and a 512 GB NVMe drive. I wiped the Windows 11 it shipped with
+and installed Proxmox VE bare metal.
+
+The plan on paper was a Debian VM for Docker. The numbers killed it before
+it existed: a 12 GB VM is a hard reservation, which on a 16 GB host leaves
+Proxmox about 2 GB to work with. A privileged LXC container with nesting
+enabled runs Docker just as well, and its 14 GB is a limit rather than a
+carve-out, so the host keeps real headroom. Same compose files, no other
+changes. Everything since runs in that one container, `CT 100`.
+
+Then Tailscale on the host, set up as a subnet router for the home network,
+so every service is reachable from my laptop or phone anywhere without
+opening a single port.
+
+## Day one was mostly debugging
+
+The first stacks came up on 2026-06-07 and immediately taught me things.
+Ollama's healthcheck called `curl`, which isn't in the Ollama image, so it
+never went healthy and Open WebUI, waiting on it, never started. Every port
+was bound to `127.0.0.1` inside the container, so the subnet route I had
+just set up could reach nothing.
+
+The best one was the model. `llama3.2:3b` was generating at about 0.5 tokens
+a second, roughly 30 times slower than the CPU should manage. Ollama counts
+the *host's* 16 logical CPUs, not the container's 6-core quota, spawns more
+threads than it is allowed, and the kernel throttles them into a crawl. One
+line in a version-controlled Modelfile fixed it:
+
+```dockerfile
+FROM llama3.2:3b
+PARAMETER num_thread 4
+```
+
+That took it to about 16 tokens a second, and it became a standing rule:
+every model pins its thread count.
+
+The same day I tried a bigger idea and walked it back. A self-hosted
+SearXNG plus a 7B model for web-augmented answers was too slow and too
+hungry for a CPU-only, 16 GB box, and a 3B model can't faithfully use what
+it retrieves anyway. Anything that needs current information or real
+reasoning goes to Claude. The local model does fast, private, offline work.
+
+## Seeing what it's doing
+
+Prometheus and Grafana were running but watching nothing, so the next
+build-out was observability: exporters for the Proxmox host, the container,
+every Docker container and PostgreSQL, HTTP probes for each endpoint, and
+Loki for logs. All of it fits inside the same 16 GB.
+
+Monitoring that lives on the box has an obvious hole, and I found it the
+hard way when the server went offline and nothing said so. Grafana, the push
+notifications and the digest all ran inside the container that had died.
+Alerts now go to Discord, and a heartbeat pings an external service every
+five minutes, so the one failure most worth hearing about is the one thing
+that can't be silent.
+
+## From a chat page to an assistant that pushes
+
+By August the local model was mostly idle. The problem was never the model.
+Open WebUI is a page you go to, type into, and watch fill at 16 tokens a
+second, and next to Claude that comparison is lost before it starts.
+
+The question that changed it was *is anyone waiting on the answer?* A slow
+model is painful to watch and perfectly fine when the result arrives on its
+own. So local work moved into a small Discord bot: a morning digest of the
+lab's health, `/ask` and `/summarize` that reply when they're done, and a
+right-click to summarize any message. The bot dials out to Discord, so it
+adds no inbound port, route or tunnel, and it works off the tailnet. Even
+the Discord server's channels and permissions are declared in a YAML file
+and applied by the bot.
+
+## Real names, still private
+
+Typing ports got old, so a Caddy reverse proxy and AdGuard Home gave every
+service a name: `chat`, `stats`, `apps`, `dns`. In August those moved from a
+made-up `.home` domain to a real domain with real Let's Encrypt
+certificates, without publishing anything. The names resolve publicly to a
+private address that only the LAN and tailnet can reach. Caddy proves it
+owns the domain by writing a DNS record through Cloudflare's API, never by
+receiving a connection, which is what makes real HTTPS possible on a host
+the internet can't see.
+
+## The month it stopped lying to me
+
+The homelab is deployed from `main`: a nightly job pulls the repo and
+restarts whatever changed. In September I found the box running a commit
+from 20 days earlier. The sync job had never been installed. Its schedule
+lived in a comment at the top of its own file. And because it was built to
+stay quiet when nothing needs doing, "never ran" looked exactly like three
+weeks of healthy days.
+
+<Callout title="The rule I took from it">
+  A job cannot report its own death. Whatever tells you a job ran has to live
+  outside the job. And for every check, ask what would make it report a
+  problem. If nothing can, it isn't a check.
+</Callout>
+
+That turned out to be one of three. The "heal" for a stale stack was
+`docker compose up -d`, which doesn't recreate a container when only a
+bind-mounted file changed, so it reported success and replaced nothing. And
+the check meant to catch stale config read the container's file with
+`docker cp`, which resolves the mount back to the host's copy, so it was
+comparing the file against itself. Each fix was small. Finding them changed
+how I write checks at work too.
+
+## Running the house
+
+October is when the lab stopped being a project and became infrastructure
+other people rely on. Two USB drives arrived: an encrypted one for a nightly
+image of the whole container, and a 5 TB one for media. Jellyfin went live,
+with Live TV and a guide. Home Assistant came in, and a Matter bridge lets
+Alexa reach it. AdGuard became the household's DNS, which is exactly why the
+nightly sync is never allowed to restart it on its own: if that restart
+fails, every tool you'd reach for to diagnose it resolves names through the
+thing that is down.
+
+The Discord bot grew a concierge in `#ask`: ask for a movie and it comes
+back with a clarifying question if the title is ambiguous, then a ✅/❌ card,
+and nothing happens until I approve it. It also reads the calendar, the
+weather and the lab's own health. And Claude Code on my laptop can query the
+lab's telemetry and calendar through read-only MCP servers.
+
+## What I'd tell someone starting one
+
+**Put it in a repo before you plug it in.** Every compose file, every
+dashboard and every alert rule is in git, which means the box can be rebuilt
+and every change has a reason attached.
+
+**Keep a setup log.** Mine records the goal, the steps, what went wrong and
+what I'd do next for every change. It's the reason I can write this post,
+and the reason the same mistake rarely happens twice.
+
+**Pick constraints and let them decide things.** Sixteen gigabytes and no
+GPU decided VM versus LXC, one small model versus several, and local versus
+Claude. Nothing is exposed to the internet, so certificates come from DNS
+and the bot dials out.
+
+**Watch the watchers.** The failures that cost me the most time were never
+the hardware. They were checks that couldn't fail.
+
+The whole thing, including the full
+[setup log](https://github.com/brignano/homelab/blob/main/docs/setup-log.md),
+is public.

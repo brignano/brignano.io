@@ -10,9 +10,10 @@ import { applyTheme } from "@/lib/theme";
 // Nav is inline at every width. A slide-in dialog to reveal a few links cost
 // two taps and an overlay to show what fits on one line, so the drawer, the
 // hamburger, and their animation state are gone. "Home" is not a link here:
-// the monogram is, and six words did not fit beside it on a phone. Five do,
-// down to ~340px wide, only with the phone gap at gap-x-3: at gap-x-5 the row
-// is 30px wider than a 390px screen.
+// the monogram is, and six words did not fit beside it on a phone. Five fit
+// in ~372px with the phone gaps below; at the old gap-x-5 the row was 420px
+// and scrolled sideways on a 390px screen. CI's fonts measure a few px wider
+// than local, so keep the slack.
 const PAGES = ["work", "projects", "blog", "resume", "coding"] as const;
 
 // Don't start hiding until the header has scrolled its own height away, and
@@ -99,7 +100,7 @@ export default function Header() {
       className={`sticky top-0 z-30 text-sm py-6 md:px-16 px-6 border-b border-line bg-bg/80 backdrop-blur-md lg:mb-28 mb-10 transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:translate-y-0 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
     >
       <div
-        className={`max-w-6xl mx-auto flex items-center justify-between gap-x-4 relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}
+        className={`max-w-6xl mx-auto flex items-center justify-between gap-x-3 sm:gap-x-4 relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}
       >
         <Link href="/" className="cursor-pointer shrink-0">
           <span className="sr-only">Anthony Brignano</span>
@@ -117,7 +118,7 @@ export default function Header() {
         {/* Centered on large screens via absolute positioning; on small screens
             it sits in the flex row between the logo and the theme toggle. */}
         <nav className="lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:transform">
-          <ul className="flex items-center gap-x-3 sm:gap-x-8">
+          <ul className="flex items-center gap-x-2.5 sm:gap-x-8">
             {PAGES.map((page) => {
               const isActive = currentPage === page;
               const label = page.charAt(0).toUpperCase() + page.slice(1);
