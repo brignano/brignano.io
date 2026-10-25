@@ -12,6 +12,7 @@ import CountUp from "@/components/count-up";
 import LatestCommit from "@/components/latest-commit";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import ProjectCard from "@/components/project-card";
+import Trail from "@/components/trail";
 import {
   socialLinks,
   achievements,
@@ -34,9 +35,10 @@ export default function Home() {
   return (
     <>
       <BreadcrumbSchema items={HOME_BREADCRUMBS} />
-      <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16">
+      <main className="relative isolate max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16">
+        <Trail />
         {/* Hero — full-height, staggered reveal (TSD §5.1) */}
-        <section className="relative fold-fit flex flex-col justify-center mb-8 md:mb-16">
+        <section id="top" data-trail="Trailhead" data-trail-zone="base" className="relative fold-fit flex flex-col justify-center mb-8 md:mb-16">
           {/* Two columns at lg. The hero previously used 672px of a 1152px
               container and left ~624px of the fold empty on the right, which is
               where the signature was meant to go. Rather than fill it with
@@ -187,7 +189,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section
+        <section id="about" data-trail="About" data-trail-zone="base"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -212,7 +214,7 @@ export default function Home() {
         </section>
 
         {/* Highlights — outcome cards + "Now" strip (TSD §5.5b) */}
-        <section className="py-16 md:py-24">
+        <section id="highlights" data-trail="Highlights" data-trail-zone="mid" className="py-16 md:py-24">
           <h2
             data-aos="fade-up"
             data-aos-duration={600}
@@ -293,7 +295,7 @@ export default function Home() {
             /projects for the full list. Keeping one array in constants.ts as the
             source of truth means adding a project never touches this file. */}
         {featuredProjects.length > 0 && (
-          <section
+          <section id="projects" data-trail="Projects" data-trail-zone="mid"
             className="py-16 md:py-24"
             data-aos="fade-up"
             data-aos-duration={1000}
@@ -318,7 +320,7 @@ export default function Home() {
         )}
 
         {/* Work Experience (Current Position Only) */}
-        <section
+        <section id="role" data-trail="Current role" data-trail-zone="mid"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -395,7 +397,7 @@ export default function Home() {
         </section>
 
         {/* Open-source activity — calm real-data preview that funnels to /coding */}
-        <section
+        <section id="open-source" data-trail="Open source" data-trail-zone="summit"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -433,7 +435,7 @@ export default function Home() {
         </section>
 
         {/* Contact — a standalone full-height finale (TSD §5.1). */}
-        <section
+        <section id="contact" data-trail="Get in touch" data-trail-zone="summit"
           className="min-h-[70vh] flex flex-col justify-center border-t border-line mt-8"
           data-aos="fade-up"
           data-aos-duration={800}
