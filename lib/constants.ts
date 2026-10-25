@@ -432,7 +432,6 @@ export const projects: Project[] = [
     tech: ["Node", "TypeScript", "npm"],
     status: "live",
     kind: "product",
-    featured: true,
     links: [
       { label: "Run it", url: "https://www.npmjs.com/package/brignano" },
       { label: "Source", url: "https://github.com/brignano/card" },
@@ -459,6 +458,9 @@ export const projects: Project[] = [
     tech: ["TypeScript", "Browser extension", "Claude", "Playwright"],
     status: "proof of concept",
     kind: "product",
+    // Featured over the terminal card: an AI-native tool is the stronger
+    // claim on a homepage whose hero says AI is being built into the tools.
+    featured: true,
     links: [{ label: "Get early access", url: "https://guidebook.brignano.io" }],
   },
   {
