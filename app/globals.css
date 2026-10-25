@@ -349,33 +349,3 @@ html[data-chat-open] #scroll-to-top {
     display: none !important;
   }
 }
-
-/* The Trail (components/trail.tsx) ─────────────────────────────────────────
-   One path, drawn by scroll. --trail-progress (0–1) is written by the
-   component; everything visual is derived here so the scroll handler touches
-   one custom property and nothing else. */
-.trail-path {
-  stroke-width: 1.75px;
-  stroke-dasharray: var(--trail-length, 0);
-  stroke-dashoffset: calc(
-    var(--trail-length, 0) * (1 - var(--trail-progress, 0))
-  );
-  transition: stroke-dashoffset 160ms linear;
-}
-@media (min-width: 64rem) {
-  .trail-path {
-    stroke-width: 2.5px;
-  }
-}
-/* A waypoint appears once the line has reached it. */
-.trail-waypoint {
-  stroke-width: 1.5px;
-  opacity: clamp(0, (var(--trail-progress, 0) - var(--wp-at, 0)) * 40, 1);
-  transition: opacity 240ms ease-out;
-}
-@media (prefers-reduced-motion: reduce) {
-  /* Fully drawn, static, all waypoints visible. */
-  .trail {
-    --trail-progress: 1 !important;
-  }
-}
