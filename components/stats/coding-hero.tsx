@@ -92,3 +92,26 @@ export default function CodingHero({
     </div>
   );
 }
+
+// Shown in the hero's place when WakaTime did not answer (API down, key
+// rotated, rate limited). The page used to fall through to the normal hero
+// with "0 hours" as the headline, which reads as a year of not coding rather
+// than a stats outage. Same card, same framing, no number to misread.
+export function CodingHeroUnavailable() {
+  return (
+    <div className="bg-card border border-line rounded-lg p-6 md:p-8">
+      <div className="text-xs uppercase tracking-wide text-slate">
+        Total time coding, tracked
+      </div>
+      <div className="font-sans text-2xl md:text-3xl font-bold tracking-tight mt-1">
+        WakaTime isn&apos;t answering right now.
+      </div>
+      <p className="mt-4 max-w-2xl text-sm md:text-base text-ink-soft leading-relaxed">
+        This is where the editor time WakaTime has tracked across every machine
+        since 2020 usually goes — thousands of hours, most of them on private
+        commits that never show up publicly. Check back shortly; the GitHub
+        activity below is live.
+      </p>
+    </div>
+  );
+}

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo, useSyncExternalStore } from "react";
 import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from "recharts";
 import type { StatsData } from "@/types/wakatime";
 import { buildPalette } from "./chart-colors";
@@ -16,6 +16,15 @@ interface ChartDataItem {
   seconds: number;
 }
 
+// True once React has hydrated on the client, false on the server and during
+// hydration. A hydration gate that never calls setState in an effect.
+const useHydrated = () =>
+  useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+
 export default function StatsPie({ data, title, description }: StatsPieProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -24,8 +33,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
   // no document, so chartColors() returns the light-mode fallbacks there; the
   // gate keeps the first client render identical before swapping to the real
   // (theme-aware) values.
-  const [tokensReady, setTokensReady] = useState(false);
-  useEffect(() => setTokensReady(true), []);
+  const tokensReady = useHydrated();
   // Built from THIS chart's own series list, so slots are not shared with any
   // other chart on the page and the visible subset can change without
   // repainting survivors.

@@ -102,8 +102,16 @@ export default function Home() {
               data-aos-duration={600}
               data-aos-delay={340}
               /* No bottom margin below `sm` — the social row underneath is
-                 hidden there, so this is the last thing in the hero. */
-              className="flex flex-wrap md:flex-nowrap gap-3 sm:gap-4 mb-0 sm:mb-8 lg:mb-6 items-center"
+                 hidden there, so this is the last thing in the hero.
+
+                 `pr-14` below `sm` keeps the row out of the column the chat
+                 launcher floats in (fixed 24px off the bottom-right corner, 48px
+                 wide). On a phone this row is the last thing in the fold and
+                 the hero is taller than the screen, so padding the section
+                 can't lift it clear; narrowing the row instead makes the second
+                 button wrap under the first when it would otherwise run under
+                 the launcher. scripts/fold-check.mjs asserts this in CI. */
+              className="flex flex-wrap md:flex-nowrap gap-3 sm:gap-4 mb-0 sm:mb-8 lg:mb-6 items-center pr-14 sm:pr-0"
             >
               <Link
                 href="/resume"

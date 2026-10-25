@@ -49,3 +49,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# fold-check screenshots (scripts/fold-check.mjs)
+/fold-screenshots
+/.lighthouseci

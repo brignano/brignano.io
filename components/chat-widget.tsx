@@ -134,7 +134,10 @@ export default function ChatWidget() {
   const refocusToggleRef = useRef(false);
 
   // Read storage after mount so the server and client render the same thing.
+  // sessionStorage only exists in the browser, so this cannot be a lazy
+  // useState initializer without a hydration mismatch.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- restoring from sessionStorage after hydration
     setMessages(loadMessages());
     setRestored(true);
   }, []);

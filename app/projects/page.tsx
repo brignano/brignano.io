@@ -48,6 +48,9 @@ export default function Projects() {
         </header>
 
         <section className="mb-16 md:mb-24">
+          {/* Headings must descend in order for assistive tech; the cards are
+              h3s, so the grid needs an h2 even though it shows no title. */}
+          <h2 className="sr-only">Products</h2>
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
             {products.map((project) => (
               <ProjectCard key={project.slug} project={project} />
