@@ -414,9 +414,9 @@ export const projects: Project[] = [
     slug: "driftwood",
     title: "driftwood",
     description:
-      "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts.",
+      "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts. It also draws a Terraform plan on its pull request, before anything is applied.",
     tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
-    status: "proof of concept",
+    status: "active",
     kind: "product",
     featured: true,
     links: [
