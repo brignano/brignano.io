@@ -237,7 +237,7 @@ export const socialLinks: SocialLink[] = [
 
 /** Where a project actually is, stated plainly. Overselling a proof of
  *  concept is the fastest way to make the honest entries unreadable too. */
-export type ProjectStatus = "live" | "active" | "proof of concept";
+export type ProjectStatus = "live" | "beta" | "proof of concept";
 
 /** `product` is something a visitor can use. `practice` is how the work gets
  *  done — real and public, but nobody is installing my homelab. They render in
@@ -393,8 +393,8 @@ export const nowBuilding: NowItem[] = [
 // worse than no card — the visitor reaches for it, finds nothing, and leaves
 // with a worse impression than if it had never been listed. A project with
 // private source but a published package is listed by its public link alone.
-// guidebook's source is private and its package unpublished, so it links to
-// its public landing page only. Add a Source link if the repo goes public.
+// guidebook's source is private, so it links to its public site and its Chrome
+// Web Store listing only. Add a Source link if the repo goes public.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -414,9 +414,9 @@ export const projects: Project[] = [
     slug: "driftwood",
     title: "driftwood",
     description:
-      "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts.",
+      "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts. It also draws a Terraform plan on its pull request, before anything is applied.",
     tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
-    status: "proof of concept",
+    status: "beta",
     kind: "product",
     featured: true,
     links: [
@@ -443,7 +443,7 @@ export const projects: Project[] = [
     description:
       "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. DECISIONS.md records why each value is what it is.",
     tech: ["CSS", "Design tokens", "npm"],
-    status: "active",
+    status: "beta",
     kind: "product",
     links: [
       { label: "npm", url: "https://www.npmjs.com/package/@brignano/design" },
@@ -454,14 +454,20 @@ export const projects: Project[] = [
     slug: "guidebook",
     title: "Guidebook",
     description:
-      "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A browser extension highlights each thing to click and says in plain words what to do, playing guides written by a Claude skill or recorded by doing the task once. App teams can embed the same engine and check every guide in CI.",
-    tech: ["TypeScript", "Browser extension", "Claude", "Playwright"],
-    status: "proof of concept",
+      "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A Chrome extension highlights each thing to click and says in plain words what to do. Record a guide by doing the task once, share it with a link, or browse the guide library. App teams can embed the same engine and check every guide in CI.",
+    tech: ["TypeScript", "Browser extension", "Claude", "Playwright", "Supabase"],
+    status: "live",
     kind: "product",
     // Featured over the terminal card: an AI-native tool is the stronger
     // claim on a homepage whose hero says AI is being built into the tools.
     featured: true,
-    links: [{ label: "Get early access", url: "https://guidebook.brignano.io" }],
+    links: [
+      { label: "Try the demo", url: "https://guidebook.brignano.io" },
+      {
+        label: "Chrome Web Store",
+        url: "https://chromewebstore.google.com/detail/kagfmiadbbingdaehochbgliomjdhfae",
+      },
+    ],
   },
   {
     slug: "poker-helper",
@@ -482,7 +488,7 @@ export const projects: Project[] = [
     description:
       "One source of truth for my AI-agent setup — context, slash commands, output styles, permissions and MCP servers — symlinked into place by an installer so every machine I work on behaves the same way.",
     tech: ["Shell", "PowerShell", "Claude Code", "MCP"],
-    status: "active",
+    status: "beta",
     kind: "practice",
     links: [{ label: "Source", url: "https://github.com/brignano/ai-tools" }],
   },
@@ -492,7 +498,7 @@ export const projects: Project[] = [
     description:
       "A mini PC running Proxmox, Docker and Tailscale, with Prometheus and Grafana for metrics and Ollama plus Open WebUI for local inference. Documented well enough that I could rebuild the whole thing from the repo.",
     tech: ["Proxmox", "Docker", "Tailscale", "Prometheus", "Grafana", "Ollama"],
-    status: "active",
+    status: "beta",
     kind: "practice",
     links: [{ label: "Source", url: "https://github.com/brignano/homelab" }],
   },
