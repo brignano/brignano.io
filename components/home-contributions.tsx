@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import ContributionCalendar from "@/components/contribution-calendar";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import ContributionCalendar, {
+  weeksThatFit,
+} from "@/components/contribution-calendar";
 import { fetchContributions, type ContributionYear } from "@/lib/contributions";
 import { useNearViewport } from "@/lib/use-near-viewport";
+
+const SIZES = { blockSize: 11, blockMargin: 4, fontSize: 12 };
 
 type State =
   | { status: "idle" | "loading" }
@@ -13,11 +17,11 @@ type State =
 /**
  * Calm, restrained contribution preview for the homepage. Uses the **current
  * calendar year** (matching the full /coding calendar) rather than a trailing
- * 12-month window: most public activity lands in the current year, so this puts
- * the active months on the left where the overflow container shows them first,
- * instead of leading with last year's empty months (work commits live on a
- * private GitHub Enterprise that never reaches this public graph). Real data
- * only; the year selector, legend, and color legend chrome live on /coding.
+ * 12-month window, so it never leads with last year's empty months (work
+ * commits live on a private GitHub Enterprise that never reaches this public
+ * graph). The grid is cut to as many of the latest weeks as fit the card, so
+ * the most recent activity is always in view with no sideways scroll; the full
+ * year, year selector, and color legend live on /coding.
  *
  * The homepage is a client component, so the data is fetched in the browser —
  * but only once the section scrolls near the viewport, and rendered by the same
@@ -30,6 +34,26 @@ export default function HomeContributions({
 }) {
   const [ref, near] = useNearViewport<HTMLDivElement>();
   const [state, setState] = useState<State>({ status: "idle" });
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState<number | null>(null);
+
+  // Track the card's inner width so the grid can be cut to what fits.
+  useLayoutEffect(() => {
+    const el = boxRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(([entry]) =>
+      setWidth(Math.floor(entry.contentRect.width))
+    );
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Fallback for browsers without ResizeObserver: the grid overflows, so open
+  // the scroller at its right end, where the latest weeks are.
+  useLayoutEffect(() => {
+    const el = boxRef.current;
+    if (el && state.status === "ready") el.scrollLeft = el.scrollWidth;
+  }, [state.status, width]);
 
   useEffect(() => {
     // `near` only ever flips false → true, so this runs the fetch once. Don't
@@ -50,15 +74,14 @@ export default function HomeContributions({
   }, [near, username]);
 
   return (
-    <div className="overflow-x-auto -mx-1 px-1 py-1">
-      <div ref={ref} className="min-w-[320px] min-h-[140px]">
+    <div ref={boxRef} className="overflow-x-auto py-1">
+      <div ref={ref} className="min-h-[140px]">
         {state.status === "ready" && (
           <ContributionCalendar
-            data={state.data}
-            blockSize={11}
-            blockMargin={4}
-            fontSize={12}
+            data={withoutFutureDays(state.data)}
+            {...SIZES}
             showLegend={false}
+            maxWeeks={width ? weeksThatFit(width, SIZES) : undefined}
           />
         )}
         {state.status === "error" && (
@@ -69,4 +92,20 @@ export default function HomeContributions({
       </div>
     </div>
   );
+}
+
+/** Today's date as YYYY-MM-DD in the visitor's time zone. */
+function localToday() {
+  const d = new Date();
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+/**
+ * The API can return the rest of the year as empty days; drop them so the
+ * right edge of the grid is this week, not December.
+ */
+function withoutFutureDays(data: ContributionYear): ContributionYear {
+  const today = localToday();
+  return { ...data, days: data.days.filter((d) => d.date <= today) };
 }

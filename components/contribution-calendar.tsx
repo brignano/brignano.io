@@ -25,11 +25,30 @@ interface ContributionCalendarProps {
   showLegend?: boolean;
   /** Footer line; `{{count}}` and `{{year}}` are substituted. */
   totalLabel?: string;
+  /** Keep only the most recent N week columns (see `weeksThatFit`). */
+  maxWeeks?: number;
 }
 
 function parseDate(iso: string) {
   const [y, m, d] = iso.split("-").map(Number);
   return Date.UTC(y, m - 1, d);
+}
+
+/** Width of the Mon/Wed/Fri label gutter; shared with `weeksThatFit`. */
+function weekdayLabelWidth(fontSize: number) {
+  return Math.round(fontSize * 2.4);
+}
+
+/**
+ * How many week columns fit in `width` px at the given sizes, so a caller can
+ * pass the result as `maxWeeks` and show the latest weeks without scrolling.
+ */
+export function weeksThatFit(
+  width: number,
+  { blockSize = 12, blockMargin = 4, fontSize = 14 } = {}
+) {
+  const step = blockSize + blockMargin;
+  return Math.max(1, Math.floor((width - weekdayLabelWidth(fontSize) + blockMargin) / step));
 }
 
 export default function ContributionCalendar({
@@ -39,6 +58,7 @@ export default function ContributionCalendar({
   fontSize = 14,
   showLegend = true,
   totalLabel = "{{count}} contributions in {{year}}",
+  maxWeeks,
 }: ContributionCalendarProps) {
   const { days, year, total } = data;
   if (days.length === 0) return null;
@@ -48,10 +68,10 @@ export default function ContributionCalendar({
   const firstDay = parseDate(days[0].date);
   const firstSunday = firstDay - new Date(firstDay).getUTCDay() * DAY_MS;
   const step = blockSize + blockMargin;
-  const labelWidth = Math.round(fontSize * 2.4);
+  const labelWidth = weekdayLabelWidth(fontSize);
   const monthHeight = fontSize + 6;
 
-  const cells = days.map((day) => {
+  const allCells = days.map((day) => {
     const t = parseDate(day.date);
     const index = Math.round((t - firstSunday) / DAY_MS);
     return {
@@ -61,18 +81,32 @@ export default function ContributionCalendar({
       month: new Date(t).getUTCMonth(),
     };
   });
-  const columns = cells.reduce((max, c) => Math.max(max, c.col + 1), 0);
+  const allColumns = allCells.reduce((max, c) => Math.max(max, c.col + 1), 0);
+  // Drop the oldest weeks when only the latest N should show.
+  const skip = maxWeeks ? Math.max(0, allColumns - maxWeeks) : 0;
+  const cells = skip
+    ? allCells.filter((c) => c.col >= skip).map((c) => ({ ...c, col: c.col - skip }))
+    : allCells;
+  const columns = allColumns - skip;
 
   // One label where each month starts, unless it would crowd the previous one.
-  const monthLabels: { col: number; label: string }[] = [];
-  let lastMonth = -1;
-  let lastLabelCol = -10;
+  // A trimmed grid can open on the tail of a month; when the next month starts
+  // within three columns, label that one instead of the stub.
+  const monthStarts: { col: number; month: number }[] = [];
   for (const cell of cells) {
-    if (cell.month === lastMonth) continue;
-    lastMonth = cell.month;
-    if (cell.col - lastLabelCol < 3) continue;
-    monthLabels.push({ col: cell.col, label: MONTHS[cell.month] });
-    lastLabelCol = cell.col;
+    if (monthStarts[monthStarts.length - 1]?.month !== cell.month) {
+      monthStarts.push({ col: cell.col, month: cell.month });
+    }
+  }
+  if (skip && monthStarts.length > 1 && monthStarts[1].col < 3) {
+    monthStarts.shift();
+  }
+  const monthLabels: { col: number; label: string }[] = [];
+  let lastLabelCol = -10;
+  for (const { col, month } of monthStarts) {
+    if (col - lastLabelCol < 3) continue;
+    monthLabels.push({ col, label: MONTHS[month] });
+    lastLabelCol = col;
   }
 
   const width = labelWidth + columns * step - blockMargin;
