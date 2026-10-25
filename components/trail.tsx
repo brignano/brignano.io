@@ -8,13 +8,16 @@ import { useEffect, useRef, useState } from "react";
  * A single line runs down the page's left gutter from the hero (trailhead) to
  * the contact section (summit) and draws itself as the visitor scrolls. It is
  * measured from the real sections, so each waypoint sits exactly beside the
- * section it names and the line doubles as scroll progress. On desktop the
- * waypoints are links: nav is the trail.
+ * section it marks and the line doubles as scroll progress.
+ *
+ * It is deliberately not navigation. The header already does wayfinding, and
+ * side-dot section links are a one-page-template pattern; the trail is the
+ * signature and the progress, nothing a visitor has to operate.
  *
  * Contract (TSD §5.3–5.5):
  * - SVG + CSS + one rAF-throttled scroll listener. No library, no scroll-jack.
- * - Decorative: the SVG is aria-hidden and pointer-events: none. The waypoint
- *   links are real HTML, so removing the SVG removes nothing a reader needs.
+ * - Decorative: aria-hidden and pointer-events: none, so removing it removes
+ *   nothing a reader needs.
  * - prefers-reduced-motion: the line renders fully drawn and static (CSS pins
  *   --trail-progress to 1; the listener is never attached).
  * - Inked with --mark, the identity colour the design system reserves for
@@ -77,7 +80,7 @@ function measure(main: HTMLElement): Geometry | null {
   // The line lives in <main>'s own horizontal padding (px-6 / md:px-16), so
   // it never competes with content for width.
   const spineX = wide ? 28 : 7;
-  const amp = wide ? 11 : 3;
+  const amp = wide ? 14 : 3;
 
   const stops = sections.map((el, i) => {
     const top = el.getBoundingClientRect().top + window.scrollY - mainTop;
@@ -111,7 +114,7 @@ function measure(main: HTMLElement): Geometry | null {
     for (let k = 1; k <= bends; k++) {
       const t = k / (bends + 1);
       const side = k % 2 === 0 ? 1 : -1;
-      const scale = zone === "mid" ? 1.4 : zone === "summit" ? 0.5 : 1;
+      const scale = zone === "mid" ? 1.6 : zone === "summit" ? 0.5 : 1;
       pts.push({ x: spineX + side * amp * scale, y: a.y + span * t });
     }
     pts.push({ x: spineX, y: b.y });
@@ -224,7 +227,7 @@ export default function Trail() {
                 key={w.id}
                 cx={geo.spineX}
                 cy={w.y}
-                r={geo.spineX > 10 ? 4 : 2.5}
+                r={geo.spineX > 10 ? 4.5 : 2.5}
                 className="trail-waypoint"
                 style={{ "--wp-at": w.at } as React.CSSProperties}
                 fill="var(--bg)"
@@ -242,28 +245,6 @@ export default function Trail() {
               strokeLinejoin="round"
             />
           </svg>
-          {/* Waypoints as links, desktop only: a generous hit area centred on
-              each dot, with the section name appearing beside it on hover or
-              focus. Calm by default, informative on intent. Nav is the trail. */}
-          <nav
-            aria-label="Sections"
-            className="pointer-events-auto hidden lg:block"
-          >
-            {geo.waypoints.slice(1).map((w) => (
-              <a
-                key={w.id}
-                href={`#${w.id}`}
-                className="trail-wp group absolute flex h-7 w-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full focus-visible:outline-none"
-                style={{ left: geo.spineX, top: w.y }}
-              >
-                {/* Above the dot, centred on the spine: the one place on the
-                    line that is never over a heading. */}
-                <span className="trail-wp-label pointer-events-none absolute bottom-full mb-2 whitespace-nowrap font-display text-[10px] uppercase tracking-[0.18em] text-mark-ink opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
-                  {w.label}
-                </span>
-              </a>
-            ))}
-          </nav>
         </>
       )}
     </div>
