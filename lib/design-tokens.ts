@@ -1,7 +1,7 @@
 /**
  * Runtime access to the design-system CSS custom properties.
  *
- * Some libraries (Recharts, react-github-calendar) take colours as JS strings
+ * Some consumers (the chart palette) take colours as JS strings
  * and cannot read `var(--token)`. Rather than hardcode hexes next to them —
  * which is exactly how this codebase ended up with three unrelated palettes —
  * these helpers read the resolved value off `<html>` at runtime.

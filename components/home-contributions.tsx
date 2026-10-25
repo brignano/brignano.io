@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-import { useCalendarTheme } from "@/lib/use-calendar-theme";
+import { useEffect, useState } from "react";
+import ContributionCalendar from "@/components/contribution-calendar";
+import { fetchContributions, type ContributionYear } from "@/lib/contributions";
+import { useNearViewport } from "@/lib/use-near-viewport";
 
-const GitHubCalendar = dynamic(
-  () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
-  { ssr: false }
-);
-
+type State =
+  | { status: "idle" | "loading" }
+  | { status: "ready"; data: ContributionYear }
+  | { status: "error" };
 
 /**
  * Calm, restrained contribution preview for the homepage. Uses the **current
@@ -18,50 +18,50 @@ const GitHubCalendar = dynamic(
  * instead of leading with last year's empty months (work commits live on a
  * private GitHub Enterprise that never reaches this public graph). Real data
  * only; the year selector, legend, and color legend chrome live on /coding.
+ *
+ * The homepage is a client component, so the data is fetched in the browser —
+ * but only once the section scrolls near the viewport, and rendered by the same
+ * dependency-free SVG calendar the server uses on /coding.
  */
 export default function HomeContributions({
   username = "brignano",
 }: {
   username?: string;
 }) {
-  const [mounted, setMounted] = useState(false);
-  const [year, setYear] = useState<number | null>(null);
-  const [colorScheme, setColorScheme] = useState<"light" | "dark">("light");
-  const calendarTheme = useCalendarTheme(mounted, colorScheme);
+  const [ref, near] = useNearViewport<HTMLDivElement>();
+  const [state, setState] = useState<State>({ status: "idle" });
 
   useEffect(() => {
-    /* eslint-disable react-hooks/set-state-in-effect --
-       client-only mount gate + theme sync, same as github-calendar-client */
-    setMounted(true);
-    // Resolve the year from the browser clock after mount so server and client
-    // markup match (the calendar is client-only via the mounted gate anyway).
-    setYear(new Date().getFullYear());
-
-    const root = document.documentElement;
-    setColorScheme(root.classList.contains("dark") ? "dark" : "light");
-    /* eslint-enable react-hooks/set-state-in-effect */
-    const observer = new MutationObserver(() => {
-      setColorScheme(root.classList.contains("dark") ? "dark" : "light");
-    });
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
-    return () => observer.disconnect();
-  }, []);
+    if (!near || state.status !== "idle") return;
+    const controller = new AbortController();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- kicks off the one fetch, once the section is near
+    setState({ status: "loading" });
+    fetchContributions(username, new Date().getFullYear(), {
+      signal: controller.signal,
+    })
+      .then((data) => setState({ status: "ready", data }))
+      .catch((err) => {
+        if (err?.name !== "AbortError") setState({ status: "error" });
+      });
+    return () => controller.abort();
+  }, [near, state.status, username]);
 
   return (
     <div className="overflow-x-auto -mx-1 px-1 py-1">
-      <div className="min-w-[320px]">
-        {mounted && year !== null && (
-          <GitHubCalendar
-            username={username}
-            year={year}
-            colorScheme={colorScheme}
-            theme={calendarTheme}
+      <div ref={ref} className="min-w-[320px] min-h-[140px]">
+        {state.status === "ready" && (
+          <ContributionCalendar
+            data={state.data}
             blockSize={11}
             blockMargin={4}
             fontSize={12}
-            showColorLegend={false}
-            labels={{ totalCount: "{{count}} contributions in {{year}}" }}
+            showLegend={false}
           />
+        )}
+        {state.status === "error" && (
+          <p className="text-sm text-slate italic">
+            Couldn&apos;t load the contribution graph from GitHub just now.
+          </p>
         )}
       </div>
     </div>

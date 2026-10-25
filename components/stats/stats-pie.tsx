@@ -1,6 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
-import { PieChart, Pie, ResponsiveContainer, Cell, Sector } from "recharts";
+import { useState, useMemo, useSyncExternalStore } from "react";
 import type { StatsData } from "@/types/wakatime";
 import { buildPalette } from "./chart-colors";
 
@@ -16,6 +15,50 @@ interface ChartDataItem {
   seconds: number;
 }
 
+// viewBox is square; the centre, radii and the +12 emphasis ring all fit.
+const SIZE = 240;
+const CENTER = SIZE / 2;
+const OUTER = 100;
+const INNER = 48;
+// Gap between sectors, in degrees.
+const PAD_ANGLE = 2;
+
+// Point on a circle, angles in degrees clockwise from 12 o'clock.
+function polar(r: number, deg: number): [number, number] {
+  const rad = ((deg - 90) * Math.PI) / 180;
+  return [CENTER + r * Math.cos(rad), CENTER + r * Math.sin(rad)];
+}
+
+// Annular sector from `start` to `end` degrees. A full ring (one sector, no
+// gap) is drawn as two half-arcs, since an arc whose ends coincide is empty.
+function ringPath(r0: number, r1: number, start: number, end: number): string {
+  if (end - start >= 360) {
+    const mid = start + 180;
+    return ringPath(r0, r1, start, mid) + " " + ringPath(r0, r1, mid, end);
+  }
+  const large = end - start > 180 ? 1 : 0;
+  const [x1, y1] = polar(r1, start);
+  const [x2, y2] = polar(r1, end);
+  const [x3, y3] = polar(r0, end);
+  const [x4, y4] = polar(r0, start);
+  return [
+    `M${x1.toFixed(2)} ${y1.toFixed(2)}`,
+    `A${r1} ${r1} 0 ${large} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`,
+    `L${x3.toFixed(2)} ${y3.toFixed(2)}`,
+    `A${r0} ${r0} 0 ${large} 0 ${x4.toFixed(2)} ${y4.toFixed(2)}`,
+    "Z",
+  ].join(" ");
+}
+
+// True once React has hydrated on the client, false on the server and during
+// hydration. A hydration gate that never calls setState in an effect.
+const useHydrated = () =>
+  useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+
 export default function StatsPie({ data, title, description }: StatsPieProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -24,8 +67,7 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
   // no document, so chartColors() returns the light-mode fallbacks there; the
   // gate keeps the first client render identical before swapping to the real
   // (theme-aware) values.
-  const [tokensReady, setTokensReady] = useState(false);
-  useEffect(() => setTokensReady(true), []);
+  const tokensReady = useHydrated();
   // Built from THIS chart's own series list, so slots are not shared with any
   // other chart on the page and the visible subset can change without
   // repainting survivors.
@@ -73,63 +115,23 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
 
   const totalHours = chartData.reduce((s, d) => s + d.value, 0) || 1;
 
-  // recharts v3 removed the `activeIndex`/`activeShape` props, so the active
-  // sector is now driven through the `shape` render prop. `shape` is called for
-  // every sector; we draw the base sector and add the emphasis ring when the
-  // sector's index matches our externally-controlled `displayIndex`.
-  const renderSector = (props: unknown) => {
-    // Type guard to safely access props
-    if (!props || typeof props !== "object") return <g />;
-
-    const {
-      cx,
-      cy,
-      innerRadius,
-      outerRadius,
-      startAngle,
-      endAngle,
-      fill,
-      index,
-    } = props as {
-      cx: number;
-      cy: number;
-      innerRadius: number;
-      outerRadius: number;
-      startAngle: number;
-      endAngle: number;
-      fill: string;
-      index: number;
-    };
-
-    const color = fill ?? palette(chartData[index]?.name ?? "Other");
-    const isActive = index === displayIndex;
-
-    return (
-      <g>
-        <Sector
-          cx={cx}
-          cy={cy}
-          innerRadius={innerRadius}
-          outerRadius={outerRadius}
-          startAngle={startAngle}
-          endAngle={endAngle}
-          fill={color}
-        />
-        {isActive && (
-          <Sector
-            cx={cx}
-            cy={cy}
-            startAngle={startAngle}
-            endAngle={endAngle}
-            innerRadius={(outerRadius ?? 0) + 6}
-            outerRadius={(outerRadius ?? 0) + 12}
-            fill={color}
-            opacity={0.9}
-          />
-        )}
-      </g>
-    );
-  };
+  // Donut geometry. Hand-rolled SVG instead of a chart library: this is the
+  // only chart on the site that was not already plain markup, and it cost the
+  // /coding page the whole of recharts (plus d3 and decimal.js underneath) at
+  // load. A ring of arcs is a few lines of trigonometry.
+  const totalSecs = chartDataSecs.reduce((s, d) => s + d.seconds, 0) || 1;
+  const sectors = (() => {
+    const n = chartDataSecs.length;
+    const pad = n > 1 ? PAD_ANGLE : 0;
+    const sweep = 360 - pad * n;
+    let angle = 0;
+    return chartDataSecs.map((d) => {
+      const start = angle;
+      const end = start + (d.seconds / totalSecs) * sweep;
+      angle = end + pad;
+      return { name: d.name, start, end };
+    });
+  })();
 
   return (
     <div className="w-full pb-6 md:pb-0 overflow-auto">
@@ -254,33 +256,42 @@ export default function StatsPie({ data, title, description }: StatsPieProps) {
             }
           }}
         >
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={chartDataSecs}
-                dataKey="seconds"
-                nameKey="name"
-                cursor="pointer"
-                outerRadius={100}
-                innerRadius={48}
-                paddingAngle={2}
-                shape={renderSector}
-                onMouseEnter={(_, idx) => setActiveIndex(idx)}
-                onMouseLeave={() => setActiveIndex(null)}
-                onClick={(_, idx) =>
-                  setSelectedIndex(idx === selectedIndex ? null : idx)
-                }
-              >
-                {chartDataSecs.map((seg, idx) => (
-                  <Cell
-                    key={`cell-${idx}`}
-                    fill={palette(seg.name)}
-                    style={{ cursor: "pointer" }}
+          <svg
+            viewBox={`0 0 ${SIZE} ${SIZE}`}
+            className="h-full w-full"
+            role="img"
+            aria-label={`${title ?? "Breakdown"}: ${chartData
+              .map((d) => `${d.name} ${d.value} hours`)
+              .join(", ")}`}
+          >
+            {sectors.map((sec, idx) => {
+              const color = palette(sec.name);
+              const isActive = idx === displayIndex;
+              return (
+                <g
+                  key={`${sec.name}-${idx}`}
+                  className="cursor-pointer"
+                  onMouseEnter={() => setActiveIndex(idx)}
+                  onMouseLeave={() => setActiveIndex(null)}
+                  onClick={() =>
+                    setSelectedIndex(idx === selectedIndex ? null : idx)
+                  }
+                >
+                  <path
+                    d={ringPath(INNER, OUTER, sec.start, sec.end)}
+                    fill={color}
                   />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
+                  {isActive && (
+                    <path
+                      d={ringPath(OUTER + 6, OUTER + 12, sec.start, sec.end)}
+                      fill={color}
+                      opacity={0.9}
+                    />
+                  )}
+                </g>
+              );
+            })}
+          </svg>
         </div>
       </div>
     </div>

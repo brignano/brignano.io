@@ -12,8 +12,8 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 - **TailwindCSS 4** for styling
 - **TypeScript** for type safety
 - **Google Analytics 4** and **Vercel Speed Insights** integration
-- **GitHub Calendar** visualization
-- **AOS** (Animate On Scroll) animations
+- **GitHub contribution calendar** rendered as plain SVG from the public contributions API (no chart library)
+- **Scroll reveal** animations (a small IntersectionObserver hook; content is visible by default)
 - **Resume Integration** at `/resume` path with YAML-based data and PDF download functionality
 - **Coding Activity** page with WakaTime tiles and a GitHub contribution calendar
 - **Scroll-to-top** button for long pages
@@ -79,6 +79,22 @@ The PDF is rendered once at build time by the `app/resume.pdf` route, so the dow
 - `npm run build` - Build the application for production
 - `npm run start` - Start the Next.js production server
 - `npm run lint` - Run ESLint to check code quality
+- `npm run check:fold` - Screenshot the first screen of every page at phone and desktop width (needs a running production server; see below)
+
+### Continuous integration
+
+Every pull request runs `.github/workflows/ci.yml`:
+
+1. **Lint & build** — `npm run lint` and `npm run build`, with no secrets, so the pages must render their fallbacks (not errors) without API keys.
+2. **Lighthouse budgets** — [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) audits `/`, `/projects`, `/resume` and `/coding` against the floors in `lighthouserc.json` (performance, accessibility, SEO). Reports are uploaded as a job artifact and to Lighthouse's temporary public storage.
+3. **Fold screenshots** — `scripts/fold-check.mjs` captures the first screen of every page (including the 404) at 390×844 and 1440×900 in light and dark, uploads them as an artifact, and fails if the page scrolls sideways or the floating chat launcher covers a link or button in the fold.
+
+To run the fold check locally:
+
+```bash
+npm run build && npm start &
+npm run check:fold          # screenshots land in fold-screenshots/
+```
 
 ## 📦 Building for Production
 

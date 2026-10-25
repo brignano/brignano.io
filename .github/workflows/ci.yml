@@ -1,0 +1,118 @@
+name: CI
+
+# Every pull request and every push to main runs the same gate: lint, a
+# production build, Lighthouse against the site's own budgets, and a fold
+# check that screenshots the first screen of each page at phone and desktop
+# width in both themes. A dependency bump or a copy change cannot quietly
+# regress performance, accessibility, or the mobile fold without turning
+# this red.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Lint & build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # No secrets on purpose: the build must succeed on a fork PR with none,
+      # and the pages must render their fallbacks (not errors) without them.
+      - run: npm run build
+
+      # Everything the audit jobs need to `next start` without rebuilding.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: next-build
+          path: |
+            .next
+            !.next/cache
+          retention-days: 1
+          include-hidden-files: true
+
+  lighthouse:
+    name: Lighthouse budgets
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: next-build
+          path: .next
+
+      # Budgets, URLs and the server command live in lighthouserc.json.
+      - run: npx --yes @lhci/cli@0.15.x autorun
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci
+          retention-days: 14
+          # A dot-directory is "hidden" to upload-artifact and skipped otherwise.
+          include-hidden-files: true
+
+  fold:
+    name: Fold screenshots
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: next-build
+          path: .next
+
+      - run: npx playwright install --with-deps chromium
+
+      - name: Start the production server
+        run: |
+          npm start -- --port 3000 > server.log 2>&1 &
+          npx --yes wait-on@8 http://localhost:3000 --timeout 60000
+
+      # Screenshots the first screen of every page and fails if the fixed chat
+      # launcher covers anything clickable in it (scripts/fold-check.mjs).
+      - run: node scripts/fold-check.mjs
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fold-screenshots
+          path: fold-screenshots
+          retention-days: 14

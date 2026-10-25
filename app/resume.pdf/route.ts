@@ -1,10 +1,7 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { createElement, type ReactElement } from "react";
-import { load as parseYaml } from "js-yaml";
 import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import ResumePDF from "@/components/resume-pdf";
-import type { ResumeData } from "@/types/resume";
+import { loadResume } from "@/lib/resume";
 
 // Rendered once at build time (force-static) into a static /resume.pdf.
 // Generating the PDF here instead of in the browser keeps @react-pdf/renderer
@@ -13,11 +10,7 @@ import type { ResumeData } from "@/types/resume";
 export const dynamic = "force-static";
 
 export async function GET() {
-  const yamlText = await readFile(
-    path.join(process.cwd(), "public", "resume.yml"),
-    "utf8"
-  );
-  const data = parseYaml(yamlText) as ResumeData;
+  const data = await loadResume();
   const buffer = await renderToBuffer(
     createElement(ResumePDF, { data }) as ReactElement<DocumentProps>
   );

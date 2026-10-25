@@ -8,9 +8,11 @@ import type {
 } from "@/types/wakatime";
 import StatsPie from "../../components/stats/stats-pie";
 import StatsBar from "../../components/stats/stats-bar";
-import CodingHero from "../../components/stats/coding-hero";
+import CodingHero, {
+  CodingHeroUnavailable,
+} from "../../components/stats/coding-hero";
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
-import GitHubCalendarClient from "../../components/github-calendar-client";
+import ContributionGraph from "@/components/contribution-graph";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { fetchLatestPublicCommit, LatestCommit } from "@/lib/github";
 import LocalTime from "../../components/local-time";
@@ -93,445 +95,440 @@ async function fetchCommitDetails(repoFullName: string, sha: string) {
 }
 
 export default async function Page() {
-  try {
-    const userResp =
-      await safeFetch<WakaTimeApiResponse<WakaTimeUser>>("/users/current");
-    const allTimeResp = await safeFetch<
-      WakaTimeApiResponse<WakaTimeAllTimeStats>
-    >("/users/current/stats/all_time");
+  const userResp =
+    await safeFetch<WakaTimeApiResponse<WakaTimeUser>>("/users/current");
+  const allTimeResp = await safeFetch<
+    WakaTimeApiResponse<WakaTimeAllTimeStats>
+  >("/users/current/stats/all_time");
 
-    const user = userResp?.data?.data ?? null;
-    const allTime = allTimeResp?.data?.data ?? null;
+  const user = userResp?.data?.data ?? null;
+  const allTime = allTimeResp?.data?.data ?? null;
 
-    const languages: StatsData[] = Array.isArray(allTime?.languages)
-      ? allTime.languages.map((l) => ({
-          name: l.name,
-          seconds: l.total_seconds ?? l.seconds ?? 0,
+  const languages: StatsData[] = Array.isArray(allTime?.languages)
+    ? allTime.languages.map((l) => ({
+        name: l.name,
+        seconds: l.total_seconds ?? l.seconds ?? 0,
+      }))
+    : [];
+
+  const categories: StatsData[] = Array.isArray(allTime?.categories)
+    ? allTime.categories.map((c) => ({
+        name: c.name,
+        seconds: c.total_seconds ?? c.seconds ?? 0,
+      }))
+    : [];
+
+  // These breakdowns are already part of the stats/all_time response — surfaced
+  // at zero extra API cost. (machines/dependencies are intentionally skipped as
+  // low-signal.) Any that come back empty on the free plan self-hide below.
+  const toStats = (items?: { name: string; total_seconds?: number; seconds?: number }[]): StatsData[] =>
+    Array.isArray(items)
+      ? items.map((i) => ({
+          name: i.name,
+          seconds: i.total_seconds ?? i.seconds ?? 0,
         }))
       : [];
 
-    const categories: StatsData[] = Array.isArray(allTime?.categories)
-      ? allTime.categories.map((c) => ({
-          name: c.name,
-          seconds: c.total_seconds ?? c.seconds ?? 0,
-        }))
-      : [];
+  const editors = toStats(allTime?.editors);
+  const operatingSystems = toStats(allTime?.operating_systems);
+  // Projects are intentionally NOT surfaced — they include confidential
+  // private/enterprise project names that must not appear on a public page.
+  const bestDay = allTime?.best_day ?? null;
 
-    // These breakdowns are already part of the stats/all_time response — surfaced
-    // at zero extra API cost. (machines/dependencies are intentionally skipped as
-    // low-signal.) Any that come back empty on the free plan self-hide below.
-    const toStats = (items?: { name: string; total_seconds?: number; seconds?: number }[]): StatsData[] =>
-      Array.isArray(items)
-        ? items.map((i) => ({
-            name: i.name,
-            seconds: i.total_seconds ?? i.seconds ?? 0,
-          }))
-        : [];
-
-    const editors = toStats(allTime?.editors);
-    const operatingSystems = toStats(allTime?.operating_systems);
-    // Projects are intentionally NOT surfaced — they include confidential
-    // private/enterprise project names that must not appear on a public page.
-    const bestDay = allTime?.best_day ?? null;
-
-    // Total coding time from languages (fallback if all_time endpoint provided it differently)
-    const totalSecondsFromLanguages = languages.reduce(
-      (s, l) => s + (l.seconds || 0),
-      0
-    );
-    const totalHoursReadable = Number(
-      (totalSecondsFromLanguages / 3600).toFixed(1)
-    );
-    // Prefer the human-readable all_time value when available (includes "Other" language)
-    const totalTimeText =
-      allTime?.human_readable_total_including_other_language ||
-      `${totalHoursReadable} hours`;
-    // Prefer the human-readable daily average when available; fall back to computed value
-    const dailyAverageText =
-      allTime?.human_readable_daily_average_including_other_language ||
-      allTime?.human_readable_daily_average ||
-      (() => {
-        const days = allTime?.days_including_holidays || 1;
-        const avgSec = days > 0 ? totalSecondsFromLanguages / days : 0;
-        const hrs = Math.floor(avgSec / 3600);
-        const mins = Math.round((avgSec % 3600) / 60);
-        if (hrs > 0) return `${hrs} hrs ${mins} mins`;
-        if (mins > 0) return `${mins} mins`;
-        return "0 secs";
-      })();
-
-    // Range helper text from all_time (e.g. "since Dec 11 2020")
-    const rangeText = allTime?.human_readable_range || null;
-
-    // Compute a link to the user's WakaTime profile when available
-    const wakaProfile = (() => {
-      if (!user) return null;
-      // try common properties returned by the WakaTime API
-      return (
-        user.url ??
-        user.profile_url ??
-        (user.username ? `https://wakatime.com/@${user.username}` : null)
-      );
+  // Total coding time from languages (fallback if all_time endpoint provided it differently)
+  const totalSecondsFromLanguages = languages.reduce(
+    (s, l) => s + (l.seconds || 0),
+    0
+  );
+  const totalHoursReadable = Number(
+    (totalSecondsFromLanguages / 3600).toFixed(1)
+  );
+  // Prefer the human-readable all_time value when available (includes "Other" language)
+  const totalTimeText =
+    allTime?.human_readable_total_including_other_language ||
+    `${totalHoursReadable} hours`;
+  // Prefer the human-readable daily average when available; fall back to computed value
+  const dailyAverageText =
+    allTime?.human_readable_daily_average_including_other_language ||
+    allTime?.human_readable_daily_average ||
+    (() => {
+      const days = allTime?.days_including_holidays || 1;
+      const avgSec = days > 0 ? totalSecondsFromLanguages / days : 0;
+      const hrs = Math.floor(avgSec / 3600);
+      const mins = Math.round((avgSec % 3600) / 60);
+      if (hrs > 0) return `${hrs} hrs ${mins} mins`;
+      if (mins > 0) return `${mins} mins`;
+      return "0 secs";
     })();
 
-    // fetch latest public commit (server-side)
-    const latestCommitRaw: LatestCommit | null =
-      await fetchLatestPublicCommit();
-    let latestCommit: LatestCommit | null = latestCommitRaw;
-    if (latestCommitRaw?.repo && latestCommitRaw?.sha) {
-      const details = await fetchCommitDetails(
-        latestCommitRaw.repo,
-        latestCommitRaw.sha
-      );
-      if (details) {
-        latestCommit = {
-          sha: latestCommitRaw.sha,
-          repo: latestCommitRaw.repo,
-          url: latestCommitRaw.url,
-          message: details.commit?.message || latestCommitRaw.message,
-          author_name:
-            details.commit?.author?.name || latestCommitRaw.author_name,
-          author_login: details.author?.login || latestCommitRaw.author_login,
-          author_avatar:
-            details.author?.avatar_url || latestCommitRaw.author_avatar,
-          date: details.commit?.author?.date || latestCommitRaw.date,
-          filesChanged: Array.isArray(details.files)
-            ? details.files.length
-            : undefined,
-          additions: details.stats?.additions ?? undefined,
-          deletions: details.stats?.deletions ?? undefined,
-        } as LatestCommit;
-      }
-    }
+  // Range helper text from all_time (e.g. "since Dec 11 2020")
+  const rangeText = allTime?.human_readable_range || null;
 
-    // Prepare subject/body for rendering (preserve body formatting)
-    let commitSubject = "";
-    let commitBody = "";
-    if (latestCommit) {
-      const parts = splitMessage(latestCommit.message);
-      commitSubject = parts.subject;
-      commitBody = parts.bodyLines.length ? parts.bodyLines.join("\n") : "";
-    }
-
+  // Compute a link to the user's WakaTime profile when available
+  const wakaProfile = (() => {
+    if (!user) return null;
+    // try common properties returned by the WakaTime API
     return (
-      <>
-        <BreadcrumbSchema items={CODING_BREADCRUMBS} />
-        <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
-        <div className="max-w-6xl mx-auto">
-          <h1
-            data-aos="fade-up"
-            data-aos-duration="600"
-            data-aos-once="true"
-            className="font-sans text-4xl font-bold tracking-tight"
-          >
-            Coding Activity
-          </h1>
-          <div
-            data-aos="fade-up"
-            data-aos-duration="600"
-            data-aos-once="true"
-            data-aos-delay="100"
-            className="my-6"
-          >
+      user.url ??
+      user.profile_url ??
+      (user.username ? `https://wakatime.com/@${user.username}` : null)
+    );
+  })();
+
+  // fetch latest public commit (server-side)
+  const latestCommitRaw: LatestCommit | null =
+    await fetchLatestPublicCommit();
+  let latestCommit: LatestCommit | null = latestCommitRaw;
+  if (latestCommitRaw?.repo && latestCommitRaw?.sha) {
+    const details = await fetchCommitDetails(
+      latestCommitRaw.repo,
+      latestCommitRaw.sha
+    );
+    if (details) {
+      latestCommit = {
+        sha: latestCommitRaw.sha,
+        repo: latestCommitRaw.repo,
+        url: latestCommitRaw.url,
+        message: details.commit?.message || latestCommitRaw.message,
+        author_name:
+          details.commit?.author?.name || latestCommitRaw.author_name,
+        author_login: details.author?.login || latestCommitRaw.author_login,
+        author_avatar:
+          details.author?.avatar_url || latestCommitRaw.author_avatar,
+        date: details.commit?.author?.date || latestCommitRaw.date,
+        filesChanged: Array.isArray(details.files)
+          ? details.files.length
+          : undefined,
+        additions: details.stats?.additions ?? undefined,
+        deletions: details.stats?.deletions ?? undefined,
+      } as LatestCommit;
+    }
+  }
+
+  // Prepare subject/body for rendering (preserve body formatting)
+  let commitSubject = "";
+  let commitBody = "";
+  if (latestCommit) {
+    const parts = splitMessage(latestCommit.message);
+    commitSubject = parts.subject;
+    commitBody = parts.bodyLines.length ? parts.bodyLines.join("\n") : "";
+  }
+
+  return (
+    <>
+      <BreadcrumbSchema items={CODING_BREADCRUMBS} />
+      <main className="max-w-6xl mx-auto md:px-16 px-6 pt-0 pb-12">
+      <div className="max-w-6xl mx-auto">
+        <h1
+          data-aos="fade-up"
+          data-aos-duration="600"
+          data-aos-once="true"
+          className="font-sans text-4xl font-bold tracking-tight"
+        >
+          Coding Activity
+        </h1>
+        <div
+          data-aos="fade-up"
+          data-aos-duration="600"
+          data-aos-once="true"
+          data-aos-delay="100"
+          className="my-6"
+        >
+          {allTime ? (
             <CodingHero
               totalTimeText={totalTimeText}
               dailyAverageText={dailyAverageText}
               rangeText={rangeText}
               bestDay={bestDay}
             />
-          </div>
-
-          {/* WakaTime breakdowns — the bulk of the iceberg, below the waterline. */}
-          {languages.length > 0 && (
-            <div
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-              data-aos-delay="150"
-              className="bg-card border border-line p-6 rounded-lg mb-6"
-            >
-              <StatsBar
-                data={languages}
-                title="Programming Languages"
-                description="Languages used in the IDE (when tracked by WakaTime)."
-              />
-            </div>
+          ) : (
+            <CodingHeroUnavailable />
           )}
+        </div>
 
-          {(editors.length > 0 || operatingSystems.length > 0) && (
-            <div
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-              data-aos-delay="175"
-              className={`grid grid-cols-1 gap-6 mb-6 ${
-                editors.length > 0 && operatingSystems.length > 0
-                  ? "lg:grid-cols-2"
-                  : ""
-              }`}
-            >
-              {editors.length > 0 && (
-                <div className="bg-card border border-line p-6 rounded-lg">
-                  <StatsBar
-                    data={editors}
-                    title="Editors"
-                    description="Editors and IDEs used (when tracked by WakaTime)."
-                  />
-                </div>
-              )}
-              {operatingSystems.length > 0 && (
-                <div className="bg-card border border-line p-6 rounded-lg">
-                  <StatsBar
-                    data={operatingSystems}
-                    title="Operating Systems"
-                    description="Operating systems coded on (when tracked by WakaTime)."
-                  />
-                </div>
-              )}
-            </div>
-          )}
-
-          {categories.length > 0 && (
-            <div
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-              data-aos-delay="200"
-              className="bg-card border border-line p-6 rounded-lg mb-6"
-            >
-              <StatsPie
-                data={categories}
-                title="Activity Types"
-                description="Types of IDE activity (when tracked by WakaTime)."
-              />
-            </div>
-          )}
-
-
-          {/* The public slice — the visible tip of the iceberg. */}
+        {/* WakaTime breakdowns — the bulk of the iceberg, below the waterline. */}
+        {languages.length > 0 && (
           <div
             data-aos="fade-up"
             data-aos-duration="700"
             data-aos-once="true"
-            data-aos-delay="275"
-            className="mt-12"
+            data-aos-delay="150"
+            className="bg-card border border-line p-6 rounded-lg mb-6"
           >
-            <h2 className="font-sans text-3xl font-bold tracking-tight">
-              The public slice
-            </h2>
-            <p className="mt-1 text-sm text-slate">
-              Everything above is tracked privately by WakaTime. Here&apos;s the
-              part that shows up on GitHub.
-            </p>
+            <StatsBar
+              data={languages}
+              title="Programming Languages"
+              description="Languages used in the IDE (when tracked by WakaTime)."
+            />
           </div>
+        )}
 
-          {/* Last Commit Tile (server-rendered, styled like other coding tiles) */}
-          {latestCommit && (
-            <div
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-              data-aos-delay="300"
-              className="mt-6 mb-6"
-            >
+        {(editors.length > 0 || operatingSystems.length > 0) && (
+          <div
+            data-aos="fade-up"
+            data-aos-duration="700"
+            data-aos-once="true"
+            data-aos-delay="175"
+            className={`grid grid-cols-1 gap-6 mb-6 ${
+              editors.length > 0 && operatingSystems.length > 0
+                ? "lg:grid-cols-2"
+                : ""
+            }`}
+          >
+            {editors.length > 0 && (
               <div className="bg-card border border-line p-6 rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-sans text-2xl font-bold tracking-tight">
-                    Last Commit
-                  </h3>
-                  <a
-                    href={`https://github.com/${latestCommit.repo}/tree/${latestCommit.sha}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-1.5 border rounded bg-surface-hover text-sm font-medium hover:bg-surface-active"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      focusable="false"
-                      className="octicon octicon-file-code w-4 h-4 mr-2 text-ink-soft"
-                      viewBox="0 0 16 16"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      style={{
-                        display: "inline-block",
-                        overflow: "visible",
-                        verticalAlign: "text-bottom",
-                      }}
-                    >
-                      <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
-                    </svg>
-                    Browse files
-                  </a>
-                </div>
-                <p className="text-sm text-slate mb-4">
-                  Most recent public commit on GitHub.
-                </p>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div>
-                      <div className="flex flex-col gap-2">
-                      {commitSubject && (
-                          <div className="text-sm font-semibold text-ink">
-                          {commitSubject}
-                        </div>
-                      )}
-                      {commitBody && (
-                          <div className="text-sm text-ink-soft whitespace-pre-wrap">
-                          {commitBody}
-                        </div>
-                      )}
-                    </div>
-                    <div className="mt-2 text-sm text-ink-soft flex items-center gap-2 flex-wrap">
-                      <a
-                        href={`https://github.com/${latestCommit.repo}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-medium"
-                      >
-                        {latestCommit.repo}
-                      </a>
-                      <span className="mx-1 md:mx-2">&nbsp;•</span>
-
-                      <a
-                        href={String(latestCommit.url)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center font-mono text-xs bg-surface-hover px-2 py-1 rounded"
-                      >
-                        <span>{shortSha(latestCommit.sha)}</span>
-                        <svg
-                          className="w-3 h-3 ml-2 text-ink-soft"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M14 3h7v7"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M10 14L21 3"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M21 21H3V3"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </a>
-
-                      {typeof latestCommit.filesChanged === "number" && (
-                        <>
-                          <span className="mx-1 md:mx-2">&nbsp;•</span>
-                          <span>{latestCommit.filesChanged} files changed</span>
-                        </>
-                      )}
-
-                      {typeof latestCommit.additions === "number" &&
-                        typeof latestCommit.deletions === "number" && (
-                          <>
-                            <span className="mx-1 md:mx-2">•</span>
-
-                            <span className="ml-2 text-success-ink font-semibold">
-                              +{latestCommit.additions}
-                            </span>
-                            <span className="ml-2 text-danger-ink font-semibold">
-                              −{latestCommit.deletions}
-                            </span>
-                          </>
-                        )}
-
-                      {latestCommit.author_avatar ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={latestCommit.author_avatar}
-                          alt={
-                            latestCommit.author_login ??
-                            latestCommit.author_name ??
-                            "author"
-                          }
-                            loading="lazy"
-                            fetchPriority="low"
-                            decoding="async"
-                          className="w-6 h-6 rounded-full ml-2"
-                        />
-                      ) : null}
-
-                      {latestCommit.author_login ? (
-                        <a
-                          href={`https://github.com/${latestCommit.author_login}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="ml-2 font-medium text-interactive-ink hover:underline"
-                        >
-                          {latestCommit.author_login}
-                        </a>
-                      ) : latestCommit.author_name ? (
-                        <span className="ml-2">
-                          by {latestCommit.author_name}
-                        </span>
-                      ) : null}
-
-                      {latestCommit.date && (
-                        <LocalTime iso={latestCommit.date} />
-                      )}
-                    </div>
-                  </div>
-                </div>
+                <StatsBar
+                  data={editors}
+                  title="Editors"
+                  description="Editors and IDEs used (when tracked by WakaTime)."
+                />
               </div>
-            </div>
-          )}
+            )}
+            {operatingSystems.length > 0 && (
+              <div className="bg-card border border-line p-6 rounded-lg">
+                <StatsBar
+                  data={operatingSystems}
+                  title="Operating Systems"
+                  description="Operating systems coded on (when tracked by WakaTime)."
+                />
+              </div>
+            )}
+          </div>
+        )}
 
+        {categories.length > 0 && (
           <div
             data-aos="fade-up"
             data-aos-duration="700"
             data-aos-once="true"
             data-aos-delay="200"
-            className="mt-6"
+            className="bg-card border border-line p-6 rounded-lg mb-6"
           >
-            <GitHubCalendarClient
-              initialYear={2026}
-              buttonSize="large"
-              title="Contribution Graph"
-              description={"GitHub contribution activity by year."}
-              showDisclaimer={true}
+            <StatsPie
+              data={categories}
+              title="Activity Types"
+              description="Types of IDE activity (when tracked by WakaTime)."
             />
           </div>
+        )}
 
+
+        {/* The public slice — the visible tip of the iceberg. */}
+        <div
+          data-aos="fade-up"
+          data-aos-duration="700"
+          data-aos-once="true"
+          data-aos-delay="275"
+          className="mt-12"
+        >
+          <h2 className="font-sans text-3xl font-bold tracking-tight">
+            The public slice
+          </h2>
+          <p className="mt-1 text-sm text-slate">
+            Everything above is tracked privately by WakaTime. Here&apos;s the
+            part that shows up on GitHub.
+          </p>
+        </div>
+
+        {/* Last Commit Tile (server-rendered, styled like other coding tiles) */}
+        {latestCommit && (
           <div
             data-aos="fade-up"
             data-aos-duration="700"
             data-aos-once="true"
-            data-aos-delay="350"
-            className="mt-6 text-sm text-ink-soft flex justify-start"
+            data-aos-delay="300"
+            className="mt-6 mb-6"
           >
-            <WakaTimeDisclaimer url={wakaProfile} />
+            <div className="bg-card border border-line p-6 rounded-lg">
+              {/* `pr-14` below `sm` keeps the right-aligned link out of the
+                  chat launcher's column, like the homepage hero CTAs. */}
+              <div className="flex items-center justify-between mb-2 pr-14 sm:pr-0">
+                <h3 className="font-sans text-2xl font-bold tracking-tight">
+                  Last Commit
+                </h3>
+                <a
+                  href={`https://github.com/${latestCommit.repo}/tree/${latestCommit.sha}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-1.5 border rounded bg-surface-hover text-sm font-medium hover:bg-surface-active"
+                >
+                  <svg
+                    aria-hidden="true"
+                    focusable="false"
+                    className="octicon octicon-file-code w-4 h-4 mr-2 text-ink-soft"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    style={{
+                      display: "inline-block",
+                      overflow: "visible",
+                      verticalAlign: "text-bottom",
+                    }}
+                  >
+                    <path d="M4 1.75C4 .784 4.784 0 5.75 0h5.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v8.586A1.75 1.75 0 0 1 14.25 15h-9a.75.75 0 0 1 0-1.5h9a.25.25 0 0 0 .25-.25V6h-2.75A1.75 1.75 0 0 1 10 4.25V1.5H5.75a.25.25 0 0 0-.25.25v2.5a.75.75 0 0 1-1.5 0Zm1.72 4.97a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l1.47-1.47-1.47-1.47a.75.75 0 0 1 0-1.06ZM3.28 7.78 1.81 9.25l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042Zm8.22-6.218V4.25c0 .138.112.25.25.25h2.688l-.011-.013-2.914-2.914-.013-.011Z"></path>
+                  </svg>
+                  Browse files
+                </a>
+              </div>
+              <p className="text-sm text-slate mb-4">
+                Most recent public commit on GitHub.
+              </p>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    {/* `break-words` + `min-w-0`: a commit body can carry an
+                        unbreakable token (a session URL, a long path) that
+                        would otherwise make the whole page scroll sideways on
+                        a phone. The fold check in CI caught exactly that. */}
+                    <div className="flex min-w-0 flex-col gap-2 break-words">
+                    {commitSubject && (
+                        <div className="text-sm font-semibold text-ink">
+                        {commitSubject}
+                      </div>
+                    )}
+                    {commitBody && (
+                        <div className="text-sm text-ink-soft whitespace-pre-wrap">
+                        {commitBody}
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-2 text-sm text-ink-soft flex items-center gap-2 flex-wrap">
+                    <a
+                      href={`https://github.com/${latestCommit.repo}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium"
+                    >
+                      {latestCommit.repo}
+                    </a>
+                    <span className="mx-1 md:mx-2">&nbsp;•</span>
+
+                    <a
+                      href={String(latestCommit.url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center font-mono text-xs bg-surface-hover px-2 py-1 rounded"
+                    >
+                      <span>{shortSha(latestCommit.sha)}</span>
+                      <svg
+                        className="w-3 h-3 ml-2 text-ink-soft"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M14 3h7v7"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M10 14L21 3"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M21 21H3V3"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </a>
+
+                    {typeof latestCommit.filesChanged === "number" && (
+                      <>
+                        <span className="mx-1 md:mx-2">&nbsp;•</span>
+                        <span>{latestCommit.filesChanged} files changed</span>
+                      </>
+                    )}
+
+                    {typeof latestCommit.additions === "number" &&
+                      typeof latestCommit.deletions === "number" && (
+                        <>
+                          <span className="mx-1 md:mx-2">•</span>
+
+                          <span className="ml-2 text-success-ink font-semibold">
+                            +{latestCommit.additions}
+                          </span>
+                          <span className="ml-2 text-danger-ink font-semibold">
+                            −{latestCommit.deletions}
+                          </span>
+                        </>
+                      )}
+
+                    {latestCommit.author_avatar ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={latestCommit.author_avatar}
+                        alt={
+                          latestCommit.author_login ??
+                          latestCommit.author_name ??
+                          "author"
+                        }
+                          loading="lazy"
+                          fetchPriority="low"
+                          decoding="async"
+                        className="w-6 h-6 rounded-full ml-2"
+                      />
+                    ) : null}
+
+                    {latestCommit.author_login ? (
+                      <a
+                        href={`https://github.com/${latestCommit.author_login}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-2 font-medium text-interactive-ink hover:underline"
+                      >
+                        {latestCommit.author_login}
+                      </a>
+                    ) : latestCommit.author_name ? (
+                      <span className="ml-2">
+                        by {latestCommit.author_name}
+                      </span>
+                    ) : null}
+
+                    {latestCommit.date && (
+                      <LocalTime iso={latestCommit.date} />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        )}
+
+        <div
+          data-aos="fade-up"
+          data-aos-duration="700"
+          data-aos-once="true"
+          data-aos-delay="200"
+          className="mt-6"
+        >
+          <ContributionGraph
+            buttonSize="large"
+            title="Contribution Graph"
+            description={"GitHub contribution activity by year."}
+            showDisclaimer={true}
+          />
         </div>
-      </main>
-      </>
-    );
-  } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : String(err);
-    return (
-      <>
-        <BreadcrumbSchema items={CODING_BREADCRUMBS} />
-        <main className="max-w-4xl mx-auto px-6 pt-0 pb-12">
-          <h1 className="prose">My Coding</h1>
-          <p>Error loading coding statistics: {errorMessage}</p>
-          <p>Ensure `WAKATIME_API_KEY` is set in your environment.</p>
-        </main>
-      </>
-    );
-  }
+
+        <div
+          data-aos="fade-up"
+          data-aos-duration="700"
+          data-aos-once="true"
+          data-aos-delay="350"
+          className="mt-6 text-sm text-ink-soft flex justify-start"
+        >
+          <WakaTimeDisclaimer url={wakaProfile} />
+        </div>
+      </div>
+    </main>
+    </>
+  );
 }

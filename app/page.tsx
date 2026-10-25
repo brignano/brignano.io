@@ -36,7 +36,7 @@ export default function Home() {
       <BreadcrumbSchema items={HOME_BREADCRUMBS} />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16">
         {/* Hero — full-height, staggered reveal (TSD §5.1) */}
-        <section className="relative fold-fit flex flex-col justify-center mb-8 md:mb-16">
+        <section id="top" className="relative fold-fit flex flex-col justify-center mb-8 md:mb-16">
           {/* Two columns at lg. The hero previously used 672px of a 1152px
               container and left ~624px of the fold empty on the right, which is
               where the signature was meant to go. Rather than fill it with
@@ -102,8 +102,16 @@ export default function Home() {
               data-aos-duration={600}
               data-aos-delay={340}
               /* No bottom margin below `sm` — the social row underneath is
-                 hidden there, so this is the last thing in the hero. */
-              className="flex flex-wrap md:flex-nowrap gap-3 sm:gap-4 mb-0 sm:mb-8 lg:mb-6 items-center"
+                 hidden there, so this is the last thing in the hero.
+
+                 `pr-14` below `sm` keeps the row out of the column the chat
+                 launcher floats in (fixed 24px off the bottom-right corner, 48px
+                 wide). On a phone this row is the last thing in the fold and
+                 the hero is taller than the screen, so padding the section
+                 can't lift it clear; narrowing the row instead makes the second
+                 button wrap under the first when it would otherwise run under
+                 the launcher. scripts/fold-check.mjs asserts this in CI. */
+              className="flex flex-wrap md:flex-nowrap gap-3 sm:gap-4 mb-0 sm:mb-8 lg:mb-6 items-center pr-14 sm:pr-0"
             >
               <Link
                 href="/resume"
@@ -179,7 +187,7 @@ export default function Home() {
         </section>
 
         {/* About Section */}
-        <section
+        <section id="about"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -204,7 +212,7 @@ export default function Home() {
         </section>
 
         {/* Highlights — outcome cards + "Now" strip (TSD §5.5b) */}
-        <section className="py-16 md:py-24">
+        <section id="highlights" className="py-16 md:py-24">
           <h2
             data-aos="fade-up"
             data-aos-duration={600}
@@ -285,7 +293,7 @@ export default function Home() {
             /projects for the full list. Keeping one array in constants.ts as the
             source of truth means adding a project never touches this file. */}
         {featuredProjects.length > 0 && (
-          <section
+          <section id="projects"
             className="py-16 md:py-24"
             data-aos="fade-up"
             data-aos-duration={1000}
@@ -310,7 +318,7 @@ export default function Home() {
         )}
 
         {/* Work Experience (Current Position Only) */}
-        <section
+        <section id="role"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -365,9 +373,8 @@ export default function Home() {
                 observability through Splunk and Dynatrace; and an end-to-end
                 CI/CD and DevSecOps toolchain — Jenkins, GitHub Actions,
                 Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx —
-                supporting 78,000+ pipelines across 90,000+ runs a week, with a
-                unified pipeline model designed to consolidate them onto
-                platform tooling. AI features ship as MCP-based skills.
+                supporting 95,000+ pipelines, with a unified pipeline model
+                designed to consolidate them onto platform tooling. AI features ship as MCP-based skills.
               </p>
             </details>
 
@@ -388,7 +395,7 @@ export default function Home() {
         </section>
 
         {/* Open-source activity — calm real-data preview that funnels to /coding */}
-        <section
+        <section id="open-source"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -426,7 +433,7 @@ export default function Home() {
         </section>
 
         {/* Contact — a standalone full-height finale (TSD §5.1). */}
-        <section
+        <section id="contact"
           className="min-h-[70vh] flex flex-col justify-center border-t border-line mt-8"
           data-aos="fade-up"
           data-aos-duration={800}

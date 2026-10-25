@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo, useSyncExternalStore } from "react";
 import type { StatsData } from "@/types/wakatime";
 import { buildPalette } from "./chart-colors";
 
@@ -12,14 +12,22 @@ interface StatsBarProps {
 // Horizontal-bar counterpart to StatsPie. Same StatsData[] contract and the
 // same top-8 + "Other" data prep, but renders a ranked list of CSS-width bars
 // (better than a donut for many-item lists like languages/editors/projects).
+// True once React has hydrated on the client, false on the server and during
+// hydration. A hydration gate that never calls setState in an effect.
+const useHydrated = () =>
+  useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+
 export default function StatsBar({ data, title, description }: StatsBarProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   // Resolve the palette from the design tokens after hydration. The server has
   // no document, so chartColors() returns the light-mode fallbacks there; the
   // gate keeps the first client render identical before swapping to the real
   // (theme-aware) values.
-  const [tokensReady, setTokensReady] = useState(false);
-  useEffect(() => setTokensReady(true), []);
+  const tokensReady = useHydrated();
   // Built from THIS chart's own series list, so slots are not shared with any
   // other chart on the page and the visible subset can change without
   // repainting survivors.

@@ -34,6 +34,20 @@
   --display: var(--font-silkscreen), var(--mono);
 }
 
+/* Readable muted text in light mode.
+   tokens.css sets light `--slate` to n-500 (#8a8a8f), which it labels
+   "3.44:1 — large text / UI marks only". This site uses `text-slate` for
+   small text everywhere — eyebrows, metric labels, card meta, chart
+   descriptions — and every one of those fails WCAG AA (4.5:1) in light mode;
+   Lighthouse flagged them on every page. Dark `--slate` is already n-500 at
+   5.29:1, so stepping light to n-600 (#6b6b73, 5.28:1) makes the token mean
+   the same thing in both themes rather than changing how the site uses it.
+   TODO(upstream): move this into @brignano/design so `life` and the other
+   surfaces get it too, then delete this block. */
+:root:not([data-theme="dark"]) {
+  --slate: var(--n-600);
+}
+
 
 /* The page background belongs to the ROOT element, not just <body>.
    <body> carries `bg-bg`, and CSS propagates that to the canvas only while
