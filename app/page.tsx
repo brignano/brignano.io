@@ -12,6 +12,7 @@ import CountUp from "@/components/count-up";
 import LatestCommit from "@/components/latest-commit";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import ProjectCard from "@/components/project-card";
+import CaseStudyCard from "@/components/case-study-card";
 import {
   socialLinks,
   achievements,
@@ -21,6 +22,7 @@ import {
   SITE_ROLE,
   SITE_TAGLINE,
 } from "@/lib/constants";
+import { caseStudies } from "@/lib/work";
 import { event } from "@/lib/gtag";
 
 const HOME_BREADCRUMBS = [
@@ -289,6 +291,37 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Selected work — the two case studies. The highest-signal thing on
+            the page for a hiring manager: how the work was done, not just
+            that it was. Cards come from lib/work.ts. */}
+        <section
+          id="work"
+          className="py-16 md:py-24"
+          data-aos="fade-up"
+          data-aos-duration={800}
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-4 mb-3">
+            <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">
+              Selected work
+            </h2>
+            <Link
+              href="/work"
+              className="text-sm text-interactive-ink hover:underline"
+            >
+              About these write-ups →
+            </Link>
+          </div>
+          <p className="text-sm text-slate mb-8 max-w-2xl">
+            The problem, the constraints, what I built, and what changed.
+            Nothing stated that isn&apos;t documented and current.
+          </p>
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+            {caseStudies.map((study) => (
+              <CaseStudyCard key={study.slug} study={study} />
+            ))}
+          </div>
+        </section>
+
         {/* Projects — homepage shows only the featured few and hands off to
             /projects for the full list. Keeping one array in constants.ts as the
             source of truth means adding a project never touches this file. */}
@@ -382,7 +415,9 @@ export default function Home() {
               <span className="font-medium text-ink">
                 Prior:
               </span>{" "}
-              migrated 10,000+ code repositories to GitHub Enterprise Cloud; recognized with the 2023 Enterprise Tech Data &amp; Cyber Award.
+              migrated 10,000+ code repositories to GitHub Enterprise Cloud
+              (<Link href="/work/github-enterprise-cloud-migration" className="underline text-interactive-ink">case study</Link>);
+              recognized with the 2023 Enterprise Tech Data &amp; Cyber Award.
             </p>
             <p className="text-sm text-slate">
               For my full career history, see{" "}

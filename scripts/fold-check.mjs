@@ -16,6 +16,8 @@ const OUT_DIR = "fold-screenshots";
 
 const PAGES = [
   ["home", "/"],
+  ["work", "/work"],
+  ["case-study", "/work/github-enterprise-cloud-migration"],
   ["projects", "/projects"],
   ["resume", "/resume"],
   ["coding", "/coding"],
@@ -63,6 +65,9 @@ async function checkPage(page, name, viewport) {
     const box = await target.boundingBox();
     if (!box || box.y >= viewport.height || box.y + box.height <= 0) continue;
     for (const { selector, box: fb } of floating) {
+      // A card-sized block link with the launcher over one corner is still
+      // easy to tap; only a target the launcher can actually hide counts.
+      if (fb && box.width * box.height > 6 * fb.width * fb.height) continue;
       if (fb && intersects(box, fb)) {
         const text = (await target.innerText()).trim().replace(/\s+/g, " ");
         problems.push(

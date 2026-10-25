@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { caseStudies } from "@/lib/work";
 
 export const dynamic = "force-static";
 
@@ -11,6 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: baseUrl, changeFrequency: "monthly", priority: 1 },
+    { url: `${baseUrl}/work`, changeFrequency: "monthly", priority: 0.9 },
+    ...caseStudies.map((c) => ({
+      url: `${baseUrl}/work/${c.slug}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.8,
+    })),
     { url: `${baseUrl}/projects`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/resume`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${baseUrl}/coding`, changeFrequency: "monthly", priority: 0.8 },
