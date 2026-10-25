@@ -6,14 +6,22 @@ tags: ["homelab", "platform-engineering", "self-hosting", "local-llm"]
 published: true
 ---
 
-The homelab started as a repository before it was a machine. On 2026-06-06 I
+I wanted four things from a server at home: automation for the monotonous
+chores, somewhere to experiment with local LLMs, a place to deploy sites
+quickly, and a reason to keep learning as the tools change. What I didn't
+expect was how much of the learning would be fundamentals. Networking, DNS,
+certificates, containers, deploys, backups: the core infrastructure that
+work usually hands you already running, set up by myself, and broken by
+myself, one layer at a time.
+
+It started as a repository before it was a machine. On 2026-06-06 I
 created [`brignano/homelab`](https://github.com/brignano/homelab) with three
 Docker Compose stacks (monitoring, core services, local AI), a bootstrap
 script, and a setup log. The hardware arrived the next day.
 
 Four and a half months later that log has 117 entries, and the box runs the
-house's DNS, its media, its smart-home bridge, and an assistant I talk to in
-Discord. This is how it got there.
+house's DNS, its smart-home bridge, its backups, and an assistant that posts
+to Discord every morning. This is how it got there.
 
 ## The hardware, and the first real decision
 
@@ -126,19 +134,20 @@ how I write checks at work too.
 ## Running the house
 
 October is when the lab stopped being a project and became infrastructure
-other people rely on. Two USB drives arrived: an encrypted one for a nightly
-image of the whole container, and a 5 TB one for media. Jellyfin went live,
-with Live TV and a guide. Home Assistant came in, and a Matter bridge lets
-Alexa reach it. AdGuard became the household's DNS, which is exactly why the
+other people rely on. Two USB drives arrived: an encrypted one that takes a
+nightly image of the whole container, and a larger one for storage. Home
+Assistant came in, and a Matter bridge lets Alexa reach it. AdGuard became the household's DNS, which is exactly why the
 nightly sync is never allowed to restart it on its own: if that restart
 fails, every tool you'd reach for to diagnose it resolves names through the
 thing that is down.
 
-The Discord bot grew a concierge in `#ask`: ask for a movie and it comes
-back with a clarifying question if the title is ambiguous, then a ✅/❌ card,
-and nothing happens until I approve it. It also reads the calendar, the
-weather and the lab's own health. And Claude Code on my laptop can query the
-lab's telemetry and calendar through read-only MCP servers.
+The part I use every day is the morning digest: one Discord message with
+what's up, what restarted, how much disk and memory are left, and which
+logs are throwing errors. The bot also grew a concierge in `#ask` that can
+read the calendar, the weather and the lab's own health, and anything that
+would change something waits for a ✅/❌ from me. Honestly, I don't use it
+much yet. And Claude Code on my laptop can query the lab's telemetry and
+calendar through read-only MCP servers.
 
 ## What I'd tell someone starting one
 
@@ -157,6 +166,19 @@ and the bot dials out.
 
 **Watch the watchers.** The failures that cost me the most time were never
 the hardware. They were checks that couldn't fail.
+
+## What's next
+
+Not everything earned its keep. There's an on-demand Kali Linux desktop
+that boots when I visit it and scales to zero when I don't, and I haven't
+opened it in a long time. On a box with this little headroom, it's due for
+a rethink or a removal.
+
+What I want next is a photo library. Right now my photos have exactly one
+copy, in iCloud, and a sync service is not a backup: a deletion or a locked
+account takes a photo away everywhere at once. The plan is a nightly mirror
+from my phone's library to a drive on the homelab that never deletes
+anything. That will probably be the next post.
 
 The whole thing, including the full
 [setup log](https://github.com/brignano/homelab/blob/main/docs/setup-log.md),
