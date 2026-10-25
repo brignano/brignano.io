@@ -12,7 +12,7 @@ import CodingHero, {
   CodingHeroUnavailable,
 } from "../../components/stats/coding-hero";
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
-import GitHubCalendarClient from "../../components/github-calendar-client";
+import ContributionGraph from "@/components/contribution-graph";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { fetchLatestPublicCommit, LatestCommit } from "@/lib/github";
 import LocalTime from "../../components/local-time";
@@ -506,8 +506,7 @@ export default async function Page() {
           data-aos-delay="200"
           className="mt-6"
         >
-          <GitHubCalendarClient
-            initialYear={2026}
+          <ContributionGraph
             buttonSize="large"
             title="Contribution Graph"
             description={"GitHub contribution activity by year."}

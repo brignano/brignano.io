@@ -12,7 +12,7 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 - **TailwindCSS 4** for styling
 - **TypeScript** for type safety
 - **Google Analytics 4** and **Vercel Speed Insights** integration
-- **GitHub Calendar** visualization
+- **GitHub contribution calendar** rendered as plain SVG from the public contributions API (no chart library)
 - **Scroll reveal** animations (a small IntersectionObserver hook; content is visible by default)
 - **Resume Integration** at `/resume` path with YAML-based data and PDF download functionality
 - **Coding Activity** page with WakaTime tiles and a GitHub contribution calendar
