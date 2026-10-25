@@ -32,7 +32,10 @@ export default function HomeContributions({
   const [state, setState] = useState<State>({ status: "idle" });
 
   useEffect(() => {
-    if (!near || state.status !== "idle") return;
+    // `near` only ever flips false → true, so this runs the fetch once. Don't
+    // depend on `state.status`: the "loading" update would re-run the effect
+    // and its cleanup would abort the request it just started.
+    if (!near) return;
     const controller = new AbortController();
     // eslint-disable-next-line react-hooks/set-state-in-effect -- kicks off the one fetch, once the section is near
     setState({ status: "loading" });
@@ -44,7 +47,7 @@ export default function HomeContributions({
         if (err?.name !== "AbortError") setState({ status: "error" });
       });
     return () => controller.abort();
-  }, [near, state.status, username]);
+  }, [near, username]);
 
   return (
     <div className="overflow-x-auto -mx-1 px-1 py-1">
