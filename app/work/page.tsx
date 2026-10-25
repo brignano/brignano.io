@@ -6,7 +6,7 @@ import { caseStudies } from "@/lib/work";
 
 const TITLE = "Work — Anthony Brignano";
 const DESCRIPTION =
-  "Two case studies from building The Hartford's developer platform: ATLAS itself, and migrating 10,000+ repositories to GitHub Enterprise Cloud.";
+  "Three case studies from building The Hartford's developer platform: ATLAS itself, making developer onboarding self-service, and migrating 10,000+ repositories to GitHub Enterprise Cloud.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -18,7 +18,11 @@ export const metadata: Metadata = {
     url: "https://brignano.io/work",
     type: "website",
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESCRIPTION },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 const WORK_BREADCRUMBS = [
@@ -36,7 +40,7 @@ export default function Work() {
             Work
           </h1>
           <p className="text-ink-soft text-lg">
-            Two pieces of work in enough detail to judge how I think: the
+            Three pieces of work in enough detail to judge how I think: the
             problem, what constrained it, what I built, and what changed.
             Written under the same rule as the numbers on this site. Nothing
             here is stated that is not documented and current, and where a
@@ -46,19 +50,22 @@ export default function Work() {
 
         {/* The cards are h3s; headings must descend in order. */}
         <h2 className="sr-only">Case studies</h2>
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
           {caseStudies.map((study) => (
             <CaseStudyCard key={study.slug} study={study} />
           ))}
         </div>
 
         <p className="mt-12 text-sm text-slate max-w-2xl">
-          The short version of both is a few lines on{" "}
+          The short version of each is a few lines on{" "}
           <Link href="/resume" className="underline text-interactive-ink">
             my resume
           </Link>
           . The long version is a conversation:{" "}
-          <a href="mailto:hi@brignano.io" className="underline text-interactive-ink">
+          <a
+            href="mailto:hi@brignano.io"
+            className="underline text-interactive-ink"
+          >
             hi@brignano.io
           </a>
           .

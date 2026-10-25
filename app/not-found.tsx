@@ -10,10 +10,18 @@ export const metadata: Metadata = {
 // Where a lost visitor most likely meant to go. Same destinations as the
 // header, so this page never offers a route the nav does not.
 const DESTINATIONS = [
-  { href: "/work", label: "Work", blurb: "Two case studies" },
+  { href: "/work", label: "Work", blurb: "Three case studies" },
   { href: "/projects", label: "Projects", blurb: "Things I build for myself" },
-  { href: "/resume", label: "Resume", blurb: "Full career history, with a PDF" },
-  { href: "/coding", label: "Coding", blurb: "What I've been working on lately" },
+  {
+    href: "/resume",
+    label: "Resume",
+    blurb: "Full career history, with a PDF",
+  },
+  {
+    href: "/coding",
+    label: "Coding",
+    blurb: "What I've been working on lately",
+  },
 ];
 
 // Replaces Next's unstyled default. The root layout still wraps this in the
@@ -31,8 +39,8 @@ export default function NotFound() {
         </h1>
         <p className="text-base sm:text-lg text-ink-soft mb-8 max-w-xl leading-relaxed">
           The page you&apos;re looking for has moved, never existed, or the link
-          that brought you here has a typo. Everything on the site is one of
-          the five pages below.
+          that brought you here has a typo. Everything on the site is one of the
+          five pages below.
         </p>
         <div className="flex flex-wrap gap-3 sm:gap-4 items-center mb-10">
           <Link

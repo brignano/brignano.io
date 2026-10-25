@@ -1,4 +1,4 @@
-// Case studies for /work. The content lives here, not in a CMS: two
+// Case studies for /work. The content lives here, not in a CMS: three
 // write-ups that change a few times a year do not need one, and keeping them
 // in code means the same integrity rules that govern the hero metrics
 // (docs/tsd-site-modernization.md §5.7) govern these. Every number below is
@@ -108,6 +108,81 @@ export const caseStudies: CaseStudy[] = [
       "Snowflake",
       "Splunk",
       "Dynatrace",
+    ],
+  },
+  {
+    slug: "self-service-developer-onboarding",
+    title: "Onboarding: 40+ days to hours",
+    eyebrow: "Case study · Developer experience",
+    lede: "A CEO-sponsored initiative to make a new engineer's setup at The Hartford self-service. A fresh machine now goes from unboxed to productive in hours, against a 40+ day baseline, without a ticket or a wait on a person.",
+    description:
+      "How The Hartford made engineer onboarding self-service: browser walkthroughs, a desktop agent and one build command get a new machine productive in hours.",
+    facts: [
+      { label: "Unboxed to productive, before", value: "40+ days" },
+      { label: "Unboxed to productive, today", value: "Hours" },
+      { label: "Sponsor", value: "The CEO" },
+      { label: "Built-in walkthroughs", value: "3" },
+    ],
+    sections: [
+      {
+        heading: "The problem",
+        paragraphs: [
+          "A new engineer's first useful commit was 40+ days away. Almost none of that was learning the codebase. It was finding out which tools to install, which versions the company's pipelines expected, which access to request and from whom, and in what order, and then doing it, mostly by asking whoever sat nearest. The answers lived in wiki pages that were right when they were written, chat threads that could not be searched, and the heads of people who had done it last.",
+          "The same forty days were paid again on every transfer between teams and every new laptop, because the setup was never captured anywhere a machine could replay it. And because no one team owned the whole path from a blank machine to a first commit, no one team saw the whole cost.",
+        ],
+      },
+      {
+        heading: "Why it reached the CEO",
+        paragraphs: [
+          "Making onboarding self-service became a CEO-sponsored initiative, with a stated goal of an engineer being productive on their first day. The developer platform, ATLAS, is how the platform team delivers on that. The 40+ day figure is the baseline the initiative was launched against. The first-day goal is the target, and it is written here as a target, not a result.",
+        ],
+      },
+      {
+        heading: "The first hour, as designed",
+        paragraphs: [
+          "The design rule was that onboarding never leaves the browser until it has to. A new engineer opens the platform's site and starts a walkthrough. The first one sets up the machine with the CLI, in a terminal embedded in the page, so the engineer is watching real commands run on their own laptop without having to know them yet. A desktop agent, installed as a standard software package, is what connects the two: a button on the site runs a native command on the machine.",
+          "The second walkthrough opens a chat window on the site that talks to Copilot through the CLI on the engineer's own machine, by way of that agent, so AI help is part of day one rather than something to set up later. The third opens VS Code, installs the platform extension and walks through the parts of the editor that matter on the first day. Beginner and advanced CLI walkthroughs follow.",
+          "From there the engineer installs what the company has already vetted from a catalog of 120+ skills, 10+ MCP servers and 10+ agents, and builds their first project with one command that builds any project the same way on every laptop. Which tool versions and which scans run is decided by policy in configuration, so a new engineer never has to get that right by hand.",
+        ],
+      },
+      {
+        heading: "What self-service means here",
+        paragraphs: [
+          "No ticket, and no waiting on a person. The walkthroughs replace the wiki page that was right when it was written, because they are the setup, not a description of it, and when the setup changes the walkthrough changes with it. The catalog replaces the chat thread, because what is vetted is listed in one place. Policy as configuration replaces the colleague who knew which version, because the platform knows.",
+          "The walkthroughs were refined and certified by the platform's team in India, who went through them as a new engineer would and sent back what did not hold up. That is the part I would not skip: a walkthrough written by the people who built the platform is only correct for the people who built the platform until someone else has run it.",
+        ],
+      },
+      {
+        heading: "What the numbers mean",
+        paragraphs: [
+          "Hours is what the platform delivers on a fresh machine today, against the 40+ day baseline. The CLI has had OpenTelemetry instrumentation since before its first user, so the platform has usage data for every day it has existed, and that data, not a survey, is what the platform team watches as the rollout continues.",
+          "What is not claimed: the first-day goal, which is the initiative's target; any figure for the whole 8,000-engineer organization, which the rollout is heading toward and has not reached; and any reduction in support tickets, which is not instrumented directly. Where a number does not exist yet, this page says so.",
+        ],
+      },
+      {
+        heading: "How it rolled out",
+        paragraphs: [
+          "The unified surface of CLI, desktop app and IDE extensions reached 1,000+ active engineers in its first 90 days. The desktop agent reached the same number in a day, because it shipped to everyone who already had the CLI. Today the CLI is in use on 4,000+ machines and the agent on 2,000+ devices, and the platform is rolling out toward the full engineering organization.",
+          "The AI engineering team is now writing new walkthroughs for enterprise AI tools, such as the AWS and Jenkins MCP servers, as each is onboarded. The same engine that gets a new engineer to their first commit gets an existing engineer to their first use of a new tool.",
+        ],
+      },
+      {
+        heading: "What I would tell the next person",
+        paragraphs: [
+          "Make the first hour a product. Onboarding was slow because it was nobody's product; it got fast when it got an owner, a surface and telemetry.",
+          "Stay in the browser until you cannot. An embedded terminal and a desktop agent let the engineer watch their own machine get set up without first learning how to do it.",
+          "Have someone who was not in the room run every walkthrough before it ships. The India team's certification pass is why the walkthroughs survive first contact with a real new hire.",
+          "Write the baseline down before you start, and keep the target separate from the result. Forty days is a number we can defend. The first-day goal is a goal, and saying so costs nothing.",
+        ],
+      },
+    ],
+    stack: [
+      "TypeScript",
+      "VS Code",
+      "GitHub Copilot",
+      "MCP",
+      "Open Policy Agent",
+      "OpenTelemetry",
     ],
   },
   {

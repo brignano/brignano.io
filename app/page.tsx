@@ -38,7 +38,10 @@ export default function Home() {
       <BreadcrumbSchema items={HOME_BREADCRUMBS} />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16">
         {/* Hero — full-height, staggered reveal (TSD §5.1) */}
-        <section id="top" className="relative fold-fit flex flex-col justify-center mb-8 md:mb-16">
+        <section
+          id="top"
+          className="relative fold-fit flex flex-col justify-center mb-8 md:mb-16"
+        >
           {/* Two columns at lg. The hero previously used 672px of a 1152px
               container and left ~624px of the fold empty on the right, which is
               where the signature was meant to go. Rather than fill it with
@@ -48,29 +51,32 @@ export default function Home() {
               without duplicating the markup. */}
           <div className="relative z-10 grid gap-y-4 sm:gap-y-9 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-16 lg:items-center">
             <div className="max-w-2xl lg:col-start-1 lg:row-start-1">
-            <p
-              data-aos="fade-up"
-              data-aos-duration={500}
-              className="font-display uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-3 sm:mb-5"
-            >
-              {SITE_ROLE}
-            </p>
-            <h1
-              data-aos="fade-up"
-              data-aos-duration={600}
-              data-aos-delay={80}
-              className="font-sans font-bold tracking-tight text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-6 lg:mb-5 leading-[1.05]"
-            >
-              {SITE_TAGLINE}.
-            </h1>
-            <p
-              data-aos="fade-up"
-              data-aos-duration={600}
-              data-aos-delay={180}
-              className="text-base sm:text-lg text-ink-soft mb-5 sm:mb-8 lg:mb-6 max-w-xl leading-relaxed"
-            >
-              I build the shared tools and automation engineers rely on to ship software — faster, safer, and more consistently. Think of it as building the factory, not the products that roll off it. Increasingly, that means baking AI right into those tools.
-            </p>
+              <p
+                data-aos="fade-up"
+                data-aos-duration={500}
+                className="font-display uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-3 sm:mb-5"
+              >
+                {SITE_ROLE}
+              </p>
+              <h1
+                data-aos="fade-up"
+                data-aos-duration={600}
+                data-aos-delay={80}
+                className="font-sans font-bold tracking-tight text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-6 lg:mb-5 leading-[1.05]"
+              >
+                {SITE_TAGLINE}.
+              </h1>
+              <p
+                data-aos="fade-up"
+                data-aos-duration={600}
+                data-aos-delay={180}
+                className="text-base sm:text-lg text-ink-soft mb-5 sm:mb-8 lg:mb-6 max-w-xl leading-relaxed"
+              >
+                I build the shared tools and automation engineers rely on to
+                ship software — faster, safer, and more consistently. Think of
+                it as building the factory, not the products that roll off it.
+                Increasingly, that means baking AI right into those tools.
+              </p>
             </div>
 
             {/* Proof panel. A row of three small numbers on mobile; a stacked
@@ -97,13 +103,12 @@ export default function Home() {
             </dl>
 
             <div className="lg:col-start-1 lg:row-start-2">
-
-            {/* Primary CTAs — one filled, one outline (TSD §5.3) */}
-            <div
-              data-aos="fade-up"
-              data-aos-duration={600}
-              data-aos-delay={340}
-              /* No bottom margin below `sm` — the social row underneath is
+              {/* Primary CTAs — one filled, one outline (TSD §5.3) */}
+              <div
+                data-aos="fade-up"
+                data-aos-duration={600}
+                data-aos-delay={340}
+                /* No bottom margin below `sm` — the social row underneath is
                  hidden there, so this is the last thing in the hero.
 
                  `pr-14` below `sm` keeps the row out of the column the chat
@@ -113,39 +118,45 @@ export default function Home() {
                  can't lift it clear; narrowing the row instead makes the second
                  button wrap under the first when it would otherwise run under
                  the launcher. scripts/fold-check.mjs asserts this in CI. */
-              className="flex flex-wrap md:flex-nowrap gap-3 sm:gap-4 mb-0 sm:mb-8 lg:mb-6 items-center pr-14 sm:pr-0"
-            >
-              <Link
-                href="/resume"
-                className="inline-flex items-center px-4 sm:px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold rounded-lg transition-colors duration-200 md:flex-shrink-0"
-                onClick={() => {
-                  event("cta_clicked", {
-                    cta: "resume",
-                    location: "hero",
-                    transport_type: "beacon",
-                  });
-                }}
+                className="flex flex-wrap md:flex-nowrap gap-3 sm:gap-4 mb-0 sm:mb-8 lg:mb-6 items-center pr-14 sm:pr-0"
               >
-                Resume
-                <DocumentTextIcon className="ml-2 w-4 h-4" aria-hidden="true" />
-              </Link>
-              <Link
-                href="/coding"
-                className="inline-flex items-center px-4 sm:px-6 py-3 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
-                onClick={() => {
-                  event("cta_clicked", {
-                    cta: "coding_activity",
-                    location: "hero",
-                    transport_type: "beacon",
-                  });
-                }}
-              >
-                Coding Activity
-                <CodeBracketIcon className="ml-2 w-4 h-4" aria-hidden="true" />
-              </Link>
-            </div>
+                <Link
+                  href="/resume"
+                  className="inline-flex items-center px-4 sm:px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold rounded-lg transition-colors duration-200 md:flex-shrink-0"
+                  onClick={() => {
+                    event("cta_clicked", {
+                      cta: "resume",
+                      location: "hero",
+                      transport_type: "beacon",
+                    });
+                  }}
+                >
+                  Resume
+                  <DocumentTextIcon
+                    className="ml-2 w-4 h-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+                <Link
+                  href="/coding"
+                  className="inline-flex items-center px-4 sm:px-6 py-3 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
+                  onClick={() => {
+                    event("cta_clicked", {
+                      cta: "coding_activity",
+                      location: "hero",
+                      transport_type: "beacon",
+                    });
+                  }}
+                >
+                  Coding Activity
+                  <CodeBracketIcon
+                    className="ml-2 w-4 h-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
 
-            {/* Social Links — hidden below `sm`, where the fold is the scarce
+              {/* Social Links — hidden below `sm`, where the fold is the scarce
                 resource and these three are the weakest claim on it: the exact
                 same three links, with icons, sit in the footer of every page.
                 Cutting them here is what buys the headline, the paragraph, the
@@ -156,40 +167,41 @@ export default function Home() {
                 carry `mb-8` below xl, which both added 32px to a section already
                 fighting for room and pulled the centred content off centre; the
                 gap to what follows is the section's own `mb-8 md:mb-16`. */}
-            <ul
-              data-aos="fade-up"
-              data-aos-duration={600}
-              data-aos-delay={420}
-              className="hidden sm:flex items-center flex-wrap gap-x-5 gap-y-4"
-            >
-              {socialLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    target="_blank"
-                    className="flex items-center border-b border-line group"
-                    onClick={() => {
-                      const ctaName = String(link.name)
-                        .toLowerCase()
-                        .replace(/\s+/g, "_");
-                      event("social_link_clicked", {
-                        cta: ctaName,
-                        href: link.href,
-                        transport_type: "beacon",
-                      });
-                    }}
-                  >
-                    {link.icon} <span className="ml-1">{link.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+              <ul
+                data-aos="fade-up"
+                data-aos-duration={600}
+                data-aos-delay={420}
+                className="hidden sm:flex items-center flex-wrap gap-x-5 gap-y-4"
+              >
+                {socialLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      target="_blank"
+                      className="flex items-center border-b border-line group"
+                      onClick={() => {
+                        const ctaName = String(link.name)
+                          .toLowerCase()
+                          .replace(/\s+/g, "_");
+                        event("social_link_clicked", {
+                          cta: ctaName,
+                          href: link.href,
+                          transport_type: "beacon",
+                        });
+                      }}
+                    >
+                      {link.icon} <span className="ml-1">{link.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
         {/* About Section */}
-        <section id="about"
+        <section
+          id="about"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -199,16 +211,27 @@ export default function Home() {
           </h2>
           <div className="max-w-3xl space-y-4 text-base sm:text-lg text-ink-soft leading-relaxed">
             <p>
-              I design and scale the systems big engineering teams build on — easy to operate, hard to break, and built to grow with the teams that use them.
+              I design and scale the systems big engineering teams build on —
+              easy to operate, hard to break, and built to grow with the teams
+              that use them.
             </p>
             <p>
-              In practice, that means taking the slow, repetitive, mistake-prone parts of building software and making them automatic and safe — the behind-the-scenes plumbing most people never see but every engineer relies on. Increasingly, that means building AI directly into those everyday tools.
+              In practice, that means taking the slow, repetitive, mistake-prone
+              parts of building software and making them automatic and safe —
+              the behind-the-scenes plumbing most people never see but every
+              engineer relies on. Increasingly, that means building AI directly
+              into those everyday tools.
             </p>
             <p>
-              Beyond the platform, I lead our enterprise hackathons, mentor emerging leaders as a rotation manager and career coach in the company&apos;s Leadership Development Program, and serve on the Central Connecticut State University (CCSU) Computer Science Industry Advisory Board.
+              Beyond the platform, I lead our enterprise hackathons, mentor
+              emerging leaders as a rotation manager and career coach in the
+              company&apos;s Leadership Development Program, and serve on the
+              Central Connecticut State University (CCSU) Computer Science
+              Industry Advisory Board.
             </p>
             <p>
-              Outside of work, you&apos;ll usually find me climbing rocks, snowboarding through the woods, or exploring new ideas.
+              Outside of work, you&apos;ll usually find me climbing rocks,
+              snowboarding through the woods, or exploring new ideas.
             </p>
           </div>
         </section>
@@ -227,7 +250,8 @@ export default function Home() {
             data-aos-duration={600}
             className="text-sm text-slate mb-8"
           >
-            New to the jargon? Tap any tag to see what it means in plain English.
+            New to the jargon? Tap any tag to see what it means in plain
+            English.
           </p>
 
           {/* Tier 1 — quantified outcomes with tappable skill pills that reveal
@@ -255,9 +279,7 @@ export default function Home() {
               <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft">
                 {nowBuilding.map((item) => {
                   const label = (
-                    <span className="font-medium text-ink">
-                      {item.label}
-                    </span>
+                    <span className="font-medium text-ink">{item.label}</span>
                   );
                   return (
                     <li key={item.label}>
@@ -279,9 +301,7 @@ export default function Home() {
                       ) : (
                         label
                       )}{" "}
-                      <span className="text-slate">
-                        {item.detail}
-                      </span>
+                      <span className="text-slate">{item.detail}</span>
                     </li>
                   );
                 })}
@@ -291,7 +311,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Selected work — the two case studies. The highest-signal thing on
+        {/* Selected work — the case studies. The highest-signal thing on
             the page for a hiring manager: how the work was done, not just
             that it was. Cards come from lib/work.ts. */}
         <section
@@ -315,7 +335,7 @@ export default function Home() {
             The problem, the constraints, what I built, and what changed.
             Nothing stated that isn&apos;t documented and current.
           </p>
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
             {caseStudies.map((study) => (
               <CaseStudyCard key={study.slug} study={study} />
             ))}
@@ -326,7 +346,8 @@ export default function Home() {
             /projects for the full list. Keeping one array in constants.ts as the
             source of truth means adding a project never touches this file. */}
         {featuredProjects.length > 0 && (
-          <section id="projects"
+          <section
+            id="projects"
             className="py-16 md:py-24"
             data-aos="fade-up"
             data-aos-duration={1000}
@@ -351,7 +372,8 @@ export default function Home() {
         )}
 
         {/* Work Experience (Current Position Only) */}
-        <section id="role"
+        <section
+          id="role"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -364,10 +386,15 @@ export default function Home() {
               Senior Staff Software Engineer — Enterprise Platform Engineering
             </h3>
             <p className="text-lg text-ink-soft mb-4 leading-relaxed">
-              I lead the strategy, design, and delivery of The Hartford&apos;s developer platform — the one place 4,000+ engineers go to build, ship, and run their software, on its way to the full 8,000-engineer organization.
+              I lead the strategy, design, and delivery of The Hartford&apos;s
+              developer platform — the one place 4,000+ engineers go to build,
+              ship, and run their software, on its way to the full
+              8,000-engineer organization.
             </p>
             <p className="text-base text-ink-soft mb-6 leading-relaxed">
-              My focus is making the whole thing automatic, reliable, and secure by default — so engineers hit fewer roadblocks and spend more time on the work that matters.
+              My focus is making the whole thing automatic, reliable, and secure
+              by default — so engineers hit fewer roadblocks and spend more time
+              on the work that matters.
             </p>
             <ul className="space-y-3 mb-6">
               {[
@@ -407,17 +434,22 @@ export default function Home() {
                 CI/CD and DevSecOps toolchain — Jenkins, GitHub Actions,
                 Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx —
                 supporting 95,000+ pipelines, with a unified pipeline model
-                designed to consolidate them onto platform tooling. AI features ship as MCP-based skills.
+                designed to consolidate them onto platform tooling. AI features
+                ship as MCP-based skills.
               </p>
             </details>
 
             <p className="text-sm text-ink-soft mb-4">
-              <span className="font-medium text-ink">
-                Prior:
-              </span>{" "}
-              migrated 10,000+ code repositories to GitHub Enterprise Cloud
-              (<Link href="/work/github-enterprise-cloud-migration" className="underline text-interactive-ink">case study</Link>);
-              recognized with the 2023 Enterprise Tech Data &amp; Cyber Award for the enterprise GitHub Actions implementation.
+              <span className="font-medium text-ink">Prior:</span> migrated
+              10,000+ code repositories to GitHub Enterprise Cloud (
+              <Link
+                href="/work/github-enterprise-cloud-migration"
+                className="underline text-interactive-ink"
+              >
+                case study
+              </Link>
+              ); recognized with the 2023 Enterprise Tech Data &amp; Cyber Award
+              for the enterprise GitHub Actions implementation.
             </p>
             <p className="text-sm text-slate">
               For my full career history, see{" "}
@@ -430,7 +462,8 @@ export default function Home() {
         </section>
 
         {/* Open-source activity — calm real-data preview that funnels to /coding */}
-        <section id="open-source"
+        <section
+          id="open-source"
           className="py-16 md:py-24"
           data-aos="fade-up"
           data-aos-duration={800}
@@ -443,16 +476,12 @@ export default function Home() {
               texture, not the whole story). */}
           <div className="flex flex-wrap items-baseline gap-x-7 gap-y-2 mb-6 text-sm text-ink-soft">
             <span>
-              <span className="font-semibold text-ink">
-                30+
-              </span>{" "}
-              public repositories
+              <span className="font-semibold text-ink">30+</span> public
+              repositories
             </span>
             <span>
               Building in public since{" "}
-              <span className="font-semibold text-ink">
-                2014
-              </span>
+              <span className="font-semibold text-ink">2014</span>
             </span>
           </div>
           <div className="bg-card/70 backdrop-blur-sm border border-line rounded-xl p-6 sm:p-8">
@@ -468,18 +497,19 @@ export default function Home() {
         </section>
 
         {/* Contact — a standalone full-height finale (TSD §5.1). */}
-        <section id="contact"
+        <section
+          id="contact"
           className="min-h-[70vh] flex flex-col justify-center border-t border-line mt-8"
           data-aos="fade-up"
           data-aos-duration={800}
         >
-          <h2
-            className="font-sans text-4xl sm:text-5xl lg:text-6xl mb-6 font-bold tracking-tight"
-          >
+          <h2 className="font-sans text-4xl sm:text-5xl lg:text-6xl mb-6 font-bold tracking-tight">
             Let&apos;s build something.
           </h2>
           <p className="text-ink-soft mb-10 max-w-2xl text-lg leading-relaxed">
-            If you&apos;re building tools that make engineering teams faster — or just want to talk shop about platforms, developer experience, or AI — I&apos;d love to connect.
+            If you&apos;re building tools that make engineering teams faster —
+            or just want to talk shop about platforms, developer experience, or
+            AI — I&apos;d love to connect.
           </p>
           <div>
             <a
