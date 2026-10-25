@@ -162,7 +162,7 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "What the numbers mean",
         paragraphs: [
-          "The initiative is judged on hire date to first commit, measured across every engineer hired, whichever path they took. On that measure the enterprise average is 36 days today, against the 40+ day baseline. The hours figure is a different thing: it is what the platform path delivers on a single machine, from unboxed to building. The average moves slowly because it counts everyone, including hires on teams where the platform is not yet the default, and it will move as the platform becomes the standard day-one path. The platform team expects the most recent month's cohort to show the drop. That figure is not in yet, so it is not here.",
+          "The initiative is judged on hire date to first commit. The hours figure is not that number: it is what the platform path delivers on a single machine, from unboxed to building. The enterprise KPI is a cumulative average over every engineer hired since the measurement began, whichever path they took, so by construction it moves slowly and has not yet caught up with the change. The number that will show the shift is the most recent cohort's, and the platform team expects it to. That figure is not in yet, so it is not here.",
           "What is not claimed: the first-day goal, which is the initiative's target; any figure for the full 8,000-engineer organization, which the rollout is heading toward and has not reached; and any reduction in support tickets, which is not instrumented directly. Where a number does not exist yet, this page says so.",
         ],
       },
@@ -186,7 +186,7 @@ export const caseStudies: CaseStudy[] = [
           "Make the first day a product. Onboarding was slow because it was nobody's product; it got fast when it got an owner, a surface and telemetry.",
           "Stay in the browser until you cannot. An embedded terminal and a desktop agent let the engineer watch their own machine get set up without first learning how to do it.",
           "Have someone who was not in the room run every walkthrough before it ships. The India team's certification pass is why the walkthroughs survive first contact with a real new hire.",
-          "Keep the target separate from the result, and publish the slow number next to the fast one. Hours on a machine and 36 days across the enterprise are both true, and a reader who sees only the first will not trust the second.",
+          "Keep the target separate from the result, and say which number you are quoting. Hours on a machine and a cumulative enterprise average are different measures, and a reader who is handed one as the other will not trust either.",
         ],
       },
     ],
