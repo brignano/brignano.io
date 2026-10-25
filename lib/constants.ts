@@ -237,7 +237,7 @@ export const socialLinks: SocialLink[] = [
 
 /** Where a project actually is, stated plainly. Overselling a proof of
  *  concept is the fastest way to make the honest entries unreadable too. */
-export type ProjectStatus = "live" | "active" | "proof of concept";
+export type ProjectStatus = "live" | "beta" | "proof of concept";
 
 /** `product` is something a visitor can use. `practice` is how the work gets
  *  done — real and public, but nobody is installing my homelab. They render in
@@ -416,7 +416,7 @@ export const projects: Project[] = [
     description:
       "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts. It also draws a Terraform plan on its pull request, before anything is applied.",
     tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
-    status: "active",
+    status: "beta",
     kind: "product",
     featured: true,
     links: [
@@ -444,7 +444,7 @@ export const projects: Project[] = [
     description:
       "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. DECISIONS.md records why each value is what it is.",
     tech: ["CSS", "Design tokens", "npm"],
-    status: "active",
+    status: "beta",
     kind: "product",
     links: [
       { label: "npm", url: "https://www.npmjs.com/package/@brignano/design" },
@@ -480,7 +480,7 @@ export const projects: Project[] = [
     description:
       "One source of truth for my AI-agent setup — context, slash commands, output styles, permissions and MCP servers — symlinked into place by an installer so every machine I work on behaves the same way.",
     tech: ["Shell", "PowerShell", "Claude Code", "MCP"],
-    status: "active",
+    status: "beta",
     kind: "practice",
     links: [{ label: "Source", url: "https://github.com/brignano/ai-tools" }],
   },
@@ -490,7 +490,7 @@ export const projects: Project[] = [
     description:
       "A mini PC running Proxmox, Docker and Tailscale, with Prometheus and Grafana for metrics and Ollama plus Open WebUI for local inference. Documented well enough that I could rebuild the whole thing from the repo.",
     tech: ["Proxmox", "Docker", "Tailscale", "Prometheus", "Grafana", "Ollama"],
-    status: "active",
+    status: "beta",
     kind: "practice",
     links: [{ label: "Source", url: "https://github.com/brignano/homelab" }],
   },

@@ -10,7 +10,7 @@ import { event } from "@/lib/gtag";
 // signal (DESIGN.md — state colour always ships with an icon or a word).
 const STATUS_STYLES: Record<ProjectStatus, string> = {
   live: "bg-success-surface text-success-ink",
-  active: "bg-interactive-surface text-interactive-ink",
+  beta: "bg-interactive-surface text-interactive-ink",
   "proof of concept": "bg-attention-surface text-attention-ink",
 };
 
