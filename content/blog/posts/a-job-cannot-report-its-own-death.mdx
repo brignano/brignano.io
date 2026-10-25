@@ -1,0 +1,110 @@
+---
+title: "A job cannot report its own death"
+description: "My homelab sat three weeks behind main while GitHub said every change had shipped. Three checks that could not fail, and the question I now ask of every one."
+date: 2026-10-25
+tags: ["homelab", "observability", "platform-engineering"]
+published: true
+---
+
+My homelab is one mini PC running Proxmox, with Docker, Tailscale, Prometheus,
+Grafana and a local model on Ollama. Everything it runs is defined in a
+[public repo](https://github.com/brignano/homelab), and a nightly job pulls
+`main` and restarts whatever changed. On paper, merging a pull request is
+deploying it.
+
+On 2026-09-19 I went to deploy some dashboard changes and found the box
+running a commit from 2026-08-30. Twenty days of merged work had never
+arrived. Every PR was green. Nothing had alerted. The dashboards were quiet,
+because quiet is what they show when nothing is wrong.
+
+## The job that was never installed
+
+The sync script, `repo-sync.sh`, documented its own schedule in a comment at
+the top of the file:
+
+```sh
+#   0 4 * * * /root/homelab/scripts/repo-sync.sh >> /var/log/repo-sync.log 2>&1
+```
+
+That comment was the only place the schedule lived. Installing it was a step
+someone had to remember, on a box they were already busy setting up. The
+heartbeat and the nightly database backup were in the crontab. The sync job
+was not. One missing line, twenty days of drift.
+
+The part that matters is why nothing noticed. `repo-sync.sh` was built to be
+quiet: it only speaks when it has something to do, so silence means "up to
+date". That is a good property right up until the job stops running, at which
+point "never ran" and "three weeks of healthy, quiet days" are the same
+signal. The heartbeat could not help either. It proves the box is alive, and
+the box was alive the whole time.
+
+<Callout title="The rule">
+  A job cannot report its own death. Whatever tells you a job ran has to live
+  outside the job, or the failure you care about most is the one it can never
+  describe.
+</Callout>
+
+The fix was three layers, none of them clever. A script, `install-cron.sh`,
+now owns the schedule, so it is code rather than a ritual, and its `--check`
+flag reports what is missing without changing anything. The sync job pings
+[Healthchecks](https://healthchecks.io) with its exit code on every run, so
+"ran and failed" and "never ran" are different alerts. And every cron entry
+appends to a log file, because cron mails its output to a local mailbox that
+nobody reads and no mail server delivers.
+
+## The heal that never healed
+
+The same day, a favicon would not show up. The file was committed, CI had
+passed, and the server returned a 404 for it.
+
+The sync job's answer to a stale stack was `docker compose up -d`. Compose
+decides whether to recreate a container by hashing its service definition:
+image, environment, ports, mount source and target. The bytes behind a bind
+mount are not in that hash and cannot be. With the image pinned and the
+compose file unchanged, `up -d` found nothing to do, exited 0, and the
+verification step counted containers that had never stopped and reported a
+successful heal.
+
+```sh
+# before: exits 0, replaces nothing when only a mounted file changed
+docker compose up -d
+# after
+docker compose up -d --force-recreate
+```
+
+So the stack was flagged stale the next day, "fixed" again, and the drift
+metric climbed the whole time. The metric was telling the truth. It just read
+as noise next to a line that said success.
+
+## The check that could only say yes
+
+The third one was the worst, because it was the check guarding exactly this
+failure. A runbook step compared each container's view of a mounted config
+file against the copy in the repo, using `docker cp` to read the container's
+side. `docker cp` resolves a bind mount back to its host source. The check
+was copying out the very file it then compared against, so it could only
+ever say "identical".
+
+It had reported all-clear for weeks, including on a morning when two
+containers were provably serving stale config. What exposed it was a second,
+noisier check disagreeing with it. The fix reads the file through
+`/proc/<pid>/root`, which resolves through the container's own mount
+namespace, and compares by content and inode.
+
+## The question
+
+All three failures have the same shape: something whose job was to tell me
+about a problem was structurally unable to. A schedule that lived in a
+comment. A heal that verified its own no-op. A comparison against itself.
+
+So this is the question I now ask of every check, in the homelab and at work:
+
+**What would make this report a problem?**
+
+If the answer is "nothing can", it is not a check. It is decoration, and it
+is worse than nothing, because it reads as evidence. The heartbeat, the
+success line and the all-clear were all decoration in exactly the moments
+they were needed.
+
+The full write-ups, with the commands and the dead ends, are in the repo's
+[setup log](https://github.com/brignano/homelab/blob/main/docs/setup-log.md).

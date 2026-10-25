@@ -8,6 +8,8 @@
         "http://localhost:3000/work",
         "http://localhost:3000/work/atlas-developer-platform",
         "http://localhost:3000/projects",
+        "http://localhost:3000/blog",
+        "http://localhost:3000/blog/a-job-cannot-report-its-own-death",
         "http://localhost:3000/resume",
         "http://localhost:3000/coding"
       ],

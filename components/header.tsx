@@ -10,8 +10,10 @@ import { applyTheme } from "@/lib/theme";
 // Nav is inline at every width. A slide-in dialog to reveal a few links cost
 // two taps and an overlay to show what fits on one line, so the drawer, the
 // hamburger, and their animation state are gone. "Home" is not a link here:
-// the monogram is, and five words did not fit beside it on a phone.
-const PAGES = ["work", "projects", "resume", "coding"] as const;
+// the monogram is, and six words did not fit beside it on a phone. Five do,
+// down to ~340px wide, only with the phone gap at gap-x-3: at gap-x-5 the row
+// is 30px wider than a 390px screen.
+const PAGES = ["work", "projects", "blog", "resume", "coding"] as const;
 
 // Don't start hiding until the header has scrolled its own height away, and
 // ignore deltas smaller than this so momentum jitter and iOS rubber-band
@@ -115,7 +117,7 @@ export default function Header() {
         {/* Centered on large screens via absolute positioning; on small screens
             it sits in the flex row between the logo and the theme toggle. */}
         <nav className="lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:transform">
-          <ul className="flex items-center gap-x-5 sm:gap-x-8">
+          <ul className="flex items-center gap-x-3 sm:gap-x-8">
             {PAGES.map((page) => {
               const isActive = currentPage === page;
               const label = page.charAt(0).toUpperCase() + page.slice(1);
