@@ -19,6 +19,8 @@ const PAGES = [
   ["work", "/work"],
   ["case-study", "/work/github-enterprise-cloud-migration"],
   ["projects", "/projects"],
+  ["blog", "/blog"],
+  ["post", "/blog/building-my-homelab"],
   ["resume", "/resume"],
   ["coding", "/coding"],
   ["not-found", "/this-page-does-not-exist"],
