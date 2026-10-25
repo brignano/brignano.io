@@ -25,7 +25,7 @@ export default function HighlightCard({
       data-aos="fade-up"
       data-aos-duration={600}
       data-aos-delay={index * 70}
-      className="bg-card/70 backdrop-blur-sm border border-line rounded-xl px-6 py-5 shadow-sm flex flex-col"
+      className="bg-card/70 backdrop-blur-sm border border-line rounded-xl px-6 py-5 shadow-sm flex flex-col h-full"
     >
       <p className="text-base font-semibold tracking-tight mb-2">
         {achievement.outcome}
@@ -34,7 +34,9 @@ export default function HighlightCard({
         {achievement.detail}
       </p>
 
-      <div className="flex flex-wrap gap-2">
+      {/* mt-auto pins the tags to the bottom so cards in a row line up even
+          when one description is shorter than its neighbour's. */}
+      <div className="mt-auto flex flex-wrap gap-2">
         {achievement.skills.map((skill) => {
           const hasDefinition = Boolean(glossary[skill]);
 
