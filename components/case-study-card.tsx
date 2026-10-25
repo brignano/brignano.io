@@ -20,7 +20,10 @@ export default function CaseStudyCard({ study }: { study: CaseStudy }) {
         {study.facts.slice(0, 2).map((fact) => (
           <div key={fact.label}>
             <dd className="font-semibold text-ink inline">{fact.value}</dd>{" "}
-            <dt className="text-slate inline">{fact.label.toLowerCase()}</dt>
+            {/* Lower-case the first letter only: "the CLI" must stay "CLI". */}
+            <dt className="text-slate inline">
+              {fact.label.charAt(0).toLowerCase() + fact.label.slice(1)}
+            </dt>
           </div>
         ))}
       </dl>

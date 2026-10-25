@@ -6,7 +6,7 @@ import { caseStudies } from "@/lib/work";
 
 const TITLE = "Work — Anthony Brignano";
 const DESCRIPTION =
-  "Two case studies from building The Hartford's developer platform: migrating 10,000+ repositories to GitHub Enterprise Cloud, and a DevOps intelligence layer that shows where engineers lose time.";
+  "Two case studies from building The Hartford's developer platform: ATLAS itself, and migrating 10,000+ repositories to GitHub Enterprise Cloud.";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -53,7 +53,7 @@ export default function Work() {
         </div>
 
         <p className="mt-12 text-sm text-slate max-w-2xl">
-          The short version of both is two lines on{" "}
+          The short version of both is a few lines on{" "}
           <Link href="/resume" className="underline text-interactive-ink">
             my resume
           </Link>

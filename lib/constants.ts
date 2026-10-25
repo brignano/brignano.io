@@ -317,9 +317,9 @@ export const achievements: Achievement[] = [
     skills: ["Desktop App", "Self-service onboarding"],
   },
   {
-    outcome: "One command builds any project — laptop, cloud, anywhere",
+    outcome: "One command builds any project",
     detail:
-      "The same result every time, with no fiddly setup to do per project.",
+      "The same result on every laptop, with no fiddly setup to do per project. Remote builds on platform compute are next.",
     skills: ["CI/CD", "Base-image registry", "Containers"],
   },
   {

@@ -27,6 +27,20 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+
+  /**
+   * The DevOps intelligence case study shipped briefly as its own page before
+   * being folded into the ATLAS study. Keep the old address working.
+   */
+  async redirects() {
+    return [
+      {
+        source: "/work/devops-intelligence",
+        destination: "/work/atlas-developer-platform",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 /**
