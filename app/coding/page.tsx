@@ -340,7 +340,9 @@ export default async function Page() {
             className="mt-6 mb-6"
           >
             <div className="bg-card border border-line p-6 rounded-lg">
-              <div className="flex items-center justify-between mb-2">
+              {/* `pr-14` below `sm` keeps the right-aligned link out of the
+                  chat launcher's column, like the homepage hero CTAs. */}
+              <div className="flex items-center justify-between mb-2 pr-14 sm:pr-0">
                 <h3 className="font-sans text-2xl font-bold tracking-tight">
                   Last Commit
                 </h3>

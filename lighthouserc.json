@@ -21,14 +21,14 @@
         "categories:performance": [
           "error",
           {
-            "minScore": 0.8,
+            "minScore": 0.9,
             "aggregationMethod": "median-run"
           }
         ],
         "categories:accessibility": [
           "error",
           {
-            "minScore": 0.95,
+            "minScore": 1,
             "aggregationMethod": "median-run"
           }
         ],
@@ -46,7 +46,7 @@
             "aggregationMethod": "median-run"
           }
         ],
-        "color-contrast": "warn",
+        "color-contrast": "error",
         "is-crawlable": "off"
       }
     },

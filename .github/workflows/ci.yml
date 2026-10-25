@@ -77,6 +77,8 @@ jobs:
           name: lighthouse-reports
           path: .lighthouseci
           retention-days: 14
+          # A dot-directory is "hidden" to upload-artifact and skipped otherwise.
+          include-hidden-files: true
 
   fold:
     name: Fold screenshots
