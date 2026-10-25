@@ -315,7 +315,7 @@ export default function Home() {
             The problem, the constraints, what I built, and what changed.
             Nothing stated that isn&apos;t documented and current.
           </p>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+          <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
             {caseStudies.map((study) => (
               <CaseStudyCard key={study.slug} study={study} />
             ))}
