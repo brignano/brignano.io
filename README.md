@@ -299,6 +299,7 @@ Optional:
 ## 📄 Pages
 
 - `/` - Home page
+- `/work` - Case studies (`lib/work.ts`), one page per study at `/work/<slug>`
 - `/coding` - Coding Activity (WakaTime tiles + GitHub contribution calendar)
 - `/resume` - Resume page
 - `/sitemap.xml` - Generated sitemap

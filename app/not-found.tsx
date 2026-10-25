@@ -7,9 +7,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Where a lost visitor most likely meant to go. Same four destinations as the
+// Where a lost visitor most likely meant to go. Same destinations as the
 // header, so this page never offers a route the nav does not.
 const DESTINATIONS = [
+  { href: "/work", label: "Work", blurb: "Two case studies" },
   { href: "/projects", label: "Projects", blurb: "Things I build for myself" },
   { href: "/resume", label: "Resume", blurb: "Full career history, with a PDF" },
   { href: "/coding", label: "Coding", blurb: "What I've been working on lately" },
@@ -31,7 +32,7 @@ export default function NotFound() {
         <p className="text-base sm:text-lg text-ink-soft mb-8 max-w-xl leading-relaxed">
           The page you&apos;re looking for has moved, never existed, or the link
           that brought you here has a typo. Everything on the site is one of
-          the four pages below.
+          the five pages below.
         </p>
         <div className="flex flex-wrap gap-3 sm:gap-4 items-center mb-10">
           <Link
@@ -44,7 +45,7 @@ export default function NotFound() {
         </div>
         {/* `pr-14` below `sm` keeps the stacked cards out of the chat
             launcher's column, as the hero CTA row does on the homepage. */}
-        <ul className="grid sm:grid-cols-3 gap-4 max-w-3xl pr-14 sm:pr-0">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl pr-14 sm:pr-0">
           {DESTINATIONS.map((d) => (
             <li key={d.href}>
               <Link

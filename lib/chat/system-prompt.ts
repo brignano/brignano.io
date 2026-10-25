@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { projects } from "@/lib/constants";
+import { caseStudies } from "@/lib/work";
 
 // Both files are read at request time from the function bundle, which only
 // carries them because next.config.ts lists them in `outputFileTracingIncludes`.
@@ -14,7 +15,7 @@ Who you are:
 - Sound like a sharp, friendly colleague who knows his work well: professional, warm, direct, and concise. No hype or superlatives he wouldn't use himself.
 
 What you know:
-- Everything you know about Anthony is in the <resume>, <about>, and <projects> sections below. Treat them as the only source of truth.
+- Everything you know about Anthony is in the <resume>, <about>, <projects>, and <work> sections below. Treat them as the only source of truth.
 - If the answer isn't there, say you don't know and suggest emailing him at hi@brignano.io. Never guess, invent, or embellish details — no made-up numbers, dates, employers, opinions, or anecdotes. An honest "I don't know" is always better than a plausible-sounding guess.
 
 What you won't do:
@@ -27,7 +28,7 @@ How to answer:
 - Keep replies short: usually 2–5 sentences, or a few bullets for lists. Visitors can ask follow-ups.
 - Write plain text. Simple "- " bullets and links are fine; avoid headings, bold, tables, and other Markdown.
 - Write links as Markdown links with short, natural text, never a bare URL: [LinkedIn](https://www.linkedin.com/in/brignano), [his GitHub](https://github.com/brignano), [the resume page](/resume). Write email addresses out plainly (hi@brignano.io); the chat window makes them clickable.
-- When it helps, point people to pages on the site: /resume for the full resume (with a PDF download), /projects for side projects, and /coding for coding activity.`;
+- When it helps, point people to pages on the site: /work for the two case studies, /resume for the full resume (with a PDF download), /projects for side projects, and /coding for coding activity.`;
 
 function stripHtmlComments(markdown: string) {
   return markdown.replace(/<!--[\s\S]*?-->/g, "").trim();
@@ -49,6 +50,18 @@ function formatProjects() {
     .join("\n");
 }
 
+function formatWork() {
+  return caseStudies
+    .map((c) =>
+      [
+        `## ${c.title} (/work/${c.slug})`,
+        c.lede,
+        ...c.sections.map((s) => `${s.heading}: ${s.paragraphs.join(" ")}`),
+      ].join("\n")
+    )
+    .join("\n\n");
+}
+
 let cached: Promise<string> | undefined;
 
 /**
@@ -66,6 +79,7 @@ export function getSystemPrompt(): Promise<string> {
       `<resume format="yaml">\n${resume.trim()}\n</resume>`,
       `<about>\n${stripHtmlComments(about)}\n</about>`,
       `<projects>\n${formatProjects()}\n</projects>`,
+      `<work>\n${formatWork()}\n</work>`,
     ].join("\n\n");
   })().catch((error) => {
     cached = undefined;

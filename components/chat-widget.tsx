@@ -69,7 +69,7 @@ const MARKDOWN_LINK_PATTERN =
 
 // Bare URLs, email addresses, and the site's own paths also become links.
 const LINK_PATTERN =
-  /(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"]|[\w.+-]+@[\w-]+(?:\.[\w-]+)+|(?<![\w/])\/(?:resume|projects|coding)\b)/g;
+  /(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"]|[\w.+-]+@[\w-]+(?:\.[\w-]+)+|(?<![\w/])\/(?:resume|projects|coding|work)\b)/g;
 
 function ChatLink({ href, children }: { href: string; children: string }) {
   const external = href.startsWith("http");

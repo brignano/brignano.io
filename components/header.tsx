@@ -7,10 +7,11 @@ import { MoonIcon, SunIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { applyTheme } from "@/lib/theme";
 
-// Nav is inline at every width. A slide-in dialog to reveal three links cost
+// Nav is inline at every width. A slide-in dialog to reveal a few links cost
 // two taps and an overlay to show what fits on one line, so the drawer, the
-// hamburger, and their animation state are gone.
-const PAGES = ["home", "projects", "resume", "coding"] as const;
+// hamburger, and their animation state are gone. "Home" is not a link here:
+// the monogram is, and five words did not fit beside it on a phone.
+const PAGES = ["work", "projects", "resume", "coding"] as const;
 
 // Don't start hiding until the header has scrolled its own height away, and
 // ignore deltas smaller than this so momentum jitter and iOS rubber-band
@@ -100,9 +101,12 @@ export default function Header() {
       >
         <Link href="/" className="cursor-pointer shrink-0">
           <span className="sr-only">Anthony Brignano</span>
+          {/* Absolute path: a relative `favicon.svg` resolved against the
+              current directory, so it 404ed on the first nested route
+              (/work/<slug>). */}
           <Image
             alt="icon"
-            src="favicon.svg"
+            src="/favicon.svg"
             className="h-8 w-auto invert-0 dark:invert"
             width={35}
             height={35}
@@ -126,7 +130,7 @@ export default function Header() {
                     </span>
                   ) : (
                     <Link
-                      href={page === "home" ? "/" : `/${page}`}
+                      href={`/${page}`}
                       className="text-ink-soft hover:text-ink text-sm sm:text-base cursor-pointer border-b-2 border-transparent pb-1 transition-colors"
                     >
                       {label}
