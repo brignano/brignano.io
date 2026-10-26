@@ -354,7 +354,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
                             {job.technologies.map((tech, i) => (
                               <span
                                 key={i}
-                                className="text-xs px-2 py-1 bg-surface-active rounded"
+                                className="text-xs px-2 py-1 bg-surface-active rounded-sm"
                               >
                                 {tech}
                               </span>
@@ -528,7 +528,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
                   {project.technologies.map((tech, i) => (
                     <span
                       key={i}
-                      className="text-xs px-2 py-1 bg-surface-active rounded"
+                      className="text-xs px-2 py-1 bg-surface-active rounded-sm"
                     >
                       {tech}
                     </span>

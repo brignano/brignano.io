@@ -1,6 +1,11 @@
 "use client";
 import { useState, useMemo, useSyncExternalStore } from "react";
 import type { StatsData } from "@/types/wakatime";
+import {
+  serverThemeSnapshot,
+  subscribeTheme,
+  themeSnapshot,
+} from "@/lib/design-tokens";
 import { buildPalette } from "./chart-colors";
 
 interface StatsBarProps {
@@ -12,29 +17,29 @@ interface StatsBarProps {
 // Horizontal-bar counterpart to StatsPie. Same StatsData[] contract and the
 // same top-8 + "Other" data prep, but renders a ranked list of CSS-width bars
 // (better than a donut for many-item lists like languages/editors/projects).
-// True once React has hydrated on the client, false on the server and during
-// hydration. A hydration gate that never calls setState in an effect.
-const useHydrated = () =>
-  useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
-  );
 
 export default function StatsBar({ data, title, description }: StatsBarProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  // Resolve the palette from the design tokens after hydration. The server has
-  // no document, so chartColors() returns the light-mode fallbacks there; the
-  // gate keeps the first client render identical before swapping to the real
-  // (theme-aware) values.
-  const tokensReady = useHydrated();
+  // Resolve the palette from the design tokens after hydration, and again on
+  // every theme change: the tokens are light-dark() values, so the resolved
+  // colours differ per theme. The server has no document, so chartColors()
+  // returns the light-mode fallbacks there; the server snapshot keeps the first
+  // client render identical before swapping to the real values.
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    themeSnapshot,
+    serverThemeSnapshot,
+  );
   // Built from THIS chart's own series list, so slots are not shared with any
   // other chart on the page and the visible subset can change without
   // repainting survivors.
   const palette = useMemo(
-    () => buildPalette((data || []).map((d) => d.name)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- re-read once mounted
-    [tokensReady, data],
+    () =>
+      buildPalette(
+        (data || []).map((d) => d.name),
+        theme !== "",
+      ),
+    [theme, data],
   );
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);

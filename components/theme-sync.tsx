@@ -16,9 +16,9 @@ const useIsomorphicLayoutEffect =
  * React reconciles `<html>`'s className while hydrating and drops the class the
  * script added — `suppressHydrationWarning` silences the warning without
  * stopping the patch. The visible result was a system-dark visitor getting light
- * chrome: `@brignano/design` flips its tokens off `prefers-color-scheme` on its
- * own, so the cards went dark while everything driven by Tailwind's `dark:`
- * variant stayed light.
+ * chrome: with no `data-theme`, `@brignano/design`'s `light-dark()` tokens follow
+ * the OS through `color-scheme: light dark`, so the cards went dark while
+ * everything driven by Tailwind's `dark:` variant stayed light.
  *
  * This must stay in sync with the inline script in `app/layout.tsx` — that one
  * prevents the flash, this one survives hydration. Neither is redundant. Both

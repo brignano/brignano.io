@@ -44,7 +44,7 @@ export const contentType = "image/png";
 const BG = "#0d0d0f"; // --n-0    page ground
 const CARD = "#17171a"; // --n-50   the proof panel's surface (--card)
 const LINE = "#202024"; // --n-100  hairline (--line)
-const INK = "#f2f2f0"; // --n-900  headline, metric values
+const INK = "#f2f2f4"; // --n-900  headline, metric values
 const SLATE = "#8b8b93"; // --n-500 eyebrow, metric labels, url
 // --mark is the one colour the system spends on being recognisable rather than
 // informative, and tokens.css is explicit that it inks a drawn mark and is
