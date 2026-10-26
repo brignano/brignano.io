@@ -4,7 +4,9 @@
  * Three things have to move together or the page renders one theme's tokens
  * under another theme's chrome:
  *   1. `.dark` on <html>   — what Tailwind's `dark:` variant reads
- *   2. `data-theme`        — what @brignano/design's tokens read
+ *   2. `data-theme`        — what @brignano/design's tokens read (it sets
+ *                            `color-scheme`, which picks the light or dark
+ *                            side of every `light-dark()` token)
  *   3. <meta name="theme-color"> — what the *browser* paints outside the page
  *
  * (3) is the one that is easy to forget and only shows up on a phone. iOS
@@ -25,7 +27,7 @@
  *  cannot read a CSS custom property, so these are literals and must move with
  *  the tokens. */
 export const THEME_COLORS = {
-  light: "#fafafa",
+  light: "#fafafb",
   dark: "#0d0d0f",
 } as const;
 

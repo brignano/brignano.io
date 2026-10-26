@@ -350,7 +350,7 @@ export default async function Page() {
                   href={`https://github.com/${latestCommit.repo}/tree/${latestCommit.sha}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-4 py-1.5 border rounded bg-surface-hover text-sm font-medium hover:bg-surface-active"
+                  className="inline-flex items-center px-4 py-1.5 border rounded-sm bg-surface-hover text-sm font-medium hover:bg-surface-active"
                 >
                   <svg
                     aria-hidden="true"
@@ -407,7 +407,7 @@ export default async function Page() {
                       href={String(latestCommit.url)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center font-mono text-xs bg-surface-hover px-2 py-1 rounded"
+                      className="inline-flex items-center font-mono text-xs bg-surface-hover px-2 py-1 rounded-sm"
                     >
                       <span>{shortSha(latestCommit.sha)}</span>
                       <svg

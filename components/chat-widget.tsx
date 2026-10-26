@@ -421,7 +421,7 @@ export default function ChatWidget() {
                 placeholder="Ask a question…"
                 aria-describedby={input.length >= COUNTER_FROM ? "chat-input-count" : undefined}
                 // 16px on phones: iOS Safari zooms the page into smaller inputs.
-                className="w-full resize-none field-sizing-content min-h-9 max-h-28 rounded-xl border border-line-strong bg-bg px-3 py-2 text-[16px] sm:text-sm text-ink placeholder:text-ink-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                className="w-full resize-none field-sizing-content min-h-9 max-h-28 rounded-xl border border-line-control bg-bg px-3 py-2 text-[16px] sm:text-sm text-ink placeholder:text-ink-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
               />
               {input.length >= COUNTER_FROM && (
                 <p id="chat-input-count" className="text-xs text-ink-soft text-right">

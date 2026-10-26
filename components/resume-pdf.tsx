@@ -28,7 +28,7 @@ Font.register({
 // Paper has no dark theme, so only the light steps exist. Each is at least as
 // dark as the ad-hoc grey it replaced, so print contrast holds or improves.
 const INK = {
-  n900: "#111111", // --n-900  rules, strongest text
+  n900: "#111114", // --n-900  rules, strongest text
   n800: "#33333a", // --n-800  headings, employer names
   n700: "#52525b", // --n-700  body copy
   n600: "#6b6b73", // --n-600  captions, the footer

@@ -19,7 +19,8 @@ import { readTokens, readToken } from "@/lib/design-tokens";
  * every chart below it rendered entirely in the neutral "Other" grey.
  */
 
-/** SSR fallbacks. Must match design/tokens.chart.css (light mode). */
+/** SSR fallbacks. Must match design/tokens.chart.css (the light side of each
+ *  light-dark() pair). */
 const SLOT_TOKENS = [
   ["--chart-1", "#2a78d6"],
   ["--chart-2", "#eb6834"],
@@ -33,14 +34,18 @@ const SLOT_TOKENS = [
 
 export const SLOT_COUNT = SLOT_TOKENS.length;
 
-/** Resolved slot colours for the current theme. */
-export function chartColors(): string[] {
-  return readTokens(SLOT_TOKENS);
+/** SSR fallback for "Other": --chart-other is --slate, light side. */
+const OTHER_FALLBACK = "#6b6b73";
+
+/** Resolved slot colours for the current theme. `resolve: false` returns the
+ *  SSR fallbacks, so the hydrating render matches the server's markup. */
+export function chartColors(resolve = true): string[] {
+  return resolve ? readTokens(SLOT_TOKENS) : SLOT_TOKENS.map(([, f]) => f);
 }
 
 /** The aggregate bucket. Neutral on purpose — "Other" is not an entity. */
-export function chartOther(): string {
-  return readToken("--chart-other", "#8a8a8f");
+export function chartOther(resolve = true): string {
+  return resolve ? readToken("--chart-other", OTHER_FALLBACK) : OTHER_FALLBACK;
 }
 
 export type ChartPalette = (name: string) => string;
@@ -51,10 +56,16 @@ export type ChartPalette = (name: string) => string;
  * `names` should be the chart's complete series list (before any display
  * filtering), so the mapping stays put when the visible set changes. Names
  * past slot 8, and the literal "Other" bucket, get the neutral.
+ *
+ * Pass `resolve: false` while hydrating (no theme known yet) to get the same
+ * fallbacks the server rendered; resolve once the theme is known.
  */
-export function buildPalette(names: readonly string[]): ChartPalette {
-  const colors = chartColors();
-  const other = chartOther();
+export function buildPalette(
+  names: readonly string[],
+  resolve = true,
+): ChartPalette {
+  const colors = chartColors(resolve);
+  const other = chartOther(resolve);
   const slots = new Map<string, number>();
   for (const n of names) {
     if (n === "Other" || slots.has(n)) continue;
