@@ -423,7 +423,7 @@ export const lifePhotos: LifePhoto[] = [
   {
     src: "/life/exploring.jpg",
     alt: "Anthony on a rock above a turquoise mountain lake, peaks behind",
-    caption: "Exploring",
+    caption: "Traveling",
     position: "50% 35%",
   },
   {
