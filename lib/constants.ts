@@ -437,7 +437,7 @@ export const lifePhotos: LifePhoto[] = [
   {
     src: "/life/trail.jpg",
     alt: "Anthony on a wooded trail, smiling behind a small toad on his hand",
-    caption: "Trail friends",
+    caption: "Critters",
     position: "50% 40%",
   },
 ];
