@@ -68,7 +68,7 @@ export default function Home() {
                 />
                 <div>
                   <p className="text-base sm:text-lg font-semibold text-ink">
-                    Hi, I&apos;m {SITE_NAME}.
+                    Hi, I&apos;m Anthony.
                   </p>
                   <p className="text-sm text-slate">{SITE_ROLE}</p>
                 </div>
@@ -118,7 +118,7 @@ export default function Home() {
                   <CountUp value={heroMetrics[0].value} />
                 </dd>
                 <dt className="text-sm text-slate mt-1">
-                  engineers use the platform I lead
+                  engineers use the platform I build
                 </dt>
               </dl>
             </div>
@@ -273,13 +273,13 @@ export default function Home() {
             {lifePhotos.map((photo) => (
               <li
                 key={photo.src}
-                className="relative aspect-[4/5] overflow-hidden rounded-lg border border-line bg-card"
+                className="relative aspect-[4/5] md:aspect-square last:col-span-2 last:aspect-video md:last:col-span-1 md:last:aspect-square overflow-hidden rounded-lg border border-line bg-card"
               >
                 <Image
                   src={photo.src}
                   alt={photo.alt}
                   fill
-                  sizes="(min-width: 768px) 33vw, 50vw"
+                  sizes="(min-width: 768px) 33vw, 100vw"
                   className="object-cover"
                   style={{ objectPosition: photo.position }}
                 />
