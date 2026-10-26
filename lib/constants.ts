@@ -264,8 +264,10 @@ export interface HeroMetric {
   label: string;
 }
 
-// Single source of truth for the hero proof strip. Keep these current —
-// they render directly under the hero subhead (above the fold).
+// Single source of truth for the scale metrics. Keep these current — they
+// render in the social card and the homepage Current Role section. The
+// homepage hero shows only the first, since the other two mean nothing to a
+// visitor outside engineering.
 // Integrity (TSD §5.7): every figure here is CURRENT AND DOCUMENTED, never a
 // forecast, and the VERB matters as much as the number:
 //   4,000+ engineers  — actually on the platform (8,000 full-org = trajectory)
@@ -383,6 +385,58 @@ export const nowBuilding: NowItem[] = [
     label: "AI-native tooling",
     detail: "Claude Code",
     href: "https://www.github.com/brignano/ai-tools",
+  },
+];
+
+export interface LifePhoto {
+  src: string;
+  alt: string;
+  caption: string;
+  // CSS object-position, so the crop keeps the person in frame.
+  position: string;
+}
+
+// The "Outside of work" grid on the homepage: keep it a multiple of 6 so it
+// fills both the 2-column phone grid and the 3-column desktop one. Photos live in public/life/,
+// resized to 1200px and stripped of EXIF (no GPS) before they're committed.
+// One photo per interest; captions name the interest, never a place unless
+// Anthony gives it.
+export const lifePhotos: LifePhoto[] = [
+  {
+    src: "/life/climbing.jpg",
+    alt: "Anthony grinning at the camera after a climb, chalky fingers scraped up",
+    caption: "Climbing",
+    position: "50% 40%",
+  },
+  {
+    src: "/life/snowboarding.jpg",
+    alt: "Anthony with his snowboard at the top of a lift, mountains behind",
+    caption: "Snowboarding",
+    position: "25% 50%",
+  },
+  {
+    src: "/life/hiking.jpg",
+    alt: "Anthony on a trail below rocky peaks and golden larches",
+    caption: "Hiking",
+    position: "52% 50%",
+  },
+  {
+    src: "/life/mountain-lake.jpg",
+    alt: "Anthony smiling in front of a clear green mountain lake",
+    caption: "Exploring",
+    position: "50% 40%",
+  },
+  {
+    src: "/life/canyon.jpg",
+    alt: "Anthony with a camera, looking up through an orange slot canyon",
+    caption: "Photography",
+    position: "50% 55%",
+  },
+  {
+    src: "/life/trail.jpg",
+    alt: "Anthony on a wooded trail, smiling behind a small toad on his hand",
+    caption: "Nature",
+    position: "50% 40%",
   },
 ];
 
