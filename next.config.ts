@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
    */
   outputFileTracingIncludes: {
     "/api/chat": ["./public/resume.yml", "./lib/chat/about-me.md"],
+    // The PDF is prerendered at build, but if it is ever rendered on demand
+    // its embedded fonts have to be in the function too.
+    "/resume.pdf": ["./assets/fonts/**"],
   },
 
   /**
