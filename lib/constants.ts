@@ -399,6 +399,8 @@ export interface LifePhoto {
 // The "Outside of work" grid on the homepage: keep it a multiple of 6 so it
 // fills both the 2-column phone grid and the 3-column desktop one. Photos live in public/life/,
 // resized to 1200px and stripped of EXIF (no GPS) before they're committed.
+// Give a replacement photo a new filename: browsers cache these hard, so
+// reusing a name can keep showing the old picture.
 // One photo per interest; captions name the interest, never a place unless
 // Anthony gives it.
 export const lifePhotos: LifePhoto[] = [
@@ -409,7 +411,7 @@ export const lifePhotos: LifePhoto[] = [
     position: "50% 40%",
   },
   {
-    src: "/life/snowboarding.jpg",
+    src: "/life/snowboarding-trees.jpg",
     alt: "Anthony standing in deep snow among the trees, holding his snowboard",
     caption: "Snowboarding",
     position: "45% 55%",
@@ -435,7 +437,7 @@ export const lifePhotos: LifePhoto[] = [
   {
     src: "/life/trail.jpg",
     alt: "Anthony on a wooded trail, smiling behind a small toad on his hand",
-    caption: "Animals",
+    caption: "Wildlife",
     position: "50% 40%",
   },
 ];
