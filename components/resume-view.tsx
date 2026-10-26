@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import {
-  ArrowDownTrayIcon,
+  DocumentTextIcon,
   MinusIcon,
   PlusIcon,
   ShareIcon,
@@ -14,8 +14,8 @@ import { SkillBadge } from "@/components/skill-badge";
 import { useToast } from "@/components/toast-provider";
 import { event } from "@/lib/gtag";
 
-// The downloadable PDF is generated at build time by app/resume.pdf/route.ts;
-// the hero's download button links straight to /resume.pdf.
+// The PDF is generated at build time by app/resume.pdf/route.ts; the hero's
+// View PDF button opens /resume.pdf in a new tab, in the browser's viewer.
 
 const RESUME_BREADCRUMBS = [
   {
@@ -157,8 +157,8 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             onClick={handleDownloadPDF}
             className="inline-flex items-center gap-2 px-4 py-2 border-2 border-transparent bg-interactive text-on-interactive font-semibold rounded-lg hover:bg-interactive-hover transition-colors duration-200"
           >
-            <ArrowDownTrayIcon className="h-5 w-5" />
-            Download PDF
+            <DocumentTextIcon className="h-5 w-5" />
+            View PDF
           </a>
           <button
             type="button"

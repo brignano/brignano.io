@@ -203,7 +203,7 @@ html {
 }
 
 /* Print styles — make Cmd+P of /resume a clean ~2-page document.
-   The purpose-built artifact is the "Download PDF" button (components/resume-pdf.tsx);
+   The purpose-built artifact is the "View PDF" button (components/resume-pdf.tsx);
    this block makes the *browser print* of the live page sane and short too:
    strips site chrome, forces every experience card open, flattens card styling
    to plain text, goes monochrome, and caps bullets to approximate 2 pages. */
