@@ -87,10 +87,10 @@ export default function Home() {
                 data-aos-delay={180}
                 className="text-base sm:text-lg text-ink-soft mb-5 sm:mb-8 lg:mb-6 max-w-xl leading-relaxed"
               >
-                I build the shared tools and automation engineers rely on to
+                That means the shared tools and automation engineers rely on to
                 ship software — faster, safer, and more consistently. Think of
-                it as building the factory, not the products that roll off it.
-                Increasingly, that means baking AI right into those tools.
+                it as the factory, not the products that roll off it.
+                Increasingly, with AI baked right in.
               </p>
             </div>
 
@@ -118,7 +118,7 @@ export default function Home() {
                   <CountUp value={heroMetrics[0].value} />
                 </dd>
                 <dt className="text-sm text-slate mt-1">
-                  engineers use the platform I build
+                  engineers on the platform
                 </dt>
               </dl>
             </div>
@@ -273,13 +273,13 @@ export default function Home() {
             {lifePhotos.map((photo) => (
               <li
                 key={photo.src}
-                className="relative aspect-[4/5] md:aspect-square last:col-span-2 last:aspect-video md:last:col-span-1 md:last:aspect-square overflow-hidden rounded-lg border border-line bg-card"
+                className="relative aspect-[4/5] md:aspect-square overflow-hidden rounded-lg border border-line bg-card"
               >
                 <Image
                   src={photo.src}
                   alt={photo.alt}
                   fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
+                  sizes="(min-width: 768px) 33vw, 50vw"
                   className="object-cover"
                   style={{ objectPosition: photo.position }}
                 />

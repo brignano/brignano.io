@@ -396,9 +396,11 @@ export interface LifePhoto {
   position: string;
 }
 
-// The "Outside of work" grid on the homepage. Photos live in public/life/,
+// The "Outside of work" grid on the homepage: keep it a multiple of 6 so it
+// fills both the 2-column phone grid and the 3-column desktop one. Photos live in public/life/,
 // resized to 1200px and stripped of EXIF (no GPS) before they're committed.
-// Captions name the activity only; add a place only if Anthony gives it.
+// One photo per interest; captions name the interest, never a place unless
+// Anthony gives it.
 export const lifePhotos: LifePhoto[] = [
   {
     src: "/life/climbing.jpg",
@@ -407,33 +409,21 @@ export const lifePhotos: LifePhoto[] = [
     position: "50% 40%",
   },
   {
-    src: "/life/hiking.jpg",
-    alt: "Anthony on a trail below rocky peaks and golden larches",
-    caption: "Hiking",
-    position: "52% 50%",
-  },
-  {
-    src: "/life/cat.jpg",
-    alt: "Anthony in a hoodie with a grey and white cat curled up beside him",
-    caption: "Cat time",
-    position: "50% 30%",
-  },
-  {
     src: "/life/snowboarding.jpg",
     alt: "Anthony with his snowboard at the top of a lift, mountains behind",
     caption: "Snowboarding",
     position: "25% 50%",
   },
   {
-    src: "/life/rainy-day.jpg",
-    alt: "Anthony in a rain jacket, wide-eyed, sipping a drink through a straw",
-    caption: "Rain or shine",
-    position: "50% 40%",
+    src: "/life/hiking.jpg",
+    alt: "Anthony on a trail below rocky peaks and golden larches",
+    caption: "Hiking",
+    position: "52% 50%",
   },
   {
     src: "/life/mountain-lake.jpg",
     alt: "Anthony smiling in front of a clear green mountain lake",
-    caption: "Mountain lakes",
+    caption: "Exploring",
     position: "50% 40%",
   },
   {
@@ -445,16 +435,8 @@ export const lifePhotos: LifePhoto[] = [
   {
     src: "/life/trail.jpg",
     alt: "Anthony on a wooded trail, smiling behind a small toad on his hand",
-    caption: "Trail company",
+    caption: "Nature",
     position: "50% 40%",
-  },
-  // Last tile spans both columns on a phone (3x3 on desktop, 2+1 on a
-  // phone), so it should be a landscape photo.
-  {
-    src: "/life/coast.jpg",
-    alt: "Anthony sitting on rocks by the ocean, smiling over his shoulder",
-    caption: "On the coast",
-    position: "35% 50%",
   },
 ];
 
