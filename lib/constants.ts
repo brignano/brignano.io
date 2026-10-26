@@ -419,9 +419,9 @@ export const lifePhotos: LifePhoto[] = [
     position: "30% 50%",
   },
   {
-    src: "/life/wakeboarding.jpg",
-    alt: "Anthony wakeboarding in a bright green suit",
-    caption: "Wakeboarding",
+    src: "/life/trail.jpg",
+    alt: "Anthony on a wooded trail, smiling behind a small toad on his hand",
+    caption: "Trail company",
     position: "50% 40%",
   },
   {
@@ -433,7 +433,7 @@ export const lifePhotos: LifePhoto[] = [
   {
     src: "/life/canyon.jpg",
     alt: "Anthony with a camera, looking up through an orange slot canyon",
-    caption: "Exploring",
+    caption: "Photography",
     position: "50% 55%",
   },
 ];

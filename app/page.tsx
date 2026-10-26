@@ -267,8 +267,7 @@ export default function Home() {
           </h2>
           <p className="max-w-3xl text-base sm:text-lg text-ink-soft leading-relaxed mb-8">
             You&apos;ll usually find me outside: climbing, snowboarding through
-            the trees, hiking somewhere with a view, or on a wakeboard behind a
-            boat.
+            the trees, hiking somewhere with a view, or out with my camera.
           </p>
           <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             {lifePhotos.map((photo) => (
