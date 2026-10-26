@@ -410,9 +410,9 @@ export const lifePhotos: LifePhoto[] = [
   },
   {
     src: "/life/snowboarding.jpg",
-    alt: "Anthony with his snowboard at the top of a lift, mountains behind",
+    alt: "Anthony standing in deep snow among the trees, holding his snowboard",
     caption: "Snowboarding",
-    position: "25% 50%",
+    position: "45% 55%",
   },
   {
     src: "/life/hiking.jpg",
@@ -421,10 +421,10 @@ export const lifePhotos: LifePhoto[] = [
     position: "52% 50%",
   },
   {
-    src: "/life/mountain-lake.jpg",
-    alt: "Anthony smiling in front of a clear green mountain lake",
+    src: "/life/exploring.jpg",
+    alt: "Anthony on a rock above a turquoise mountain lake, peaks behind",
     caption: "Exploring",
-    position: "50% 40%",
+    position: "50% 35%",
   },
   {
     src: "/life/canyon.jpg",
@@ -435,7 +435,7 @@ export const lifePhotos: LifePhoto[] = [
   {
     src: "/life/trail.jpg",
     alt: "Anthony on a wooded trail, smiling behind a small toad on his hand",
-    caption: "Nature",
+    caption: "Animals",
     position: "50% 40%",
   },
 ];

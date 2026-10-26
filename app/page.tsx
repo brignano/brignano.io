@@ -441,15 +441,17 @@ export default function Home() {
               Senior Staff Software Engineer — Enterprise Platform Engineering
             </h3>
             <p className="text-lg text-ink-soft mb-4 leading-relaxed">
-              I lead the strategy, design, and delivery of The Hartford&apos;s
-              developer platform — the one place 4,000+ engineers go to build,
-              ship, and run their software, on its way to the full
-              8,000-engineer organization.
+              I&apos;m a technical lead on The Hartford&apos;s developer
+              platform — the one place 4,000+ engineers go to build, ship, and
+              run their software, on its way to the full 8,000-engineer
+              organization.
             </p>
             <p className="text-base text-ink-soft mb-6 leading-relaxed">
-              My focus is making the whole thing automatic, reliable, and secure
-              by default — so engineers hit fewer roadblocks and spend more time
-              on the work that matters.
+              I make a lot of the day-to-day technical calls, and I keep the
+              platform running, scaling, and getting better while new
+              capabilities come online alongside it. The goal: automatic,
+              reliable, and secure by default — so engineers hit fewer
+              roadblocks and spend more time on the work that matters.
             </p>
             {/* The platform's scale, moved here from the hero: meaningful to
                 engineers and recruiters, noise to everyone else. */}
