@@ -1,11 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import {
-  DocumentTextIcon,
-  CodeBracketIcon,
-  EnvelopeIcon,
-} from "@heroicons/react/24/outline";
+import { DocumentTextIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
 import HomeContributions from "@/components/home-contributions";
 import HighlightCard from "@/components/highlight-card";
 import CountUp from "@/components/count-up";
@@ -18,7 +15,9 @@ import {
   achievements,
   nowBuilding,
   featuredProjects,
+  lifePhotos,
   heroMetrics,
+  SITE_NAME,
   SITE_ROLE,
   SITE_TAGLINE,
 } from "@/lib/constants";
@@ -51,13 +50,29 @@ export default function Home() {
               without duplicating the markup. */}
           <div className="relative z-10 grid gap-y-4 sm:gap-y-9 lg:grid-cols-[minmax(0,1fr)_18rem] lg:gap-x-16 lg:items-center">
             <div className="max-w-2xl lg:col-start-1 lg:row-start-1">
-              <p
+              {/* Who, before what. Someone who searched the name should see it
+                  confirmed, with a face, before the pitch. The photo sits here
+                  below `lg`; at `lg` it moves into the right-hand card. */}
+              <div
                 data-aos="fade-up"
                 data-aos-duration={500}
-                className="font-display uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-3 sm:mb-5"
+                className="flex items-center gap-4 mb-4 sm:mb-6"
               >
-                {SITE_ROLE}
-              </p>
+                <Image
+                  src="/headshot.jpeg"
+                  alt=""
+                  width={64}
+                  height={64}
+                  priority
+                  className="lg:hidden w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border border-line"
+                />
+                <div>
+                  <p className="text-base sm:text-lg font-semibold text-ink">
+                    Hi, I&apos;m {SITE_NAME}.
+                  </p>
+                  <p className="text-sm text-slate">{SITE_ROLE}</p>
+                </div>
+              </div>
               <h1
                 data-aos="fade-up"
                 data-aos-duration={600}
@@ -79,28 +94,34 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Proof panel. A row of three small numbers on mobile; a stacked
-                panel at lg where it has real room. */}
-            <dl
+            {/* Right-hand card at `lg`: the face, and the one number anyone
+                can read. The pipeline and repository counts are real but mean
+                nothing outside engineering, so they moved to Current Role. */}
+            <div
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={260}
-              className="flex flex-wrap gap-x-7 gap-y-4 sm:gap-x-0 lg:flex-col lg:gap-0 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:rounded-lg lg:border lg:border-line lg:bg-card lg:p-5 lg:shadow-1"
+              className="hidden lg:flex flex-col items-center text-center lg:col-start-2 lg:row-start-1 lg:row-span-2 rounded-lg border border-line bg-card p-6 shadow-1"
             >
-              {heroMetrics.map((metric) => (
-                <div
-                  key={metric.label}
-                  className="flex flex-col sm:px-5 sm:first:pl-0 sm:border-l sm:first:border-l-0 border-line lg:px-0 lg:border-l-0 lg:border-t lg:first:border-t-0 lg:border-line lg:py-3 lg:first:pt-0 lg:last:pb-0"
-                >
-                  <dd className="text-xl lg:text-3xl font-bold tracking-tight">
-                    <CountUp value={metric.value} />
-                  </dd>
-                  <dt className="text-xs lg:text-sm text-slate mt-1">
-                    {metric.label}
-                  </dt>
-                </div>
-              ))}
-            </dl>
+              <Image
+                src="/headshot.jpeg"
+                alt={`Photo of ${SITE_NAME}`}
+                width={128}
+                height={128}
+                priority
+                className="w-32 h-32 rounded-full object-cover border border-line"
+              />
+              <p className="mt-4 font-semibold">{SITE_NAME}</p>
+              <p className="text-sm text-slate">Connecticut</p>
+              <dl className="mt-5 pt-5 border-t border-line w-full">
+                <dd className="text-3xl font-bold tracking-tight">
+                  <CountUp value={heroMetrics[0].value} />
+                </dd>
+                <dt className="text-sm text-slate mt-1">
+                  engineers use the platform I lead
+                </dt>
+              </dl>
+            </div>
 
             <div className="lg:col-start-1 lg:row-start-2">
               {/* Primary CTAs — one filled, one outline (TSD §5.3) */}
@@ -137,23 +158,22 @@ export default function Home() {
                     aria-hidden="true"
                   />
                 </Link>
-                <Link
-                  href="/coding"
+                {/* The second CTA used to be Coding Activity, the most
+                    engineers-only page on the site. Email works for everyone. */}
+                <a
+                  href="mailto:hi@brignano.io"
                   className="inline-flex items-center px-4 sm:px-6 py-3 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", {
-                      cta: "coding_activity",
+                      cta: "contact",
                       location: "hero",
                       transport_type: "beacon",
                     });
                   }}
                 >
-                  Coding Activity
-                  <CodeBracketIcon
-                    className="ml-2 w-4 h-4"
-                    aria-hidden="true"
-                  />
-                </Link>
+                  Get in touch
+                  <EnvelopeIcon className="ml-2 w-4 h-4" aria-hidden="true" />
+                </a>
               </div>
 
               {/* Social Links — hidden below `sm`, where the fold is the scarce
@@ -229,11 +249,47 @@ export default function Home() {
               Central Connecticut State University (CCSU) Computer Science
               Industry Advisory Board.
             </p>
-            <p>
-              Outside of work, you&apos;ll usually find me climbing rocks,
-              snowboarding through the woods, or exploring new ideas.
-            </p>
           </div>
+        </section>
+
+        {/* Outside of work — the part of the page for people who searched
+            the name rather than the job title. Early on purpose: friends,
+            family and dates shouldn't have to scroll past case studies to
+            find it. Photos and captions come from lib/constants.ts. */}
+        <section
+          id="life"
+          className="py-16 md:py-24"
+          data-aos="fade-up"
+          data-aos-duration={800}
+        >
+          <h2 className="font-sans text-3xl sm:text-4xl mb-4 font-bold tracking-tight">
+            Outside of work
+          </h2>
+          <p className="max-w-3xl text-base sm:text-lg text-ink-soft leading-relaxed mb-8">
+            You&apos;ll usually find me outside: climbing, snowboarding through
+            the trees, hiking somewhere with a view, or on a wakeboard behind a
+            boat.
+          </p>
+          <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+            {lifePhotos.map((photo) => (
+              <li
+                key={photo.src}
+                className="relative aspect-[4/5] overflow-hidden rounded-lg border border-line bg-card"
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(min-width: 768px) 33vw, 50vw"
+                  className="object-cover"
+                  style={{ objectPosition: photo.position }}
+                />
+                <span className="absolute bottom-2 left-2 rounded-md bg-black/55 px-2 py-0.5 text-xs font-medium text-white">
+                  {photo.caption}
+                </span>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* Highlights — outcome cards + "Now" strip (TSD §5.5b) */}
@@ -396,6 +452,18 @@ export default function Home() {
               by default — so engineers hit fewer roadblocks and spend more time
               on the work that matters.
             </p>
+            {/* The platform's scale, moved here from the hero: meaningful to
+                engineers and recruiters, noise to everyone else. */}
+            <dl className="flex flex-wrap gap-x-8 gap-y-4 mb-6">
+              {heroMetrics.map((metric) => (
+                <div key={metric.label} className="flex flex-col">
+                  <dd className="text-2xl font-bold tracking-tight">
+                    <CountUp value={metric.value} />
+                  </dd>
+                  <dt className="text-sm text-slate mt-1">{metric.label}</dt>
+                </div>
+              ))}
+            </dl>
             <ul className="space-y-3 mb-6">
               {[
                 "Leading a CEO-sponsored push to make new-engineer setup self-service — the platform already gets a fresh machine productive in hours, down from a 40+ day wait, as it rolls out team-wide.",
@@ -504,12 +572,12 @@ export default function Home() {
           data-aos-duration={800}
         >
           <h2 className="font-sans text-4xl sm:text-5xl lg:text-6xl mb-6 font-bold tracking-tight">
-            Let&apos;s build something.
+            Say hello.
           </h2>
           <p className="text-ink-soft mb-10 max-w-2xl text-lg leading-relaxed">
-            If you&apos;re building tools that make engineering teams faster —
-            or just want to talk shop about platforms, developer experience, or
-            AI — I&apos;d love to connect.
+            Whether you want to talk shop about platforms, developer experience,
+            or AI, swap climbing and snowboarding stories, or just say hi,
+            I&apos;d love to hear from you.
           </p>
           <div>
             <a

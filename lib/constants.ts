@@ -264,8 +264,10 @@ export interface HeroMetric {
   label: string;
 }
 
-// Single source of truth for the hero proof strip. Keep these current —
-// they render directly under the hero subhead (above the fold).
+// Single source of truth for the scale metrics. Keep these current — they
+// render in the social card and the homepage Current Role section. The
+// homepage hero shows only the first, since the other two mean nothing to a
+// visitor outside engineering.
 // Integrity (TSD §5.7): every figure here is CURRENT AND DOCUMENTED, never a
 // forecast, and the VERB matters as much as the number:
 //   4,000+ engineers  — actually on the platform (8,000 full-org = trajectory)
@@ -383,6 +385,56 @@ export const nowBuilding: NowItem[] = [
     label: "AI-native tooling",
     detail: "Claude Code",
     href: "https://www.github.com/brignano/ai-tools",
+  },
+];
+
+export interface LifePhoto {
+  src: string;
+  alt: string;
+  caption: string;
+  // CSS object-position, so the crop keeps the person in frame.
+  position: string;
+}
+
+// The "Outside of work" grid on the homepage. Photos live in public/life/,
+// resized to 1200px and stripped of EXIF (no GPS) before they're committed.
+// Captions name the activity only; add a place only if Anthony gives it.
+export const lifePhotos: LifePhoto[] = [
+  {
+    src: "/life/climbing.jpg",
+    alt: "Anthony grinning at the camera after a climb, chalky fingers scraped up",
+    caption: "Climbing",
+    position: "50% 40%",
+  },
+  {
+    src: "/life/snowboarding.jpg",
+    alt: "Anthony standing in deep snow among the trees, holding his snowboard",
+    caption: "Snowboarding",
+    position: "45% 55%",
+  },
+  {
+    src: "/life/hiking.jpg",
+    alt: "Anthony on a rock above a turquoise mountain lake",
+    caption: "Hiking",
+    position: "30% 50%",
+  },
+  {
+    src: "/life/wakeboarding.jpg",
+    alt: "Anthony wakeboarding in a bright green suit",
+    caption: "Wakeboarding",
+    position: "50% 40%",
+  },
+  {
+    src: "/life/coast.jpg",
+    alt: "Anthony sitting on rocks by the ocean, smiling over his shoulder",
+    caption: "On the coast",
+    position: "35% 50%",
+  },
+  {
+    src: "/life/canyon.jpg",
+    alt: "Anthony with a camera, looking up through an orange slot canyon",
+    caption: "Exploring",
+    position: "50% 55%",
   },
 ];
 
