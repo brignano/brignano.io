@@ -18,7 +18,10 @@ export async function GET() {
   return new Response(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": 'attachment; filename="Anthony_Brignano_Resume.pdf"',
+      // Quoted filename covers spaces for every current browser; filename*
+      // is the RFC 6266 percent-encoded form for clients that prefer it.
+      "Content-Disposition":
+        "attachment; filename=\"Anthony Brignano Resume.pdf\"; filename*=UTF-8''Anthony%20Brignano%20Resume.pdf",
     },
   });
 }
