@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 19,
     fontWeight: "bold",
+    // Without its own lineHeight the name inherits a line box sized for the
+    // Page's 10pt text, and its descenders run into the title below.
+    lineHeight: 1.2,
     marginBottom: 4,
   },
   title: {
