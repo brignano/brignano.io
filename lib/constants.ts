@@ -457,7 +457,7 @@ export const projects: Project[] = [
     slug: "sites",
     title: "Sites",
     description:
-      "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one is built from a single config file and served at its own brignano.io subdomain. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
+      "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one starts as a free preview on a brignano.io subdomain, then moves to the business's own domain, whether that's the URL they already have or a new one, so the site carries their brand. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
     tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
     status: "live",
     kind: "product",
