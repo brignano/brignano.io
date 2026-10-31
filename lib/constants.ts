@@ -443,7 +443,7 @@ export const lifePhotos: LifePhoto[] = [
 ];
 
 // Ordered most-compelling first (HostStats, a side project built for a family
-// member, sits last among the products; @brignano/design sits with the practice
+// member, sits last among the products; Design sits with the practice
 // entries because it is the setup underneath the products, not one of them): /projects renders this array as-is and the
 // homepage takes the `featured` ones. Adding a project is one entry here.
 //
@@ -543,7 +543,7 @@ export const projects: Project[] = [
   },
   {
     slug: "design",
-    title: "@brignano/design",
+    title: "Design",
     description:
       "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. DECISIONS.md records why each value is what it is.",
     tech: ["CSS", "Design tokens", "npm"],
