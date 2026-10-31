@@ -442,7 +442,8 @@ export const lifePhotos: LifePhoto[] = [
   },
 ];
 
-// Ordered most-compelling first: /projects renders this array as-is and the
+// Ordered most-compelling first (HostStats, a side project built for a family
+// member, sits last among the products): /projects renders this array as-is and the
 // homepage takes the `featured` ones. Adding a project is one entry here.
 //
 // Private repos are deliberately absent. A card whose link goes nowhere is
@@ -465,19 +466,6 @@ export const projects: Project[] = [
     // most operational thing on the list.
     featured: true,
     links: [{ label: "Get a free preview", url: "https://sites.brignano.io" }],
-  },
-  {
-    slug: "hoststats",
-    title: "HostStats",
-    description:
-      "Airbnb hosts upload their CSV exports and get occupancy, booking trends and earnings back as charts. Every file is parsed in the browser — no account, no upload, and no server that could leak a year of someone's bookings.",
-    tech: ["Next.js", "TypeScript", "Cloudflare Workers", "Tailwind"],
-    status: "live",
-    kind: "product",
-    links: [
-      { label: "Open HostStats", url: "https://hoststats.brignano.io" },
-      { label: "Source", url: "https://github.com/brignano/hoststats" },
-    ],
   },
   {
     slug: "driftwood",
@@ -550,6 +538,19 @@ export const projects: Project[] = [
     links: [
       { label: "Download", url: "https://github.com/brignano/breakeven/releases/latest" },
       { label: "Source", url: "https://github.com/brignano/breakeven" },
+    ],
+  },
+  {
+    slug: "hoststats",
+    title: "HostStats",
+    description:
+      "Airbnb hosts upload their CSV exports and get occupancy, booking trends and earnings back as charts. Every file is parsed in the browser — no account, no upload, and no server that could leak a year of someone's bookings.",
+    tech: ["Next.js", "TypeScript", "Cloudflare Workers", "Tailwind"],
+    status: "live",
+    kind: "product",
+    links: [
+      { label: "Open HostStats", url: "https://hoststats.brignano.io" },
+      { label: "Source", url: "https://github.com/brignano/hoststats" },
     ],
   },
   {
