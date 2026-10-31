@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Draft — awaiting approval |
+| **Status** | **Shipped** — Oct 2026, in-repo variant (#290). Private `brignano/blog` repo not built. |
 | **Author** | Anthony Brignano |
 | **Date** | 2026-06-08 |
 | **Repos** | `brignano.io` (app only) |
@@ -10,6 +10,16 @@
 | **Related** | [tsd-site-modernization.md](./tsd-site-modernization.md) §9 (Work/case-studies — separate, content-heavy effort) |
 
 ---
+
+> **Status update, 2026-10-31.** `/blog` is live (PR #290, merged 2026-10-25) with one post, "Building my homelab". What differs from this draft:
+>
+> - **Content source (§5.6):** posts live in `content/blog/posts/*.mdx` in this repo. The private `brignano/blog` repo, `BLOG_REPO_TOKEN` and the Vercel deploy hook do not exist yet. `lib/blog.ts` is still the only file that knows the source, and `BLOG_CONTENT_DIR` overrides it, so moving later is a one-file change.
+> - **Static export (§2):** the site is no longer `output: "export"` (it has a Vercel function for `/api/chat`). Blog pages are still prerendered.
+> - **Shipped as specced:** MDX via `next-mdx-remote`, `rehype-pretty-code`, `@tailwindcss/typography`, RSS (`app/rss.xml`), sitemap entries, `BlogPosting` JSON-LD, "Blog" in the nav.
+> - **Not built:** the `ideas/` catalog, per-post OG images, tag filter pages (§5.7, fast-follows in §6).
+>
+> The private blog repo and the `ideas/` catalog are optional. Nothing on the live site depends on them.
+
 
 ## 1. Summary
 
