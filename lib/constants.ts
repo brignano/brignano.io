@@ -543,13 +543,13 @@ export const projects: Project[] = [
     slug: "breakeven",
     title: "Breakeven",
     description:
-      "Know the price of every call. A desktop pot-odds and equity calculator for Texas Hold'em: enter the pot and the bet, optionally your cards and the board, and it shows the equity you need, the equity you have from 5,000 simulated hands, your outs and the cards that hurt you — then a call-or-fold verdict. After a session, open your PokerStars hand histories to price-check every call and fold. Windows and Mac downloads, nothing to install.",
+      "Know the price of every call. A desktop pot-odds and equity calculator for Texas Hold'em: enter the pot and the bet, optionally your cards and the board, and it shows the equity you need, the equity you have from 5,000 simulated hands, your outs and the cards that hurt you — then a call-or-fold verdict. Leave it running and it tracks your PokerStars hands from the files PokerStars saves, so after a session you can price-check every call and fold and see how loose or aggressive each player at your tables is. Windows and Mac downloads, nothing to install.",
     tech: ["Python", "Tkinter", "PyInstaller", "GitHub Actions"],
     status: "live",
     kind: "product",
     links: [
-      { label: "Download", url: "https://github.com/brignano/poker-helper/releases/latest" },
-      { label: "Source", url: "https://github.com/brignano/poker-helper" },
+      { label: "Download", url: "https://github.com/brignano/breakeven/releases/latest" },
+      { label: "Source", url: "https://github.com/brignano/breakeven" },
     ],
   },
   {
