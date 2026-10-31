@@ -450,7 +450,8 @@ export const lifePhotos: LifePhoto[] = [
 // with a worse impression than if it had never been listed. A project with
 // private source but a published package is listed by its public link alone.
 // guidebook's source is private, so it links to its public site and its Chrome
-// Web Store listing only. Add a Source link if the repo goes public.
+// Web Store listing only. Add a Source link if the repo goes public. sites is
+// private for the same reason, so it links to its public front door only.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -476,6 +477,7 @@ export const projects: Project[] = [
     kind: "product",
     featured: true,
     links: [
+      { label: "Open driftwood", url: "https://driftwood.brignano.io" },
       { label: "npm", url: "https://www.npmjs.com/package/@brignano/driftwood" },
       { label: "Source", url: "https://github.com/brignano/driftwood" },
     ],
@@ -524,6 +526,16 @@ export const projects: Project[] = [
         url: "https://chromewebstore.google.com/detail/kagfmiadbbingdaehochbgliomjdhfae",
       },
     ],
+  },
+  {
+    slug: "sites",
+    title: "Sites",
+    description:
+      "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one is built from a single config file and served at its own brignano.io subdomain. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
+    tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
+    status: "live",
+    kind: "product",
+    links: [{ label: "Get a free preview", url: "https://sites.brignano.io" }],
   },
   {
     slug: "poker-helper",
