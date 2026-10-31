@@ -443,7 +443,8 @@ export const lifePhotos: LifePhoto[] = [
 ];
 
 // Ordered most-compelling first (HostStats, a side project built for a family
-// member, sits last among the products): /projects renders this array as-is and the
+// member, sits last among the products; @brignano/design sits with the practice
+// entries because it is the setup underneath the products, not one of them): /projects renders this array as-is and the
 // homepage takes the `featured` ones. Adding a project is one entry here.
 //
 // Private repos are deliberately absent. A card whose link goes nowhere is
@@ -466,6 +467,25 @@ export const projects: Project[] = [
     // most operational thing on the list.
     featured: true,
     links: [{ label: "Get a free preview", url: "https://sites.brignano.io" }],
+  },
+  {
+    slug: "guidebook",
+    title: "Guidebook",
+    description:
+      "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A Chrome extension highlights each thing to click and says in plain words what to do. Record a guide by doing the task once, share it with a link, or browse the guide library. App teams can embed the same engine and check every guide in CI.",
+    tech: ["TypeScript", "Browser extension", "Claude", "Playwright", "Supabase"],
+    status: "live",
+    kind: "product",
+    // Featured over the terminal card: an AI-native tool is the stronger
+    // claim on a homepage whose hero says AI is being built into the tools.
+    featured: true,
+    links: [
+      { label: "Try the demo", url: "https://guidebook.brignano.io" },
+      {
+        label: "Chrome Web Store",
+        url: "https://chromewebstore.google.com/detail/kagfmiadbbingdaehochbgliomjdhfae",
+      },
+    ],
   },
   {
     slug: "driftwood",
@@ -496,38 +516,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "design",
-    title: "@brignano/design",
-    description:
-      "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. DECISIONS.md records why each value is what it is.",
-    tech: ["CSS", "Design tokens", "npm"],
-    status: "beta",
-    kind: "product",
-    links: [
-      { label: "npm", url: "https://www.npmjs.com/package/@brignano/design" },
-      { label: "Source", url: "https://github.com/brignano/design" },
-    ],
-  },
-  {
-    slug: "guidebook",
-    title: "Guidebook",
-    description:
-      "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A Chrome extension highlights each thing to click and says in plain words what to do. Record a guide by doing the task once, share it with a link, or browse the guide library. App teams can embed the same engine and check every guide in CI.",
-    tech: ["TypeScript", "Browser extension", "Claude", "Playwright", "Supabase"],
-    status: "live",
-    kind: "product",
-    // Featured over the terminal card: an AI-native tool is the stronger
-    // claim on a homepage whose hero says AI is being built into the tools.
-    featured: true,
-    links: [
-      { label: "Try the demo", url: "https://guidebook.brignano.io" },
-      {
-        label: "Chrome Web Store",
-        url: "https://chromewebstore.google.com/detail/kagfmiadbbingdaehochbgliomjdhfae",
-      },
-    ],
-  },
-  {
     slug: "breakeven",
     title: "Breakeven",
     description:
@@ -551,6 +539,19 @@ export const projects: Project[] = [
     links: [
       { label: "Open HostStats", url: "https://hoststats.brignano.io" },
       { label: "Source", url: "https://github.com/brignano/hoststats" },
+    ],
+  },
+  {
+    slug: "design",
+    title: "@brignano/design",
+    description:
+      "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. DECISIONS.md records why each value is what it is.",
+    tech: ["CSS", "Design tokens", "npm"],
+    status: "beta",
+    kind: "practice",
+    links: [
+      { label: "npm", url: "https://www.npmjs.com/package/@brignano/design" },
+      { label: "Source", url: "https://github.com/brignano/design" },
     ],
   },
   {
