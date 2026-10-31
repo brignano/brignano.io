@@ -454,6 +454,19 @@ export const lifePhotos: LifePhoto[] = [
 // private for the same reason, so it links to its public front door only.
 export const projects: Project[] = [
   {
+    slug: "sites",
+    title: "Sites",
+    description:
+      "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one is built from a single config file and served at its own brignano.io subdomain. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
+    tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
+    status: "live",
+    kind: "product",
+    // Featured over HostStats: it is live with real clients, so it is the
+    // most operational thing on the list.
+    featured: true,
+    links: [{ label: "Get a free preview", url: "https://sites.brignano.io" }],
+  },
+  {
     slug: "hoststats",
     title: "HostStats",
     description:
@@ -461,7 +474,6 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "Cloudflare Workers", "Tailwind"],
     status: "live",
     kind: "product",
-    featured: true,
     links: [
       { label: "Open HostStats", url: "https://hoststats.brignano.io" },
       { label: "Source", url: "https://github.com/brignano/hoststats" },
@@ -526,16 +538,6 @@ export const projects: Project[] = [
         url: "https://chromewebstore.google.com/detail/kagfmiadbbingdaehochbgliomjdhfae",
       },
     ],
-  },
-  {
-    slug: "sites",
-    title: "Sites",
-    description:
-      "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one is built from a single config file and served at its own brignano.io subdomain. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
-    tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
-    status: "live",
-    kind: "product",
-    links: [{ label: "Get a free preview", url: "https://sites.brignano.io" }],
   },
   {
     slug: "poker-helper",
