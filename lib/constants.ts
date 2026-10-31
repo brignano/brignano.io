@@ -540,10 +540,10 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "poker-helper",
-    title: "Poker Helper",
+    slug: "breakeven",
+    title: "Breakeven",
     description:
-      "A desktop pot-odds calculator for Texas Hold'em. Enter the pot and the bet, optionally your cards and the board, and it gives pot odds, your chance of hitting your outs, and showdown equity from 5,000 simulated hands — then a call-or-fold verdict. Windows and Mac downloads, nothing to install.",
+      "Know the price of every call. A desktop pot-odds and equity calculator for Texas Hold'em: enter the pot and the bet, optionally your cards and the board, and it shows the equity you need, the equity you have from 5,000 simulated hands, your outs and the cards that hurt you — then a call-or-fold verdict. After a session, open your PokerStars hand histories to price-check every call and fold. Windows and Mac downloads, nothing to install.",
     tech: ["Python", "Tkinter", "PyInstaller", "GitHub Actions"],
     status: "live",
     kind: "product",
