@@ -504,9 +504,9 @@ export const projects: Project[] = [
   },
   {
     slug: "card",
-    title: "npx brignano",
+    title: "Card",
     description:
-      "An interactive terminal business card. Gradient ASCII intro, live GitHub stats fetched on a 1.5-second leash so it never hangs, and quick actions to copy my email, open my socials or save a vCard.",
+      "An interactive terminal business card, run with npx brignano. Gradient ASCII intro, live GitHub stats fetched on a 1.5-second leash so it never hangs, and quick actions to copy my email, open my socials or save a vCard.",
     tech: ["Node", "TypeScript", "npm"],
     status: "live",
     kind: "product",
