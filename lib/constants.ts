@@ -529,9 +529,9 @@ export const projects: Project[] = [
   },
   {
     slug: "sites",
-    title: "sites",
+    title: "Sites",
     description:
-      "Quick websites for local business owners. Each site is built from one config file and served at its own brignano.io subdomain, and owners sign in to edit their own text and photos. Ask for a free preview of your site.",
+      "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one is built from a single config file and served at its own brignano.io subdomain. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
     tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
     status: "live",
     kind: "product",
