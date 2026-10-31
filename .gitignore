@@ -29,7 +29,9 @@
 !public/.well-known/appspecific/com.tesla.3p.public-key.pem
 
 # claude code
-.claude/
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
 
 # debug
 npm-debug.log*
