@@ -476,6 +476,7 @@ export const projects: Project[] = [
     kind: "product",
     featured: true,
     links: [
+      { label: "Open driftwood", url: "https://driftwood.brignano.io" },
       { label: "npm", url: "https://www.npmjs.com/package/@brignano/driftwood" },
       { label: "Source", url: "https://github.com/brignano/driftwood" },
     ],
