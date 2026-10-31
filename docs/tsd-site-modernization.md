@@ -2,13 +2,27 @@
 
 | | |
 |---|---|
-| **Status** | Draft — awaiting approval |
+| **Status** | **Shipped** — Oct 2026 (some details diverged, see below) |
 | **Author** | Anthony Brignano |
 | **Date** | 2026-06-08 |
 | **Repos** | `brignano.io` (app), `aws` (DNS/email only — no app changes) |
 | **Target release** | v3.0 (visual refresh) |
 
 ---
+
+> **Status update, 2026-10-31.** P0, P1 and P2 are live. What differs from this draft:
+>
+> - **Animation (§5.1):** `aos` is gone. `components/scroll-reveal.tsx` replaced it and renders visible by default. Some CSS in `globals.css` still uses the old `[data-aos]` attribute names.
+> - **Type (§5.2):** Geist Sans is the base and Silkscreen is the accent. Inconsolata and the dead `font-incognito` / `font-inter` classes are removed. `IBM_Plex_Mono` was added for code.
+> - **Theme FOUC (§5.6):** a blocking inline script in `app/layout.tsx` sets the theme before first paint.
+> - **Footer and icons (§5.5):** the "Built with" badges are gone and CTA icons come from `@heroicons/react`.
+> - **Hero (§5.3):** the metric strip shipped (`heroMetrics` in `lib/constants.ts`), now as a panel beside the copy on wide screens (6229b27).
+> - **Work section (§9):** this was "future" here, and it has since shipped as `/work` with case studies (plus `/projects`).
+> - **Design tokens:** colours and type tokens now come from the `@brignano/design` package (0.3.0, #295). Treat the accent decision in §10.3 as superseded by that package.
+> - **Copy:** the homepage was rewritten on 2026-10-26 to be welcoming to non-engineers ("Hi, I'm Anthony.", photo grid). The copy table in §5.4 is historical. The integrity rules in §5.7 still apply.
+>
+> Not re-measured: the Lighthouse targets in §4. `lighthouserc.json` holds the budget. Anything new belongs in its own issue, not in this document.
+
 
 ## 1. Summary
 

@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Status** | Draft — awaiting approval |
+| **Status** | **Parked** — prototyped twice and removed; not planned |
 | **Author** | Anthony Brignano |
 | **Date** | 2026-06-08 |
 | **Repos** | `brignano.io` (app only) |
@@ -10,6 +10,15 @@
 | **Related** | [tsd-site-modernization.md](./tsd-site-modernization.md) (evolves §10.2 motif, reuses §10.3 accent, builds on §5.1 animation system) · [tsd-blog.md](./tsd-blog.md) |
 
 ---
+
+> **Status update, 2026-10-31.** This did not ship, and no work is planned.
+>
+> - A first version went live on 2026-07-13 (#192). It was removed on 2026-08-23 (6229b27): a straight line in the left gutter had no topography, so the metaphor could not read.
+> - The P0 prototype was rebuilt on 2026-10-25 (f85a7f2) and removed the same day (ddb83a9). It failed the taste gate in §6: the page read better without it. The prototype is in git history at those two commits.
+> - The ⌘K palette (§5.6) was never built on the site.
+>
+> The §6 gate said to kill the idea if it read as gimmicky, so this is that outcome. Reopen it only with a new idea of what the signature should be. The sections below are the original draft, kept for the record.
+
 
 ## 1. Summary
 
