@@ -489,7 +489,7 @@ export const projects: Project[] = [
   },
   {
     slug: "driftwood",
-    title: "driftwood",
+    title: "Driftwood",
     description:
       "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts. It also draws a Terraform plan on its pull request, before anything is applied.",
     tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
@@ -497,7 +497,7 @@ export const projects: Project[] = [
     kind: "product",
     featured: true,
     links: [
-      { label: "Open driftwood", url: "https://driftwood.brignano.io" },
+      { label: "Open Driftwood", url: "https://driftwood.brignano.io" },
       { label: "npm", url: "https://www.npmjs.com/package/@brignano/driftwood" },
       { label: "Source", url: "https://github.com/brignano/driftwood" },
     ],
@@ -556,7 +556,7 @@ export const projects: Project[] = [
   },
   {
     slug: "ai-tools",
-    title: "ai-tools",
+    title: "AI Tools",
     description:
       "One source of truth for my AI-agent setup — context, slash commands, output styles, permissions and MCP servers — symlinked into place by an installer so every machine I work on behaves the same way.",
     tech: ["Shell", "PowerShell", "Claude Code", "MCP"],
@@ -566,7 +566,7 @@ export const projects: Project[] = [
   },
   {
     slug: "homelab",
-    title: "homelab",
+    title: "Homelab",
     description:
       "A mini PC running Proxmox, Docker and Tailscale, with Prometheus and Grafana for metrics and Ollama plus Open WebUI for local inference. Documented well enough that I could rebuild the whole thing from the repo.",
     tech: ["Proxmox", "Docker", "Tailscale", "Prometheus", "Grafana", "Ollama"],
