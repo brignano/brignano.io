@@ -366,66 +366,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Selected work — the case studies. The highest-signal thing on
-            the page for a hiring manager: how the work was done, not just
-            that it was. Cards come from lib/work.ts. */}
-        <section
-          id="work"
-          className="py-16 md:py-24"
-          data-aos="fade-up"
-          data-aos-duration={800}
-        >
-          <div className="flex flex-wrap items-baseline justify-between gap-4 mb-3">
-            <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">
-              Selected work
-            </h2>
-            <Link
-              href="/work"
-              className="text-sm text-interactive-ink hover:underline"
-            >
-              About these write-ups →
-            </Link>
-          </div>
-          <p className="text-sm text-slate mb-8 max-w-2xl">
-            The problem, the constraints, what I built, and what changed.
-            Nothing stated that isn&apos;t documented and current.
-          </p>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-            {caseStudies.map((study) => (
-              <CaseStudyCard key={study.slug} study={study} />
-            ))}
-          </div>
-        </section>
-
-        {/* Projects — homepage shows only the featured few and hands off to
-            /projects for the full list. Keeping one array in constants.ts as the
-            source of truth means adding a project never touches this file. */}
-        {featuredProjects.length > 0 && (
-          <section
-            id="projects"
-            className="py-16 md:py-24"
-            data-aos="fade-up"
-            data-aos-duration={1000}
-          >
-            <div className="flex flex-wrap items-baseline justify-between gap-4 mb-8">
-              <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">
-                Projects
-              </h2>
-              <Link
-                href="/projects"
-                className="text-sm text-interactive-ink hover:underline"
-              >
-                All projects →
-              </Link>
-            </div>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-              {featuredProjects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          </section>
-        )}
-
         {/* Work Experience (Current Position Only) */}
         <section
           id="role"
@@ -529,6 +469,66 @@ export default function Home() {
             </p>
           </div>
         </section>
+
+        {/* Selected work — the case studies. The highest-signal thing on
+            the page for a hiring manager: how the work was done, not just
+            that it was. Cards come from lib/work.ts. */}
+        <section
+          id="work"
+          className="py-16 md:py-24"
+          data-aos="fade-up"
+          data-aos-duration={800}
+        >
+          <div className="flex flex-wrap items-baseline justify-between gap-4 mb-3">
+            <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">
+              Selected work
+            </h2>
+            <Link
+              href="/work"
+              className="text-sm text-interactive-ink hover:underline"
+            >
+              About these write-ups →
+            </Link>
+          </div>
+          <p className="text-sm text-slate mb-8 max-w-2xl">
+            The problem, the constraints, what I built, and what changed.
+            Nothing stated that isn&apos;t documented and current.
+          </p>
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+            {caseStudies.map((study) => (
+              <CaseStudyCard key={study.slug} study={study} />
+            ))}
+          </div>
+        </section>
+
+        {/* Projects — homepage shows only the featured few and hands off to
+            /projects for the full list. Keeping one array in constants.ts as the
+            source of truth means adding a project never touches this file. */}
+        {featuredProjects.length > 0 && (
+          <section
+            id="projects"
+            className="py-16 md:py-24"
+            data-aos="fade-up"
+            data-aos-duration={1000}
+          >
+            <div className="flex flex-wrap items-baseline justify-between gap-4 mb-8">
+              <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">
+                Projects
+              </h2>
+              <Link
+                href="/projects"
+                className="text-sm text-interactive-ink hover:underline"
+              >
+                All projects →
+              </Link>
+            </div>
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+              {featuredProjects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Open-source activity — calm real-data preview that funnels to /coding */}
         <section
