@@ -450,7 +450,8 @@ export const lifePhotos: LifePhoto[] = [
 // with a worse impression than if it had never been listed. A project with
 // private source but a published package is listed by its public link alone.
 // guidebook's source is private, so it links to its public site and its Chrome
-// Web Store listing only. Add a Source link if the repo goes public.
+// Web Store listing only. Add a Source link if the repo goes public. sites is
+// private for the same reason, so it links to its public front door only.
 export const projects: Project[] = [
   {
     slug: "hoststats",
@@ -525,6 +526,16 @@ export const projects: Project[] = [
         url: "https://chromewebstore.google.com/detail/kagfmiadbbingdaehochbgliomjdhfae",
       },
     ],
+  },
+  {
+    slug: "sites",
+    title: "sites",
+    description:
+      "Quick websites for local business owners. Each site is built from one config file and served at its own brignano.io subdomain, and owners sign in to edit their own text and photos. Ask for a free preview of your site.",
+    tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
+    status: "live",
+    kind: "product",
+    links: [{ label: "Get a free preview", url: "https://sites.brignano.io" }],
   },
   {
     slug: "poker-helper",
