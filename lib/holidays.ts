@@ -38,7 +38,40 @@ export const HOLIDAYS: readonly Holiday[] = [
     label: "Happy holidays",
     window: (year) => ({
       start: new Date(year, 11, 15),
-      end: new Date(year, 11, 31),
+      end: new Date(year, 11, 25),
+    }),
+  },
+  {
+    // Spans the year boundary: Dec 26 of `year` through Jan 2 of `year + 1`.
+    id: "new-year",
+    label: "Happy New Year",
+    window: (year) => ({
+      start: new Date(year, 11, 26),
+      end: new Date(year + 1, 0, 2),
+    }),
+  },
+  {
+    id: "valentines",
+    label: "Happy Valentine's Day",
+    window: (year) => ({
+      start: new Date(year, 1, 7),
+      end: new Date(year, 1, 14),
+    }),
+  },
+  {
+    id: "independence-day",
+    label: "Happy Fourth of July",
+    window: (year) => ({
+      start: new Date(year, 5, 28),
+      end: new Date(year, 6, 5),
+    }),
+  },
+  {
+    id: "halloween",
+    label: "Happy Halloween",
+    window: (year) => ({
+      start: new Date(year, 9, 17),
+      end: new Date(year, 10, 1),
     }),
   },
 ];
@@ -49,9 +82,13 @@ export function activeHoliday(
   holidays: readonly Holiday[] = HOLIDAYS,
 ): Holiday | null {
   const day = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  for (const h of holidays) {
-    const { start, end } = h.window(day.getFullYear());
-    if (day >= start && day <= end) return h;
+  // Also try last year's window, so one that spans New Year's still matches
+  // in early January.
+  for (const year of [day.getFullYear(), day.getFullYear() - 1]) {
+    for (const h of holidays) {
+      const { start, end } = h.window(year);
+      if (day >= start && day <= end) return h;
+    }
   }
   return null;
 }
