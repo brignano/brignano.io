@@ -454,6 +454,8 @@ export const lifePhotos: LifePhoto[] = [
 // guidebook's source is private, so it links to its public site and its Chrome
 // Web Store listing only. Add a Source link if the repo goes public. sites is
 // private for the same reason, so it links to its public front door only.
+// design.brignano.io is public through a hostname Access bypass; its PR
+// previews on workers.dev stay private, so never link those.
 export const projects: Project[] = [
   {
     slug: "sites",
@@ -545,11 +547,12 @@ export const projects: Project[] = [
     slug: "design",
     title: "Design",
     description:
-      "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. DECISIONS.md records why each value is what it is.",
+      "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. Every token and component has a live preview in light and dark, and DECISIONS.md records why each value is what it is.",
     tech: ["CSS", "Design tokens", "npm"],
     status: "beta",
     kind: "practice",
     links: [
+      { label: "See it live", url: "https://design.brignano.io" },
       { label: "npm", url: "https://www.npmjs.com/package/@brignano/design" },
       { label: "Source", url: "https://github.com/brignano/design" },
     ],
