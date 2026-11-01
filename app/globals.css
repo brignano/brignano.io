@@ -385,3 +385,54 @@ html[data-chat-open] #scroll-to-top {
     display: none !important;
   }
 }
+
+/* Seasonal accent ──────────────────────────────────────────────────────────
+   Switched on by components/holiday-theme.tsx (windows in lib/holidays.ts).
+   Deliberately small: a 3px strip across the top of the viewport. It is fixed
+   and pointer-events:none, so it never shifts layout or covers anything
+   clickable, and it is decoration only (no text, nothing for a screen reader).
+   Colours are design tokens. Motion is a slow sheen, off under
+   prefers-reduced-motion. */
+html[data-holiday]::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  pointer-events: none;
+  background-size: 200% 100%;
+}
+
+html[data-holiday="thanksgiving"]::before {
+  background-image: linear-gradient(
+    90deg,
+    var(--attention),
+    var(--danger),
+    var(--attention),
+    var(--danger),
+    var(--attention)
+  );
+}
+
+html[data-holiday="winter"]::before {
+  background-image: linear-gradient(
+    90deg,
+    var(--danger),
+    var(--success),
+    var(--i),
+    var(--success),
+    var(--danger)
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-holiday]::before {
+    animation: holiday-sheen 24s linear infinite;
+  }
+}
+
+@keyframes holiday-sheen {
+  to {
+    background-position: -200% 0;
+  }
+}

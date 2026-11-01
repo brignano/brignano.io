@@ -2,6 +2,7 @@ import { Geist, IBM_Plex_Mono, Silkscreen } from "next/font/google";
 import Script from "next/script";
 import type { Metadata } from "next";
 import ThemeSync from "@/components/theme-sync";
+import HolidayTheme from "@/components/holiday-theme";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -120,6 +121,7 @@ export default function RootLayout({
       >
         {/* Restores the theme class React drops while hydrating <html>. */}
         <ThemeSync />
+        <HolidayTheme />
         <Script
           id="structured-data"
           type="application/ld+json"
