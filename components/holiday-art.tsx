@@ -278,11 +278,11 @@ function Hearts() {
   );
 }
 
-function Bunting({ className }: { className: string }) {
+function Bunting({ className, colors = ["danger", "card", "i"] }: { className: string; colors?: string[] }) {
   const flags = [0, 1, 2, 3, 4, 5].map((i) => {
     const x = 18 + i * 40;
     const y = 6 + 22 * Math.sin((x / 260) * Math.PI);
-    const c = ["danger", "card", "i"][i % 3];
+    const c = colors[i % colors.length];
     return (
       <path
         key={i}
@@ -298,6 +298,315 @@ function Bunting({ className }: { className: string }) {
       <path d="M0 6Q130 50 260 6" stroke={t("n-500")} strokeWidth="1.5" />
       {flags}
     </svg>
+  );
+}
+
+
+const mix = (a: string, pct: number, b: string) =>
+  `color-mix(in srgb, var(--${a}) ${pct}%, var(--${b}))`;
+const PURPLE = mix("i", 60, "danger");
+const ORANGE = mix("danger", 45, "attention");
+const PINK = mix("danger", 45, "n-0");
+
+function Lantern({ drop, size = 40 }: { drop: number; size?: number }) {
+  return (
+    <svg viewBox={`0 0 40 ${drop + 66}`} width={size} fill="none">
+      <line x1="20" y1="0" x2="20" y2={drop} stroke={t("n-500")} />
+      <rect x="14" y={drop} width="12" height="5" rx="1.5" fill={t("attention")} />
+      <ellipse cx="20" cy={drop + 24} rx="17" ry="19" fill={t("danger")} />
+      <path d={`M20 ${drop + 5}c-9 8-9 30 0 38M20 ${drop + 5}c9 8 9 30 0 38`} stroke={t("attention")} strokeWidth="1.3" opacity=".7" />
+      <rect x="14" y={drop + 41} width="12" height="5" rx="1.5" fill={t("attention")} />
+      <path d={`M16 ${drop + 46}v14M20 ${drop + 46}v18M24 ${drop + 46}v14`} stroke={t("attention")} strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function Lanterns() {
+  return (
+    <>
+      <div className="hx hx-lanterns hx-lanterns-l">
+        <Lantern drop={8} />
+        <Lantern drop={34} size={34} />
+        <Lantern drop={12} size={30} />
+      </div>
+      <div className="hx hx-lanterns hx-lanterns-r">
+        <Lantern drop={12} size={30} />
+        <Lantern drop={34} size={34} />
+        <Lantern drop={8} />
+      </div>
+    </>
+  );
+}
+
+function Powder({ className, items }: { className: string; items: [number, number, number, string][] }) {
+  return (
+    <svg className={`hx hx-powder ${className}`} viewBox="0 0 140 140" fill="none">
+      {items.map(([x, y, r, c], i) => (
+        <circle key={i} cx={x} cy={y} r={r} fill={c} opacity=".55" />
+      ))}
+    </svg>
+  );
+}
+
+function Holi() {
+  const a: [number, number, number, string][] = [[10, 10, 52, t("danger")], [58, 18, 30, ORANGE], [24, 62, 28, PURPLE], [70, 60, 16, t("i")], [100, 12, 14, t("success")]];
+  const b: [number, number, number, string][] = [[130, 10, 54, t("i")], [84, 22, 28, PINK], [112, 66, 26, t("attention")], [66, 64, 14, t("success")], [40, 10, 12, t("danger")]];
+  const c: [number, number, number, string][] = [[10, 130, 50, t("success")], [56, 124, 28, t("attention")], [22, 78, 24, PINK], [78, 100, 14, t("i")]];
+  const d: [number, number, number, string][] = [[130, 130, 46, PURPLE], [86, 124, 26, t("danger")], [118, 80, 22, ORANGE]];
+  return (
+    <>
+      <Powder className="hx-powder-tl" items={a} />
+      <Powder className="hx-powder-tr" items={b} />
+      <Powder className="hx-powder-bl" items={c} />
+      <Powder className="hx-powder-br" items={d} />
+    </>
+  );
+}
+
+function Shamrock({ style, className }: { style?: CSSProperties; className?: string }) {
+  return (
+    <svg className={className} style={style} viewBox="0 0 48 52" fill="none">
+      {[0, 120, 240].map((r) => (
+        <path key={r} d={HEART} transform={`rotate(${r} 24 24) translate(12 3)`} fill={t("success")} />
+      ))}
+      <path d="M24 24q2 14 8 24" stroke={t("success-ink")} strokeWidth="3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function Leprechaun() {
+  // A top hat peeking over the bottom edge.
+  return (
+    <div className="hx hx-hat">
+      <svg viewBox="0 0 100 80" fill="none">
+        <rect x="26" y="6" width="48" height="52" rx="4" fill={t("success-ink")} />
+        <rect x="26" y="40" width="48" height="10" fill={t("n-900")} />
+        <rect x="42" y="38" width="16" height="14" rx="2" fill={t("attention")} stroke={t("n-900")} strokeWidth="2" />
+        <ellipse cx="50" cy="60" rx="46" ry="10" fill={t("success-ink")} />
+      </svg>
+    </div>
+  );
+}
+
+function Easter() {
+  const egg = (x: number, c: string, i: number) => (
+    <g key={i} transform={`translate(${x} 0)`}>
+      <path d="M20 4C32 4 38 26 38 40c0 12-8 20-18 20S2 52 2 40C2 26 8 4 20 4z" fill={mix(c, 45, "n-0")} stroke={t("n-400")} strokeWidth="1.5" />
+      <path d="M3 34l7-6 6 6 7-6 6 6 7-6 5 5" stroke={t(c)} strokeWidth="3" strokeLinejoin="round" />
+      <circle cx="20" cy="48" r="3" fill={t(c)} />
+    </g>
+  );
+  return (
+    <>
+      <div className="hx hx-eggs">
+        <svg viewBox="0 0 150 64" fill="none">
+          {[egg(0, "attention", 0), egg(52, "i", 1), egg(104, "danger", 2)]}
+        </svg>
+      </div>
+      <div className="hx hx-bunny">
+        <svg viewBox="0 0 90 120" fill="none">
+          <ellipse cx="28" cy="34" rx="10" ry="32" fill={t("card")} stroke={t("n-400")} strokeWidth="2" />
+          <ellipse cx="62" cy="34" rx="10" ry="32" fill={t("card")} stroke={t("n-400")} strokeWidth="2" />
+          <ellipse cx="28" cy="36" rx="4.5" ry="24" fill={PINK} />
+          <ellipse cx="62" cy="36" rx="4.5" ry="24" fill={PINK} />
+          <circle cx="45" cy="88" r="32" fill={t("card")} stroke={t("n-400")} strokeWidth="2" />
+          <circle cx="34" cy="82" r="3.2" fill={t("ink")} />
+          <circle cx="56" cy="82" r="3.2" fill={t("ink")} />
+          <ellipse cx="45" cy="92" rx="4" ry="3" fill={mix("danger", 60, "n-0")} />
+        </svg>
+      </div>
+    </>
+  );
+}
+
+function Rainbow({ className }: { className: string }) {
+  const bands = [t("danger"), ORANGE, t("attention"), t("success"), t("i"), PURPLE];
+  return (
+    <svg className={`hx hx-rainbow ${className}`} viewBox="0 0 120 120" fill="none">
+      {bands.map((c, i) => {
+        const r = 100 - i * 11;
+        return <path key={c + i} d={`M${120 - r} 0A${r} ${r} 0 0 0 120 ${r}`} stroke={c} strokeWidth="11" opacity=".8" />;
+      })}
+    </svg>
+  );
+}
+
+function Star({ className }: { className: string }) {
+  return (
+    <svg className={`hx hx-bigstar ${className}`} viewBox="0 0 60 60" fill="none">
+      <path d="M30 4l7.6 17.6 19 1.8-14.4 12.6 4.3 18.6L30 44.4 13.5 54.6l4.3-18.6L3.4 23.4l19-1.8z" fill={t("card")} stroke={t("danger")} strokeWidth="3" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function Flame({ x, y, color = "attention" }: { x: number; y: number; color?: string }) {
+  return (
+    <path
+      className="hx-flame"
+      d={`M${x} ${y}c-4-5-3-9 0-13 3 4 4 8 0 13z`}
+      fill={t(color)}
+    />
+  );
+}
+
+function Diwali() {
+  const diya = (x: number, i: number) => (
+    <g key={i} transform={`translate(${x} 0)`}>
+      <path d="M2 30h40c0 12-9 18-20 18S2 42 2 30z" fill={t("danger")} stroke={t("attention")} strokeWidth="2" />
+      <path d="M2 30c10-6 30-6 40 0" stroke={t("attention")} strokeWidth="2" />
+      <Flame x={22} y={28} />
+    </g>
+  );
+  const petals = Array.from({ length: 12 }, (_, i) => (
+    <ellipse key={i} cx="120" cy="38" rx="7" ry="16" transform={`rotate(${i * 30} 120 0)`} fill={t(i % 2 ? "attention" : "danger")} opacity=".8" />
+  ));
+  const rangoli = (
+    <svg viewBox="0 0 120 120" fill="none">
+      {petals}
+      <circle cx="120" cy="0" r="62" stroke={t("i")} strokeWidth="3" strokeDasharray="2 7" strokeLinecap="round" />
+      <circle cx="120" cy="0" r="92" stroke={t("attention")} strokeWidth="3" strokeDasharray="1 8" strokeLinecap="round" />
+      <circle cx="120" cy="0" r="14" fill={t("i")} />
+    </svg>
+  );
+  return (
+    <>
+      <div className="hx hx-rangoli hx-rangoli-r">{rangoli}</div>
+      <div className="hx hx-rangoli hx-rangoli-l">{rangoli}</div>
+      <div className="hx hx-diyas">
+        <svg viewBox="0 0 270 56" fill="none">
+          {[0, 56, 112, 168, 224].map(diya)}
+        </svg>
+      </div>
+    </>
+  );
+}
+
+function Menorah() {
+  const xs = [10, 22.5, 35, 47.5, 72.5, 85, 97.5, 110];
+  return (
+    <div className="hx hx-menorah">
+      <svg viewBox="0 0 120 120" fill="none">
+        <g stroke={t("attention")} strokeWidth="3.5" strokeLinecap="round">
+          {[0, 1, 2, 3].map((i) => {
+            const a = 10 + i * 12.5;
+            const b = 110 - i * 12.5;
+            const y = 96 - i * 6;
+            return <path key={i} d={`M${a} 60V78Q${a} ${y} 60 ${y}Q${b} ${y} ${b} 78V60`} />;
+          })}
+          <path d="M60 48V108" />
+          <path d="M36 110h48" />
+        </g>
+        {[...xs, 60].map((x, i) => {
+          const tall = x === 60;
+          const top = tall ? 36 : 52;
+          return (
+            <g key={i}>
+              <rect x={x - 3} y={top} width="6" height={tall ? 18 : 14} fill={t("i")} />
+              <Flame x={x} y={top - 1} />
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function Davids({ className }: { className: string }) {
+  return (
+    <svg className={`hx hx-david ${className}`} viewBox="0 0 60 90" fill="none">
+      <line x1="30" y1="0" x2="30" y2="30" stroke={t("n-500")} />
+      <g stroke={t("i")} strokeWidth="3" strokeLinejoin="round">
+        <path d="M30 34l17 30H13z" />
+        <path d="M30 70L13 40h34z" />
+      </g>
+    </svg>
+  );
+}
+
+function Kinara() {
+  const candles: [number, string][] = [
+    [8, "danger"], [24, "danger"], [40, "danger"], [60, "n-900"],
+    [80, "success"], [96, "success"], [112, "success"],
+  ];
+  return (
+    <div className="hx hx-kinara">
+      <svg viewBox="0 0 120 100" fill="none">
+        <path d="M8 40v22q0 10 8 10h88q8 0 8-10V40" stroke={t("attention-ink")} strokeWidth="3" />
+        <path d="M60 40v42M40 90h40" stroke={t("attention-ink")} strokeWidth="5" strokeLinecap="round" />
+        {candles.map(([x, c], i) => {
+          const tall = x === 60;
+          const top = tall ? 14 : 24 + Math.abs(i - 3) * 2;
+          return (
+            <g key={i}>
+              <rect x={x - 4} y={top} width="8" height={40 - top + 2} fill={t(c)} />
+              <Flame x={x} y={top - 1} color="attention" />
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
+function Crescent({ className }: { className: string }) {
+  return (
+    <svg className={`hx hx-crescent ${className}`} viewBox="0 0 80 130" fill="none">
+      <line x1="40" y1="0" x2="40" y2="34" stroke={t("n-500")} />
+      <path d="M52 34a30 30 0 1 0 0 58 24 24 0 1 1 0-58z" fill={t("attention")} />
+      <path d="M58 98l3 8 8 .5-6.200 5 2.200 8L58 115l-7 4.500 2.200-8-6.200-5 8-.5z" fill={t("attention")} />
+    </svg>
+  );
+}
+
+function Fanous({ drop = 10 }: { drop?: number }) {
+  return (
+    <svg viewBox="0 0 50 110" width="38" fill="none">
+      <line x1="25" y1="0" x2="25" y2={drop} stroke={t("n-500")} />
+      <path d={`M25 ${drop}l10 12H15z`} fill={t("attention")} />
+      <path d={`M15 ${drop + 12}h20l6 40H9z`} fill={mix("success", 70, "n-0")} stroke={t("success-ink")} strokeWidth="2" />
+      <path d={`M25 ${drop + 12}v40M17 ${drop + 12}l-3 40M33 ${drop + 12}l3 40`} stroke={t("success-ink")} strokeWidth="1.5" />
+      <path d={`M9 ${drop + 52}h32l-4 8H13z`} fill={t("attention")} />
+      <circle cx="25" cy={drop + 34} r="5" fill={t("attention")} />
+    </svg>
+  );
+}
+
+function Eid() {
+  return (
+    <>
+      <div className="hx hx-lanterns hx-lanterns-l">
+        <Crescent className="hx-crescent-inline" />
+      </div>
+      <div className="hx hx-lanterns hx-lanterns-r">
+        <Fanous drop={14} />
+        <Fanous drop={40} />
+        <Fanous drop={10} />
+      </div>
+    </>
+  );
+}
+
+function Shamrocks() {
+  return (
+    <>
+      <div className="hx hx-leaves-corner hx-leaves-l">
+        <Shamrock style={{ transform: "rotate(-25deg)" }} />
+        <Shamrock style={{ transform: "rotate(15deg)" }} />
+      </div>
+      <div className="hx hx-leaves-corner hx-leaves-r">
+        <Shamrock style={{ transform: "rotate(25deg)" }} />
+        <Shamrock style={{ transform: "rotate(-15deg)" }} />
+      </div>
+      <div className="hx hx-falling">
+        {[0, 1, 2, 3, 4].map((i) => (
+          <Shamrock
+            key={i}
+            style={{ left: `${12 + i * 19}%`, "--d": `${22 + i * 4}s`, "--l": `${-i * 6}s` } as CSSProperties}
+          />
+        ))}
+      </div>
+      <Leprechaun />
+    </>
   );
 }
 
@@ -369,6 +678,51 @@ export default function HolidayArt({ id }: { id: string }): ReactNode {
           <Bunting className="hx-bunting-r" />
           <Burst className="hx-burst-l hx-burst-small" a="danger" b="i" />
           <Burst className="hx-burst-r hx-burst-small" a="i" b="danger" />
+        </>
+      );
+    case "lunar-new-year":
+      return <Lanterns />;
+    case "holi":
+      return <Holi />;
+    case "st-patricks":
+      return <Shamrocks />;
+    case "easter":
+      return <Easter />;
+    case "pride":
+      return (
+        <>
+          <Rainbow className="hx-rainbow-r" />
+          <Rainbow className="hx-rainbow-l" />
+        </>
+      );
+    case "juneteenth":
+      return (
+        <>
+          <Bunting className="hx-bunting-l" />
+          <Bunting className="hx-bunting-r" />
+          <Star className="hx-bigstar-l" />
+          <Star className="hx-bigstar-r" />
+        </>
+      );
+    case "eid-al-fitr":
+    case "eid-al-adha":
+      return <Eid />;
+    case "diwali":
+      return <Diwali />;
+    case "hanukkah":
+      return (
+        <>
+          <Davids className="hx-david-l" />
+          <Davids className="hx-david-r" />
+          <Menorah />
+        </>
+      );
+    case "kwanzaa":
+      return (
+        <>
+          <Bunting className="hx-bunting-l" colors={["danger", "n-900", "success"]} />
+          <Bunting className="hx-bunting-r" colors={["success", "n-900", "danger"]} />
+          <Kinara />
         </>
       );
     default:
