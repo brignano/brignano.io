@@ -20,7 +20,17 @@ export default function HolidayTheme() {
     if (!shown) return;
     const root = document.documentElement;
     root.dataset.holiday = shown.id;
+    // Keep the art below the sticky header so it never covers the logo or the
+    // theme toggle: the decorations hang from the header's bottom edge.
+    const header = document.querySelector("header");
+    const measure = () =>
+      root.style.setProperty("--hx-top", `${header?.offsetHeight ?? 0}px`);
+    measure();
+    const ro = header ? new ResizeObserver(measure) : null;
+    if (header) ro?.observe(header);
     return () => {
+      ro?.disconnect();
+      root.style.removeProperty("--hx-top");
       delete root.dataset.holiday;
     };
   }, [shown]);
