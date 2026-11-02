@@ -9,6 +9,7 @@
 @import "@brignano/design/tokens.css";
 @import "@brignano/design/tokens.chart.css";
 @import "@brignano/design/tailwind.css";
+@import "./holiday.css";
 
 @plugin "@tailwindcss/typography";
 
