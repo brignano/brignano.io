@@ -386,124 +386,166 @@ html[data-chat-open] #scroll-to-top {
   }
 }
 
-/* Seasonal accent ──────────────────────────────────────────────────────────
-   Switched on by components/holiday-theme.tsx (windows in lib/holidays.ts).
-   Deliberately small: a 6px strip across the top of the viewport. It is fixed
-   and pointer-events:none, so it never shifts layout or covers anything
-   clickable, and it is decoration only (no text, nothing for a screen reader).
-   Colours are design tokens. Motion is a slow sheen, off under
-   prefers-reduced-motion. */
-html[data-holiday]::before {
-  content: "";
+/* Holiday overlays ─────────────────────────────────────────────────────────
+   Drawn by components/holiday-art.tsx while a window in lib/holidays.ts is
+   open. Fixed, decorative and pointer-events:none, so nothing shifts or gets
+   covered; colours are design tokens. Motion is off under
+   prefers-reduced-motion (falling things are hidden, the rest holds still). */
+.holiday-art {
   position: fixed;
-  inset: 0 0 auto 0;
-  height: 6px;
-  z-index: 60;
+  inset: 0;
+  z-index: 45;
   pointer-events: none;
-  background-size: 200% 100%;
+  overflow: hidden;
+}
+.holiday-art .hx {
+  position: absolute;
+  pointer-events: none;
+}
+.holiday-art svg {
+  display: block;
+}
+.holiday-art .hx-snow,
+.holiday-art .hx-falling,
+.holiday-art .hx-hearts {
+  inset: 0;
 }
 
-html[data-holiday="thanksgiving"]::before {
-  background-image: linear-gradient(
-    90deg,
-    var(--attention),
-    var(--danger),
-    var(--attention),
-    var(--danger),
-    var(--attention)
-  );
+/* Halloween */
+.hx-web {
+  top: 0;
+  width: clamp(72px, 10vw, 140px);
+  height: auto;
+}
+.hx-web-r { right: 0; }
+.hx-web-l { left: 0; transform: scaleX(-1); }
+.hx-spider {
+  top: 0;
+  right: clamp(90px, 14vw, 190px);
+  width: 28px;
+  transform-origin: 50% 0;
+}
+.hx-ghost {
+  left: 0;
+  bottom: 22%;
+  width: clamp(44px, 5vw, 70px);
+  transform: translateX(-38%) rotate(-8deg);
+  opacity: 0.9;
+}
+.hx-skeleton {
+  left: clamp(70px, 12vw, 200px);
+  bottom: 0;
+  width: clamp(80px, 9vw, 130px);
+  transform: translateY(34%);
+}
+.hx-broom {
+  left: clamp(8px, 1.5vw, 24px);
+  bottom: 0;
+  width: clamp(26px, 3vw, 44px);
+  transform: rotate(14deg);
+  transform-origin: 50% 100%;
+}
+@media (max-width: 640px) {
+  .hx-skeleton, .hx-broom { display: none; }
 }
 
-html[data-holiday="winter"]::before {
-  background-image: linear-gradient(
-    90deg,
-    var(--danger),
-    var(--success),
-    var(--i),
-    var(--success),
-    var(--danger)
-  );
+/* Thanksgiving */
+.hx-leaves-corner {
+  top: -6px;
+  display: flex;
+  width: clamp(80px, 9vw, 130px);
+}
+.hx-leaves-corner svg { width: 40%; margin-right: -10%; }
+.hx-leaves-l { left: 4px; }
+.hx-leaves-r { right: 4px; flex-direction: row-reverse; }
+.hx-falling svg {
+  position: absolute;
+  top: -50px;
+  width: 22px;
+  opacity: 0.85;
+}
+.hx-turkey {
+  right: clamp(110px, 16vw, 240px);
+  bottom: 0;
+  width: clamp(96px, 11vw, 150px);
+  transform: translateY(26%);
+}
+@media (max-width: 640px) {
+  .hx-turkey { right: auto; left: 12px; }
 }
 
-html[data-holiday="new-year"]::before {
-  background-image: linear-gradient(
-    90deg,
-    var(--attention),
-    var(--i),
-    var(--attention),
-    var(--i),
-    var(--attention)
-  );
+/* Winter holidays */
+.hx-lights {
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+}
+.hx-lights svg { flex: 0 0 96px; width: 96px; height: 30px; }
+.hx-snow i {
+  position: absolute;
+  top: -12px;
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: var(--n-0);
+  box-shadow: 0 0 0 1px var(--n-300);
+  opacity: 0.85;
 }
 
-html[data-holiday="valentines"]::before {
-  background-image: linear-gradient(
-    90deg,
-    var(--danger),
-    color-mix(in srgb, var(--danger) 45%, var(--n-0)),
-    var(--danger),
-    color-mix(in srgb, var(--danger) 45%, var(--n-0)),
-    var(--danger)
-  );
+/* New Year's and Fourth of July */
+.hx-burst { top: 56px; width: clamp(80px, 9vw, 130px); height: auto; opacity: 0.9; }
+.hx-burst-l { left: clamp(8px, 2vw, 40px); }
+.hx-burst-r { right: clamp(8px, 2vw, 40px); }
+.hx-burst-small { top: 72px; width: clamp(60px, 6vw, 90px); }
+.hx-confetti { width: 7px; height: 12px; border-radius: 1px; opacity: 0.85; }
+.hx-bunting { top: 0; width: clamp(110px, 10vw, 140px); height: auto; }
+.hx-bunting-l { left: 0; }
+.hx-bunting-r { right: 0; transform: scaleX(-1); }
+
+/* Valentine's Day */
+.hx-hearts svg {
+  position: absolute;
+  bottom: -30px;
+  width: var(--s);
+  height: var(--s);
+  opacity: 0.6;
+}
+.hx-cupid {
+  right: clamp(8px, 2vw, 32px);
+  top: 70px;
+  width: clamp(60px, 6vw, 90px);
+  opacity: 0.85;
 }
 
-html[data-holiday="independence-day"]::before {
-  background-image: linear-gradient(
-    90deg,
-    var(--danger),
-    var(--n-0),
-    var(--i),
-    var(--n-0),
-    var(--danger)
-  );
-}
-
-html[data-holiday="halloween"]::before {
-  background-image: linear-gradient(
-    90deg,
-    var(--attention),
-    var(--n-900),
-    var(--attention),
-    var(--n-900),
-    var(--attention)
-  );
-}
-
+/* Motion: only for visitors who haven't asked for less. */
 @media (prefers-reduced-motion: no-preference) {
-  html[data-holiday]::before {
-    animation: holiday-sheen 24s linear infinite;
-  }
+  .hx-spider { animation: hx-sway 5s ease-in-out infinite alternate; }
+  .hx-ghost { animation: hx-bob 6s ease-in-out infinite alternate; }
+  .hx-lights svg:nth-child(4n + 1) path:last-child { animation: hx-twinkle 3.2s ease-in-out infinite; }
+  .hx-lights svg:nth-child(4n + 3) path:last-child { animation: hx-twinkle 3.2s ease-in-out -1.6s infinite; }
+  .hx-snow i { animation: hx-fall var(--d) linear var(--l) infinite; }
+  .hx-falling svg { animation: hx-leaf var(--d) linear var(--l) infinite; }
+  .hx-hearts svg { animation: hx-rise var(--d) linear var(--l) infinite; }
+  .hx-burst { animation: hx-pulse 4s ease-in-out infinite alternate; transform-origin: 50% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hx-snow, .hx-falling, .hx-hearts { display: none; }
 }
 
-@keyframes holiday-sheen {
-  to {
-    background-position: -200% 0;
-  }
+@keyframes hx-sway { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+@keyframes hx-bob { from { transform: translateX(-38%) rotate(-8deg); } to { transform: translateX(-30%) rotate(-4deg); } }
+@keyframes hx-twinkle { 50% { opacity: 0.45; } }
+@keyframes hx-fall { to { transform: translateY(105vh) translateX(30px); } }
+@keyframes hx-leaf {
+  0% { transform: translate(0, 0) rotate(0); }
+  50% { transform: translate(40px, 55vh) rotate(180deg); }
+  100% { transform: translate(-10px, 110vh) rotate(360deg); }
 }
-
-/* Greeting pill: bottom-left, clear of the chat launcher and scroll-to-top
-   (both bottom-right). Fixed and pointer-events:none like the strip. The accent
-   follows the active theme's first colour. */
-html[data-holiday="thanksgiving"] { --holiday-accent: var(--attention); }
-html[data-holiday="winter"] { --holiday-accent: var(--success); }
-html[data-holiday="new-year"] { --holiday-accent: var(--i); }
-html[data-holiday="valentines"] { --holiday-accent: var(--danger); }
-html[data-holiday="independence-day"] { --holiday-accent: var(--i); }
-html[data-holiday="halloween"] { --holiday-accent: var(--attention); }
-
-.holiday-pill {
-  position: fixed;
-  left: 16px;
-  bottom: 24px;
-  z-index: 40;
-  pointer-events: none;
-  padding: 6px 14px;
-  border: 2px solid var(--holiday-accent, var(--line-strong));
-  border-radius: 999px;
-  background: var(--card);
-  color: var(--ink);
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1.4;
-  box-shadow: var(--shadow-2);
+@keyframes hx-rise {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  100% { transform: translateY(-105vh); opacity: 0; }
 }
+@keyframes hx-pulse { to { transform: scale(1.08); opacity: 0.7; } }

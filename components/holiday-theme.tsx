@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { HOLIDAYS, activeHoliday, type Holiday } from "@/lib/holidays";
+import HolidayArt from "@/components/holiday-art";
 
 /**
- * Switches on a seasonal accent: sets `data-holiday` on <html> (the top strip is
- * pure CSS in app/globals.css) and shows a small greeting pill, bottom-left.
- * Both are fixed and non-interactive, so they never shift layout or cover
- * anything clickable, and both stay still under prefers-reduced-motion. Runs
+ * Switches on a seasonal overlay: sets `data-holiday` on <html> and draws that
+ * holiday's decorations (components/holiday-art.tsx, styled in app/globals.css).
+ * Everything is fixed, decorative and non-interactive, so it never shifts
+ * layout or covers anything clickable, and it holds still under
+ * prefers-reduced-motion. Runs
  * after hydration so the statically generated pages stay cacheable and the
  * first paint is unchanged.
  *
@@ -37,8 +39,8 @@ export default function HolidayTheme() {
 
   if (!holiday) return null;
   return (
-    <div className="holiday-pill" role="status">
-      <span aria-hidden="true">{holiday.emoji}</span> {holiday.label}
+    <div className="holiday-art" aria-hidden="true">
+      <HolidayArt id={holiday.id} />
     </div>
   );
 }

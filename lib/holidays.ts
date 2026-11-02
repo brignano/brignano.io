@@ -9,8 +9,6 @@
 export type Holiday = {
   id: string;
   label: string;
-  /** Decorative; shown beside the label, hidden from assistive tech. */
-  emoji: string;
   /** First and last day (inclusive) the theme shows, for the given year. */
   window: (year: number) => { start: Date; end: Date };
 };
@@ -26,7 +24,6 @@ export const HOLIDAYS: readonly Holiday[] = [
     // US Thanksgiving is the 4th Thursday of November: show the week before it
     // through the weekend after.
     id: "thanksgiving",
-    emoji: "🦃",
     label: "Happy Thanksgiving",
     window: (year) => {
       const day = nthWeekday(year, 10, 4, 4);
@@ -38,7 +35,6 @@ export const HOLIDAYS: readonly Holiday[] = [
   },
   {
     id: "winter",
-    emoji: "❄️",
     label: "Happy holidays",
     window: (year) => ({
       start: new Date(year, 11, 15),
@@ -48,7 +44,6 @@ export const HOLIDAYS: readonly Holiday[] = [
   {
     // Spans the year boundary: Dec 26 of `year` through Jan 2 of `year + 1`.
     id: "new-year",
-    emoji: "🎆",
     label: "Happy New Year",
     window: (year) => ({
       start: new Date(year, 11, 26),
@@ -57,7 +52,6 @@ export const HOLIDAYS: readonly Holiday[] = [
   },
   {
     id: "valentines",
-    emoji: "💝",
     label: "Happy Valentine's Day",
     window: (year) => ({
       start: new Date(year, 1, 7),
@@ -66,7 +60,6 @@ export const HOLIDAYS: readonly Holiday[] = [
   },
   {
     id: "independence-day",
-    emoji: "🎇",
     label: "Happy Fourth of July",
     window: (year) => ({
       start: new Date(year, 5, 28),
@@ -75,7 +68,6 @@ export const HOLIDAYS: readonly Holiday[] = [
   },
   {
     id: "halloween",
-    emoji: "🎃",
     label: "Happy Halloween",
     window: (year) => ({
       start: new Date(year, 9, 17),
