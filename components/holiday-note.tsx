@@ -1,5 +1,6 @@
 "use client";
 
+import { OPEN_EVENT } from "@/components/holiday-greeting";
 import { useHoliday } from "@/lib/use-holiday";
 
 /**
@@ -13,6 +14,14 @@ export default function HolidayNote() {
   return (
     <small className="text-ink-soft">
       {off ? "Holiday decorations are off" : `Dressed up for ${holiday.label}`}
+      {" · "}
+      <button
+        type="button"
+        onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}
+        className="cursor-pointer underline underline-offset-2 hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
+      >
+        What&apos;s this?
+      </button>
       {" · "}
       <button
         type="button"
