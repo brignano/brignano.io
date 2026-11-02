@@ -176,6 +176,12 @@ export const HOLIDAYS: readonly Holiday[] = [
     },
   },
   {
+    // 3/14, 3.14.
+    id: "pi-day",
+    label: "Pi Day",
+    windows: (y) => [{ start: day(y, 2, 12), end: day(y, 2, 14) }],
+  },
+  {
     id: "st-patricks",
     label: "St. Patrick's Day",
     windows: (y) => [{ start: day(y, 2, 10), end: day(y, 2, 17) }],
@@ -198,6 +204,11 @@ export const HOLIDAYS: readonly Holiday[] = [
     id: "easter",
     label: "Easter",
     windows: (y) => [around(easter(y), 7, 1)],
+  },
+  {
+    id: "earth-day",
+    label: "Earth Day",
+    windows: (y) => [{ start: day(y, 3, 15), end: day(y, 3, 22) }],
   },
   {
     id: "eid-al-adha",
@@ -230,7 +241,13 @@ export const HOLIDAYS: readonly Holiday[] = [
   {
     id: "halloween",
     label: "Halloween",
-    windows: (y) => [{ start: day(y, 9, 17), end: day(y, 10, 1) }],
+    windows: (y) => [{ start: day(y, 9, 17), end: day(y, 9, 31) }],
+  },
+  {
+    // Oct 31 – Nov 2. Marigolds, candles and cut-paper banners.
+    id: "dia-de-muertos",
+    label: "Día de Muertos",
+    windows: (y) => [{ start: day(y, 9, 31), end: day(y, 10, 2) }],
   },
   {
     // Five days of the festival of lights.
@@ -275,4 +292,21 @@ export function activeHoliday(
       86_400_000,
   );
   return open[doy % open.length];
+}
+
+/**
+ * Which day (0-based) of its current window `holiday` is on `date`. Lets a
+ * theme change as the holiday goes on: Hanukkah lights one more candle a night,
+ * Kwanzaa one more a day. 0 when the holiday isn't open.
+ */
+export function dayInWindow(holiday: Holiday, date: Date): number {
+  const today = day(date.getFullYear(), date.getMonth(), date.getDate());
+  for (const y of [today.getFullYear(), today.getFullYear() - 1]) {
+    for (const { start, end } of holiday.windows(y)) {
+      if (today >= start && today <= end) {
+        return Math.round((today.getTime() - start.getTime()) / 86_400_000);
+      }
+    }
+  }
+  return 0;
 }
