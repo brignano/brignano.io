@@ -81,7 +81,7 @@ export default function HolidayButton() {
               rel="noopener noreferrer"
               className="underline underline-offset-2 hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
             >
-              Learn more
+              More about {holiday.label}
             </a>
           </p>
         )}
