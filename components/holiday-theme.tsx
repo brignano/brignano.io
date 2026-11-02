@@ -21,15 +21,29 @@ export default function HolidayTheme() {
     const root = document.documentElement;
     root.dataset.holiday = shown.id;
     // Keep the art below the sticky header so it never covers the logo or the
-    // theme toggle: the decorations hang from the header's bottom edge.
+    // theme toggle: the decorations hang from the header's bottom edge, and
+    // slide up with it when it tucks away on scroll (and back when it returns).
     const header = document.querySelector("header");
-    const measure = () =>
-      root.style.setProperty("--hx-top", `${header?.offsetHeight ?? 0}px`);
+    const measure = () => {
+      // Under reduced motion the header never moves, so neither does the art.
+      const tucked =
+        header?.classList.contains("-translate-y-full") &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      root.style.setProperty(
+        "--hx-top",
+        tucked ? "0px" : `${header?.offsetHeight ?? 0}px`,
+      );
+    };
     measure();
     const ro = header ? new ResizeObserver(measure) : null;
-    if (header) ro?.observe(header);
+    const mo = header ? new MutationObserver(measure) : null;
+    if (header) {
+      ro?.observe(header);
+      mo?.observe(header, { attributes: true, attributeFilter: ["class"] });
+    }
     return () => {
       ro?.disconnect();
+      mo?.disconnect();
       root.style.removeProperty("--hx-top");
       delete root.dataset.holiday;
     };

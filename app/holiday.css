@@ -7,10 +7,16 @@
 
 .holiday-art {
   position: fixed;
-  inset: var(--hx-top, 0px) 0 0 0; /* starts below the header, see holiday-theme.tsx */
+  inset: 0;
+  top: var(--hx-top, 0px); /* starts below the header, see holiday-theme.tsx */
   z-index: 25; /* under the sticky header (z-30) so the logo and theme toggle are never covered */
   pointer-events: none;
   overflow: hidden;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .holiday-art {
+    transition: top 300ms ease-out; /* matches the header's slide */
+  }
 }
 .holiday-art .hx {
   position: absolute;
