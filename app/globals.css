@@ -388,7 +388,7 @@ html[data-chat-open] #scroll-to-top {
 
 /* Seasonal accent ──────────────────────────────────────────────────────────
    Switched on by components/holiday-theme.tsx (windows in lib/holidays.ts).
-   Deliberately small: a 4px strip across the top of the viewport. It is fixed
+   Deliberately small: a 6px strip across the top of the viewport. It is fixed
    and pointer-events:none, so it never shifts layout or covers anything
    clickable, and it is decoration only (no text, nothing for a screen reader).
    Colours are design tokens. Motion is a slow sheen, off under
@@ -397,7 +397,7 @@ html[data-holiday]::before {
   content: "";
   position: fixed;
   inset: 0 0 auto 0;
-  height: 4px;
+  height: 6px;
   z-index: 60;
   pointer-events: none;
   background-size: 200% 100%;
@@ -479,4 +479,31 @@ html[data-holiday="halloween"]::before {
   to {
     background-position: -200% 0;
   }
+}
+
+/* Greeting pill: bottom-left, clear of the chat launcher and scroll-to-top
+   (both bottom-right). Fixed and pointer-events:none like the strip. The accent
+   follows the active theme's first colour. */
+html[data-holiday="thanksgiving"] { --holiday-accent: var(--attention); }
+html[data-holiday="winter"] { --holiday-accent: var(--success); }
+html[data-holiday="new-year"] { --holiday-accent: var(--i); }
+html[data-holiday="valentines"] { --holiday-accent: var(--danger); }
+html[data-holiday="independence-day"] { --holiday-accent: var(--i); }
+html[data-holiday="halloween"] { --holiday-accent: var(--attention); }
+
+.holiday-pill {
+  position: fixed;
+  left: 16px;
+  bottom: 24px;
+  z-index: 40;
+  pointer-events: none;
+  padding: 6px 14px;
+  border: 2px solid var(--holiday-accent, var(--line-strong));
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  box-shadow: var(--shadow-2);
 }
