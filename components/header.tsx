@@ -10,7 +10,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { applyTheme } from "@/lib/theme";
+import { setTheme } from "@/lib/theme";
 
 // Nav is inline from `sm` up. Below that, five words plus the monogram and the
 // theme toggle measured 371px even at gap-x-2.5: the page scrolled sideways on
@@ -64,18 +64,13 @@ export default function Header() {
   const toggleTheme = () => {
     const newDark = !isDarkMode;
     // Flipping the class notifies the store above, which re-renders the icon.
-    // `applyTheme` moves the three things that must never drift together:
+    // `setTheme` moves the three things that must never drift together:
     // `.dark` (Tailwind's variant), `data-theme` (the design tokens), and
     // <meta name="theme-color"> (the browser's own chrome and overscroll
     // gutter). If these drift, the page renders one theme's tokens under
     // another theme's utilities — or, for the meta tag, inside another theme's
     // browser chrome.
-    applyTheme(newDark);
-    try {
-      localStorage.setItem("theme", newDark ? "dark" : "light");
-    } catch {
-      // ignore (e.g. storage disabled)
-    }
+    setTheme(newDark);
   };
 
   useEffect(() => {

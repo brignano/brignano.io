@@ -15,6 +15,7 @@ import ScrollToTop from "@/components/scroll-to-top";
 import ScrollReveal from "@/components/scroll-reveal";
 import ToastProvider from "@/components/toast-provider";
 import ChatWidget from "@/components/chat-widget";
+import KeyboardShortcuts from "@/components/keyboard-shortcuts";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -185,6 +186,7 @@ export default function RootLayout({
         </ToastProvider>
         <ScrollToTop />
         <ChatWidget />
+        <KeyboardShortcuts />
         <SpeedInsights />
       </body>
     </html>

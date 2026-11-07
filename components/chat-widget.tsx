@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { event } from "@/lib/gtag";
+import { OPEN_CHAT_EVENT } from "@/lib/shortcuts";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -207,6 +208,18 @@ export default function ChatWidget() {
   }, [open]);
 
   useEffect(() => () => abortRef.current?.abort(), []);
+
+  // The `/` keyboard shortcut (components/keyboard-shortcuts.tsx) opens the
+  // chat through this event rather than reaching into this component's state.
+  useEffect(() => {
+    const onOpen = () => {
+      track("chat_opened");
+      stickToBottomRef.current = true;
+      setOpen(true);
+    };
+    window.addEventListener(OPEN_CHAT_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_CHAT_EVENT, onOpen);
+  }, []);
 
   const openChat = () => {
     track("chat_opened");

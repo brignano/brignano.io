@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { socialLinks } from "@/lib/constants";
 import HolidayNote from "@/components/holiday-note";
+import { OPEN_SHORTCUTS_EVENT } from "@/lib/shortcuts";
 
 export default function Footer() {
   return (
@@ -35,6 +36,17 @@ export default function Footer() {
             Reserved
           </small>
           <HolidayNote />
+          {/* Only where there is a keyboard to press: a phone has no use for it. */}
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event(OPEN_SHORTCUTS_EVENT))}
+            className="hidden pointer-fine:inline-flex items-center gap-1.5 mt-2 text-xs text-slate hover:text-ink cursor-pointer transition-colors focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
+          >
+            Keyboard shortcuts
+            <kbd className="font-mono text-ink bg-bg border border-line rounded-md px-1.5 py-0.5">
+              ?
+            </kbd>
+          </button>
         </div>
       </div>
     </footer>
