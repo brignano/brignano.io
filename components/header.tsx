@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { applyTheme } from "@/lib/theme";
 import HolidayButton from "@/components/holiday-button";
+import HolidayBanner from "@/components/holiday-banner";
 
 // Nav is inline from `sm` up. Below that, five words plus the monogram and the
 // theme toggle measured 371px even at gap-x-2.5: the page scrolled sideways on
@@ -210,6 +211,7 @@ export default function Header() {
           <ul className="flex flex-col">{links("menu")}</ul>
         </nav>
       )}
+      <HolidayBanner />
     </header>
   );
 }
