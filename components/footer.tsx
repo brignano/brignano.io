@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { socialLinks } from "@/lib/constants";
-import HolidayNote from "@/components/holiday-note";
 
 export default function Footer() {
   return (
@@ -34,7 +33,6 @@ export default function Footer() {
             Copyright © Anthony Brignano {new Date().getFullYear()} All rights
             Reserved
           </small>
-          <HolidayNote />
         </div>
       </div>
     </footer>

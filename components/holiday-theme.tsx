@@ -9,8 +9,8 @@ import { useHoliday } from "@/lib/use-holiday";
  * holiday's decorations (components/holiday/, styled in app/holiday.css).
  * Everything is fixed, decorative and non-interactive, so it never shifts
  * layout or covers anything clickable, and it holds still under
- * prefers-reduced-motion. The footer says what it is and lets visitors turn it
- * off (components/footer.tsx).
+ * prefers-reduced-motion. The header button explains it and lets visitors turn it
+ * off (components/holiday-button.tsx).
  */
 export default function HolidayTheme() {
   const { holiday, day, off } = useHoliday();
