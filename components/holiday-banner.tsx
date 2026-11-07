@@ -14,8 +14,8 @@ const SEEN = "holiday-greeted";
  * until dismissed (a timed note is gone before anyone can use it) and then does
  * not return for that holiday this year; the header button, labelled with the
  * holiday's name, stays available. Previews (`?holiday=`) always show it.
- * Because it sits inside the sticky header it tucks away with it on scroll and
- * the decorations (which hang from the header) move with it.
+ * It floats just under the sticky header (never in flow, so no layout shift)
+ * and tucks away with the header on scroll.
  */
 export default function HolidayBanner() {
   const { holiday, off, toggle } = useHoliday();
@@ -48,48 +48,52 @@ export default function HolidayBanner() {
   const info = HOLIDAY_INFO[holiday.id];
 
   return (
+    // Absolutely positioned under the header, so it floats over the page instead
+    // of pushing it down: it appears after hydration, and a push is layout shift.
     <div
       role="region"
       aria-label="Holiday decorations"
-      className="mx-auto mt-4 flex max-w-6xl items-start gap-3 rounded-xl border border-line bg-card px-4 py-3 text-sm text-ink"
+      className="absolute inset-x-6 top-full mt-3 md:inset-x-16"
     >
-      <SparklesIcon className="mt-0.5 size-5 shrink-0 text-interactive-ink" />
-      <div className="min-w-0 flex-1">
-        <p>
-          <strong>The site is dressed up for {holiday.label}.</strong>{" "}
-          {info && (
-            <span className="text-ink-soft">
-              {info.about}{" "}
-              <a
-                href={info.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline underline-offset-2 hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
-              >
-                More about {holiday.label}
-              </a>
-            </span>
-          )}
-        </p>
+      <div className="mx-auto flex max-w-6xl items-start gap-3 rounded-xl border border-line bg-card px-4 py-3 text-sm text-ink shadow-lg">
+        <SparklesIcon className="mt-0.5 size-5 shrink-0 text-interactive-ink" />
+        <div className="min-w-0 flex-1">
+          <p>
+            <strong>The site is dressed up for {holiday.label}.</strong>{" "}
+            {info && (
+              <span className="text-ink-soft">
+                {info.about}{" "}
+                <a
+                  href={info.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline underline-offset-2 hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
+                >
+                  More about {holiday.label}
+                </a>
+              </span>
+            )}
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              if (!off) toggle();
+              dismiss();
+            }}
+            className="mt-2 cursor-pointer rounded-full border border-line bg-surface-hover px-3 py-1 text-xs font-medium hover:text-interactive-ink focus-visible:ring-2 focus-visible:ring-interactive-ink"
+          >
+            Turn off decorations
+          </button>
+        </div>
         <button
           type="button"
-          onClick={() => {
-            if (!off) toggle();
-            dismiss();
-          }}
-          className="mt-2 cursor-pointer rounded-full border border-line bg-surface-hover px-3 py-1 text-xs font-medium hover:text-interactive-ink focus-visible:ring-2 focus-visible:ring-interactive-ink"
+          aria-label="Dismiss"
+          onClick={dismiss}
+          className="shrink-0 cursor-pointer text-ink-soft hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
         >
-          Turn off decorations
+          <XMarkIcon className="size-5" />
         </button>
       </div>
-      <button
-        type="button"
-        aria-label="Dismiss"
-        onClick={dismiss}
-        className="shrink-0 cursor-pointer text-ink-soft hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
-      >
-        <XMarkIcon className="size-5" />
-      </button>
     </div>
   );
 }
