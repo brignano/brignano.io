@@ -5,36 +5,18 @@ import { SparklesIcon } from "@heroicons/react/24/outline";
 import { HOLIDAY_INFO } from "@/lib/holiday-info";
 import { useHoliday } from "@/lib/use-holiday";
 
-const SEEN = "holiday-greeted";
-
 /**
  * The header button that explains and controls the seasonal decorations. It
  * sits beside the theme toggle and shows only while a holiday is on. Its
  * popover says which holiday it is, says what it is in a line, links to read
- * more and has the switch for the decorations. It opens by itself the first
- * time a visitor sees each holiday this year, stays open until dismissed, and
- * shrinks back into the button so it is clear where it went.
- * Previews (`?holiday=`) always open it.
+ * more and has the switch for the decorations. The button carries the
+ * holiday's name ("Diwali", or "Diwali off") so nobody has to guess what the
+ * icon means; the first-visit banner (holiday-banner.tsx) points people to it.
  */
 export default function HolidayButton() {
   const { holiday, off, toggle } = useHoliday();
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
-
-  const key = holiday ? `${holiday.id}-${new Date().getFullYear()}` : "";
-
-  useEffect(() => {
-    if (!holiday) return;
-    const preview = new URLSearchParams(window.location.search).has("holiday");
-    try {
-      if (!preview && localStorage.getItem(SEEN) === key) return;
-      if (!preview) localStorage.setItem(SEEN, key);
-    } catch {
-      /* storage blocked: open it, it stays until dismissed */
-    }
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- shown once, after the client knows the date
-    setOpen(true);
-  }, [holiday, key]);
 
   useEffect(() => {
     if (!open) return;
@@ -56,13 +38,16 @@ export default function HolidayButton() {
     <div ref={root} className="shrink-0 sm:relative">
       <button
         type="button"
-        aria-label={`${holiday.label} decorations`}
         aria-expanded={open}
         aria-controls="holiday-panel"
         onClick={() => setOpen((o) => !o)}
-        className={`shrink-0 bg-card hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full p-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"}`}
+        className={`flex h-9 shrink-0 items-center gap-1.5 bg-card hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full pl-2 pr-3 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"}`}
       >
-        <SparklesIcon className="size-5 cursor-pointer" />
+        <SparklesIcon className="size-5 shrink-0 cursor-pointer" />
+        <span className="max-w-28 cursor-pointer truncate text-xs font-medium sm:max-w-none">
+          {holiday.label}
+          {off && " off"}
+        </span>
       </button>
       <div
         id="holiday-panel"
