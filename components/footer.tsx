@@ -39,7 +39,9 @@ export default function Footer() {
           {/* Only where there is a keyboard to press: a phone has no use for it. */}
           <button
             type="button"
-            onClick={() => window.dispatchEvent(new Event(OPEN_SHORTCUTS_EVENT))}
+            onClick={() =>
+              window.dispatchEvent(new Event(OPEN_SHORTCUTS_EVENT))
+            }
             className="hidden pointer-fine:inline-flex items-center gap-1.5 mt-2 text-xs text-slate hover:text-ink cursor-pointer transition-colors focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
           >
             Keyboard shortcuts
