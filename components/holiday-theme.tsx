@@ -7,9 +7,9 @@ import { useHoliday } from "@/lib/use-holiday";
 /**
  * Switches on a seasonal overlay: sets `data-holiday` on <html> and draws that
  * holiday's decorations (components/holiday/, styled in app/holiday.css).
- * Everything is fixed, decorative and non-interactive, so it never shifts
- * layout or covers anything clickable, and it holds still under
- * prefers-reduced-motion. The header button explains it and lets visitors turn it
+ * The art frames the first screen, behind the content, and scrolls away with
+ * it. It is decorative and non-interactive, so it never shifts layout or
+ * covers anything clickable, and it holds still under prefers-reduced-motion. The header button explains it and lets visitors turn it
  * off (components/holiday-button.tsx).
  */
 export default function HolidayTheme() {
@@ -22,7 +22,7 @@ export default function HolidayTheme() {
     root.dataset.holiday = shown.id;
     // Keep the art below the sticky header so it never covers the logo or the
     // theme toggle: the decorations hang from the header's bottom edge. The
-    // offset is set once (and on resize) and never animated: moving a fixed
+    // offset is set once (and on resize) and never animated: moving the
     // layer's `top` counts as layout shift, which Lighthouse scores.
     const header = document.querySelector("header");
     const measure = () =>
