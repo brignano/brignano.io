@@ -31,7 +31,24 @@ export default function HolidayTheme() {
     measure();
     const ro = header ? new ResizeObserver(measure) : null;
     if (header) ro?.observe(header);
+    // Full colour on the first screen; once the visitor scrolls into the page
+    // to read, the art fades to a trace so text passing over it stays clean.
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() =>
+        root.toggleAttribute(
+          "data-hx-reading",
+          window.scrollY > window.innerHeight * 0.4
+        )
+      );
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+      root.removeAttribute("data-hx-reading");
       ro?.disconnect();
       root.style.removeProperty("--hx-top");
       delete root.dataset.holiday;

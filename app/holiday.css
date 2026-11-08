@@ -5,7 +5,8 @@
    - behind the content, never on top of it: text and cards always paint over
      the art (z-index -1, above only the page background);
    - pinned to the top and bottom edges and the corners of the screen; the
-     top pieces hang from the header and slide up with it when it tucks away;
+     top pieces hang from the header and slide up with it when it tucks away,
+     and the whole layer fades to a trace once the visitor scrolls in to read;
      nothing drifts, floats or flies across the page;
    - at most a slow change of light in place, and none at all under
      prefers-reduced-motion;
@@ -24,6 +25,14 @@
 }
 html[data-header-hidden] .holiday-art {
   --hx-head: 0px;
+}
+/* Scrolled into the page to read (holiday-theme.tsx): the pinned art fades to
+   a trace, so text scrolling past it is never fighting full-colour shapes. */
+html[data-hx-reading] .holiday-art {
+  opacity: 0.18;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .holiday-art { transition: opacity 400ms ease-out; }
 }
 /* <body> paints its own background (bg-bg), which would hide a z-index -1
    layer; isolating it makes the art sit between that background and the page. */
