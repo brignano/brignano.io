@@ -14,40 +14,41 @@ const SEEN = "holiday-greeted";
  * what the icon means. Its popover says which holiday it is, says what it is in
  * a line, links to read more and has the switch for the decorations.
  *
- * The first time a visitor lands during a holiday the popover opens on its own,
- * pointing at the button, so the note they read and the control they come back
- * to are the same thing. Closing it in any way (the X, a click away, Escape)
- * marks it seen for that holiday this year. Previews (`?holiday=`) always open it.
+ * Nothing opens on its own: a popup on landing covers the page people came to
+ * read. Instead, until a visitor has opened the popover once for this holiday
+ * this year, the button carries a small dot (the same "something new here" cue
+ * a notification badge gives). Opening it clears the dot. Previews
+ * (`?holiday=`) always show the dot.
  */
 export default function HolidayButton() {
   const { holiday, off, toggle } = useHoliday();
   const [open, setOpen] = useState(false);
-  // Opened on its own for a first visit (vs. by a click): says where it lives.
-  const [greet, setGreet] = useState(false);
+  const [fresh, setFresh] = useState(false);
   const root = useRef<HTMLDivElement>(null);
 
   const key = holiday ? `${holiday.id}-${new Date().getFullYear()}` : "";
 
-  // First visit this holiday: open the popover once the client knows the date.
+  // Not opened yet this holiday: show the dot once the client knows the date.
   useEffect(() => {
     if (!holiday) return;
     const preview = new URLSearchParams(window.location.search).has("holiday");
     try {
       if (!preview && localStorage.getItem(SEEN) === key) return;
     } catch {
-      /* storage blocked: show it; it closes like any other popover */
+      /* storage blocked: show the dot; it clears when opened */
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- opened after the client knows the date
-    setOpen(true);
-    setGreet(true);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- known only after the client knows the date
+    setFresh(true);
   }, [holiday, key]);
 
-  const close = () => {
-    setOpen(false);
+  const close = () => setOpen(false);
+  const show = () => {
+    setOpen(true);
+    setFresh(false);
     try {
       localStorage.setItem(SEEN, key);
     } catch {
-      /* storage blocked: it opens again next visit */
+      /* storage blocked: the dot returns next visit */
     }
   };
 
@@ -63,7 +64,6 @@ export default function HolidayButton() {
       document.removeEventListener("pointerdown", away);
       document.removeEventListener("keydown", esc);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- close only reads the stable key
   }, [open]);
 
   if (!holiday) return null;
@@ -74,14 +74,19 @@ export default function HolidayButton() {
         type="button"
         aria-expanded={open}
         aria-controls="holiday-panel"
-        onClick={() => {
-          setGreet(false);
-          if (open) close();
-          else setOpen(true);
-        }}
+        onClick={() => (open ? close() : show())}
         className={`flex h-9 shrink-0 items-center gap-1.5 bg-card hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full pl-2 pr-3 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"}`}
       >
-        <SparklesIcon className="size-5 shrink-0 cursor-pointer" />
+        <span className="relative shrink-0">
+          <SparklesIcon className="size-5 cursor-pointer" />
+          {fresh && (
+            <span
+              aria-hidden="true"
+              className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-interactive ring-2 ring-card"
+            />
+          )}
+          {fresh && <span className="sr-only">(new)</span>}
+        </span>
         <span className="max-w-28 cursor-pointer truncate text-xs font-medium sm:max-w-none">
           {holiday.label}
           {off && " off"}
@@ -136,11 +141,6 @@ export default function HolidayButton() {
             />
           </button>
         </div>
-        {greet && (
-          <p className="mt-2 text-xs text-ink-soft">
-            Close this and it stays in the {holiday.label} button above.
-          </p>
-        )}
       </div>
     </div>
   );
