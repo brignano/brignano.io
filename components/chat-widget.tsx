@@ -1,7 +1,8 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { event } from "@/lib/gtag";
+import { OPEN_CHAT_EVENT } from "@/lib/shortcuts";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -208,11 +209,19 @@ export default function ChatWidget() {
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
-  const openChat = () => {
+  // Shared by the launcher button and the `/` keyboard shortcut
+  // (components/keyboard-shortcuts.tsx), which opens the chat through an event
+  // rather than reaching into this component's state.
+  const openChat = useCallback(() => {
     track("chat_opened");
     stickToBottomRef.current = true;
     setOpen(true);
-  };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener(OPEN_CHAT_EVENT, openChat);
+    return () => window.removeEventListener(OPEN_CHAT_EVENT, openChat);
+  }, [openChat]);
 
   const onListScroll = () => {
     const list = listRef.current;

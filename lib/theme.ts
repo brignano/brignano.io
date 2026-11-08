@@ -68,3 +68,14 @@ export function resolveTheme(): boolean {
     (!stored && window.matchMedia("(prefers-color-scheme: dark)").matches)
   );
 }
+
+/** Apply a theme and remember it as the visitor's choice. Used by the header
+ *  toggle and the `t` keyboard shortcut, so both persist the same way. */
+export function setTheme(dark: boolean): void {
+  applyTheme(dark);
+  try {
+    localStorage.setItem("theme", dark ? "dark" : "light");
+  } catch {
+    // ignore (e.g. storage disabled)
+  }
+}

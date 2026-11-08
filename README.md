@@ -8,6 +8,7 @@ A personal website and portfolio built with Next.js 16, React 19, and TailwindCS
 
 - **Next.js 16** with App Router; pages are prerendered and the chat API runs as a Vercel function
 - **AI chat assistant** that answers visitors' questions about my experience and projects (Claude Haiku)
+- **Keyboard shortcuts**: `g` then a letter jumps to a page, `j`/`k` step through sections, `t` flips the theme, `/` opens the chat, and `?` lists them all (`lib/shortcuts.ts`, `components/keyboard-shortcuts.tsx`)
 - **React 19** with modern hooks and components
 - **TailwindCSS 4** for styling
 - **TypeScript** for type safety
