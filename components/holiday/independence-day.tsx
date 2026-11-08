@@ -1,7 +1,7 @@
 import { Sparkle, t } from "./shared";
 
-// Night-sky flavour: striped sashes cut across the top corners, and shooting
-// stars streak across now and then.
+// Night-sky flavour: striped sashes cut across the top corners, and a couple
+// of stars.
 
 const Sash = ({ cls }: { cls: string }) => (
   <svg className={`hx hx-id-sash ${cls}`} viewBox="0 0 120 120" fill="none">
@@ -16,9 +16,6 @@ export default function IndependenceDay() {
     <>
       <Sash cls="hx-id-sash-l" />
       <Sash cls="hx-id-sash-r" />
-      {[0, 1, 2].map((n) => (
-        <div key={n} className={`hx hx-id-streak hx-id-streak-${n}`} />
-      ))}
       <Sparkle className="hx-id-spark" color="i" style={{ left: "14%", top: "24%" }} />
       <Sparkle className="hx-id-spark" color="danger" style={{ left: "86%", top: "30%", animationDelay: "-1.3s" }} />
     </>

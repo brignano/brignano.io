@@ -34,14 +34,6 @@ const Web = ({ cls }: { cls: string }) => (
   </svg>
 );
 
-const Bat = ({ n }: { n: number }) => (
-  <div className={`hx hx-hw-bat hx-hw-bat-${n}`}>
-    <svg viewBox="0 0 60 26" fill={t("n-900")}>
-      <path className="hx-hw-wing" d="M30 14C26 4 14 0 0 6c5 2 6 6 6 10 5-3 9-2 12 2 2-3 6-4 12-4s10 1 12 4c3-4 7-5 12-2 0-4 1-8 6-10C46 0 34 4 30 14z" />
-    </svg>
-  </div>
-);
-
 export default function Halloween() {
   return (
     <>
@@ -89,9 +81,6 @@ export default function Halloween() {
           <path d="M16 140h30M13 160h36" stroke={t("n-500")} strokeWidth="2" />
         </svg>
       </div>
-      <Bat n={1} />
-      <Bat n={2} />
-      <Bat n={3} />
     </>
   );
 }

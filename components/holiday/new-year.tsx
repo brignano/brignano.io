@@ -1,14 +1,12 @@
-import { Field, Sparkle, t, vars } from "./shared";
+import { Sparkle, t, vars } from "./shared";
 
-// Fireworks that actually go off: each burst blooms, hangs, fades, and the next
-// one fires somewhere else. Gold confetti drifts down between them.
+// Fireworks frozen mid-burst along the edges of the page.
 
 const BURSTS: [string, string, number, string, string][] = [
   ["4%", "16%", 0, "attention", "i"],
   ["88%", "10%", 2.4, "i", "attention"],
   ["9%", "52%", 4.8, "i", "danger"],
   ["91%", "46%", 1.2, "attention", "success"],
-  ["24%", "2%", 3.6, "attention", "i"],
 ];
 
 function Burst({ a, b }: { a: string; b: string }) {
@@ -39,9 +37,6 @@ export default function NewYear() {
       ))}
       <Sparkle className="hx-ny-spark" style={{ left: "13%", top: "30%" }} />
       <Sparkle className="hx-ny-spark" style={{ left: "84%", top: "26%", animationDelay: "-1.5s" }} color="i" />
-      <Field n={14} wind={1.2} className="hx-ny-confetti">
-        {(i) => <i style={{ background: t(["attention", "i", "attention", "success", "danger"][i % 5]) }} />}
-      </Field>
     </>
   );
 }

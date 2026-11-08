@@ -22,44 +22,6 @@ export function Glow({ className }: { className: string }) {
   return <div className={`hx hx-glow ${className}`} />;
 }
 
-/**
- * Things that drift down (or float up) the whole viewport: snow, leaves,
- * petals, hearts. Positions, speeds and sizes are spread deterministically so
- * server and client agree. Hidden under prefers-reduced-motion.
- */
-export function Field({
-  n,
-  dir = "fall",
-  className = "",
-  wind = 1,
-  children,
-}: {
-  n: number;
-  dir?: "fall" | "rise";
-  className?: string;
-  wind?: number;
-  children: (i: number) => ReactNode;
-}) {
-  return (
-    <div className={`hx hx-field hx-${dir} ${className}`}>
-      {Array.from({ length: n }, (_, i) => (
-        <span
-          key={i}
-          style={vars({
-            "--x": `${(i * 37 + 9) % 96}%`,
-            "--d": `${16 + ((i * 7) % 14)}s`,
-            "--l": `${-((i * 5) % 24)}s`,
-            "--s": 0.7 + ((i * 13) % 7) / 10,
-            "--w": `${(i % 2 ? 1 : -1) * wind * (20 + ((i * 11) % 40))}px`,
-          })}
-        >
-          {children(i)}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 /** A four-point sparkle, for twinkling. */
 export function Sparkle({
   className = "",
@@ -74,5 +36,23 @@ export function Sparkle({
     <svg className={`hx hx-sparkle ${className}`} style={style} viewBox="0 0 24 24" fill={t(color)}>
       <path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z" />
     </svg>
+  );
+}
+
+/**
+ * A string hung along the top edge, just under the header: the same place for
+ * every theme, so it reads as decoration and never sits over the words. `unit`
+ * draws one 96×34 swag; it repeats across the width.
+ */
+export function Garland({ unit, n = 28 }: { unit: (i: number) => ReactNode; n?: number }) {
+  return (
+    <div className="hx hx-garland">
+      {Array.from({ length: n }, (_, i) => (
+        <svg key={i} viewBox="0 0 96 34" fill="none">
+          <path d="M0 3Q48 20 96 3" stroke={t("n-500")} strokeWidth="1.5" />
+          {unit(i)}
+        </svg>
+      ))}
+    </div>
   );
 }

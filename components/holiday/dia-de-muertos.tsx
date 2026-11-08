@@ -1,7 +1,6 @@
-import { Field, ORANGE, PINK, PURPLE, SKY, t, vars } from "./shared";
+import { ORANGE, PINK, PURPLE, SKY, t, vars } from "./shared";
 
-// Cut-paper banners flutter across the top corners, marigold petals fall, and
-// candles burn in a row along the bottom.
+// Cut-paper banners hang across the top corners and candles burn in a row along the bottom.
 
 const COLORS = [PINK, ORANGE, PURPLE, SKY, t("success"), t("attention")];
 
@@ -30,13 +29,6 @@ export default function DiaDeMuertos() {
     <>
       <Banner side="l" />
       <Banner side="r" />
-      <Field n={12} wind={1.5} className="hx-dm-petals">
-        {(i) => (
-          <svg viewBox="0 0 20 24">
-            <path d="M10 1C3 6 1 16 10 23c9-7 7-17 0-22z" fill={i % 3 ? t("attention") : ORANGE} />
-          </svg>
-        )}
-      </Field>
       <div className="hx hx-dm-candles">
         <svg viewBox="0 0 160 64" fill="none">
           {[14, 62, 108].map((x, i) => (

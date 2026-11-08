@@ -1,8 +1,9 @@
-import { Glow, t } from "./shared";
+import { Garland, Glow, t } from "./shared";
 
 // The kinara lights as the week goes on, in the traditional order: the black
 // centre candle on the first day, then alternating red (left) and green
-// (right) outward. A woven-mat strip runs along the bottom edge.
+// (right) outward. Red, black and green bunting hangs along the top and a
+// woven-mat strip runs along the bottom edge.
 
 const CANDLES: { x: number; c: string; day: number }[] = [
   { x: 8, c: "danger", day: 1 },
@@ -18,6 +19,11 @@ export default function Kwanzaa({ day }: { day: number }) {
   return (
     <>
       <Glow className="hx-g-kwanzaa" />
+      <Garland
+        unit={(i) => (
+          <path d="M38 9h20l-10 18z" fill={t(["danger", "n-900", "success"][i % 3])} />
+        )}
+      />
       <svg className="hx hx-kw-mat" height="12" fill="none">
         <defs>
           <pattern id="hx-mat" width="24" height="12" patternUnits="userSpaceOnUse">
