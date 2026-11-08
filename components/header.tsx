@@ -104,6 +104,13 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Tell the page when the header is tucked away, so things hung from its
+  // bottom edge (the holiday garlands, app/holiday.css) can follow it up.
+  const tucked = hidden && !menuOpen;
+  useEffect(() => {
+    document.documentElement.toggleAttribute("data-header-hidden", tucked);
+  }, [tucked]);
+
   useEffect(() => {
     if (!menuOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {

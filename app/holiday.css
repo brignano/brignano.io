@@ -4,25 +4,26 @@
    same for all, so the theme frames the page and never competes with it:
    - behind the content, never on top of it: text and cards always paint over
      the art (z-index -1, above only the page background);
-   - anchored to the edges and corners of the first screen, scrolling away
-     with it; nothing drifts, floats or flies across the page;
+   - pinned to the top and bottom edges and the corners of the screen; the
+     top pieces hang from the header and slide up with it when it tucks away;
+     nothing drifts, floats or flies across the page;
    - at most a slow change of light in place, and none at all under
      prefers-reduced-motion;
    - decorative, pointer-events:none, design tokens only.
    Classes are hx-<holiday>-*. */
 
 .holiday-art {
-  /* Frames the first screen only and scrolls away with it: once someone is
-     reading, the page is plain, and nothing is left behind where the header
-     used to be when it tucks away on scroll. */
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: var(--hx-top, 87px); /* starts below the header, see holiday-theme.tsx */
-  height: calc(100svh - var(--hx-top, 87px));
+  position: fixed;
+  inset: 0;
   z-index: -1; /* behind the page: content always paints over it */
   pointer-events: none;
   overflow: hidden;
+  /* Where the header's bottom edge is right now: its height while it shows,
+     0 while it is tucked away on scroll (header.tsx sets the attribute). */
+  --hx-head: var(--hx-top, 87px);
+}
+html[data-header-hidden] .holiday-art {
+  --hx-head: 0px;
 }
 /* <body> paints its own background (bg-bg), which would hide a z-index -1
    layer; isolating it makes the art sit between that background and the page. */
@@ -32,6 +33,23 @@ html[data-holiday] body {
 .holiday-art .hx {
   position: absolute;
   pointer-events: none;
+}
+/* Pieces hung from the top edge follow the header. `translate` is separate
+   from `transform`, so it adds to any flip or rotation a piece already has,
+   and moving it is not layout shift. */
+.hx-garland, .hx-wn-lights, .hx-hw-web, .hx-hw-spider, .hx-dm-banner,
+.hx-hk-star, .hx-ln-row, .hx-vl-garland, .hx-pi-dial, .hx-hl-tl, .hx-hl-tr,
+.hx-ei-moon, .hx-ei-lamps, .hx-jt-mark, .hx-jt-ribbon, .hx-jt-star,
+.hx-id-sash, .hx-dw-rangoli {
+  translate: 0 var(--hx-head);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hx-garland, .hx-wn-lights, .hx-hw-web, .hx-hw-spider, .hx-dm-banner,
+  .hx-hk-star, .hx-ln-row, .hx-vl-garland, .hx-pi-dial, .hx-hl-tl, .hx-hl-tr,
+  .hx-ei-moon, .hx-ei-lamps, .hx-jt-mark, .hx-jt-ribbon, .hx-jt-star,
+  .hx-id-sash, .hx-dw-rangoli {
+    transition: translate 300ms ease-out; /* the header's own timing */
+  }
 }
 .holiday-art svg {
   display: block;
