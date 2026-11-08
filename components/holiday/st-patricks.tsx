@@ -1,13 +1,22 @@
-import { Sparkle, t } from "./shared";
+import { Garland, HEART, Sparkle, t } from "./shared";
 
-// A faint rainbow rises out of the bottom of the page and lands in a pot of
-// gold.
+// Shamrocks strung along the top; a faint rainbow rises out of the bottom of
+// the page and lands in a pot of gold.
 
 const BANDS = ["danger", "attention", "success", "i"];
 
 export default function StPatricks() {
   return (
     <>
+      <Garland
+        unit={() => (
+          <g transform="translate(37 7) scale(.46)">
+            {[0, 120, 240].map((r) => (
+              <path key={r} d={HEART} transform={`rotate(${r} 24 24) translate(12 3)`} fill={t("success")} />
+            ))}
+          </g>
+        )}
+      />
       <svg className="hx hx-sp-rainbow" viewBox="0 0 1000 500" preserveAspectRatio="none" fill="none">
         {BANDS.map((c, i) => (
           <path key={c} d={`M${60 + i * 26} 500A${440 - i * 26} ${440 - i * 26} 0 0 1 ${940 - i * 26} 500`} stroke={t(c)} strokeWidth="22" strokeOpacity=".16" />

@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 // Shared helpers for the holiday scenes. Colours are design tokens only, so a
 // scene follows light and dark for free.
@@ -36,5 +36,23 @@ export function Sparkle({
     <svg className={`hx hx-sparkle ${className}`} style={style} viewBox="0 0 24 24" fill={t(color)}>
       <path d="M12 0c1 7 5 11 12 12-7 1-11 5-12 12-1-7-5-11-12-12C7 11 11 7 12 0z" />
     </svg>
+  );
+}
+
+/**
+ * A string hung along the top edge, just under the header: the same place for
+ * every theme, so it reads as decoration and never sits over the words. `unit`
+ * draws one 96×34 swag; it repeats across the width.
+ */
+export function Garland({ unit, n = 28 }: { unit: (i: number) => ReactNode; n?: number }) {
+  return (
+    <div className="hx hx-garland">
+      {Array.from({ length: n }, (_, i) => (
+        <svg key={i} viewBox="0 0 96 34" fill="none">
+          <path d="M0 3Q48 20 96 3" stroke={t("n-500")} strokeWidth="1.5" />
+          {unit(i)}
+        </svg>
+      ))}
+    </div>
   );
 }

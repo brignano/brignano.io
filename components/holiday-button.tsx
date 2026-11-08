@@ -1,66 +1,85 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { SparklesIcon } from "@heroicons/react/24/outline";
-import { HANDOFF } from "@/components/holiday-banner";
+import { SparklesIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { HOLIDAY_INFO } from "@/lib/holiday-info";
 import { useHoliday } from "@/lib/use-holiday";
 
+const SEEN = "holiday-greeted";
+
 /**
  * The header button that explains and controls the seasonal decorations. It
- * sits beside the theme toggle and shows only while a holiday is on. Its
- * popover says which holiday it is, says what it is in a line, links to read
- * more and has the switch for the decorations. The button carries the
- * holiday's name ("Diwali", or "Diwali off") so nobody has to guess what the
- * icon means; the first-visit banner (holiday-banner.tsx) points people to it.
+ * sits beside the theme toggle and shows only while a holiday is on, labelled
+ * with the holiday's name ("Diwali", or "Diwali off") so nobody has to guess
+ * what the icon means. Its popover says which holiday it is, says what it is in
+ * a line, links to read more and has the switch for the decorations.
+ *
+ * The first time a visitor lands during a holiday the popover opens on its own,
+ * pointing at the button, so the note they read and the control they come back
+ * to are the same thing. Closing it in any way (the X, a click away, Escape)
+ * marks it seen for that holiday this year. Previews (`?holiday=`) always open it.
  */
 export default function HolidayButton() {
   const { holiday, off, toggle } = useHoliday();
   const [open, setOpen] = useState(false);
-  const [flag, setFlag] = useState(false);
+  // Opened on its own for a first visit (vs. by a click): says where it lives.
+  const [greet, setGreet] = useState(false);
   const root = useRef<HTMLDivElement>(null);
+
+  const key = holiday ? `${holiday.id}-${new Date().getFullYear()}` : "";
+
+  // First visit this holiday: open the popover once the client knows the date.
+  useEffect(() => {
+    if (!holiday) return;
+    const preview = new URLSearchParams(window.location.search).has("holiday");
+    try {
+      if (!preview && localStorage.getItem(SEEN) === key) return;
+    } catch {
+      /* storage blocked: show it; it closes like any other popover */
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- opened after the client knows the date
+    setOpen(true);
+    setGreet(true);
+  }, [holiday, key]);
+
+  const close = () => {
+    setOpen(false);
+    try {
+      localStorage.setItem(SEEN, key);
+    } catch {
+      /* storage blocked: it opens again next visit */
+    }
+  };
 
   useEffect(() => {
     if (!open) return;
     const away = (e: PointerEvent) => {
-      if (!root.current?.contains(e.target as Node)) setOpen(false);
+      if (!root.current?.contains(e.target as Node)) close();
     };
-    const esc = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const esc = (e: KeyboardEvent) => e.key === "Escape" && close();
     document.addEventListener("pointerdown", away);
     document.addEventListener("keydown", esc);
     return () => {
       document.removeEventListener("pointerdown", away);
       document.removeEventListener("keydown", esc);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- close only reads the stable key
   }, [open]);
-
-  // When the first-visit banner folds into this button, light it up for a
-  // moment so the visitor sees where it went.
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const on = () => {
-      setFlag(true);
-      clearTimeout(timer);
-      timer = setTimeout(() => setFlag(false), 2400);
-    };
-    window.addEventListener(HANDOFF, on);
-    return () => {
-      window.removeEventListener(HANDOFF, on);
-      clearTimeout(timer);
-    };
-  }, []);
 
   if (!holiday) return null;
   const info = HOLIDAY_INFO[holiday.id];
   return (
     <div ref={root} className="shrink-0 sm:relative">
       <button
-        id="holiday-button"
         type="button"
         aria-expanded={open}
         aria-controls="holiday-panel"
-        onClick={() => setOpen((o) => !o)}
-        className={`flex h-9 shrink-0 items-center gap-1.5 bg-card hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full pl-2 pr-3 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"} ${flag ? "holiday-handoff" : ""}`}
+        onClick={() => {
+          setGreet(false);
+          if (open) close();
+          else setOpen(true);
+        }}
+        className={`flex h-9 shrink-0 items-center gap-1.5 bg-card hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full pl-2 pr-3 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"}`}
       >
         <SparklesIcon className="size-5 shrink-0 cursor-pointer" />
         <span className="max-w-28 cursor-pointer truncate text-xs font-medium sm:max-w-none">
@@ -72,10 +91,23 @@ export default function HolidayButton() {
         id="holiday-panel"
         role="group"
         aria-label={`About the ${holiday.label} decorations`}
-        // The panel stays mounted so it can shrink back toward the button.
-        className={`absolute inset-x-6 top-full mt-3 origin-top-right sm:inset-x-auto sm:right-0 sm:w-72 rounded-xl border border-line bg-card p-4 text-sm text-ink shadow-lg transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none ${open ? "visible scale-100 opacity-100" : "invisible scale-50 opacity-0"}`}
+        // The panel stays mounted so it can shrink back into the button.
+        className={`absolute inset-x-6 top-full mt-3 origin-top-right sm:inset-x-auto sm:right-0 sm:w-80 rounded-xl border border-line bg-card p-4 text-sm text-ink shadow-lg transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none ${open ? "visible scale-100 opacity-100" : "invisible scale-50 opacity-0"}`}
       >
-        <p className="font-semibold">{holiday.label}</p>
+        <div className="flex items-start gap-2">
+          <SparklesIcon className="mt-0.5 size-5 shrink-0 text-interactive-ink" />
+          <p className="min-w-0 flex-1 font-semibold">
+            The site is dressed up for {holiday.label}
+          </p>
+          <button
+            type="button"
+            aria-label="Close"
+            onClick={close}
+            className="shrink-0 cursor-pointer rounded-sm text-ink-soft hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink"
+          >
+            <XMarkIcon className="size-5" />
+          </button>
+        </div>
         {info && (
           <p className="mt-1 text-ink-soft">
             {info.about}{" "}
@@ -89,7 +121,7 @@ export default function HolidayButton() {
             </a>
           </p>
         )}
-        <div className="mt-3 flex items-center justify-between gap-3">
+        <div className="mt-3 flex items-center justify-between gap-3 border-t border-line pt-3">
           <span id="holiday-switch-label">Decorations</span>
           <button
             type="button"
@@ -104,6 +136,11 @@ export default function HolidayButton() {
             />
           </button>
         </div>
+        {greet && (
+          <p className="mt-2 text-xs text-ink-soft">
+            Close this and it stays in the {holiday.label} button above.
+          </p>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { PINK, mix, t } from "./shared";
+import { Garland, PINK, mix, t } from "./shared";
 
 // A little meadow along the bottom: grass, tulips, eggs tucked in the blades, and a
 // bunny looking over the top.
@@ -21,6 +21,11 @@ const Tulip = ({ x, c }: { x: number; c: string }) => (
 export default function Easter() {
   return (
     <>
+      <Garland
+        unit={(i) => (
+          <path d="M48 9c6 0 9 8 9 13s-4 9-9 9-9-4-9-9 3-13 9-13z" fill={mix(["attention", "i", "danger", "success"][i % 4], 45, "n-0")} stroke={t("n-400")} strokeWidth="1" />
+        )}
+      />
       <div className="hx hx-ea-bunny">
         <svg viewBox="0 0 90 120" fill="none">
           <ellipse cx="28" cy="34" rx="10" ry="32" fill={t("card")} stroke={t("n-400")} strokeWidth="2" />

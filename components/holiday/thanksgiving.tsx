@@ -1,7 +1,9 @@
-import { Glow, t } from "./shared";
+import { Garland, Glow, t } from "./shared";
 
-// Harvest at ground level: a low row of pumpkins and wheat along the bottom
-// and a warm sunset glow behind them.
+// Autumn leaves strung along the top, a low row of pumpkins and wheat along
+// the bottom, and a warm sunset glow behind them.
+
+const LEAVES = ["attention", "danger", "larch-deep"];
 
 function Pumpkin({ x, s = 1, c = "attention" }: { x: number; s?: number; c?: string }) {
   return (
@@ -35,6 +37,14 @@ export default function Thanksgiving() {
   return (
     <>
       <Glow className="hx-g-thanksgiving" />
+      <Garland
+        unit={(i) => (
+          <g transform={`translate(48 8) scale(0.95) rotate(${i % 2 ? 14 : -12})`}>
+            <path d="M0 0C9 5 12 14 8 21c-2 3-5 5-8 5s-6-2-8-5C-12 14-9 5 0 0z" fill={t(LEAVES[i % 3])} />
+            <path d="M0 2v22" stroke={t("bg")} strokeWidth="1.2" opacity=".5" />
+          </g>
+        )}
+      />
       <div className="hx hx-tg-row hx-tg-row-l">
         <svg viewBox="0 0 260 64" fill="none">
           <Wheat x={22} />

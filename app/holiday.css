@@ -36,6 +36,10 @@ html[data-holiday] body {
 }
 .hx-sparkle { width: 14px; height: 14px; opacity: 0.8; }
 
+/* A string hung along the top edge (Garland in shared.tsx) ───────────── */
+.hx-garland { top: 0; left: 0; display: flex; width: 100%; overflow: hidden; }
+.hx-garland svg { flex: 0 0 96px; width: 96px; height: 34px; }
+
 /* Halloween: edge creatures and candle glow ─────────────────────────── */
 .hx-g-halloween {
   background: radial-gradient(70% 28% at 50% 108%, color-mix(in srgb, var(--attention) 22%, transparent), transparent);
@@ -64,7 +68,7 @@ html[data-holiday] body {
   .hx-dm-r { display: none; }
 }
 
-/* Thanksgiving: harvest along the ground ─────────────────────────────── */
+/* Thanksgiving: leaves strung across the top, harvest along the ground ─────────────────────────────── */
 .hx-g-thanksgiving {
   background: radial-gradient(90% 26% at 50% 112%, color-mix(in srgb, var(--attention) 26%, transparent), color-mix(in srgb, var(--danger) 8%, transparent) 60%, transparent);
 }
@@ -254,19 +258,6 @@ html[data-holiday] body {
 .hx-dw-r { right: 0; }
 .hx-dw-l { left: 0; transform: scaleX(-1); }
 .hx-dw-diyas { left: clamp(10px, 2vw, 30px); bottom: 6px; width: clamp(130px, 15vw, 210px); }
-
-/* The header button lights up as the first-visit banner folds into it
-   (holiday-banner.tsx), so visitors see where the controls went. ──────── */
-.holiday-handoff {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--i-ink) 35%, transparent);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .holiday-handoff { animation: hx-handoff 1.2s ease-out 2; }
-}
-@keyframes hx-handoff {
-  from { box-shadow: 0 0 0 0 color-mix(in srgb, var(--i-ink) 55%, transparent); }
-  to { box-shadow: 0 0 0 10px transparent; }
-}
 
 /* Motion: almost none. Nothing travels, floats or bobs: movement in the
    corner of the eye pulls attention off the words. What is left is a slow
