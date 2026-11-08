@@ -1,7 +1,7 @@
 import { PINK, mix, t } from "./shared";
 
-// A little meadow along the bottom: grass, tulips, eggs tucked in the blades, a
-// bunny looking over the top, and butterflies working across the page.
+// A little meadow along the bottom: grass, tulips, eggs tucked in the blades, and a
+// bunny looking over the top.
 
 const egg = (x: number, c: string, i: number) => (
   <g key={i} transform={`translate(${x} 0)`}>
@@ -16,18 +16,6 @@ const Tulip = ({ x, c }: { x: number; c: string }) => (
     <path d="M10 40q-12-4-14-18 8 2 14 10M10 40q12-4 14-18-8 2-14 10" fill={t("success")} opacity=".9" />
     <path d="M10 26C0 24 0 8 10 2c10 6 10 22 0 24z" fill={t(c)} />
   </g>
-);
-
-const Butterfly = ({ n }: { n: number }) => (
-  <div className={`hx hx-ea-fly hx-ea-fly-${n}`}>
-    <svg viewBox="0 0 40 30" fill="none">
-      <g className="hx-ea-wing">
-        <path d="M20 14C14 2 2 2 2 10s8 10 18 4zM20 16c-8 2-14 10-8 14s10-4 8-14z" fill={t(n === 1 ? "i" : "danger")} opacity=".85" />
-        <path d="M20 14c6-12 18-12 18-4s-8 10-18 4zM20 16c8 2 14 10 8 14s-10-4-8-14z" fill={t(n === 1 ? "i" : "danger")} opacity=".85" />
-      </g>
-      <path d="M20 8v20" stroke={t("ink")} strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  </div>
 );
 
 export default function Easter() {
@@ -66,8 +54,6 @@ export default function Easter() {
         </defs>
         <rect width="100%" height="26" fill="url(#hx-grass)" />
       </svg>
-      <Butterfly n={1} />
-      <Butterfly n={2} />
     </>
   );
 }

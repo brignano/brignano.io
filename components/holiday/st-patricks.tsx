@@ -1,20 +1,9 @@
-import { Field, HEART, Sparkle, t } from "./shared";
+import { Sparkle, t } from "./shared";
 
 // A faint rainbow rises out of the bottom of the page and lands in a pot of
-// gold; shamrocks tumble past.
+// gold.
 
 const BANDS = ["danger", "attention", "success", "i"];
-
-function Shamrock() {
-  return (
-    <svg viewBox="0 0 48 52" fill="none">
-      {[0, 120, 240].map((r) => (
-        <path key={r} d={HEART} transform={`rotate(${r} 24 24) translate(12 3)`} fill={t("success")} />
-      ))}
-      <path d="M24 24q2 14 8 24" stroke={t("success-ink")} strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
-}
 
 export default function StPatricks() {
   return (
@@ -36,9 +25,6 @@ export default function StPatricks() {
         <Sparkle className="hx-sp-glint" style={{ left: "6%", top: "-10%" }} />
         <Sparkle className="hx-sp-glint" style={{ left: "72%", top: "-24%", animationDelay: "-1.1s" }} />
       </div>
-      <Field n={8} wind={1.6} className="hx-sp-fall">
-        {() => <Shamrock />}
-      </Field>
     </>
   );
 }

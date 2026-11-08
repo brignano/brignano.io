@@ -1,7 +1,7 @@
-import { Field, HEART, Glow, PINK, mix, t, vars } from "./shared";
+import { HEART, Glow, PINK, mix, t, vars } from "./shared";
 
 // Vertical, not scattered: a string of hearts hangs down each side of the page,
-// pulsing out of step, with a few more drifting up and a rose glow below.
+// with a rose glow below.
 
 const SHADES = [t("danger"), PINK, mix("danger", 75, "n-0"), t("danger-ink")];
 
@@ -31,13 +31,6 @@ export default function Valentines() {
       <Glow className="hx-g-valentines" />
       <Garland side="l" />
       <Garland side="r" />
-      <Field n={8} dir="rise" className="hx-vl-rise">
-        {(i) => (
-          <svg viewBox="0 0 24 24" fill={t(i % 3 ? "danger" : "danger-ink")}>
-            <path d={HEART} />
-          </svg>
-        )}
-      </Field>
     </>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SparklesIcon } from "@heroicons/react/24/outline";
+import { HANDOFF } from "@/components/holiday-banner";
 import { HOLIDAY_INFO } from "@/lib/holiday-info";
 import { useHoliday } from "@/lib/use-holiday";
 
@@ -16,6 +17,7 @@ import { useHoliday } from "@/lib/use-holiday";
 export default function HolidayButton() {
   const { holiday, off, toggle } = useHoliday();
   const [open, setOpen] = useState(false);
+  const [flag, setFlag] = useState(false);
   const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,16 +34,33 @@ export default function HolidayButton() {
     };
   }, [open]);
 
+  // When the first-visit banner folds into this button, light it up for a
+  // moment so the visitor sees where it went.
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const on = () => {
+      setFlag(true);
+      clearTimeout(timer);
+      timer = setTimeout(() => setFlag(false), 2400);
+    };
+    window.addEventListener(HANDOFF, on);
+    return () => {
+      window.removeEventListener(HANDOFF, on);
+      clearTimeout(timer);
+    };
+  }, []);
+
   if (!holiday) return null;
   const info = HOLIDAY_INFO[holiday.id];
   return (
     <div ref={root} className="shrink-0 sm:relative">
       <button
+        id="holiday-button"
         type="button"
         aria-expanded={open}
         aria-controls="holiday-panel"
         onClick={() => setOpen((o) => !o)}
-        className={`flex h-9 shrink-0 items-center gap-1.5 bg-card hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full pl-2 pr-3 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"}`}
+        className={`flex h-9 shrink-0 items-center gap-1.5 bg-card hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full pl-2 pr-3 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"} ${flag ? "holiday-handoff" : ""}`}
       >
         <SparklesIcon className="size-5 shrink-0 cursor-pointer" />
         <span className="max-w-28 cursor-pointer truncate text-xs font-medium sm:max-w-none">

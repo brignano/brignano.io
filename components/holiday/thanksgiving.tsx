@@ -1,10 +1,7 @@
-import { Field, Glow, t } from "./shared";
+import { Glow, t } from "./shared";
 
-// Harvest at ground level: a low row of pumpkins and wheat along the bottom,
-// leaves blown across on a wind, and a warm sunset glow behind them.
-
-const LEAF = "M20 2C34 10 38 24 32 36c-3 5-8 8-12 8s-9-3-12-8C2 24 6 10 20 2zM20 8v34";
-const COLORS = ["attention", "danger", "larch-deep", "attention", "danger", "larch-deep"];
+// Harvest at ground level: a low row of pumpkins and wheat along the bottom
+// and a warm sunset glow behind them.
 
 function Pumpkin({ x, s = 1, c = "attention" }: { x: number; s?: number; c?: string }) {
   return (
@@ -56,14 +53,6 @@ export default function Thanksgiving() {
           <Wheat x={206} h={40} />
         </svg>
       </div>
-      <Field n={9} wind={2.4} className="hx-tg-leaves">
-        {(i) => (
-          <svg viewBox="0 0 40 46">
-            <path d={LEAF} fill={t(COLORS[i % COLORS.length])} />
-            <path d="M20 8v34" stroke={t("bg")} strokeWidth="1.4" opacity=".5" />
-          </svg>
-        )}
-      </Field>
     </>
   );
 }

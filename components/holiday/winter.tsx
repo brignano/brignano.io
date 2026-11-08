@@ -1,7 +1,7 @@
-import { Field, Glow, t } from "./shared";
+import { Glow, t } from "./shared";
 
-// Deliberately generic: no tree, cross or other symbol. Lights chase along the
-// top, snow falls, and the corners frost over with a pale blue wash.
+// Deliberately generic: no tree, cross or other symbol. Lights twinkle along
+// the top and the corners frost over with a pale blue wash.
 
 const BULBS = ["danger", "attention", "success", "i"];
 
@@ -18,9 +18,6 @@ export default function Winter() {
           </svg>
         ))}
       </div>
-      <Field n={18} className="hx-wn-snow">
-        {(i) => <i style={{ width: 4 + ((i * 3) % 6), height: 4 + ((i * 3) % 6) }} />}
-      </Field>
     </>
   );
 }
