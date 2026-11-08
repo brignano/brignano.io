@@ -8,13 +8,24 @@ import {
   type Holiday,
 } from "@/lib/holidays";
 
-const KEY = "holiday-themes";
+const KEY = "holiday-themes-off";
 const EVENT = "holiday-themes-change";
 
+const readOff = (): string[] => {
+  try {
+    const v = JSON.parse(localStorage.getItem(KEY) ?? "[]");
+    return Array.isArray(v) ? v.filter((x) => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
+};
+
 /**
- * Today's holiday theme, if any, and whether the visitor has turned themes off
- * (remembered in localStorage). The date is only known on the client, so this is
- * `null` until after hydration and the statically generated pages stay cacheable.
+ * Today's holiday theme, if any, and whether the visitor has turned that
+ * holiday's decorations off (remembered per holiday in localStorage, so turning
+ * one off does not silence the next). The date is only known on the client, so
+ * this is `null` until after hydration and the statically generated pages stay
+ * cacheable.
  *
  * Preview any theme with `?holiday=<id>` (and `&day=N` for how far in);
  * `?holiday=off` forces none.
@@ -24,7 +35,7 @@ export function useHoliday() {
     holiday: null,
     day: 0,
   });
-  const [off, setOff] = useState(false);
+  const [offIds, setOffIds] = useState<string[]>([]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -42,13 +53,7 @@ export function useHoliday() {
         : holiday
           ? dayInWindow(holiday, now)
           : 0;
-    const read = () => {
-      try {
-        setOff(localStorage.getItem(KEY) === "off");
-      } catch {
-        /* storage blocked: themes stay on */
-      }
-    };
+    const read = () => setOffIds(readOff());
     /* eslint-disable react-hooks/set-state-in-effect -- the date and storage are only known on the client */
     setFound({ holiday, day });
     read();
@@ -57,15 +62,20 @@ export function useHoliday() {
     return () => window.removeEventListener(EVENT, read);
   }, []);
 
+  const id = found.holiday?.id;
+  const off = id ? offIds.includes(id) : false;
+
   const toggle = useCallback(() => {
+    if (!id) return;
     try {
-      if (localStorage.getItem(KEY) === "off") localStorage.removeItem(KEY);
-      else localStorage.setItem(KEY, "off");
+      const ids = readOff();
+      const next = ids.includes(id) ? ids.filter((x) => x !== id) : [...ids, id];
+      localStorage.setItem(KEY, JSON.stringify(next));
     } catch {
       /* storage blocked: nothing to remember */
     }
     window.dispatchEvent(new Event(EVENT));
-  }, []);
+  }, [id]);
 
   return { ...found, off, toggle };
 }

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { socialLinks } from "@/lib/constants";
-import HolidayNote from "@/components/holiday-note";
 import { OPEN_SHORTCUTS_EVENT } from "@/lib/shortcuts";
 
 export default function Footer() {
@@ -35,7 +34,6 @@ export default function Footer() {
             Copyright © Anthony Brignano {new Date().getFullYear()} All rights
             Reserved
           </small>
-          <HolidayNote />
           {/* Only where there is a keyboard to press: a phone has no use for it. */}
           <button
             type="button"
