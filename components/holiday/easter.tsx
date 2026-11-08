@@ -1,7 +1,7 @@
-import { PINK, mix, t } from "./shared";
+import { Garland, PINK, mix, t } from "./shared";
 
-// A little meadow along the bottom: grass, tulips, eggs tucked in the blades, a
-// bunny looking over the top, and butterflies working across the page.
+// A little meadow along the bottom: grass, tulips, eggs tucked in the blades, and a
+// bunny looking over the top.
 
 const egg = (x: number, c: string, i: number) => (
   <g key={i} transform={`translate(${x} 0)`}>
@@ -18,21 +18,14 @@ const Tulip = ({ x, c }: { x: number; c: string }) => (
   </g>
 );
 
-const Butterfly = ({ n }: { n: number }) => (
-  <div className={`hx hx-ea-fly hx-ea-fly-${n}`}>
-    <svg viewBox="0 0 40 30" fill="none">
-      <g className="hx-ea-wing">
-        <path d="M20 14C14 2 2 2 2 10s8 10 18 4zM20 16c-8 2-14 10-8 14s10-4 8-14z" fill={t(n === 1 ? "i" : "danger")} opacity=".85" />
-        <path d="M20 14c6-12 18-12 18-4s-8 10-18 4zM20 16c8 2 14 10 8 14s-10-4-8-14z" fill={t(n === 1 ? "i" : "danger")} opacity=".85" />
-      </g>
-      <path d="M20 8v20" stroke={t("ink")} strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  </div>
-);
-
 export default function Easter() {
   return (
     <>
+      <Garland
+        unit={(i) => (
+          <path d="M48 9c6 0 9 8 9 13s-4 9-9 9-9-4-9-9 3-13 9-13z" fill={mix(["attention", "i", "danger", "success"][i % 4], 45, "n-0")} stroke={t("n-400")} strokeWidth="1" />
+        )}
+      />
       <div className="hx hx-ea-bunny">
         <svg viewBox="0 0 90 120" fill="none">
           <ellipse cx="28" cy="34" rx="10" ry="32" fill={t("card")} stroke={t("n-400")} strokeWidth="2" />
@@ -66,8 +59,6 @@ export default function Easter() {
         </defs>
         <rect width="100%" height="26" fill="url(#hx-grass)" />
       </svg>
-      <Butterfly n={1} />
-      <Butterfly n={2} />
     </>
   );
 }

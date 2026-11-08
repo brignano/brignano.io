@@ -1,7 +1,7 @@
-import { Field, Glow, t } from "./shared";
+import { Glow, t } from "./shared";
 
-// Light, glowing up: a warm glow breathes along the bottom, diyas flicker in a
-// row, sky lanterns float up, and rangoli fills the top corners.
+// Light, glowing up: a warm glow along the bottom, diyas flickering in a row,
+// and rangoli in the top corners.
 
 function Flame({ x, y }: { x: number; y: number }) {
   return <path className="hx-dw-flame" d={`M${x} ${y}c-4-5-3-9 0-13 3 4 4 8 0 13z`} fill={t("attention")} />;
@@ -35,14 +35,6 @@ export default function Diwali() {
           ))}
         </svg>
       </div>
-      <Field n={6} dir="rise" wind={1.4} className="hx-dw-sky">
-        {() => (
-          <svg viewBox="0 0 30 40" fill="none">
-            <path d="M4 36l3-22q8-12 16 0l3 22z" fill={t("danger")} stroke={t("attention")} strokeWidth="2" />
-            <circle cx="15" cy="30" r="3.5" fill={t("attention")} />
-          </svg>
-        )}
-      </Field>
     </>
   );
 }

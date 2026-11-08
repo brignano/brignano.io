@@ -1,7 +1,7 @@
 import { Glow, ORANGE, PURPLE, t } from "./shared";
 
 // No sprites at all: soft rainbow light spills in along both edges and pools in
-// the corners, drifting slowly. A modern wash rather than an illustration.
+// the corners. A modern wash rather than an illustration.
 
 const RAINBOW = [t("danger"), ORANGE, t("attention"), t("success"), t("i"), PURPLE];
 

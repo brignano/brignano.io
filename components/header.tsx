@@ -12,7 +12,6 @@ import {
 import Link from "next/link";
 import { applyTheme } from "@/lib/theme";
 import HolidayButton from "@/components/holiday-button";
-import HolidayBanner from "@/components/holiday-banner";
 
 // Nav is inline from `sm` up. Below that, five words plus the monogram and the
 // theme toggle measured 371px even at gap-x-2.5: the page scrolled sideways on
@@ -104,6 +103,13 @@ export default function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Tell the page when the header is tucked away, so things hung from its
+  // bottom edge (the holiday garlands, app/holiday.css) can follow it up.
+  const tucked = hidden && !menuOpen;
+  useEffect(() => {
+    document.documentElement.toggleAttribute("data-header-hidden", tucked);
+  }, [tucked]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -211,7 +217,6 @@ export default function Header() {
           <ul className="flex flex-col">{links("menu")}</ul>
         </nav>
       )}
-      <HolidayBanner />
     </header>
   );
 }

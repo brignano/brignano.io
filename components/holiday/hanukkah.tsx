@@ -1,8 +1,8 @@
-import { Field, Glow, t } from "./shared";
+import { Glow, t } from "./shared";
 
 // The menorah lights up as the holiday goes on: one candle the first night, one
 // more each night after, with the shamash (the helper candle) always lit.
-// Silver-blue stars fall slowly and hang in the corners.
+// Silver-blue stars hang in the corners.
 
 const XS = [10, 22.5, 35, 47.5, 72.5, 85, 97.5, 110];
 
@@ -54,13 +54,6 @@ export default function Hanukkah({ day }: { day: number }) {
           })}
         </svg>
       </div>
-      <Field n={9} wind={0.8} className="hx-hk-fall">
-        {() => (
-          <svg viewBox="0 0 60 70" fill="none">
-            <Star />
-          </svg>
-        )}
-      </Field>
     </>
   );
 }
