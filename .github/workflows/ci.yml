@@ -1,15 +1,18 @@
 name: CI
 
-# Every pull request and every push to main runs the same gate: lint, a
+# Every pull request runs the same gate: lint, a
 # production build, Lighthouse against the site's own budgets, and a fold
 # check that screenshots the first screen of each page at phone and desktop
 # width in both themes. A dependency bump or a copy change cannot quietly
 # regress performance, accessibility, or the mobile fold without turning
 # this red.
+#
+# There is no push-to-main trigger on purpose: the PR already ran this gate on
+# the same code, and Vercel deploys production on merge either way, so a run
+# after the merge could only report a problem too late to stop it. Run it by
+# hand from the Actions tab (workflow_dispatch) if main ever needs a check.
 on:
   pull_request:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:

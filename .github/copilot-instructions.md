@@ -99,7 +99,7 @@ This is a personal portfolio website built with Next.js 16, React 19, and Tailwi
 
 ### Environment Setup
 
-- Node.js 22 or higher recommended (see `.github/workflows/copilot-setup-steps.yml`)
+- Node.js 22 or higher recommended (CI pins 22 in `.github/workflows/ci.yml`)
 - Dependencies are installed via `npm ci` in CI/CD
 - Dev Container configuration available in `.devcontainer/`
 
