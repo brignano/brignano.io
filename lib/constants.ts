@@ -325,10 +325,10 @@ export const achievements: Achievement[] = [
     skills: ["CI/CD", "Base-image registry", "Containers"],
   },
   {
-    outcome: "The platform spots where engineers get stuck — live",
+    outcome: "The platform watches its own tools — live",
     detail:
-      "So we fix the real slow-downs instead of guessing. AI assistants can read it too.",
-    skills: ["MCP", "AWS", "DynamoDB", "Snowflake"],
+      "Usage dashboards and a status page anyone can subscribe to, so a problem shows up before the tickets do. AI assistants can read it too.",
+    skills: ["MCP", "AWS", "DynamoDB"],
   },
 ];
 

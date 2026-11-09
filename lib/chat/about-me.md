@@ -20,12 +20,12 @@ engineers ship without thinking about the plumbing.
 
 ## What he's known for at work
 
-- Running The Hartford's internal developer platform end to end — the CLI,
+- Technical lead on The Hartford's internal developer platform — the CLI,
   desktop app and IDE extensions engineers use every day, and the CI/CD and
   DevSecOps toolchain underneath them.
-- Turning platform data into decisions: the DevOps intelligence layer streams
-  pipeline and tooling telemetry so the team can see where developers are
-  actually losing time, rather than guessing.
+- Building telemetry into the platform from day one: usage dashboards and a
+  public health status page, with a Snowflake feed for deeper analysis of
+  where developers lose time still in progress.
 - Making the platform AI-native — MCP servers and skills that let AI agents
   work safely against enterprise CI/CD systems.
 - Large migrations that land on schedule, such as moving 10,000+ repositories
@@ -41,8 +41,8 @@ he spent years as the engineer the platform was supposed to serve.
 
 ## Outside the day job
 
-- Organizes The Hartford's enterprise hackathons, which draw hundreds of
-  engineers a year.
+- Organizes The Hartford's enterprise hackathons; the most recent drew about
+  250 engineers.
 - Mentors associates in the company's Tech & Operations Leadership
   Development Program.
 - Sits on the Central Connecticut State University computer science industry
