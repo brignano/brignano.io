@@ -7,7 +7,7 @@ personalInfo:
   linkedin: https://www.linkedin.com/in/brignano
   github: https://github.com/brignano
 summary: |
-  Senior Staff Platform Engineer and architect focused on enterprise developer experience, internal developer platforms, and AI-native software delivery. I design and scale the systems thousands of engineers rely on across CI/CD, DevOps intelligence, cloud platforms, and AI/ML delivery. I build paved roads and self-service platforms, treating developer experience as a first-class product.
+  Platform engineering leader who treats developer experience as a product. I'm the technical lead on ATLAS, The Hartford's internal developer platform for 4,000+ engineers, and led the company's move of 10,000+ repositories to GitHub Enterprise Cloud with zero downtime. Ten years across support, reliability, full-stack, data, quality, and platform roles mean I design for the engineers a platform serves.
 experience:
   - company: The Hartford
     position: Senior Staff Software Engineer — Enterprise Platform Engineering
@@ -17,14 +17,14 @@ experience:
     summary: |
       Technical Lead for The Hartford's enterprise developer platform and developer experience strategy — the single pane of glass for 4,000+ engineers today, rolling out toward the full 8,000-engineer organization — owning the architecture and evolution of CI/CD, DevOps intelligence, internal developer tooling, and AI-native delivery patterns across the 13,000+ repositories the platform tracks.
     highlights:
-      - Technical lead for ATLAS, the developer platform behind 4,000+ engineers, 13,000+ repositories, and 95,000+ pipelines, leading delivery for 6–8 engineers (10–12 during the GitHub migration)
+      - Technical lead on ATLAS, the developer platform behind 4,000+ engineers, 13,000+ repositories, and 95,000+ pipelines, leading delivery for 6–8 engineers (10–12 during the GitHub migration)
       - Lead technical delivery for a CEO-sponsored initiative making engineer onboarding self-service — a new machine goes from unboxed to building in hours, against a 40+ day hire-to-first-commit baseline
-      - Designed, launched, and delivered ATLAS Desktop, bridging browser, CLI, and IDE so a button on the site runs a native command — now on 2,000+ devices; the unified surface reached 1,000+ engineers in 90 days
-      - Designed and led the GitHub Enterprise Server to Cloud migration — 10,000+ repositories in under 12 months — personally designing changes to 52 integration points, agreed with each owning team, through decommissioning
+      - Designed, launched, and delivered ATLAS Desktop (Electron, TypeScript), bridging browser, CLI, and IDE so a button on the site runs a native command — now on 2,000+ devices; the unified surface reached 1,000+ engineers in 90 days
+      - Designed and led the GitHub Enterprise Server to Cloud migration — 10,000+ repositories in under 12 months — with zero downtime, personally designing changes to 52 integration points and retiring the self-hosted server and its costs
       - Made the platform AI-native with MCP servers and a catalog of 140+ vetted skills, servers, and agents that operate enterprise CI/CD safely, and moved tool-version and scan rules into OPA policy
       - Built telemetry in from day one (OpenTelemetry in the CLI, IDE, and desktop agent) and architected the event-bus pipeline into AWS behind live dashboards and a subscribe-able health status page
-      - Led the response and root-cause analysis for a GKE build-agent CPU outage, then hardened the CLI and pipelines across connectivity, image scoping, registry inference, RBAC, and TLS trust
-      - Won the AIFEE Transformation Champions award and the 2023 Enterprise Tech Data & Cyber Award for the enterprise GitHub Actions rollout, with 2025 recognition for the migration and agentic AI CI/CD work
+      - Led the response and root-cause analysis for a GKE build-agent CPU outage that stalled Harness builds for 80–100 teams, then hardened the CLI and pipelines; no similar incident since
+      - Won the AIFEE Transformation Champions award and the 2023 Enterprise Tech Data & Cyber Award (GitHub Actions rollout); recognized in 2025 for the migration and AI-first development enablement
     technologies:
       - Internal Developer Platforms (IDP)
       - GitHub Enterprise Cloud
@@ -42,10 +42,11 @@ experience:
     endDate: 2023
     summary: Led Personal Insurance test automation modernization and helped lay the foundations of a shared enterprise automation platform.
     highlights:
-      - Tech lead, product owner, and Scrum Master for a 3–5 engineer offshore team modernizing test automation; cut test execution time by about 30%
-      - Automated validation of state-specific customer forms (XML) and shared it across multiple program teams
+      - Tech lead, product owner, and Scrum Master for a 3–5 engineer offshore team modernizing Personal Insurance test automation across coverage, test data, and observability
+      - Cut the new policy platform's front-end test runs from hours to minutes by making the core library idempotent and removing blind sleeps
+      - Automated customer-form validation for every supported state, replacing manual checks for the whole QA team
+      - Helped build the shared Playwright framework; Playwright is now the company's front-end testing standard
       - Built the database API and front end for Hawkeye, the Personal Lines test-data tool
-      - Helped build the shared enterprise Playwright framework, with its contribution standards and decision log
     technologies:
       - Playwright
       - Selenium
@@ -78,7 +79,8 @@ experience:
     endDate: 2020
     summary: Built and supported customer-facing policy quoting and issuance platforms for Personal Lines insurance.
     highlights:
-      - Developed Java microservices and Angular-based frontend features supporting quoting and issuance
+      - Helped build the entire front end of the new home insurance quoting and issuance platform in Angular, with a new team I coached on front-end best practices
+      - Developed Java microservices supporting quoting and issuance
       - Integrated Oracle databases and third-party services for pricing and issuance
     technologies:
       - Java
@@ -109,9 +111,9 @@ experience:
     location: Windsor, Connecticut · On-site
     startDate: 2016
     endDate: 2017
-    summary: Drove delivery and production stability for Personal Insurance policy quoting and issuance.
+    summary: Drove delivery and production stability for internal Personal Insurance applications.
     highlights:
-      - Led a 6–8 person Agile scrum team designing a new quoting and issuance application
+      - Led a 6–8 person Agile scrum team designing a new internal CRM application
       - Personally closed about 1,500 of the team's roughly 4,000 production defects and incidents
       - Integrated multiple internal and external services to streamline agent workflows
     technologies:
@@ -209,3 +211,27 @@ education:
       - Dean's List
       - President's List
       - Upsilon Pi Epsilon Honor Society
+projects:
+  - name: Sites
+    description: Fast, phone-friendly websites for local businesses that owners update themselves; live with real clients on their own domains.
+    technologies:
+      - Cloudflare Workers
+      - JavaScript
+      - Cloudflare Access
+    url: https://sites.brignano.io
+  - name: Guidebook
+    description: A Chrome extension that walks anyone through a task on any website, step by step; guides are recorded by doing the task once and can be checked in CI.
+    technologies:
+      - TypeScript
+      - Browser extension
+      - Claude
+      - Playwright
+    url: https://chromewebstore.google.com/detail/kagfmiadbbingdaehochbgliomjdhfae
+  - name: Driftwood
+    description: Architecture as code — a versioned model in git, checked continuously against live infrastructure, with drift arriving as a pull request.
+    technologies:
+      - TypeScript
+      - Terraform
+      - Node
+    url: https://www.npmjs.com/package/@brignano/driftwood
+    github: https://github.com/brignano/driftwood
