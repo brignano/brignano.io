@@ -437,12 +437,12 @@ export default function Home() {
                 </span>
               </summary>
               <p className="mt-3 border-t border-dashed border-line pt-3 text-sm text-ink-soft leading-relaxed">
-                Under the hood: a real-time event pipeline (AWS, DynamoDB,
-                Snowflake) with ML analysis of developer pain points;
-                observability through Splunk and Dynatrace; and an end-to-end
-                CI/CD and DevSecOps toolchain — Jenkins, GitHub Actions,
-                Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx —
-                supporting 95,000+ pipelines, with a unified pipeline model
+                Under the hood: a real-time event pipeline (AWS, DynamoDB) with
+                a Snowflake feed for ML analysis of developer pain points in
+                progress; observability through Splunk and Dynatrace; and an
+                end-to-end CI/CD and DevSecOps toolchain — Jenkins, GitHub
+                Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx
+                — supporting 95,000+ pipelines, with a unified pipeline model
                 designed to consolidate them onto platform tooling. AI features
                 ship as MCP-based skills.
               </p>
