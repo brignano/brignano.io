@@ -410,7 +410,7 @@ export default function Home() {
                 "Leading a CEO-sponsored push to make new-engineer setup self-service — the platform already gets a fresh machine productive in hours, down from a 40+ day wait, as it rolls out team-wide.",
                 "One consistent set of tools — a command-line app, a desktop app, and editor add-ons — that 1,000+ engineers adopted in the first 90 days.",
                 "One command builds any project, the same way on every laptop, with nothing to set up per project. Running that same build on platform compute instead of the laptop is in progress.",
-                "Live insight into where engineers lose time: the platform watches its own tools, surfaces the biggest slow-downs, and posts a public health status page anyone can subscribe to.",
+                "Live insight into the platform's own tools: usage dashboards, and a public health status page anyone can subscribe to.",
                 "AI help built right in — ready-to-use skills and assistants that plug into the platform's own data.",
                 "Keeping the automated build-test-release systems running reliably across thousands of projects.",
               ].map((item) => (
@@ -438,8 +438,8 @@ export default function Home() {
               </summary>
               <p className="mt-3 border-t border-dashed border-line pt-3 text-sm text-ink-soft leading-relaxed">
                 Under the hood: a real-time event pipeline (AWS, DynamoDB) with
-                a Snowflake feed for ML analysis of developer pain points in
-                progress; observability through Splunk and Dynatrace; and an
+                a Snowflake feed, in progress, for ML analysis of developer pain
+                points; observability through Splunk and Dynatrace; and an
                 end-to-end CI/CD and DevSecOps toolchain — Jenkins, GitHub
                 Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx
                 — supporting 95,000+ pipelines, with a unified pipeline model

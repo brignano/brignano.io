@@ -13,7 +13,8 @@ export interface SocialLink {
 // Exported so the generated social card (app/opengraph-image.tsx) renders the
 // same name + tagline as the site — single source of truth, no drift.
 export const SITE_NAME = "Anthony Brignano";
-export const SITE_TAGLINE = "I build the platforms thousands of engineers ship on";
+export const SITE_TAGLINE =
+  "I build the platforms thousands of engineers ship on";
 // The hero eyebrow. Lives here for the same reason the tagline does: the social
 // card reproduces the landing-page fold, and the two drifted apart last time
 // this string only existed inside app/page.tsx.
@@ -39,7 +40,9 @@ export const siteMetadata: Metadata = {
     ],
     // Apple surfaces (share sheet, iMessage previews, home-screen bookmarks)
     // ignore SVG favicons and want a PNG apple-touch-icon.
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   manifest: "/manifest.json",
   // The social card image (og:image / twitter:image) is supplied by the
@@ -325,10 +328,10 @@ export const achievements: Achievement[] = [
     skills: ["CI/CD", "Base-image registry", "Containers"],
   },
   {
-    outcome: "The platform spots where engineers get stuck — live",
+    outcome: "The platform watches its own tools — live",
     detail:
-      "So we fix the real slow-downs instead of guessing. AI assistants can read it too.",
-    skills: ["MCP", "AWS", "DynamoDB", "Snowflake"],
+      "Usage dashboards and a status page anyone can subscribe to, so a problem shows up before the tickets do. AI assistants can read it too.",
+    skills: ["MCP", "AWS", "DynamoDB"],
   },
 ];
 
@@ -353,10 +356,8 @@ export const glossary: Record<string, string> = {
     "A shared library of pre-built starting points, so every project begins from the same trusted setup.",
   Containers:
     "Lightweight, self-contained boxes that package software so it runs the same on any machine.",
-  MCP:
-    "Model Context Protocol — a common way for AI assistants to plug into tools and data.",
-  AWS:
-    "Amazon Web Services — Amazon's cloud, where the software actually runs.",
+  MCP: "Model Context Protocol — a common way for AI assistants to plug into tools and data.",
+  AWS: "Amazon Web Services — Amazon's cloud, where the software actually runs.",
   DynamoDB:
     "A fast cloud database from Amazon for storing and looking up data at scale.",
   Snowflake:
@@ -475,7 +476,13 @@ export const projects: Project[] = [
     title: "Guidebook",
     description:
       "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A Chrome extension highlights each thing to click and says in plain words what to do. Record a guide by doing the task once, share it with a link, or browse the guide library. App teams can embed the same engine and check every guide in CI.",
-    tech: ["TypeScript", "Browser extension", "Claude", "Playwright", "Supabase"],
+    tech: [
+      "TypeScript",
+      "Browser extension",
+      "Claude",
+      "Playwright",
+      "Supabase",
+    ],
     status: "live",
     kind: "product",
     // Featured over the terminal card: an AI-native tool is the stronger
@@ -500,7 +507,10 @@ export const projects: Project[] = [
     featured: true,
     links: [
       { label: "Open Driftwood", url: "https://driftwood.brignano.io" },
-      { label: "npm", url: "https://www.npmjs.com/package/@brignano/driftwood" },
+      {
+        label: "npm",
+        url: "https://www.npmjs.com/package/@brignano/driftwood",
+      },
       { label: "Source", url: "https://github.com/brignano/driftwood" },
     ],
   },
@@ -526,7 +536,10 @@ export const projects: Project[] = [
     status: "live",
     kind: "product",
     links: [
-      { label: "Download", url: "https://github.com/brignano/breakeven/releases/latest" },
+      {
+        label: "Download",
+        url: "https://github.com/brignano/breakeven/releases/latest",
+      },
       { label: "Source", url: "https://github.com/brignano/breakeven" },
     ],
   },
