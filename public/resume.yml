@@ -17,34 +17,35 @@ experience:
     summary: |
       Technical Lead for The Hartford's enterprise developer platform and developer experience strategy — the single pane of glass for 4,000+ engineers today, rolling out toward the full 8,000-engineer organization — owning the architecture and evolution of CI/CD, DevOps intelligence, internal developer tooling, and AI-native delivery patterns across the 13,000+ repositories the platform tracks.
     highlights:
-      - Lead the strategy, design, and delivery of the internal developer platform used by 4,000+ engineers today and rolling out toward the full 8,000-engineer organization, including a CEO-sponsored initiative making developer onboarding self-service — the platform provisions a new machine to productive in hours, down from a 40+ day baseline
-      - Shipped a unified developer surface across a custom CLI, desktop app, and IDE extensions, reaching 1,000+ active engineers in the first 90 days
-      - Led team adoption and enablement of "one build command, any stack" — context-aware builds that run identically locally and in CI against a custom base-image registry; fully remote builds on virtual build agents are in progress
-      - Architected a real-time DevOps intelligence layer — an event bus streaming pipeline plus CLI/IDE telemetry into AWS, DynamoDB, and Snowflake for ML analysis of developer pain points — and upgraded platform observability (Splunk, Dynatrace) behind a live health status page with subscribe-able alerts
-      - Made the platform AI-native — MCP servers and out-of-the-box skills that let AI agents safely query and operate enterprise CI/CD systems, plus standardized patterns and pipelines carrying Google Cloud and Vertex AI workloads to production
-      - Operate the enterprise CI/CD and DevSecOps toolchain end to end (Jenkins, GitHub Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx), supporting 95,000+ pipelines, with a unified pipeline model designed to consolidate them onto platform tooling
-      - Led the enterprise migration from GitHub Enterprise Server to GitHub Enterprise Cloud, modernizing 10,000+ repositories in under 12 months
-      - Recognized with the 2023 Enterprise Tech Data & Cyber Award for the enterprise GitHub Actions implementation and its adoption
+      - Technical lead for ATLAS, the developer platform behind 4,000+ engineers, 13,000+ repositories, and 95,000+ pipelines, leading delivery for 6–8 engineers (10–12 during the GitHub migration)
+      - Lead technical delivery for a CEO-sponsored initiative making engineer onboarding self-service — a new machine goes from unboxed to building in hours, against a 40+ day hire-to-first-commit baseline
+      - Designed, launched, and delivered ATLAS Desktop, bridging browser, CLI, and IDE so a button on the site runs a native command — now on 2,000+ devices; the unified surface reached 1,000+ engineers in 90 days
+      - Designed and led the GitHub Enterprise Server to Cloud migration — 10,000+ repositories in under 12 months — personally designing changes to 52 integration points, agreed with each owning team, through decommissioning
+      - Made the platform AI-native with MCP servers and a catalog of 140+ vetted skills, servers, and agents that operate enterprise CI/CD safely, and moved tool-version and scan rules into OPA policy
+      - Built telemetry in from day one (OpenTelemetry in the CLI, IDE, and desktop agent) and architected the event-bus pipeline into AWS behind live dashboards and a subscribe-able health status page
+      - Led the response and root-cause analysis for a GKE build-agent CPU outage, then hardened the CLI and pipelines across connectivity, image scoping, registry inference, RBAC, and TLS trust
+      - Won the AIFEE Transformation Champions award and the 2023 Enterprise Tech Data & Cyber Award for the enterprise GitHub Actions rollout, with 2025 recognition for the migration and agentic AI CI/CD work
     technologies:
       - Internal Developer Platforms (IDP)
       - GitHub Enterprise Cloud
       - CI/CD (GitHub Actions, Harness, Jenkins, AWS CodePipeline, uDeploy)
       - DevSecOps (Checkmarx, SonarQube, Nexus)
       - Cloud & Data (AWS, DynamoDB, Snowflake, Google Cloud)
-      - Observability (Splunk, Dynatrace)
+      - Observability (OpenTelemetry, Splunk, Dynatrace)
       - AI (MCP)
+      - Policy as Code (OPA)
       - Infrastructure as Code (Terraform)
   - company: The Hartford
     position: Staff Software Engineer — Enterprise Quality Engineering
     location: Hartford, CT
     startDate: 2021
     endDate: 2023
-    summary: Drove standardization of enterprise quality engineering platforms, enabling scalable, reliable end-to-end validation.
+    summary: Led Personal Insurance test automation modernization and helped lay the foundations of a shared enterprise automation platform.
     highlights:
-      - Led multiple teams delivering automated testing solutions across critical systems
-      - Built enterprise test data management and automated validation platforms
-      - Established SDLC and automation standards across the organization
-      - Reduced end-to-end test execution time by 30%+
+      - Tech lead, product owner, and Scrum Master for a 3–5 engineer offshore team modernizing test automation; cut test execution time by about 30%
+      - Automated validation of state-specific customer forms (XML) and shared it across multiple program teams
+      - Built the database API and front end for Hawkeye, the Personal Lines test-data tool
+      - Helped build the shared enterprise Playwright framework, with its contribution standards and decision log
     technologies:
       - Playwright
       - Selenium
@@ -58,14 +59,16 @@ experience:
     endDate: 2021
     summary: Owned modernization of enterprise batch processing pipelines supporting financial and regulatory reporting.
     highlights:
-      - Transformed policy administration data into general ledger flat files for premium reporting
-      - Consolidated 108 legacy applications into a single modern policy administration platform
+      - Helped choose the vendor platform that replaced 108 legacy applications, then built its premium integration (NPPS), which has since processed hundreds of millions of dollars in premium
+      - Learned .NET and reverse-engineered legacy mainframe flat files to design the transformer that turns policy data into the general-ledger files premium reporting depends on
+      - Built in failed-transaction reprocessing, balancing, recovery playbooks, and monitoring
+      - Recognized in 2021 for NPPS design direction and for challenging the status quo
       - Established CI/CD, monitoring, and reliability standards for batch delivery
     technologies:
-      - Jenkins
-      - uDeploy
       - .NET
       - Oracle
+      - Jenkins
+      - uDeploy
       - Dynatrace
       - Sumo Logic
   - company: The Hartford
@@ -77,7 +80,6 @@ experience:
     highlights:
       - Developed Java microservices and Angular-based frontend features supporting quoting and issuance
       - Integrated Oracle databases and third-party services for pricing and issuance
-      - Resolved nearly 3,000 production defects while sustaining continuous availability of the quoting and issuance platform
     technologies:
       - Java
       - Angular
@@ -91,26 +93,27 @@ experience:
     endDate: 2018
     summary: Owned application platforms and production operations, focusing on reliability, modernization, and DevOps enablement across the application portfolio.
     highlights:
+      - Instrumented Dynatrace and Splunk monitoring and alerting across most of the line-of-business applications
+      - Moved the line-of-business applications from AnthillPro to GitHub
+      - Carried 24/7 on-call and led overnight triage and restoration of high-impact production incidents
       - Served as the primary point of ownership for full-stack applications across software, data, and infrastructure
-      - Led triage and restoration of high-impact production incidents
-      - Championed migration to open-source platforms, containerization, and public cloud
-      - Led adoption of DevOps tools and practices across the organization's portfolio
     technologies:
       - .NET
       - Oracle
       - Jenkins
-      - Docker
-      - AWS
+      - GitHub
+      - Dynatrace
+      - Splunk
   - company: The Hartford
     position: Developer — Production Support
     location: Windsor, Connecticut · On-site
     startDate: 2016
     endDate: 2017
-    summary: Drove delivery and production stability for an internal policy quoting and issuance application, supporting Personal Insurance agents.
+    summary: Drove delivery and production stability for Personal Insurance policy quoting and issuance.
     highlights:
-      - Led an Agile scrum team to design a new internal quoting and issuance application
+      - Led a 6–8 person Agile scrum team designing a new quoting and issuance application
+      - Personally closed about 1,500 of the team's roughly 4,000 production defects and incidents
       - Integrated multiple internal and external services to streamline agent workflows
-      - Resolved 1,500+ production defects and incidents
     technologies:
       - .NET
       - Oracle
@@ -121,11 +124,11 @@ experience:
 leadership:
   - organization: Enterprise Hackathons
     role: Lead / Organizer
-    description: Lead and organize The Hartford's enterprise hackathons, drawing hundreds of engineers each year.
-    details: Lead and organize The Hartford's enterprise hackathons, drawing hundreds of engineers each year. Every event takes months of planning — authoring the challenges, standing up environments and starter tooling, setting scoring criteria and prepping judges, and running the logistics of space, food, and prizes.
+    description: Lead and organize The Hartford's enterprise hackathons; the most recent drew about 250 engineers.
+    details: Lead and organize The Hartford's enterprise hackathons; the most recent drew about 250 engineers. Every event takes months of planning — authoring the challenges, standing up environments and starter tooling, setting scoring criteria and prepping judges, and running the logistics of space, food, and prizes.
   - organization: Leadership Development Program
     role: Rotation Manager & Career Coach
-    description: Mentor emerging leaders in the company's Tech & Operations Leadership Development Program — managing rotational assignments and coaching associates on long-term career growth.
+    description: Mentor emerging leaders in the company's Tech & Operations Leadership Development Program — managing rotational assignments (one direct report today) and coaching associates (two today) on long-term career growth.
   - organization: Central Connecticut State University — Computer Science Industry Advisory Board
     role: Member
     description: Judge senior projects each semester and help shape the computer science curriculum.
