@@ -8,11 +8,10 @@ Closes #
 
 ## UI changes
 
-<!-- CLAUDE.md "Wireframes before UI work". Tick one. -->
+<!-- Fleet rule "Wireframes before build" (brignano/ai-tools fleet/README.md). Tick one. -->
 
-- [ ] No visible change, or a small tweak or fix (exempt from wireframes)
-- [ ] Substantial UI/UX change: wireframes (phone + desktop) approved by Anthony before building: <!-- link to proposals/wireframes/<slug>.html and the approval -->
-- [ ] Before/after screenshots attached (phone first, light and dark), checked against the approved wireframe
+- [ ] Not a substantial UI/UX change (exempt)
+- [ ] Wireframes approved before building: <!-- link to proposals/wireframes/<slug>.html and the approval -->
 
 ## Release
 
