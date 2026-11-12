@@ -26,6 +26,14 @@ This is a personal portfolio website built with Next.js 16, React 19, and Tailwi
 - `public/` - Static assets (images, favicon, resume.json, robots.txt)
 - `types/` - TypeScript type definitions
 
+## Wireframes before UI work
+
+Before building any substantial UI or UX change (a new page, section,
+component or flow, or a change to an existing page's layout or structure),
+make wireframes at phone (390px) and desktop (1280px) widths, static or
+interactive, and get Anthony's explicit approval first. Small tweaks and fixes
+are exempt. Details: `CLAUDE.md` and `proposals/wireframes/README.md`.
+
 ## Coding Conventions
 
 ### TypeScript
