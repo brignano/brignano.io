@@ -3,7 +3,7 @@ import { Glow, t } from "./shared";
 // Deliberately generic: no tree, cross or other symbol. Lights twinkle along
 // the top and the corners frost over with a pale blue wash.
 
-const BULBS = ["danger", "attention", "success", "i"];
+const BULBS = ["danger", "attention", "success", "i-ink"];
 
 export default function Winter() {
   return (

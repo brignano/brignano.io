@@ -115,9 +115,9 @@ html[data-holiday] body {
 /* Winter holidays: lights and frost ─────────────────────────────────── */
 .hx-g-winter {
   background:
-    radial-gradient(40% 30% at 0% 0%, color-mix(in srgb, var(--i) 16%, transparent), transparent),
-    radial-gradient(40% 30% at 100% 0%, color-mix(in srgb, var(--i) 16%, transparent), transparent),
-    radial-gradient(70% 20% at 50% 110%, color-mix(in srgb, var(--i) 10%, transparent), transparent);
+    radial-gradient(40% 30% at 0% 0%, color-mix(in srgb, var(--i-ink) 16%, transparent), transparent),
+    radial-gradient(40% 30% at 100% 0%, color-mix(in srgb, var(--i-ink) 16%, transparent), transparent),
+    radial-gradient(70% 20% at 50% 110%, color-mix(in srgb, var(--i-ink) 10%, transparent), transparent);
 }
 .hx-wn-lights { top: 0; left: 0; display: flex; width: 100%; overflow: hidden; }
 .hx-wn-lights svg { flex: 0 0 96px; width: 96px; height: 30px; }
@@ -125,8 +125,8 @@ html[data-holiday] body {
 /* Hanukkah: a menorah that lights up night by night ───────────────────── */
 .hx-g-hanukkah {
   background:
-    radial-gradient(40% 30% at 0% 100%, color-mix(in srgb, var(--i) 20%, transparent), transparent),
-    radial-gradient(40% 30% at 100% 0%, color-mix(in srgb, var(--i) 12%, transparent), transparent);
+    radial-gradient(40% 30% at 0% 100%, color-mix(in srgb, var(--i-ink) 20%, transparent), transparent),
+    radial-gradient(40% 30% at 100% 0%, color-mix(in srgb, var(--i-ink) 12%, transparent), transparent);
 }
 .hx-hk-menorah { left: clamp(10px, 2vw, 30px); bottom: 6px; width: clamp(76px, 8vw, 112px); }
 .hx-hk-star { top: 0; width: clamp(34px, 3.5vw, 50px); height: auto; }
@@ -201,7 +201,7 @@ html[data-holiday] body {
 .hx-g-holi {
   background:
     radial-gradient(40% 22% at 8% 108%, color-mix(in srgb, var(--danger) 22%, transparent), transparent),
-    radial-gradient(40% 22% at 92% 108%, color-mix(in srgb, var(--i) 22%, transparent), transparent),
+    radial-gradient(40% 22% at 92% 108%, color-mix(in srgb, var(--i-ink) 22%, transparent), transparent),
     radial-gradient(40% 22% at 50% 112%, color-mix(in srgb, var(--attention) 18%, transparent), transparent);
 }
 .hx-hl { width: clamp(90px, 12vw, 170px); height: auto; opacity: 0.6; }
@@ -243,7 +243,7 @@ html[data-holiday] body {
 
 /* Eid: dusk sky, crescent and stars, glowing lanterns ─────────────────── */
 .hx-g-eid {
-  background: linear-gradient(180deg, color-mix(in srgb, var(--i) 14%, transparent), transparent 180px);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--i-ink) 14%, transparent), transparent 180px);
 }
 .hx-ei-moon {
   top: clamp(6px, 2vw, 28px);
@@ -261,7 +261,7 @@ html[data-holiday] body {
 .hx-g-pride {
   background:
     radial-gradient(34% 26% at 0% 0%, color-mix(in srgb, var(--danger) 16%, transparent), transparent),
-    radial-gradient(34% 26% at 100% 0%, color-mix(in srgb, var(--i) 16%, transparent), transparent),
+    radial-gradient(34% 26% at 100% 0%, color-mix(in srgb, var(--i-ink) 16%, transparent), transparent),
     radial-gradient(34% 26% at 0% 100%, color-mix(in srgb, var(--success) 16%, transparent), transparent),
     radial-gradient(34% 26% at 100% 100%, color-mix(in srgb, var(--attention) 16%, transparent), transparent);
 }

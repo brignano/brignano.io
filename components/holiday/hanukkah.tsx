@@ -11,7 +11,7 @@ function Flame({ x, y }: { x: number; y: number }) {
 }
 
 const Star = () => (
-  <g stroke={t("i")} strokeWidth="3" strokeLinejoin="round" fill="none">
+  <g stroke={t("i-ink")} strokeWidth="3" strokeLinejoin="round" fill="none">
     <path d="M30 34l17 30H13z" />
     <path d="M30 70L13 40h34z" />
   </g>
@@ -47,7 +47,7 @@ export default function Hanukkah({ day }: { day: number }) {
             const isOn = tall || on.has(x);
             return (
               <g key={x}>
-                <rect x={x - 3} y={top} width="6" height={tall ? 18 : 14} fill={t("i")} />
+                <rect x={x - 3} y={top} width="6" height={tall ? 18 : 14} fill={t("i-ink")} />
                 {isOn ? <Flame x={x} y={top - 1} /> : null}
               </g>
             );

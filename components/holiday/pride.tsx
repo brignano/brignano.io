@@ -3,7 +3,7 @@ import { Glow, ORANGE, PURPLE, t } from "./shared";
 // No sprites at all: soft rainbow light spills in along both edges and pools in
 // the corners. A modern wash rather than an illustration.
 
-const RAINBOW = [t("danger"), ORANGE, t("attention"), t("success"), t("i"), PURPLE];
+const RAINBOW = [t("danger"), ORANGE, t("attention"), t("success"), t("i-ink"), PURPLE];
 
 export default function Pride() {
   const stops = RAINBOW.join(", ");

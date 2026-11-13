@@ -7,10 +7,10 @@ export const t = (v: string) => `var(--${v})`;
 export const mix = (a: string, pct: number, b: string) =>
   `color-mix(in srgb, var(--${a}) ${pct}%, var(--${b}))`;
 
-export const PURPLE = mix("i", 60, "danger");
+export const PURPLE = mix("i-ink", 60, "danger");
 export const ORANGE = mix("danger", 45, "attention");
 export const PINK = mix("danger", 45, "n-0");
-export const SKY = mix("i", 55, "n-0");
+export const SKY = mix("i-ink", 55, "n-0");
 
 export const HEART = "M12 21C-6 8 4-2 12 6c8-8 18 2 0 15z";
 

@@ -14,9 +14,9 @@ export default function Diwali() {
   const rangoli = (
     <svg viewBox="0 0 120 120" fill="none">
       {petals}
-      <circle cx="120" cy="0" r="62" stroke={t("i")} strokeWidth="3" strokeDasharray="2 7" strokeLinecap="round" />
+      <circle cx="120" cy="0" r="62" stroke={t("i-ink")} strokeWidth="3" strokeDasharray="2 7" strokeLinecap="round" />
       <circle cx="120" cy="0" r="92" stroke={t("attention")} strokeWidth="3" strokeDasharray="1 8" strokeLinecap="round" />
-      <circle cx="120" cy="0" r="14" fill={t("i")} />
+      <circle cx="120" cy="0" r="14" fill={t("i-ink")} />
     </svg>
   );
   return (
