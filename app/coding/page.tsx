@@ -55,6 +55,9 @@ async function safeFetch<T>(path: string, revalidate?: number) {
   try {
     return { data: (await fetchWaka(path, revalidate)) as T, error: null };
   } catch (e) {
+    // Without this the page quietly shows its fallback and the cause never
+    // reaches the Vercel logs.
+    console.error(`[coding] WakaTime fetch ${path} failed:`, e);
     return { data: null, error: e as Error };
   }
 }
