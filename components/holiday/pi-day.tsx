@@ -14,12 +14,12 @@ export default function PiDay() {
         π
       </div>
       <svg className="hx hx-pi-dial" viewBox="0 0 80 80" fill="none">
-        <circle cx="40" cy="40" r="30" stroke={t("i")} strokeWidth="2" />
+        <circle cx="40" cy="40" r="30" stroke={t("i-ink")} strokeWidth="2" />
         <g className="hx-pi-sweep">
-          <line x1="40" y1="40" x2="70" y2="40" stroke={t("i")} strokeWidth="2" strokeLinecap="round" />
-          <circle cx="70" cy="40" r="3.5" fill={t("i")} />
+          <line x1="40" y1="40" x2="70" y2="40" stroke={t("i-ink")} strokeWidth="2" strokeLinecap="round" />
+          <circle cx="70" cy="40" r="3.5" fill={t("i-ink")} />
         </g>
-        <circle cx="40" cy="40" r="2.5" fill={t("i")} />
+        <circle cx="40" cy="40" r="2.5" fill={t("i-ink")} />
       </svg>
       <div className="hx hx-pi-ticker">
         <div>

@@ -37,7 +37,7 @@ export default function Eid() {
         <Fanous drop={18} w={28} />
       </div>
       {STARS.map(([x, y, s, d], i) => (
-        <Sparkle key={i} className="hx-ei-star" color={i % 2 ? "i" : "attention"} style={{ left: x, top: y, width: s, height: s, animationDelay: `${d}s` }} />
+        <Sparkle key={i} className="hx-ei-star" color={i % 2 ? "i-ink" : "attention"} style={{ left: x, top: y, width: s, height: s, animationDelay: `${d}s` }} />
       ))}
     </>
   );

@@ -3,9 +3,9 @@ import { Sparkle, t, vars } from "./shared";
 // Fireworks frozen mid-burst along the edges of the page.
 
 const BURSTS: [string, string, number, string, string][] = [
-  ["4%", "16%", 0, "attention", "i"],
-  ["88%", "10%", 2.4, "i", "attention"],
-  ["9%", "52%", 4.8, "i", "danger"],
+  ["4%", "16%", 0, "attention", "i-ink"],
+  ["88%", "10%", 2.4, "i-ink", "attention"],
+  ["9%", "52%", 4.8, "i-ink", "danger"],
   ["91%", "46%", 1.2, "attention", "success"],
 ];
 
@@ -36,7 +36,7 @@ export default function NewYear() {
         </div>
       ))}
       <Sparkle className="hx-ny-spark" style={{ left: "13%", top: "30%" }} />
-      <Sparkle className="hx-ny-spark" style={{ left: "84%", top: "26%", animationDelay: "-1.5s" }} color="i" />
+      <Sparkle className="hx-ny-spark" style={{ left: "84%", top: "26%", animationDelay: "-1.5s" }} color="i-ink" />
     </>
   );
 }

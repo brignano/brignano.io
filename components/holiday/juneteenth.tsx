@@ -11,12 +11,12 @@ export default function Juneteenth() {
     <>
       <svg className="hx hx-jt-mark" viewBox="0 0 300 300" fill="none">
         <path d="M20 250C20 120 110 30 250 30" stroke={t("danger")} strokeWidth="10" strokeLinecap="round" />
-        <path d={STAR} transform="translate(60 60) scale(3.2)" fill={t("i")} />
+        <path d={STAR} transform="translate(60 60) scale(3.2)" fill={t("i-ink")} />
       </svg>
       <div className="hx hx-jt-ribbon">
         <i style={{ background: t("danger") }} />
         <i style={{ background: t("n-300") }} />
-        <i style={{ background: t("i") }} />
+        <i style={{ background: t("i-ink") }} />
       </div>
       <svg className="hx hx-jt-star" viewBox="0 0 60 60" fill={t("danger")}>
         <path d={STAR} />

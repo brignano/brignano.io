@@ -82,7 +82,7 @@ export default function HolidayButton() {
           {fresh && (
             <span
               aria-hidden="true"
-              className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-interactive ring-2 ring-card"
+              className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-interactive-ink ring-2 ring-card"
             />
           )}
           {fresh && <span className="sr-only">(new)</span>}

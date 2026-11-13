@@ -3,7 +3,7 @@ import { Garland, HEART, Sparkle, t } from "./shared";
 // Shamrocks strung along the top; a faint rainbow rises out of the bottom of
 // the page and lands in a pot of gold.
 
-const BANDS = ["danger", "attention", "success", "i"];
+const BANDS = ["danger", "attention", "success", "i-ink"];
 
 export default function StPatricks() {
   return (

@@ -70,8 +70,8 @@ export default function HighlightCard({
               }}
               className={`text-xs px-2.5 py-1 rounded-full border transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink ${
                 isOpen
-                  ? "border-interactive bg-interactive-surface text-interactive-ink"
-                  : "border-line-strong text-ink-soft hover:border-interactive hover:text-interactive-ink"
+                  ? "border-interactive-ink bg-interactive-surface text-interactive-ink"
+                  : "border-line-strong text-ink-soft hover:border-interactive-ink hover:text-interactive-ink"
               }`}
             >
               {skill}

@@ -23,7 +23,7 @@ export default function Easter() {
     <>
       <Garland
         unit={(i) => (
-          <path d="M48 9c6 0 9 8 9 13s-4 9-9 9-9-4-9-9 3-13 9-13z" fill={mix(["attention", "i", "danger", "success"][i % 4], 45, "n-0")} stroke={t("n-400")} strokeWidth="1" />
+          <path d="M48 9c6 0 9 8 9 13s-4 9-9 9-9-4-9-9 3-13 9-13z" fill={mix(["attention", "i-ink", "danger", "success"][i % 4], 45, "n-0")} stroke={t("n-400")} strokeWidth="1" />
         )}
       />
       <div className="hx hx-ea-bunny">
@@ -40,7 +40,7 @@ export default function Easter() {
       </div>
       <div className="hx hx-ea-eggs">
         <svg viewBox="0 0 170 64" fill="none">
-          {[egg(0, "attention", 0), egg(66, "i", 1), egg(128, "danger", 2)]}
+          {[egg(0, "attention", 0), egg(66, "i-ink", 1), egg(128, "danger", 2)]}
         </svg>
       </div>
       <div className="hx hx-ea-tulips">
@@ -48,7 +48,7 @@ export default function Easter() {
           <Tulip x={4} c="danger" />
           <Tulip x={56} c="attention" />
           <Tulip x={110} c="danger" />
-          <Tulip x={164} c="i" />
+          <Tulip x={164} c="i-ink" />
         </svg>
       </div>
       <svg className="hx hx-ea-grass" height="26" fill="none">

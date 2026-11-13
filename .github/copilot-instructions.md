@@ -53,9 +53,12 @@ implementation: the "Wireframes before build" rule in brignano/ai-tools
 ### Styling
 
 - Use TailwindCSS utility classes for styling
-- Follow dark mode pattern: `dark:bg-zinc-900 bg-zinc-100` (dark class first)
-- Use zinc color palette for neutral colors
-- Use semantic color classes like `primary-color` when defined
+- Colours come from the `@brignano/design` package (pinned in `package.json`, imported in `app/globals.css`). Use its bridged utilities (`bg-bg`, `bg-card`, `text-ink`, `text-ink-soft`, `border-line`, `bg-interactive`, `text-interactive-ink`), never Tailwind's stock palette (`zinc-*`, `blue-*`) and never a hex
+- The tokens switch with the theme on their own, so most colours need no `dark:` variant
+- A filled button is `bg-interactive hover:bg-interactive-hover text-on-interactive` (the label is white in both themes). `interactive-hover` is a fill only: text that changes colour on hover uses `hover:text-interactive-ink-hover`, never `hover:text-interactive-hover`
+- `bg-interactive` / `--i` is only a fill behind a `text-on-interactive` label. Every other blue mark (borders and hover borders, the nav underline, dots, holiday art and glows in `app/holiday.css` and `components/holiday/`) uses the ink: `border-interactive-ink`, `bg-interactive-ink`, `--i-ink`. In dark the fill is a deep blue that reads as unlit on the page
+- The site keeps the family amber mark: do not set `data-mark`
+- Values that cannot read a CSS variable are copied from the package and must move with it: `THEME_COLORS` in `lib/theme.ts`, the chart fallbacks in `components/stats/chart-colors.ts`, `app/opengraph-image.tsx`, `components/resume-pdf.tsx` and `public/manifest.json`
 - Responsive design: use `md:` prefix for tablet/desktop breakpoints
 - Print styles: use `print:hidden` for elements that shouldn't appear in print
 
@@ -126,8 +129,8 @@ implementation: the "Wireframes before build" rule in brignano/ai-tools
 
 ### Fonts
 
-- Custom Google Fonts: Inconsolata and Silkscreen
-- Font variables: `--font-inconsolata-mono`, `--font-silkscreen-mono`
+- Loaded with `next/font/google` in `app/layout.tsx`: Geist (body and headings), IBM Plex Mono (code and data), Silkscreen (display accent)
+- Font variables: `--font-geist`, `--font-plex-mono`, `--font-silkscreen`, mapped onto the design tokens `--sans`, `--mono` and `--display` in `app/globals.css`
 
 ### Static Export
 
