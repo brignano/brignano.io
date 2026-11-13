@@ -28,16 +28,32 @@ const CODING_BREADCRUMBS = [
   },
 ];
 
+/**
+ * WakaTime only accepts OAuth access tokens (`waka_tok_…`) for reading data.
+ * The account's secret API key is now write-only, for editor plugins, and the
+ * API answers it with a 403. Use the personal token from
+ * https://wakatime.com/oauth, sent as a Bearer token.
+ */
+function wakaToken() {
+  return process.env.WAKATIME_ACCESS_TOKEN || process.env.WAKATIME_API_KEY;
+}
+
 async function fetchWaka(path: string, revalidate = 60 * 5) {
-  const apiKey = process.env.WAKATIME_API_KEY;
-  if (!apiKey) {
-    throw new Error("Missing WAKATIME_API_KEY environment variable");
+  const token = wakaToken();
+  if (!token) {
+    throw new Error("Missing WAKATIME_ACCESS_TOKEN environment variable");
+  }
+  if (!token.startsWith("waka_tok_")) {
+    console.warn(
+      "[coding] WakaTime token does not look like an OAuth token (waka_tok_…). " +
+        "Plugin API keys are rejected; get one at https://wakatime.com/oauth"
+    );
   }
 
   const url = `${WAKATIME_API_BASE}${path}`;
   const res = await fetch(url, {
     headers: {
-      Authorization: "Basic " + Buffer.from(`${apiKey}:`).toString("base64"),
+      Authorization: `Bearer ${token}`,
       "User-Agent": "brignano.io-wakatime-stats",
     },
     next: { revalidate },
@@ -55,6 +71,9 @@ async function safeFetch<T>(path: string, revalidate?: number) {
   try {
     return { data: (await fetchWaka(path, revalidate)) as T, error: null };
   } catch (e) {
+    // Without this the page quietly shows its fallback and the cause never
+    // reaches the Vercel logs.
+    console.error(`[coding] WakaTime fetch ${path} failed:`, e);
     return { data: null, error: e as Error };
   }
 }

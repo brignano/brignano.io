@@ -221,7 +221,7 @@ To enable Google Analytics:
 
 ```env
 GA_MEASUREMENT_ID=G-YOURIDHERE
-WAKATIME_API_KEY=your_wakatime_api_key_here
+WAKATIME_ACCESS_TOKEN=waka_tok_your_personal_oauth_token
 ```
 
 Generating `.env.local` from Vercel CLI
@@ -257,7 +257,7 @@ Notes and troubleshooting:
 
 ```bash
 vercel env add GA_MEASUREMENT_ID production
-vercel env add WAKATIME_API_KEY production
+vercel env add WAKATIME_ACCESS_TOKEN production
 ```
 
 After adding variables on Vercel, re-run `vercel env pull .env.local --environment=production` to fetch them into your local file.
@@ -266,7 +266,7 @@ Be careful not to commit secrets — `.env.local` should remain local and is usu
 
 Required variables for development:
 
-- `WAKATIME_API_KEY` — required to render the WakaTime coding statistics on the `/coding` page. If this is not set the coding page will show an error when fetching WakaTime data.
+- `WAKATIME_ACCESS_TOKEN` — required to render the WakaTime coding statistics on the `/coding` page. Use the personal OAuth token from https://wakatime.com/oauth (it starts with `waka_tok_`). The account's secret API key no longer works: WakaTime made it write-only for editor plugins and answers it with a 403. Without a working token the page shows its "WakaTime isn't answering" fallback, and the cause is logged with a `[coding]` prefix.
 
 Optional:
 
