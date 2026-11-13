@@ -162,7 +162,7 @@ export default function Home() {
                     engineers-only page on the site. Email works for everyone. */}
                 <a
                   href="mailto:hi@brignano.io"
-                  className="inline-flex items-center px-4 sm:px-6 py-3 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
+                  className="inline-flex items-center px-4 sm:px-6 py-3 border-2 border-line-strong hover:border-interactive-ink font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", {
                       cta: "contact",

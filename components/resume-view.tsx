@@ -164,7 +164,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             type="button"
             aria-label="Share resume"
             onClick={handleShare}
-            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200 cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 border-2 border-line-strong hover:border-interactive-ink font-semibold rounded-lg transition-all duration-200 cursor-pointer"
           >
             <ShareIcon className="h-5 w-5" />
             Share
@@ -174,7 +174,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
               href={personalInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-4 py-2 border-2 border-line-strong hover:border-interactive-ink font-semibold rounded-lg transition-all duration-200"
             >
               LinkedIn
             </a>
@@ -184,7 +184,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-4 py-2 border-2 border-line-strong hover:border-interactive font-semibold rounded-lg transition-all duration-200"
+              className="inline-flex items-center px-4 py-2 border-2 border-line-strong hover:border-interactive-ink font-semibold rounded-lg transition-all duration-200"
             >
               GitHub
             </a>
@@ -280,13 +280,13 @@ export default function ResumeView({ data }: { data: ResumeData }) {
                   >
                     <div
                       className={`absolute left-4 top-8 -translate-x-1/2 h-3 w-3 rounded-full border-2 z-10 ${isOpen
-                          ? "border-line-strong bg-interactive"
+                          ? "border-line-strong bg-interactive-ink"
                           : "border-line-strong bg-bg"
                         }`}
                       data-print-hide
                     />
                     <div
-                      className="group ml-8 relative bg-card border border-line p-6 rounded-lg cursor-pointer transition-colors hover:border-interactive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                      className="group ml-8 relative bg-card border border-line p-6 rounded-lg cursor-pointer transition-colors hover:border-interactive-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
                       role="button"
                       tabIndex={0}
                       aria-expanded={isOpen}

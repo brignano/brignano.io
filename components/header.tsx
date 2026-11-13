@@ -128,7 +128,7 @@ export default function Header() {
         <li key={page}>
           {isActive ? (
             <span
-              className={`${shape} text-ink font-medium cursor-default border-interactive`}
+              className={`${shape} text-ink font-medium cursor-default border-interactive-ink`}
               aria-current="page"
               onClick={closeMenu}
             >

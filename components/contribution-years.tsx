@@ -77,7 +77,7 @@ export default function ContributionYears({
               " " +
               (y === year
                 ? "bg-interactive text-on-interactive border-transparent hover:border-transparent"
-                : "border-line-strong hover:border-interactive bg-transparent text-ink-soft")
+                : "border-line-strong hover:border-interactive-ink bg-transparent text-ink-soft")
             }
           >
             {y}
