@@ -112,7 +112,7 @@ implementation: the "Wireframes before build" rule in brignano/ai-tools
 ### Environment Variables
 
 - `GA_MEASUREMENT_ID` - Google Analytics 4 measurement ID (optional; GA is not loaded without it)
-- `WAKATIME_API_KEY` - Required for coding statistics page
+- `WAKATIME_ACCESS_TOKEN` - WakaTime personal OAuth token (`waka_tok_…`), required for the coding statistics page
 - `VERCEL_ENV` - Automatically set by Vercel (production/preview/development)
 - `NODE_ENV` - Node environment (production/development)
 
