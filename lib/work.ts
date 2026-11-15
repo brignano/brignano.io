@@ -30,15 +30,14 @@ export interface CaseStudy {
   stack: string[];
   /** 150–160 characters for search results. */
   description: string;
-  /** The homepage card: one number, what it counts, and one plain sentence.
-   *  Written for someone who has never heard of CI/CD; the case study carries
-   *  the detail. Each card should use a different number, so the homepage
-   *  never says the same thing twice. */
+  /** The homepage card: a headline that reads on its own, then one plain
+   *  sentence. Written for someone who has never heard of CI/CD; the case
+   *  study carries the detail. A number goes in the headline only when it is
+   *  documented and means something without a caption. A bare stat ("Hours")
+   *  read as noise, so there is no separate stat slot. */
   home: {
     kicker: string;
-    stat: string;
-    statLabel: string;
-    title: string;
+    headline: string;
     line: string;
   };
 }
@@ -48,10 +47,8 @@ export const caseStudies: CaseStudy[] = [
     slug: "atlas-developer-platform",
     home: {
       kicker: "Developer platform",
-      stat: "2,000+",
-      statLabel: "devices run the desktop agent I designed and built",
-      title: "ATLAS: one place to build",
-      line: "Setup, builds and AI tools in one app, instead of a wiki, a browser and a terminal.",
+      headline: "2,000+ devices run the desktop app I designed and built",
+      line: "Part of ATLAS, the platform that puts setup, builds and AI tools in one place for engineers.",
     },
     title: "ATLAS: one platform for 4,000+ engineers",
     eyebrow: "Case study · Developer platform",
@@ -132,10 +129,8 @@ export const caseStudies: CaseStudy[] = [
     slug: "self-service-developer-onboarding",
     home: {
       kicker: "Onboarding",
-      stat: "Hours",
-      statLabel: "to get a new engineer building, down from 40+ days",
-      title: "Self-service setup",
-      line: "A new engineer's machine arrives ready to build, without a stack of access requests.",
+      headline: "Self-service setup for every new engineer",
+      line: "I lead the technical delivery of cutting the wait from hire to first commit. The rollout is underway.",
     },
     title: "Onboarding: 40+ days to hours",
     eyebrow: "Case study · Developer experience",
@@ -229,10 +224,8 @@ export const caseStudies: CaseStudy[] = [
     slug: "github-enterprise-cloud-migration",
     home: {
       kicker: "Migration",
-      stat: "10,000+",
-      statLabel: "code repositories moved to GitHub Enterprise Cloud",
-      title: "A company-wide migration",
-      line: "Moved in waves, in under 12 months, while thousands of engineers kept shipping.",
+      headline: "10,000+ code repositories moved to GitHub Enterprise Cloud",
+      line: "I designed and led the move, in waves with zero downtime, while thousands of engineers kept shipping.",
     },
     title: "10,000+ repositories to GitHub Enterprise Cloud",
     eyebrow: "Case study · Source control",

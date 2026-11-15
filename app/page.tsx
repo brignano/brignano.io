@@ -217,8 +217,8 @@ export default function Home() {
             /coding. Before adding a section here, check it says something the
             other three don't. Wireframe: proposals/wireframes/home-digest.html. */}
 
-        {/* Work: one card per case study, each with its own number so no claim
-            repeats. Card copy is `home` in lib/work.ts. */}
+        {/* Work: one card per case study, led by a headline that reads on its
+            own. Card copy is `home` in lib/work.ts. */}
         <section
           id="work"
           className="py-10 md:py-16 border-t border-line"
@@ -250,14 +250,8 @@ export default function Home() {
                   <p className="font-display uppercase tracking-[0.18em] text-[10px] text-slate">
                     {study.home.kicker}
                   </p>
-                  <p className="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-ink">
-                    {study.home.stat}
-                  </p>
-                  <p className="text-sm text-ink-soft leading-snug">
-                    {study.home.statLabel}
-                  </p>
-                  <h3 className="mt-2 text-lg font-semibold text-ink group-hover:text-interactive-ink transition-colors">
-                    {study.home.title}
+                  <h3 className="mt-1 text-xl md:text-2xl font-bold tracking-tight leading-snug text-ink text-balance group-hover:text-interactive-ink transition-colors">
+                    {study.home.headline}
                   </h3>
                   <p className="text-sm text-ink-soft leading-relaxed">
                     {study.home.line}
