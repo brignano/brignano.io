@@ -1,35 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import { mdxComponents } from "@/components/mdx";
-import { formatPostDate, getAllPosts, getPostBySlug } from "@/lib/blog";
+import { formatPostDate } from "@/lib/blog";
+import { NOTES_LABEL, NOTES_PATH, noteHref } from "@/lib/notes-path";
+import type { Post } from "@/types/blog";
 
-type Params = Promise<{ slug: string }>;
+// One post at /notes/<slug>. app/notes/[slug]/page.tsx decides whether a slug
+// is a case study or a post.
 
-// Every post is prerendered. An unknown slug is a 404, not a request-time
-// render: the post files are not shipped with the server.
-export const dynamicParams = false;
-
-export async function generateStaticParams() {
-  return (await getAllPosts()).map((p) => ({ slug: p.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
-  const post = await getPostBySlug((await params).slug);
-  if (!post) return {};
+export function postMetadata(post: Post): Metadata {
   const title = `${post.title} — Anthony Brignano`;
-  const url = `https://brignano.io/blog/${post.slug}`;
+  const url = `https://brignano.io${noteHref(post.slug)}`;
   return {
     title,
     description: post.description,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: { canonical: noteHref(post.slug) },
     openGraph: {
       title,
       description: post.description,
@@ -47,11 +35,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function PostPage({ params }: { params: Params }) {
-  const post = await getPostBySlug((await params).slug);
-  if (!post) notFound();
-
-  const url = `https://brignano.io/blog/${post.slug}`;
+export default function PostArticle({ post }: { post: Post }) {
+  const url = `https://brignano.io${noteHref(post.slug)}`;
   const blogPosting = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -74,7 +59,7 @@ export default async function PostPage({ params }: { params: Params }) {
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://brignano.io" },
-          { name: "Blog", url: "https://brignano.io/blog" },
+          { name: NOTES_LABEL, url: `https://brignano.io${NOTES_PATH}` },
           { name: post.title, url },
         ]}
       />
@@ -155,7 +140,7 @@ export default async function PostPage({ params }: { params: Params }) {
               </a>
             </p>
             <Link
-              href="/blog"
+              href={`${NOTES_PATH}?show=posts`}
               className="text-sm text-interactive-ink hover:underline shrink-0"
             >
               ← All posts

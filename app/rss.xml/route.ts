@@ -1,4 +1,5 @@
 import { getAllPosts } from "@/lib/blog";
+import { noteHref } from "@/lib/notes-path";
 
 // Built once at build time, like the sitemap. A new post reaches the feed on
 // the deploy that publishes it.
@@ -20,7 +21,7 @@ export async function GET() {
 
   const items = posts
     .map((post) => {
-      const url = `${baseUrl}/blog/${post.slug}`;
+      const url = `${baseUrl}${noteHref(post.slug)}`;
       return `    <item>
       <title>${escapeXml(post.title)}</title>
       <link>${url}</link>
@@ -35,8 +36,8 @@ ${(post.tags ?? []).map((t) => `      <category>${escapeXml(t)}</category>`).joi
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Anthony Brignano — Blog</title>
-    <link>${baseUrl}/blog</link>
+    <title>Anthony Brignano — Notes</title>
+    <link>${baseUrl}/notes?show=posts</link>
     <description>Writing on platform engineering, developer experience and the homelab.</description>
     <language>en-us</language>
     <atom:link href="${baseUrl}/rss.xml" rel="self" type="application/rss+xml" />

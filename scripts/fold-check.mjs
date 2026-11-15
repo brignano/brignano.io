@@ -16,11 +16,10 @@ const OUT_DIR = "fold-screenshots";
 
 const PAGES = [
   ["home", "/"],
-  ["work", "/work"],
-  ["case-study", "/work/github-enterprise-cloud-migration"],
+  ["notes", "/notes"],
+  ["case-study", "/notes/github-enterprise-cloud-migration"],
   ["projects", "/projects"],
-  ["blog", "/blog"],
-  ["post", "/blog/building-my-homelab"],
+  ["post", "/notes/building-my-homelab"],
   ["resume", "/resume"],
   ["coding", "/coding"],
   ["not-found", "/this-page-does-not-exist"],

@@ -35,7 +35,7 @@ function scrollToY(top: number) {
 }
 
 // The visible section headings on the page, top to bottom. Visually hidden
-// ones (the `sr-only` list labels on /work and /blog) are skipped: jumping to
+// ones (the `sr-only` list label on /notes) are skipped: jumping to
 // them lands on nothing a sighted visitor can see.
 function sectionHeadings(): HTMLElement[] {
   return Array.from(document.querySelectorAll<HTMLElement>("main h2")).filter(

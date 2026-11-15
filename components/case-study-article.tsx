@@ -1,39 +1,30 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
-import { caseStudies, getCaseStudy } from "@/lib/work";
+import { NOTES_LABEL, NOTES_PATH, noteHref } from "@/lib/notes-path";
+import { caseStudies, type CaseStudy } from "@/lib/work";
 
-type Params = Promise<{ slug: string }>;
+// One case study at /notes/<slug>. app/notes/[slug]/page.tsx decides whether
+// a slug is a case study or a post.
 
-export function generateStaticParams() {
-  return caseStudies.map((c) => ({ slug: c.slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
-  const study = getCaseStudy((await params).slug);
-  if (!study) return {};
+export function caseStudyMetadata(study: CaseStudy): Metadata {
   const title = `${study.title} — Anthony Brignano`;
-  const url = `https://brignano.io/work/${study.slug}`;
+  const url = `https://brignano.io${noteHref(study.slug)}`;
   return {
     title,
     description: study.description,
-    alternates: { canonical: `/work/${study.slug}` },
+    alternates: { canonical: noteHref(study.slug) },
     openGraph: { title, description: study.description, url, type: "article" },
-    twitter: { card: "summary_large_image", title, description: study.description },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: study.description,
+    },
   };
 }
 
-export default async function CaseStudyPage({ params }: { params: Params }) {
-  const { slug } = await params;
-  const study = getCaseStudy(slug);
-  if (!study) notFound();
-
-  const index = caseStudies.findIndex((c) => c.slug === slug);
+export default function CaseStudyArticle({ study }: { study: CaseStudy }) {
+  const index = caseStudies.findIndex((c) => c.slug === study.slug);
   const next = caseStudies[(index + 1) % caseStudies.length];
 
   return (
@@ -41,8 +32,11 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://brignano.io" },
-          { name: "Work", url: "https://brignano.io/work" },
-          { name: study.title, url: `https://brignano.io/work/${study.slug}` },
+          { name: NOTES_LABEL, url: `https://brignano.io${NOTES_PATH}` },
+          {
+            name: study.title,
+            url: `https://brignano.io${noteHref(study.slug)}`,
+          },
         ]}
       />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16 pb-12">
@@ -113,7 +107,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
               </a>
             </p>
             <Link
-              href={`/work/${next.slug}`}
+              href={noteHref(next.slug)}
               className="text-sm text-interactive-ink hover:underline shrink-0"
             >
               Next: {next.title} →

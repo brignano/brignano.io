@@ -32,16 +32,27 @@ const nextConfig: NextConfig = {
   },
 
   /**
-   * The DevOps intelligence case study shipped briefly as its own page before
-   * being folded into the ATLAS study. Keep the old address working.
+   * /work (case studies) and /blog (posts) were merged into /notes on
+   * 2026-11-15; every old address lands on its new one, and the two index
+   * pages open with the matching filter. The DevOps intelligence case study
+   * shipped briefly as its own page before being folded into the ATLAS
+   * study, so it goes straight there. Order matters: first match wins.
    */
   async redirects() {
     return [
       {
         source: "/work/devops-intelligence",
-        destination: "/work/atlas-developer-platform",
+        destination: "/notes/atlas-developer-platform",
         permanent: true,
       },
+      {
+        source: "/work",
+        destination: "/notes?show=case-studies",
+        permanent: true,
+      },
+      { source: "/work/:slug", destination: "/notes/:slug", permanent: true },
+      { source: "/blog", destination: "/notes?show=posts", permanent: true },
+      { source: "/blog/:slug", destination: "/notes/:slug", permanent: true },
     ];
   },
 };

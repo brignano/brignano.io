@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 // Where a lost visitor most likely meant to go. Same destinations as the
 // header, so this page never offers a route the nav does not.
 const DESTINATIONS = [
-  { href: "/work", label: "Work", blurb: "Three case studies" },
   { href: "/projects", label: "Projects", blurb: "Things I build for myself" },
   {
     href: "/resume",
@@ -22,6 +21,7 @@ const DESTINATIONS = [
     label: "Coding",
     blurb: "What I've been working on lately",
   },
+  { href: "/notes", label: "Notes", blurb: "Case studies and posts" },
 ];
 
 // Replaces Next's unstyled default. The root layout still wraps this in the

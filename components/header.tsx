@@ -18,7 +18,10 @@ import HolidayButton from "@/components/holiday-button";
 // a 360px Android and the toggle sat flush against a 375px iPhone's edge. So
 // phones get a menu button that drops the links into the header itself, not a
 // slide-in drawer with an overlay. "Home" is not a link here: the monogram is.
-const PAGES = ["work", "projects", "blog", "resume", "coding"] as const;
+// Notes (case studies and posts, once /work and /blog) sits last, after the
+// professional pages. Its label is the path segment capitalised, so renaming
+// it is a change to this list and app/notes/ (see lib/notes.ts).
+const PAGES = ["projects", "resume", "coding", "notes"] as const;
 
 // Don't start hiding until the header has scrolled its own height away, and
 // ignore deltas smaller than this so momentum jitter and iOS rubber-band
@@ -158,7 +161,7 @@ export default function Header() {
           <span className="sr-only">Anthony Brignano</span>
           {/* Absolute path: a relative `favicon.svg` resolved against the
               current directory, so it 404ed on the first nested route
-              (/work/<slug>). */}
+              (/notes/<slug>). */}
           <Image
             alt="icon"
             src="/favicon.svg"
