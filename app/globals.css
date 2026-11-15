@@ -388,14 +388,18 @@ html[data-chat-open] #scroll-to-top {
 }
 
 /* Project cards on /projects ──────────────────────────────────────────────
-   The picture sits on a faint field of the product's mark, the same mix as
-   the product-page stage (`--pp-stage` in @brignano/design product-page.css),
-   so a product looks the same on its card and its page. `data-mark` on the
-   card picks the hue; without one it is the family amber. The mark only
-   draws the picture and its ground, never text, links or state (DESIGN.md
-   §3). Replace with the shared card stage once brignano/design#164 ships. */
+   The picture sits on a faint field of the product's mark: a copy of
+   `.card-media.card-stage` from @brignano/design 0.11 (DESIGN.md §3, "On a
+   card that stands for a product, the stage"), the same 8% mix as the
+   product-page hero stage. `data-mark` on the card picks the hue; without one
+   it is the family amber. The mark draws the picture and its ground only,
+   never text, links or state.
+   It is a copy because this site doesn't load components.css yet: that file's
+   `.grid` and `.container` would restyle Tailwind's utilities of the same
+   name. Drop this rule for `.card-stage` when brignano.io#326 adopts the
+   shared components. */
 .project-stage {
-  background: color-mix(in srgb, var(--mark-current) 8%, var(--card));
+  background-color: color-mix(in srgb, var(--mark-current) 8%, transparent);
 }
 .project-art .a-card { fill: var(--card); stroke: var(--line-strong); }
 .project-art .a-line { stroke: var(--line-strong); fill: none; }
