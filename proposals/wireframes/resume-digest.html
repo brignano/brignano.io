@@ -1,0 +1,657 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resume Page Rethink</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* @brignano/design tokens.css, inlined (comments stripped) */
+
+:root {
+  color-scheme: light dark;
+}
+[data-theme='light'] {
+  color-scheme: light;
+}
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root {
+  --n-0: light-dark(#ffffff, #0d0d0f);
+  --n-25: light-dark(#fafafb, #131316);
+  --n-50: light-dark(#f3f3f4, #17171a);
+  --n-100: light-dark(#ececee, #202024); 
+  --n-200: light-dark(#e1e1e4, #2a2a2f); 
+  --n-300: light-dark(#cbcbce, #3a3a41); 
+  --n-400: light-dark(#a9a9ae, #55555e);
+  --n-500: light-dark(#8a8a8f, #8b8b93); 
+  --n-600: light-dark(#6b6b73, #9c9ca4); 
+  --n-700: light-dark(#52525b, #a8a8b0); 
+  --n-800: light-dark(#33333a, #d0d0d5);
+  --n-900: light-dark(#111114, #f2f2f4); 
+  --bg: light-dark(#fafafb, #0d0d0f); 
+  --card: light-dark(#ffffff, #17171a); 
+  --surface-hover: var(--n-100);
+  --surface-active: var(--n-200);
+  --surface-sticky: light-dark(color-mix(in srgb, #ffffff 92%, transparent), color-mix(in srgb, #0d0d0f 92%, transparent)); 
+  --ink: var(--n-900);
+  --ink-soft: var(--n-700);
+  --slate: light-dark(#6b6b73, #8b8b93); 
+  --line: var(--n-100);
+  --line-soft: var(--n-50);
+  --line-strong: var(--n-300); 
+  --line-control: light-dark(#8a8a8f, #6b6b73);
+  --on-dark: light-dark(#fafafb, #0d0d0f); 
+  --device: light-dark(#111114, #3a3a41); 
+  --i: light-dark(#076bd3, #0371e0);
+  --i-ink: light-dark(#0159b5, #6ba5f3);
+  --i-hover: light-dark(#014a97, #0062c7);
+  --i-ink-hover: light-dark(#014a97, #98c4ff);
+  --i-pressed: light-dark(#003e82, #0553a6);
+  --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #0371e0 20%, transparent));
+  --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #0371e0 44%, transparent));
+  --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #0371e0 30%, transparent));
+  --on-i: light-dark(#ffffff, #ffffff);
+  --danger-fill: light-dark(#a4442c, #be563c);
+  --danger-fill-hover: light-dark(#8a3722, #ad472e);
+  --danger-fill-pressed: light-dark(#8a3722, #9d381e);
+  --on-danger: light-dark(#ffffff, #ffffff);
+  --i-disabled-bg: var(--n-200);
+  --i-disabled-ink: var(--n-400);
+  --success: light-dark(#2f6b4f, #6fbf95);
+  --success-ink: light-dark(#245740, #8fd4ae);
+  --attention: light-dark(#b4741f, #e0a44f); 
+  --attention-ink: light-dark(#8a5714, #e0a44f); 
+  --danger: light-dark(#a4442c, #e07a5f);
+  --danger-ink: light-dark(#8a3722, #ec9880);
+  --info: var(--i);
+  --info-ink: var(--i-ink);
+  --success-surface: light-dark(color-mix(in srgb, #2f6b4f 12%, transparent), color-mix(in srgb, #6fbf95 20%, transparent));
+  --attention-surface: light-dark(color-mix(in srgb, #b4741f 12%, transparent), color-mix(in srgb, #e0a44f 20%, transparent));
+  --danger-surface: light-dark(color-mix(in srgb, #a4442c 12%, transparent), color-mix(in srgb, #e07a5f 20%, transparent));
+  --info-surface: var(--i-surface);
+  --success-line: light-dark(color-mix(in srgb, #2f6b4f 32%, transparent), color-mix(in srgb, #6fbf95 44%, transparent));
+  --attention-line: light-dark(color-mix(in srgb, #b4741f 32%, transparent), color-mix(in srgb, #e0a44f 44%, transparent));
+  --danger-line: light-dark(color-mix(in srgb, #a4442c 32%, transparent), color-mix(in srgb, #e07a5f 44%, transparent));
+  --info-line: var(--i-line);
+  --diff-added: var(--success);
+  --diff-added-ink: var(--success-ink);
+  --diff-added-surface: var(--success-surface);
+  --diff-changed: var(--i);
+  --diff-changed-ink: var(--i-ink);
+  --diff-changed-surface: var(--i-surface);
+  --diff-removed: var(--danger);
+  --diff-removed-ink: var(--danger-ink);
+  --diff-removed-surface: var(--danger-surface);
+  --code-surface: var(--bg);
+  --code-ink: var(--ink);
+  --code-keyword: var(--i-ink);
+  --code-string: var(--ink-soft);
+  --code-comment: var(--slate);
+  --code-highlight: var(--i-surface);
+  --mark: light-dark(#b4741f, #e0a44f);
+  --mark-ink: light-dark(#8a5714, #e0a44f); 
+  --mark-teal: light-dark(#0e7c86, #4cc0cb);
+  --mark-violet: light-dark(#7148c9, #a990f2);
+  --mark-magenta: light-dark(#b1366f, #ea7fb0);
+  --mark-current: var(--mark);
+  --forest: var(--success);
+  --forest-deep: var(--success-ink);
+  --larch: var(--attention);
+  --larch-deep: light-dark(#8a5714, #f0bd74);
+  --rust: var(--danger);
+  --rust-deep: var(--danger-ink);
+  --gold: var(--slate);
+  --sans: 'Geist', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --display: var(--sans);
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-heavy: 800;
+  --leading-display: 1.15;
+  --leading-title: 1.3;
+  --leading-ui: 1.4;
+  --leading-body: 1.6;
+  --tracking-title: -0.01em;
+  --tracking-display: -0.025em;
+  --tracking-caps: 0.08em;
+  --z-raised: 1;
+  --z-sticky: 10;
+  --z-float: 20;
+  --z-skip: 30;
+  --z-toast: 40;
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+  --radius-sm: 6px;
+  --radius-control: 8px; 
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow-1: 0 1px 2px light-dark(rgba(17, 17, 17, 0.04), rgba(0, 0, 0, 0.45));
+  --shadow-2:
+    0 2px 8px light-dark(rgba(17, 17, 17, 0.07), transparent),
+    0 2px 10px light-dark(transparent, rgba(0, 0, 0, 0.55));
+  --shadow-3:
+    0 8px 24px light-dark(rgba(17, 17, 17, 0.10), transparent),
+    0 10px 28px light-dark(transparent, rgba(0, 0, 0, 0.65));
+  --scrim: light-dark(rgba(17, 17, 17, 0.55), rgba(0, 0, 0, 0.68));
+  --shadow: var(--shadow-1); 
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 600ms;
+}
+:root {
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --section-gap: var(--s6);
+  --measure: 780px;
+}
+@media (pointer: coarse) {
+  :root:not(.tier-marketing) {
+    --text-xs: 0.75rem;
+  }
+}
+.tier-marketing {
+  --display: 'Silkscreen', var(--mono);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: clamp(2.75rem, 1rem + 4.5vw, 4rem); 
+  --section-gap: var(--s9);
+  --measure: 68ch;
+}
+[data-mark='teal'] {
+  --mark-current: var(--mark-teal);
+}
+[data-mark='violet'] {
+  --mark-current: var(--mark-violet);
+}
+[data-mark='magenta'] {
+  --mark-current: var(--mark-magenta);
+}
+::selection {
+  background: var(--i-selection);
+}
+:root {
+  accent-color: var(--i);
+}
+@media print {
+  :root,
+  [data-theme] {
+    color-scheme: light;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+</style>
+</head><body>
+<style>
+:root { color-scheme: light dark; }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+a { color: var(--i-ink); }
+.doc { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 56px; }
+.col { max-width: 68ch; display: grid; gap: 14px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); margin: 0; }
+h1.title { font-size: clamp(30px, 5vw, 44px); line-height: 1.08; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h2.h { font-size: 24px; line-height: 1.2; letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.lede { font-size: 18px; color: var(--ink-soft); margin: 0; }
+p { margin: 0; }
+.muted { color: var(--ink-soft); }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-soft); }
+ul.plain b { color: var(--ink); }
+
+.findings { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.finding { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: grid; gap: 6px; align-content: start; }
+.finding .num { font-size: 30px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.finding p { color: var(--ink-soft); font-size: 15px; }
+
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+td:first-child { font-weight: 600; white-space: nowrap; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.seg-ctl { display: inline-flex; border: 1px solid var(--line-control); border-radius: 10px; padding: 3px; gap: 3px; background: var(--card); }
+.seg-ctl button { font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--ink-soft); padding: 6px 12px; border-radius: 7px; cursor: pointer; min-height: 32px; }
+.seg-ctl button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg-ctl button:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; }
+.ctl-label { font-size: 13px; color: var(--slate); margin-right: 6px; }
+
+.frames { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.frame { display: grid; gap: 8px; min-width: 0; }
+.frame-phone { flex: 0 1 390px; min-width: 0; max-width: 390px; }
+.frame-desk { flex: 1 1 520px; min-width: 0; }
+.flabel { font-family: var(--mono); font-size: 12px; color: var(--slate); }
+.screen { container-type: inline-size; background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
+.fit { overflow: hidden; border-radius: var(--radius); }
+.fit > .screen { transform-origin: top left; }
+.frame-phone .screen { width: 390px; }
+.frame-desk .screen { width: 1280px; }
+
+/* ── The proposed /resume page. px sizes describe the real page at the
+   frame's width. @container, not @media. ── */
+.pg { --gut: 20px; font-size: 16px; line-height: 1.6; }
+.pg .nav { display: flex; justify-content: space-between; align-items: center; height: 60px; border-bottom: 1px solid var(--line); padding-inline: var(--gut); }
+.pg .logo { font-weight: 800; letter-spacing: -.04em; font-size: 18px; }
+.pg .links { display: none; gap: 28px; color: var(--ink-soft); font-size: 15px; }
+.pg .links .on { color: var(--ink); border-bottom: 2px solid var(--ink); }
+.pg .icons { display: flex; gap: 8px; }
+.pg .ico { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-size: 13px; color: var(--slate); }
+.pg .wrap { padding: 36px var(--gut) 48px; display: grid; gap: 44px; }
+
+/* Hero */
+.pg .hero { display: grid; gap: 10px; align-content: start; }
+.pg .hero .eb { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--slate); }
+.pg .ph1 { font-size: 34px; line-height: 1.1; letter-spacing: -.02em; margin: 0; }
+.pg .role { font-size: 18px; font-weight: 600; line-height: 1.35; }
+.pg .team { display: block; font-size: 15px; font-weight: 400; color: var(--ink-soft); }
+.pg .contact { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 14.5px; color: var(--ink-soft); }
+.pg .contact a { color: var(--ink-soft); text-decoration: none; }
+.pg .acts { display: flex; align-items: center; gap: 4px 18px; flex-wrap: wrap; margin-top: 8px; }
+.pg .btn { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 16px; border-radius: var(--radius-control); background: var(--i); color: var(--on-i); font-size: 15px; font-weight: 600; text-decoration: none; }
+.pg .tl { display: inline-flex; align-items: center; gap: 5px; min-height: 40px; font-size: 15px; color: var(--i-ink); text-decoration: none; background: none; border: 0; padding: 0; font-family: inherit; cursor: pointer; }
+.pg .toc { display: none; }
+.pg .summary { color: var(--ink-soft); font-size: 16.5px; max-width: 62ch; margin-top: 10px; }
+
+/* Sections */
+.pg .content { display: grid; gap: 44px; min-width: 0; }
+.pg .h2 { font-size: 22px; line-height: 1.2; letter-spacing: -.01em; margin: 0; }
+.pg .shead { display: grid; gap: 2px; margin-bottom: 16px; }
+.pg .ssub { font-size: 14px; color: var(--slate); }
+.pg .mono { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+
+/* Experience timeline */
+.pg .tline { position: relative; display: grid; gap: 12px; padding-left: 22px; }
+.pg .tline::before { content: ""; position: absolute; left: 5px; top: 14px; bottom: 14px; width: 1px; background: var(--line-strong); }
+.pg .job { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; }
+.pg .job::before { content: ""; position: absolute; left: -22px; top: 19px; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--line-strong); background: var(--bg); }
+.pg .job.now::before { background: var(--i-ink); border-color: var(--i-ink); }
+.pg .jt { font-size: 17px; font-weight: 600; line-height: 1.3; margin: 0; }
+.pg .jteam { font-size: 14px; color: var(--ink-soft); }
+.pg .jsum { font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px; }
+.pg ul.hl { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 6px; font-size: 14.5px; line-height: 1.5; color: var(--ink-soft); }
+.pg ul.hl li::marker { color: var(--slate); }
+.pg .job .rest, .pg .job .tech { display: none; }
+.pg .job.open .rest { display: grid; }
+.pg .job.open .tech { display: flex; }
+.pg .job.open .jsum.c { display: block; }
+.pg .jsum.c { display: none; }
+.pg .tech { flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pg .tech span { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--surface-active, var(--n-100)); color: var(--ink-soft); }
+.pg .tog { justify-self: start; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; margin-top: 2px; font: inherit; font-size: 14px; color: var(--i-ink); background: none; border: 0; padding: 0; cursor: pointer; }
+.pg .tog .chev { display: inline-block; transition: transform .15s; }
+.pg .tog[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.pg .tog:focus-visible, .pg .tl:focus-visible, .pg .btn:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; border-radius: 4px; }
+
+/* Compact rows: leadership, education, projects */
+.pg .rows { display: grid; border-top: 1px solid var(--line); }
+.pg .r { padding: 14px 0; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.pg .rname { font-size: 16px; font-weight: 600; margin: 0; }
+.pg .rsub { font-size: 14px; color: var(--slate); }
+.pg .rtext { font-size: 14.5px; color: var(--ink-soft); line-height: 1.5; margin-top: 4px; }
+.pg .r .more { display: none; }
+.pg .r.open .more { display: block; }
+.pg .r.open .short { display: none; }
+.pg .rlink { font-size: 14px; color: var(--i-ink); text-decoration: none; margin-top: 4px; justify-self: start; }
+
+/* Skills: a definition list, not 8 cards of pills */
+.pg dl.sk { margin: 0; display: grid; border-top: 1px solid var(--line); }
+.pg dl.sk > div { padding: 11px 0; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.pg dl.sk dt { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+.pg dl.sk dd { margin: 0; font-size: 15px; line-height: 1.5; }
+.pg .foot { border-top: 1px solid var(--line); padding: 20px var(--gut); font-size: 12px; color: var(--slate); }
+
+@container (min-width: 900px) {
+  .pg { --gut: 80px; }
+  .pg .links { display: flex; }
+  .pg .icons .menu { display: none; }
+  .pg .wrap { padding-top: 64px; grid-template-columns: 300px minmax(0, 1fr); gap: 64px; align-items: start; }
+  .pg .hero { position: sticky; top: 24px; }
+  .pg .acts { column-gap: 20px; }
+  .pg .acts .btn { flex-basis: 100%; justify-content: center; margin-bottom: 2px; }
+  .pg .ph1 { font-size: 40px; }
+  .pg .summary { display: none; }
+  .pg .content .summary { display: block; margin-top: 0; font-size: 18px; }
+  .pg .toc { display: grid; gap: 2px; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .pg .toc a { font-size: 14px; color: var(--ink-soft); text-decoration: none; padding: 3px 0; }
+  .pg .toc a.on { color: var(--ink); font-weight: 600; }
+  .pg .h2 { font-size: 24px; }
+  .pg dl.sk > div { grid-template-columns: 200px 1fr; gap: 16px; align-items: baseline; }
+  .pg .rows.two { grid-template-columns: 1fr 1fr; column-gap: 32px; }
+  .pg .job { padding: 18px 22px; }
+}
+.pg .content > .summary { display: none; }
+@container (min-width: 900px) { .pg .content > .summary { display: block; } }
+</style>
+
+<div class="doc">
+  <section class="col">
+    <p class="eyebrow">Wireframe · /resume</p>
+    <h1 class="title">Make the resume easy to digest</h1>
+    <p class="lede">Same content as today and the PDF, nothing cut. What changes is the order you meet it in: one button and three quiet links at the top, the summary as the opening paragraph, each role readable before you open it, and the long lists (skills, leadership, education) as tight rows instead of stacks of cards.</p>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-now">
+    <h2 class="h" id="h-now">What makes it hard to read today</h2>
+    <div class="findings">
+      <div class="finding"><span class="num">10.9 screens</span><p>on a phone (9,192px at 390px wide). The Skills section alone is 2,000px: nine cards, each a heading over a cloud of pills.</p></div>
+      <div class="finding"><span class="num">4 equal buttons</span><p>View PDF, Share, LinkedIn and GitHub are all button-sized, so on a phone GitHub wraps onto its own line and nothing says which one matters.</p></div>
+      <div class="finding"><span class="num">3-line title</span><p>"Senior Staff Software Engineer — Enterprise Platform Engineering" at 24px wraps to three big lines, then "Summary" is a 30px heading for one paragraph.</p></div>
+      <div class="finding"><span class="num">5 closed roles</span><p>show only a date and a title. You have to open each one to learn what the job was, even though every role already has a one-sentence summary.</p></div>
+    </div>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-wf">
+    <h2 class="h" id="h-wf">Proposed page</h2>
+    <p class="muted" style="max-width:68ch">On a phone the page goes from 10.9 screens to about <b>5.8</b>. Tap <b>Show all</b> on a role, or <b>More</b> on a leadership row, to see what sits behind it. On desktop the name, the PDF button and a short "on this page" list stay pinned on the left while the resume scrolls on the right.</p>
+    <div class="controls">
+      <div><span class="ctl-label">Show</span>
+        <div class="seg-ctl" role="group" aria-label="Frames to show">
+          <button type="button" data-show="both">Both</button>
+          <button type="button" data-show="phone">Phone</button>
+          <button type="button" data-show="desk">Desktop</button>
+        </div>
+      </div>
+      <div><span class="ctl-label">Theme</span>
+        <div class="seg-ctl" role="group" aria-label="Theme">
+          <button type="button" data-th="light">Light</button>
+          <button type="button" data-th="dark">Dark</button>
+        </div>
+      </div>
+    </div>
+    <div class="frames" id="frames">
+      <div class="frame frame-phone" id="f-phone"><span class="flabel">Phone · 390px</span><div class="fit" data-w="390"><div class="screen" id="phone-screen"></div></div></div>
+      <div class="frame frame-desk" id="f-desk"><span class="flabel">Desktop · 1280px, scaled to fit</span><div class="fit" data-w="1280"><div class="screen" id="desk-screen"></div></div></div>
+    </div>
+  </section>
+
+  <section class="col" aria-labelledby="h-why">
+    <h2 class="h" id="h-why">Choices behind it</h2>
+    <ul class="plain">
+      <li><b>One button, three links.</b> View PDF stays the blue button. Share, LinkedIn and GitHub become text links on the same line, the way the projects page now does it. At 390px all four fit on one row; in the desktop sidebar the button sits full width with the three links on one line under it.</li>
+      <li><b>The title splits at the dash.</b> "Senior Staff Software Engineer" on one line, "Enterprise Platform Engineering · The Hartford" smaller beneath it. Role cards split the same way, so long titles stop wrapping to three lines.</li>
+      <li><b>No "Summary" heading.</b> The summary becomes the opening paragraph under the links, at body size.</li>
+      <li><b>Roles say what they were while closed.</b> Older roles show their existing one-sentence summary; the current role shows its first three highlights. "Show all" opens the rest and the tech list. Every bullet in the PDF is still one tap away.</li>
+      <li><b>Lists become rows.</b> Skills turn into nine labelled lines of plain text. Leadership and education become rows with dividers. Projects shrink to a name and one line, with "All projects" linking to /projects, since the PDF leaves projects out anyway.</li>
+      <li><b>Smaller section headings</b> (22–24px, down from 30px), matching home and projects.</li>
+      <li><b>Wording is unchanged.</b> Every sentence comes from public/resume.yml as it stands, which already follows your Nov 3 career-highlights PDF. The PDF itself doesn't change.</li>
+    </ul>
+    <p class="muted"><b>Considered and dropped:</b> a row of headline numbers under the hero (it would repeat what the summary and first role already say, the same repetition we cut from home); tabs for each section (hides content from search and Cmd+F); icon-only LinkedIn and GitHub buttons (shorter, but unlabelled icons were removed from this page before for being unclear).</p>
+  </section>
+
+  <section class="col" aria-labelledby="h-next">
+    <h2 class="h" id="h-next">What happens next</h2>
+    <p class="muted">Say OK, or tell me what to change. Then I build it as one PR in brignano.io, touching only components/resume-view.tsx and its print styles, with this file committed under proposals/wireframes/. The generated PDF stays the same.</p>
+  </section>
+</div>
+
+<template id="page">
+<div class="pg">
+  <div class="nav"><span class="logo">A|B</span>
+    <span class="links"><span>Home</span><span>Projects</span><span class="on">Resume</span><span>Coding</span><span>Blog</span></span>
+    <span class="icons"><span class="ico">◐</span><span class="ico menu">≡</span></span></div>
+  <div class="wrap">
+    <aside class="hero">
+      <span class="eb">Resume</span>
+      <h1 class="ph1">Anthony Brignano</h1>
+      <div class="role">Senior Staff Software Engineer<span class="team">Enterprise Platform Engineering · The Hartford</span></div>
+      <div class="contact"><a href="#">hi@brignano.io</a><span>Connecticut, USA</span></div>
+      <div class="acts">
+        <a class="btn" href="#">▤ View PDF</a>
+        <button class="tl" type="button">Share</button>
+        <a class="tl" href="#">LinkedIn ↗</a>
+        <a class="tl" href="#">GitHub ↗</a>
+      </div>
+      <nav class="toc" aria-label="On this page">
+        <span class="mono" style="margin-bottom:4px">On this page</span>
+        <a class="on" href="#">Experience</a><a href="#">Leadership &amp; community</a><a href="#">Skills</a><a href="#">Education</a><a href="#">Projects</a>
+      </nav>
+      <p class="summary">Platform engineering leader who treats developer experience as a product. I'm the technical lead on ATLAS, The Hartford's internal developer platform for 4,000+ engineers, and led the company's move of 10,000+ repositories to GitHub Enterprise Cloud with zero downtime. Ten years across support, reliability, full-stack, data, quality, and platform roles mean I design for the engineers a platform serves.</p>
+    </aside>
+
+    <div class="content">
+      <p class="summary">Platform engineering leader who treats developer experience as a product. I'm the technical lead on ATLAS, The Hartford's internal developer platform for 4,000+ engineers, and led the company's move of 10,000+ repositories to GitHub Enterprise Cloud with zero downtime. Ten years across support, reliability, full-stack, data, quality, and platform roles mean I design for the engineers a platform serves.</p>
+
+      <section>
+        <div class="shead"><h2 class="h2">Experience</h2><span class="ssub">The Hartford · Hartford, CT · 2016 – present · 6 roles</span></div>
+        <div class="tline">
+          <div class="job now open-first">
+            <span class="mono">2023 – <b style="color:var(--ink);font-weight:500">Present</b></span>
+            <h3 class="jt">Senior Staff Software Engineer</h3>
+            <span class="jteam">Enterprise Platform Engineering</span>
+            <ul class="hl">
+              <li>Technical lead on ATLAS, the developer platform behind 4,000+ engineers, 13,000+ repositories, and 95,000+ pipelines, leading delivery for 6–8 engineers (10–12 during the GitHub migration)</li>
+              <li>Lead technical delivery for a CEO-sponsored initiative making engineer onboarding self-service — a new machine goes from unboxed to building in hours, against a 40+ day hire-to-first-commit baseline</li>
+              <li>Designed, launched, and delivered ATLAS Desktop (Electron, TypeScript), bridging browser, CLI, and IDE so a button on the site runs a native command — now on 2,000+ devices; the unified surface reached 1,000+ engineers in 90 days</li>
+            </ul>
+            <ul class="hl rest">
+              <li>Designed and led the GitHub Enterprise Server to Cloud migration — 10,000+ repositories in under 12 months — with zero downtime, personally designing changes to 52 integration points and retiring the self-hosted server and its costs</li>
+              <li>Made the platform AI-native with MCP servers and a catalog of 140+ vetted skills, servers, and agents that operate enterprise CI/CD safely, and moved tool-version and scan rules into OPA policy</li>
+              <li>Built telemetry in from day one (OpenTelemetry in the CLI, IDE, and desktop agent) and architected the event-bus pipeline into AWS behind live dashboards and a subscribe-able health status page</li>
+              <li>Led the response and root-cause analysis for a GKE build-agent CPU outage that stalled Harness builds for 80–100 teams, then hardened the CLI and pipelines; no similar incident since</li>
+              <li>Won the AIFEE Transformation Champions award and the 2023 Enterprise Tech Data &amp; Cyber Award (GitHub Actions rollout); recognized in 2025 for the migration and AI-first development enablement</li>
+            </ul>
+            <div class="tech"><span>Internal Developer Platforms</span><span>GitHub Enterprise Cloud</span><span>CI/CD</span><span>DevSecOps</span><span>AWS · Google Cloud</span><span>OpenTelemetry</span><span>MCP</span><span>OPA</span><span>Terraform</span></div>
+            <button class="tog" type="button" aria-expanded="false" data-more="Show all 8 highlights">Show all 8 highlights <span class="chev">⌄</span></button>
+          </div>
+
+          <div class="job">
+            <span class="mono">2021 – 2023</span>
+            <h3 class="jt">Staff Software Engineer</h3>
+            <span class="jteam">Enterprise Quality Engineering</span>
+            <p class="jsum">Led Personal Insurance test automation modernization and helped lay the foundations of a shared enterprise automation platform.</p>
+            <ul class="hl rest">
+              <li>Tech lead, product owner, and Scrum Master for a 3–5 engineer offshore team modernizing Personal Insurance test automation across coverage, test data, and observability</li>
+              <li>Cut the new policy platform's front-end test runs from hours to minutes by making the core library idempotent and removing blind sleeps</li>
+              <li>Automated customer-form validation for every supported state, replacing manual checks for the whole QA team</li>
+              <li>Helped build the shared Playwright framework; Playwright is now the company's front-end testing standard</li>
+              <li>Built the database API and front end for Hawkeye, the Personal Lines test-data tool</li>
+            </ul>
+            <div class="tech"><span>Playwright</span><span>Selenium</span><span>Cypress</span><span>Jenkins</span><span>Maven</span></div>
+            <button class="tog" type="button" aria-expanded="false" data-more="Show 5 highlights">Show 5 highlights <span class="chev">⌄</span></button>
+          </div>
+
+          <div class="job">
+            <span class="mono">2020 – 2021</span>
+            <h3 class="jt">Senior Software Engineer</h3>
+            <span class="jteam">Batch Processing Modernization</span>
+            <p class="jsum">Owned modernization of enterprise batch processing pipelines supporting financial and regulatory reporting.</p>
+            <ul class="hl rest">
+              <li>Helped choose the vendor platform that replaced 108 legacy applications, then built its premium integration (NPPS), which has since processed hundreds of millions of dollars in premium</li>
+              <li>Learned .NET and reverse-engineered legacy mainframe flat files to design the transformer that turns policy data into the general-ledger files premium reporting depends on</li>
+              <li>Built in failed-transaction reprocessing, balancing, recovery playbooks, and monitoring</li>
+              <li>Recognized in 2021 for NPPS design direction and for challenging the status quo</li>
+              <li>Established CI/CD, monitoring, and reliability standards for batch delivery</li>
+            </ul>
+            <div class="tech"><span>.NET</span><span>Oracle</span><span>Jenkins</span><span>uDeploy</span><span>Dynatrace</span><span>Sumo Logic</span></div>
+            <button class="tog" type="button" aria-expanded="false" data-more="Show 5 highlights">Show 5 highlights <span class="chev">⌄</span></button>
+          </div>
+
+          <div class="job">
+            <span class="mono">2018 – 2020</span>
+            <h3 class="jt">Software Engineer</h3>
+            <span class="jteam">Full-Stack Development</span>
+            <p class="jsum">Built and supported customer-facing policy quoting and issuance platforms for Personal Lines insurance.</p>
+            <ul class="hl rest">
+              <li>Helped build the entire front end of the new home insurance quoting and issuance platform in Angular, with a new team I coached on front-end best practices</li>
+              <li>Developed Java microservices supporting quoting and issuance</li>
+              <li>Integrated Oracle databases and third-party services for pricing and issuance</li>
+            </ul>
+            <div class="tech"><span>Java</span><span>Angular</span><span>Oracle</span><span>Jenkins</span><span>Sumo Logic</span></div>
+            <button class="tog" type="button" aria-expanded="false" data-more="Show 3 highlights">Show 3 highlights <span class="chev">⌄</span></button>
+          </div>
+
+          <div class="job">
+            <span class="mono">2017 – 2018</span>
+            <h3 class="jt">Multi-Stack Engineer</h3>
+            <span class="jteam">Reliability Engineering</span>
+            <p class="jsum">Owned application platforms and production operations, focusing on reliability, modernization, and DevOps enablement across the application portfolio.</p>
+            <ul class="hl rest">
+              <li>Instrumented Dynatrace and Splunk monitoring and alerting across most of the line-of-business applications</li>
+              <li>Moved the line-of-business applications from AnthillPro to GitHub</li>
+              <li>Carried 24/7 on-call and led overnight triage and restoration of high-impact production incidents</li>
+              <li>Served as the primary point of ownership for full-stack applications across software, data, and infrastructure</li>
+            </ul>
+            <div class="tech"><span>.NET</span><span>Oracle</span><span>Jenkins</span><span>GitHub</span><span>Dynatrace</span><span>Splunk</span></div>
+            <button class="tog" type="button" aria-expanded="false" data-more="Show 4 highlights">Show 4 highlights <span class="chev">⌄</span></button>
+          </div>
+
+          <div class="job">
+            <span class="mono">2016 – 2017 · Windsor, CT</span>
+            <h3 class="jt">Developer</h3>
+            <span class="jteam">Production Support</span>
+            <p class="jsum">Drove delivery and production stability for internal Personal Insurance applications.</p>
+            <ul class="hl rest">
+              <li>Led a 6–8 person Agile scrum team designing a new internal CRM application</li>
+              <li>Personally closed about 1,500 of the team's roughly 4,000 production defects and incidents</li>
+              <li>Integrated multiple internal and external services to streamline agent workflows</li>
+            </ul>
+            <div class="tech"><span>.NET</span><span>Oracle</span><span>Jenkins</span><span>Sumo Logic</span><span>SOAP</span><span>REST</span></div>
+            <button class="tog" type="button" aria-expanded="false" data-more="Show 3 highlights">Show 3 highlights <span class="chev">⌄</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="shead"><h2 class="h2">Leadership &amp; community</h2></div>
+        <div class="rows">
+          <div class="r"><h3 class="rname">Enterprise Hackathons</h3><span class="rsub">Lead / Organizer</span>
+            <p class="rtext short">Lead and organize The Hartford's enterprise hackathons; the most recent drew about 250 engineers.</p>
+            <p class="rtext more">Lead and organize The Hartford's enterprise hackathons; the most recent drew about 250 engineers. Every event takes months of planning — authoring the challenges, standing up environments and starter tooling, setting scoring criteria and prepping judges, and running the logistics of space, food, and prizes.</p>
+            <button class="tog" type="button" aria-expanded="false" data-more="More">More <span class="chev">⌄</span></button></div>
+          <div class="r"><h3 class="rname">Leadership Development Program</h3><span class="rsub">Rotation Manager &amp; Career Coach</span>
+            <p class="rtext">Mentor emerging leaders in the company's Tech &amp; Operations Leadership Development Program — managing rotational assignments (one direct report today) and coaching associates (two today) on long-term career growth.</p></div>
+          <div class="r"><h3 class="rname">CCSU Computer Science Industry Advisory Board</h3><span class="rsub">Member</span>
+            <p class="rtext short">Judge senior projects each semester and help shape the computer science curriculum.</p>
+            <p class="rtext more">Judge student senior projects every semester and work with faculty to refine the computer science curriculum, keeping coursework aligned with current industry practice and the tools graduates will use on the job.</p>
+            <button class="tog" type="button" aria-expanded="false" data-more="More">More <span class="chev">⌄</span></button></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="shead"><h2 class="h2">Skills</h2></div>
+        <dl class="sk">
+          <div><dt>Languages</dt><dd>TypeScript, JavaScript, Java, C# / .NET, SQL, Python, Bash</dd></div>
+          <div><dt>Frameworks &amp; UI</dt><dd>React, Next.js, Angular, Node.js, Spring Boot, Tailwind CSS</dd></div>
+          <div><dt>CI/CD &amp; delivery</dt><dd>Jenkins, GitHub Actions, Harness, AWS CodePipeline, UrbanCode Deploy</dd></div>
+          <div><dt>IaC &amp; containers</dt><dd>Terraform, Docker, Proxmox, Portainer</dd></div>
+          <div><dt>Cloud &amp; data</dt><dd>AWS, Google Cloud, DynamoDB, Snowflake, Oracle, PostgreSQL</dd></div>
+          <div><dt>AI / ML</dt><dd>Vertex AI, MCP, Ollama, Open WebUI</dd></div>
+          <div><dt>DevSecOps &amp; quality</dt><dd>Checkmarx, SonarQube, Nexus, NexusIQ, Playwright, Selenium, Cypress, Maven</dd></div>
+          <div><dt>Observability</dt><dd>Splunk, Dynatrace, Sumo Logic, Grafana, Prometheus</dd></div>
+          <div><dt>Platform, VCS &amp; networking</dt><dd>GitHub Enterprise, Vercel, Tailscale</dd></div>
+        </dl>
+      </section>
+
+      <section>
+        <div class="shead"><h2 class="h2">Education</h2></div>
+        <div class="rows">
+          <div class="r"><h3 class="rname">B.S. Computer Science</h3><span class="rsub">Central Connecticut State University · 2016</span>
+            <p class="rtext">Dean's List · President's List · Upsilon Pi Epsilon Honor Society</p></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="shead"><h2 class="h2">Projects</h2><span class="ssub">Things I build on my own time</span></div>
+        <div class="rows two">
+          <div class="r"><h3 class="rname">Sites</h3><p class="rtext">Fast, phone-friendly websites for local businesses that owners update themselves; live with real clients on their own domains.</p><a class="rlink" href="#">sites.brignano.io ↗</a></div>
+          <div class="r"><h3 class="rname">Guidebook</h3><p class="rtext">A Chrome extension that walks anyone through a task on any website, step by step; guides are recorded by doing the task once and can be checked in CI.</p><a class="rlink" href="#">Chrome Web Store ↗</a></div>
+          <div class="r"><h3 class="rname">Driftwood</h3><p class="rtext">Architecture as code — a versioned model in git, checked continuously against live infrastructure, with drift arriving as a pull request.</p><a class="rlink" href="#">npm ↗ · GitHub ↗</a></div>
+        </div>
+        <a class="rlink" href="#" style="display:inline-block;margin-top:14px">All projects →</a>
+      </section>
+    </div>
+  </div>
+  <div class="foot">© Anthony Brignano</div>
+</div>
+</template>
+
+<script>
+(function () {
+  var tpl = document.getElementById('page');
+  var phone = document.getElementById('phone-screen');
+  var desk = document.getElementById('desk-screen');
+  phone.append(tpl.content.cloneNode(true));
+  desk.append(tpl.content.cloneNode(true));
+
+  var fits = document.querySelectorAll('.fit');
+  function fit() {
+    fits.forEach(function (f) {
+      var full = +f.dataset.w, scr = f.firstElementChild;
+      var s = Math.min(1, (f.clientWidth || full) / full);
+      scr.style.transform = 'scale(' + s + ')';
+      f.style.height = Math.ceil(scr.offsetHeight * s) + 'px';
+    });
+  }
+  if (window.ResizeObserver) fits.forEach(function (f) { new ResizeObserver(fit).observe(f); new ResizeObserver(fit).observe(f.firstElementChild); });
+  window.addEventListener('resize', fit);
+
+  document.querySelectorAll('.pg .tog').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var box = b.closest('.job, .r');
+      var open = !box.classList.contains('open');
+      box.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', String(open));
+      b.firstChild.textContent = open ? 'Show less ' : b.dataset.more + ' ';
+      requestAnimationFrame(fit);
+    });
+  });
+
+  var fPhone = document.getElementById('f-phone'), fDesk = document.getElementById('f-desk');
+  var showBtns = document.querySelectorAll('[data-show]');
+  function show(w) {
+    fPhone.hidden = w === 'desk'; fDesk.hidden = w === 'phone';
+    showBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === w)); });
+    requestAnimationFrame(fit);
+  }
+  showBtns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show); }); });
+  show(window.innerWidth < 760 ? 'phone' : 'both');
+
+  var thBtns = document.querySelectorAll('[data-th]');
+  function theme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    thBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.th === t)); });
+  }
+  thBtns.forEach(function (b) { b.addEventListener('click', function () { theme(b.dataset.th); }); });
+  var dark = false; try { dark = matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
+  theme(dark ? 'dark' : 'light');
+})();
+</script>
+
+</body></html>

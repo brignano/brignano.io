@@ -239,7 +239,7 @@ html[data-chat-open] #scroll-to-top {
   #chat-panel,
   [data-print-hide],
   .job-tech,
-  .exp-body > p {
+  .role-summary {
     display: none !important;
   }
 
@@ -249,11 +249,32 @@ html[data-chat-open] #scroll-to-top {
     transform: none !important;
   }
 
-  /* Force every experience card fully expanded (they collapse via max-h-0). */
+  /* Print every role's highlights, open or not (closed ones carry
+     Tailwind's `hidden`); the caps at the end of this block trim them. */
+  .exp-body > ul:first-child > li.hidden {
+    display: list-item !important;
+  }
   .exp-body {
-    max-height: none !important;
-    overflow: visible !important;
-    margin-top: 4pt !important;
+    margin-top: 2pt !important;
+  }
+
+  /* The desktop two-column layout and its pinned sidebar are screen-only. */
+  main.resume-layout {
+    display: block !important;
+  }
+  main.resume-layout aside {
+    position: static !important;
+  }
+  .role-track {
+    padding-left: 0 !important;
+  }
+  .resume-summary {
+    margin: 4pt 0 8pt !important;
+    max-width: none !important;
+  }
+  .resume-sections {
+    margin-top: 0 !important;
+    gap: 7pt !important;
   }
 
   /* Drop site gutters and top offset; use the full page width. */
@@ -300,7 +321,7 @@ html[data-chat-open] #scroll-to-top {
   /* Keep the role/title line under the name a touch larger than body. Scoped to
      the hero's <p> so it doesn't also catch the employer <h3>, which shares the
      text-2xl class but wants the heading scale above. */
-  main p.text-2xl {
+  main p.resume-role {
     font-size: 13pt !important;
   }
 
@@ -318,7 +339,10 @@ html[data-chat-open] #scroll-to-top {
   }
   /* Leadership has 3 short items — one row of 3 instead of two rows of two. */
   main .lead-grid {
+    display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6pt 18pt !important;
+    border: 0 !important;
   }
   /* Drop the long web copy for the one-liner; the row of 3 has no room for it,
      and the PDF (resume-pdf.tsx) prints the same short `description`. */
@@ -331,7 +355,7 @@ html[data-chat-open] #scroll-to-top {
 
   /* Flatten card chrome (border / fill / radius / padding / indent) to clean text. */
   .bg-card,
-  main .ml-8 {
+  main .role-card {
     background: transparent !important;
     border: none !important;
     border-radius: 0 !important;
@@ -342,36 +366,35 @@ html[data-chat-open] #scroll-to-top {
 
   /* Keep an individual job/card intact across a page break — but NOT the whole
      list (that would overflow into blank pages). */
-  .space-y-10 > div,
+  .role,
   .bg-card {
     break-inside: avoid;
   }
-  .space-y-10 > div {
-    margin-bottom: 5pt !important;
+  .role-list {
+    gap: 5pt !important;
+  }
+  /* Row dividers are a screen device; paper gets plain text. */
+  main ul.border-t,
+  main dl.border-t,
+  main li.border-b,
+  main .skill-group {
+    border: 0 !important;
+    padding: 0 !important;
   }
 
   /* Skills has 9 categories — give it 3 columns (vs the default 2) and tight
      spacing so it doesn't overflow onto a third page. */
-  main .grid:has(> .skill-group) {
+  main .skill-list {
+    display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
     gap: 5pt 14pt !important;
   }
-  .skill-group h3 {
-    margin-bottom: 2pt !important;
+  main .skill-group {
+    display: block !important;
   }
-  .skill-items {
-    gap: 3pt !important;
-  }
-
-  /* Skill badges: transparent pills with black ink, no logos. Brand icons are
-     a web-only flourish — the printed/PDF resume stays clean text so it scans
-     well for recruiters and parses cleanly for ATS, matching the PDF download. */
-  .skill-items span {
-    background: transparent !important;
-    padding: 1pt 6pt 1pt 0 !important;
-  }
-  .skill-items svg {
-    display: none !important;
+  main .skill-group dd {
+    font-size: 9.5pt !important;
+    line-height: 1.3 !important;
   }
 
   /* Condense to ~2 pages: cap bullets per role. These MUST mirror the slice()
@@ -379,10 +402,10 @@ html[data-chat-open] #scroll-to-top {
      roles keep 4. Change both together. Keyed off data-role-rank (set from the
      role's index in the full list) rather than :first-child, so grouping roles
      under an employer header doesn't promote each group's first card. */
-  [data-role-rank="primary"] .exp-body ul li:nth-child(n + 9) {
+  [data-role-rank="primary"] .exp-body > ul:first-child > li:nth-child(n + 9) {
     display: none !important;
   }
-  [data-role-rank="secondary"] .exp-body ul li:nth-child(n + 5) {
+  [data-role-rank="secondary"] .exp-body > ul:first-child > li:nth-child(n + 5) {
     display: none !important;
   }
 }
