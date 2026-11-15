@@ -1,0 +1,700 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects Page Rethink</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* @brignano/design tokens.css, inlined (comments stripped) */
+
+:root {
+  color-scheme: light dark;
+}
+[data-theme='light'] {
+  color-scheme: light;
+}
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root {
+  --n-0: light-dark(#ffffff, #0d0d0f);
+  --n-25: light-dark(#fafafb, #131316);
+  --n-50: light-dark(#f3f3f4, #17171a);
+  --n-100: light-dark(#ececee, #202024); 
+  --n-200: light-dark(#e1e1e4, #2a2a2f); 
+  --n-300: light-dark(#cbcbce, #3a3a41); 
+  --n-400: light-dark(#a9a9ae, #55555e);
+  --n-500: light-dark(#8a8a8f, #8b8b93); 
+  --n-600: light-dark(#6b6b73, #9c9ca4); 
+  --n-700: light-dark(#52525b, #a8a8b0); 
+  --n-800: light-dark(#33333a, #d0d0d5);
+  --n-900: light-dark(#111114, #f2f2f4); 
+  --bg: light-dark(#fafafb, #0d0d0f); 
+  --card: light-dark(#ffffff, #17171a); 
+  --surface-hover: var(--n-100);
+  --surface-active: var(--n-200);
+  --surface-sticky: light-dark(color-mix(in srgb, #ffffff 92%, transparent), color-mix(in srgb, #0d0d0f 92%, transparent)); 
+  --ink: var(--n-900);
+  --ink-soft: var(--n-700);
+  --slate: light-dark(#6b6b73, #8b8b93); 
+  --line: var(--n-100);
+  --line-soft: var(--n-50);
+  --line-strong: var(--n-300); 
+  --line-control: light-dark(#8a8a8f, #6b6b73);
+  --on-dark: light-dark(#fafafb, #0d0d0f); 
+  --device: light-dark(#111114, #3a3a41); 
+  --i: light-dark(#076bd3, #0371e0);
+  --i-ink: light-dark(#0159b5, #6ba5f3);
+  --i-hover: light-dark(#014a97, #0062c7);
+  --i-ink-hover: light-dark(#014a97, #98c4ff);
+  --i-pressed: light-dark(#003e82, #0553a6);
+  --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #0371e0 20%, transparent));
+  --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #0371e0 44%, transparent));
+  --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #0371e0 30%, transparent));
+  --on-i: light-dark(#ffffff, #ffffff);
+  --danger-fill: light-dark(#a4442c, #be563c);
+  --danger-fill-hover: light-dark(#8a3722, #ad472e);
+  --danger-fill-pressed: light-dark(#8a3722, #9d381e);
+  --on-danger: light-dark(#ffffff, #ffffff);
+  --i-disabled-bg: var(--n-200);
+  --i-disabled-ink: var(--n-400);
+  --success: light-dark(#2f6b4f, #6fbf95);
+  --success-ink: light-dark(#245740, #8fd4ae);
+  --attention: light-dark(#b4741f, #e0a44f); 
+  --attention-ink: light-dark(#8a5714, #e0a44f); 
+  --danger: light-dark(#a4442c, #e07a5f);
+  --danger-ink: light-dark(#8a3722, #ec9880);
+  --info: var(--i);
+  --info-ink: var(--i-ink);
+  --success-surface: light-dark(color-mix(in srgb, #2f6b4f 12%, transparent), color-mix(in srgb, #6fbf95 20%, transparent));
+  --attention-surface: light-dark(color-mix(in srgb, #b4741f 12%, transparent), color-mix(in srgb, #e0a44f 20%, transparent));
+  --danger-surface: light-dark(color-mix(in srgb, #a4442c 12%, transparent), color-mix(in srgb, #e07a5f 20%, transparent));
+  --info-surface: var(--i-surface);
+  --success-line: light-dark(color-mix(in srgb, #2f6b4f 32%, transparent), color-mix(in srgb, #6fbf95 44%, transparent));
+  --attention-line: light-dark(color-mix(in srgb, #b4741f 32%, transparent), color-mix(in srgb, #e0a44f 44%, transparent));
+  --danger-line: light-dark(color-mix(in srgb, #a4442c 32%, transparent), color-mix(in srgb, #e07a5f 44%, transparent));
+  --info-line: var(--i-line);
+  --diff-added: var(--success);
+  --diff-added-ink: var(--success-ink);
+  --diff-added-surface: var(--success-surface);
+  --diff-changed: var(--i);
+  --diff-changed-ink: var(--i-ink);
+  --diff-changed-surface: var(--i-surface);
+  --diff-removed: var(--danger);
+  --diff-removed-ink: var(--danger-ink);
+  --diff-removed-surface: var(--danger-surface);
+  --code-surface: var(--bg);
+  --code-ink: var(--ink);
+  --code-keyword: var(--i-ink);
+  --code-string: var(--ink-soft);
+  --code-comment: var(--slate);
+  --code-highlight: var(--i-surface);
+  --mark: light-dark(#b4741f, #e0a44f);
+  --mark-ink: light-dark(#8a5714, #e0a44f); 
+  --mark-teal: light-dark(#0e7c86, #4cc0cb);
+  --mark-violet: light-dark(#7148c9, #a990f2);
+  --mark-magenta: light-dark(#b1366f, #ea7fb0);
+  --mark-current: var(--mark);
+  --forest: var(--success);
+  --forest-deep: var(--success-ink);
+  --larch: var(--attention);
+  --larch-deep: light-dark(#8a5714, #f0bd74);
+  --rust: var(--danger);
+  --rust-deep: var(--danger-ink);
+  --gold: var(--slate);
+  --sans: 'Geist', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --display: var(--sans);
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-heavy: 800;
+  --leading-display: 1.15;
+  --leading-title: 1.3;
+  --leading-ui: 1.4;
+  --leading-body: 1.6;
+  --tracking-title: -0.01em;
+  --tracking-display: -0.025em;
+  --tracking-caps: 0.08em;
+  --z-raised: 1;
+  --z-sticky: 10;
+  --z-float: 20;
+  --z-skip: 30;
+  --z-toast: 40;
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+  --radius-sm: 6px;
+  --radius-control: 8px; 
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow-1: 0 1px 2px light-dark(rgba(17, 17, 17, 0.04), rgba(0, 0, 0, 0.45));
+  --shadow-2:
+    0 2px 8px light-dark(rgba(17, 17, 17, 0.07), transparent),
+    0 2px 10px light-dark(transparent, rgba(0, 0, 0, 0.55));
+  --shadow-3:
+    0 8px 24px light-dark(rgba(17, 17, 17, 0.10), transparent),
+    0 10px 28px light-dark(transparent, rgba(0, 0, 0, 0.65));
+  --scrim: light-dark(rgba(17, 17, 17, 0.55), rgba(0, 0, 0, 0.68));
+  --shadow: var(--shadow-1); 
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 600ms;
+}
+:root {
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --section-gap: var(--s6);
+  --measure: 780px;
+}
+@media (pointer: coarse) {
+  :root:not(.tier-marketing) {
+    --text-xs: 0.75rem;
+  }
+}
+.tier-marketing {
+  --display: 'Silkscreen', var(--mono);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: clamp(2.75rem, 1rem + 4.5vw, 4rem); 
+  --section-gap: var(--s9);
+  --measure: 68ch;
+}
+[data-mark='teal'] {
+  --mark-current: var(--mark-teal);
+}
+[data-mark='violet'] {
+  --mark-current: var(--mark-violet);
+}
+[data-mark='magenta'] {
+  --mark-current: var(--mark-magenta);
+}
+::selection {
+  background: var(--i-selection);
+}
+:root {
+  accent-color: var(--i);
+}
+@media print {
+  :root,
+  [data-theme] {
+    color-scheme: light;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+</style>
+</head><body>
+<style>
+:root { color-scheme: light dark; }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+a { color: var(--i-ink); }
+.doc { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 56px; }
+.col { max-width: 68ch; display: grid; gap: 14px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); margin: 0; }
+h1.title { font-size: clamp(30px, 5vw, 44px); line-height: 1.08; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h2.h { font-size: 24px; line-height: 1.2; letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.lede { font-size: 18px; color: var(--ink-soft); margin: 0; }
+p { margin: 0; }
+.muted { color: var(--ink-soft); }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-soft); }
+ul.plain b { color: var(--ink); }
+
+.findings { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.finding { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: grid; gap: 6px; align-content: start; }
+.finding .num { font-size: 30px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.finding p { color: var(--ink-soft); font-size: 15px; }
+
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+td:first-child { font-weight: 600; white-space: nowrap; }
+td.new { color: var(--ink); }
+td .src { display: block; font-size: 12px; color: var(--slate); }
+
+.controls { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.seg-ctl { display: inline-flex; border: 1px solid var(--line-control); border-radius: 10px; padding: 3px; gap: 3px; background: var(--card); }
+.seg-ctl button { font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--ink-soft); padding: 6px 12px; border-radius: 7px; cursor: pointer; min-height: 32px; }
+.seg-ctl button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg-ctl button:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; }
+.ctl-label { font-size: 13px; color: var(--slate); margin-right: 6px; }
+
+.frames { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.frame { display: grid; gap: 8px; min-width: 0; }
+.frame-phone { flex: 0 1 390px; min-width: 0; max-width: 390px; }
+.frame-desk { flex: 1 1 520px; min-width: 0; }
+.flabel { font-family: var(--mono); font-size: 12px; color: var(--slate); }
+.screen { container-type: inline-size; background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
+.fit { overflow: hidden; border-radius: var(--radius); }
+.fit > .screen { transform-origin: top left; }
+.frame-phone .screen { width: 390px; }
+.frame-desk .screen { width: 1280px; }
+
+/* ── The proposed /projects page. px sizes describe the real page at the
+   frame's width. @container, not @media. ── */
+.pg { --gut: 20px; font-size: 16px; line-height: 1.6; }
+.pg .nav { display: flex; justify-content: space-between; align-items: center; height: 60px; border-bottom: 1px solid var(--line); padding-inline: var(--gut); }
+.pg .logo { font-weight: 800; letter-spacing: -.04em; font-size: 18px; }
+.pg .links { display: none; gap: 28px; color: var(--ink-soft); font-size: 15px; }
+.pg .links .on { color: var(--ink); border-bottom: 2px solid var(--ink); }
+.pg .icons { display: flex; gap: 8px; }
+.pg .ico { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-size: 13px; color: var(--slate); }
+.pg main { padding: 36px var(--gut) 48px; }
+.pg .ph1 { font-size: 36px; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 10px; }
+.pg .intro { color: var(--ink-soft); font-size: 17px; max-width: 46ch; margin-bottom: 28px; }
+
+.pg .grid { display: grid; gap: 16px; align-items: start; }
+.pg .pcard { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.pg .cover { --m: var(--mark-current); position: relative; height: 150px; background: color-mix(in srgb, var(--m) 11%, var(--card)); border-bottom: 1px solid var(--line); display: grid; place-items: center; overflow: hidden; }
+.pg .pbody { padding: 16px 18px 18px; display: grid; gap: 6px; }
+.pg .meta { font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--slate); text-transform: uppercase; }
+.pg .trow { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pg .pname { font-size: 21px; font-weight: 700; letter-spacing: -.01em; margin: 0; }
+.pg .status { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; border: 1px solid var(--line-strong); color: var(--slate); border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+.pg .status.live { border-color: var(--success-line); color: var(--success-ink); background: var(--success-surface); }
+.pg .status.live::before { content: "● "; font-size: 8px; vertical-align: 1px; }
+.pg .one { color: var(--ink-soft); font-size: 15.5px; line-height: 1.5; }
+.pg .acts { display: flex; align-items: center; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.pg .btn { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px; border-radius: var(--radius-control); background: var(--i); color: var(--on-i); font-size: 14px; font-weight: 600; text-decoration: none; }
+.pg .more { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; border-radius: var(--radius-control); border: 1px solid var(--line-control); background: transparent; color: var(--ink); font: inherit; font-size: 14px; cursor: pointer; }
+.pg .more .chev { transition: transform .15s; display: inline-block; }
+.pg .more[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.pg .more:focus-visible, .pg .btn:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; }
+.pg .details { display: none; border-top: 1px solid var(--line); margin-top: 12px; padding-top: 12px; gap: 10px; font-size: 14.5px; color: var(--ink-soft); }
+.pg .pcard.open .details { display: grid; }
+.pg .details .k { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--slate); }
+.pg .details .lks { display: flex; flex-wrap: wrap; gap: 14px; }
+.pg .details .lks a { font-size: 14px; text-decoration: none; }
+
+.pg .sec2 { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+.pg .h2 { font-size: 24px; letter-spacing: -.01em; margin: 0 0 6px; }
+.pg .sub { color: var(--ink-soft); font-size: 15px; margin-bottom: 18px; }
+.pg .rows { display: grid; gap: 12px; align-items: start; }
+.pg .row { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; grid-template-columns: 44px 1fr; gap: 4px 14px; }
+.pg .row .glyph { grid-row: span 3; width: 44px; height: 44px; border-radius: 10px; background: color-mix(in srgb, var(--mark) 12%, var(--card)); color: var(--mark); display: grid; place-items: center; }
+.pg .row .pname { font-size: 17px; }
+.pg .row .one { font-size: 14.5px; }
+.pg .row .acts { margin-top: 4px; }
+.pg .row .details { grid-column: 1 / -1; }
+.pg .foot { border-top: 1px solid var(--line); padding: 20px var(--gut); font-size: 12px; color: var(--slate); }
+
+@container (min-width: 900px) {
+  .pg { --gut: 80px; }
+  .pg .links { display: flex; }
+  .pg .icons .menu { display: none; }
+  .pg main { padding-top: 72px; }
+  .pg .ph1 { font-size: 48px; }
+  .pg .grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .pg .cover { height: 190px; }
+  .pg .rows { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Cover illustrations: drawn in the card's mark plus neutrals. Pictures of
+   what each thing does, not screenshots. */
+.pg svg { display: block; }
+.pg .cover svg { width: 82%; max-width: 300px; height: auto; max-height: 86%; }
+.pg .ill-line { stroke: var(--line-strong); }
+.pg .ill-card { fill: var(--card); stroke: var(--line-strong); }
+.pg .ill-soft { fill: var(--n-200); }
+.pg .ill-m { fill: var(--mark-current); }
+.pg .ill-ms { stroke: var(--mark-current); }
+.pg .ill-ink { fill: var(--ink); }
+.pg .ill-t { font-family: var(--mono); font-size: 10px; fill: var(--ink-soft); }
+.pg .ill-tm { font-family: var(--mono); font-size: 10px; fill: var(--mark-current); font-weight: 600; }
+.pg .term { fill: var(--device); }
+.pg .ill-onterm { font-family: var(--mono); font-size: 10px; fill: #e9e9ec; }
+.note-ill { font-size: 13px; color: var(--slate); }
+</style>
+
+<div class="doc">
+  <section class="col">
+    <p class="eyebrow">Wireframe · /projects</p>
+    <h1 class="title">Make the projects page easy to scan</h1>
+    <p class="lede">Each project gets a picture of what it does, a line saying what it is and who it's for, and one plain sentence. The long description, the tech list and the extra links move behind a Details button.</p>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-now">
+    <h2 class="h" id="h-now">What makes it a wall today</h2>
+    <div class="findings">
+      <div class="finding"><span class="num">502 words</span><p>in the nine descriptions, all shown at once. Breakeven alone is 99 words.</p></div>
+      <div class="finding"><span class="num">37 pills</span><p>of tech names, the same grey shape as the status pill, on every card. They mean little to non-engineers and compete with the names.</p></div>
+      <div class="finding"><span class="num">0 pictures</span><p>Every card is a title over a paragraph, so a poker app and an architecture tool look identical while scrolling.</p></div>
+      <div class="finding"><span class="num">5.7 screens</span><p>on a phone (4,771px at 390px wide), almost all of it paragraph text.</p></div>
+    </div>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-wf">
+    <h2 class="h" id="h-wf">Proposed page</h2>
+    <p class="muted" style="max-width:68ch">On a phone the page drops from 5.7 screens to about 3.8, and the words you read before choosing to open anything go from 502 to about 130. Click <b>Details</b> on any card to see what moves behind it. The pictures are rough sketches of the idea; the build would draw them properly in the site's style.</p>
+    <div class="controls">
+      <div><span class="ctl-label">Show</span>
+        <div class="seg-ctl" role="group" aria-label="Frames to show">
+          <button type="button" data-show="both">Both</button>
+          <button type="button" data-show="phone">Phone</button>
+          <button type="button" data-show="desk">Desktop</button>
+        </div>
+      </div>
+      <div><span class="ctl-label">Theme</span>
+        <div class="seg-ctl" role="group" aria-label="Theme">
+          <button type="button" data-th="light">Light</button>
+          <button type="button" data-th="dark">Dark</button>
+        </div>
+      </div>
+    </div>
+    <div class="frames" id="frames">
+      <div class="frame frame-phone" id="f-phone"><span class="flabel">Phone · 390px</span><div class="fit" data-w="390"><div class="screen" id="phone-screen"></div></div></div>
+      <div class="frame frame-desk" id="f-desk"><span class="flabel">Desktop · 1280px, scaled to fit</span><div class="fit" data-w="1280"><div class="screen" id="desk-screen"></div></div></div>
+    </div>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-copy">
+    <h2 class="h" id="h-copy">The new words, for you to check</h2>
+    <p class="muted" style="max-width:68ch">Sites, Guidebook and Driftwood reuse the one-liners already on the home page. The other six are new and only restate what their current descriptions say. The full descriptions stay word for word behind Details.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Project</th><th>What it is · who it's for</th><th>One sentence</th><th>Picture</th></tr></thead>
+        <tbody>
+          <tr><td>Sites</td><td>Websites · for small businesses</td><td>Websites small businesses can update themselves, with a free preview first.<span class="src">from home</span></td><td>A phone showing a shop's site with an Edit button</td></tr>
+          <tr><td>Guidebook</td><td>Chrome extension · for anyone</td><td>Step-by-step help on any website, from a Chrome extension.<span class="src">from home</span></td><td>A browser with one button ringed and a "Step 2 of 4" tip</td></tr>
+          <tr><td>Driftwood</td><td>Developer tool · for platform teams</td><td>An architecture model that's checked against the real infrastructure.<span class="src">from home</span></td><td>Model vs. real diagram, the difference opening a pull request</td></tr>
+          <tr><td>Card</td><td>Terminal app · for developers</td><td class="new">A business card you open in a terminal by typing npx brignano.</td><td>A terminal with the command and a gradient name</td></tr>
+          <tr><td>Breakeven</td><td>Desktop app · for poker players</td><td class="new">A poker calculator that says call or fold, then reviews your hands after a session.</td><td>Two cards and a need-vs-have bar ending in "Call"</td></tr>
+          <tr><td>HostStats</td><td>Web app · for Airbnb hosts</td><td class="new">Turns Airbnb booking exports into charts, and your files never leave the browser.</td><td>A small earnings bar chart</td></tr>
+          <tr><td>Design</td><td>Design system</td><td class="new">The colours, type and parts every site here is built from.</td><td>Small glyph only</td></tr>
+          <tr><td>AI Tools</td><td>Agent setup</td><td class="new">One setup for my AI coding agents, installed the same way on every machine.</td><td>Small glyph only</td></tr>
+          <tr><td>Homelab</td><td>Home server</td><td class="new">A mini PC at home that runs my servers and local AI models.</td><td>Small glyph only</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="col" aria-labelledby="h-why">
+    <h2 class="h" id="h-why">Choices behind it</h2>
+    <ul class="plain">
+      <li><b>Colour comes from each product's own mark.</b> Sites magenta, Guidebook violet, Driftwood teal, the same colours their product pages use. The other three use the family amber, since the design rules give a product its own colour only once it has a product page. The pictures still tell them apart.</li>
+      <li><b>Drawn pictures, not screenshots.</b> Screenshots go stale and are unreadable at card size on a phone. Drawings stay sharp, follow light and dark, and show the one idea. If you'd rather have real screenshots, they slot into the same space.</li>
+      <li><b>Status says "live" in green only when it is.</b> Beta goes neutral, so blue keeps meaning "you can click this", as the design system asks.</li>
+      <li><b>Details opens in place</b>, using the design system's existing disclosure pattern, so nothing new is needed in brignano/design. Open cards are remembered only for the visit.</li>
+      <li><b>The "how the work gets made" group shrinks to rows</b> with a small glyph and one line. It's for engineers, so it shouldn't compete with the products.</li>
+    </ul>
+    <p class="muted"><b>Considered and dropped:</b> filter chips (nine items don't need filtering); a separate page per project (more to maintain, and the Details panel covers it); one card per row on desktop (twice the scrolling).</p>
+  </section>
+
+  <section class="col" aria-labelledby="h-next">
+    <h2 class="h" id="h-next">What happens next</h2>
+    <p class="muted">Say OK, or tell me what to change (words, pictures, layout). Then I build it as one PR in brignano.io: a new card, a picture per project, the six new one-liners in lib/constants.ts, and this file committed under proposals/wireframes/. The home page's "On the side" cards don't change.</p>
+  </section>
+</div>
+
+<template id="page">
+  <div class="pg">
+    <div class="nav">
+      <span class="logo">A|B</span>
+      <span class="links"><span>Work</span><span class="on">Projects</span><span>Blog</span><span>Resume</span><span>Coding</span></span>
+      <span class="icons"><span class="ico" aria-hidden="true">☀</span><span class="ico menu" aria-hidden="true">≡</span></span>
+    </div>
+    <main>
+      <h1 class="ph1">Projects</h1>
+      <p class="intro">Things I build on my own time. Open any one for the details.</p>
+
+      <div class="grid">
+        <!-- Sites -->
+        <article class="pcard" data-mark="magenta">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 240 130">
+              <rect x="80" y="6" width="80" height="140" rx="12" class="ill-card" stroke-width="1.5"/>
+              <rect x="90" y="20" width="60" height="8" rx="2" class="ill-m"/>
+              <rect x="90" y="34" width="60" height="34" rx="3" class="ill-soft"/>
+              <rect x="90" y="74" width="40" height="5" rx="2" class="ill-soft"/>
+              <text x="90" y="92" class="ill-t">Open 9–5</text>
+              <rect x="90" y="100" width="34" height="12" rx="3" class="ill-m" opacity=".35"/>
+              <rect x="150" y="56" width="58" height="22" rx="11" class="ill-card" stroke-width="1.5"/>
+              <text x="160" y="71" class="ill-tm">✎ Edit</text>
+            </svg>
+          </div>
+          <div class="pbody">
+            <span class="meta">Websites · for small businesses</span>
+            <div class="trow"><h3 class="pname">Sites</h3><span class="status live">live</span></div>
+            <p class="one">Websites small businesses can update themselves, with a free preview first.</p>
+            <div class="acts"><a class="btn" href="#">Get a free preview ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one starts as a free preview on a brignano.io subdomain, then moves to the business's own domain, whether that's the URL they already have or a new one, so the site carries their brand. Owners log in to change their hours, photos or words, and the site updates about a minute later.</p>
+              <div><div class="k">Built with</div>Cloudflare Workers · JavaScript · YAML · Cloudflare Access</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Guidebook -->
+        <article class="pcard" data-mark="violet">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 240 130">
+              <rect x="20" y="12" width="200" height="110" rx="8" class="ill-card" stroke-width="1.5"/>
+              <line x1="20" y1="28" x2="220" y2="28" class="ill-line" stroke-width="1.5"/>
+              <circle cx="32" cy="20" r="3" class="ill-soft"/><circle cx="42" cy="20" r="3" class="ill-soft"/>
+              <rect x="34" y="40" width="80" height="6" rx="2" class="ill-soft"/>
+              <rect x="34" y="52" width="110" height="6" rx="2" class="ill-soft"/>
+              <rect x="34" y="78" width="46" height="18" rx="4" class="ill-soft"/>
+              <rect x="30" y="74" width="54" height="26" rx="7" fill="none" class="ill-ms" stroke-width="2.5"/>
+              <rect x="96" y="70" width="104" height="34" rx="6" class="ill-m"/>
+              <text x="104" y="84" class="ill-onterm" style="font-size:9px">Step 2 of 4</text>
+              <text x="104" y="97" class="ill-onterm" style="font-size:9px;font-weight:600">Click Save</text>
+            </svg>
+          </div>
+          <div class="pbody">
+            <span class="meta">Chrome extension · for anyone</span>
+            <div class="trow"><h3 class="pname">Guidebook</h3><span class="status live">live</span></div>
+            <p class="one">Step-by-step help on any website, from a Chrome extension.</p>
+            <div class="acts"><a class="btn" href="#">Try the demo ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>Step-by-step help on any website, for anyone: a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A Chrome extension highlights each thing to click and says in plain words what to do. Record a guide by doing the task once, share it with a link, or browse the guide library. App teams can embed the same engine and check every guide in CI.</p>
+              <div><div class="k">Built with</div>TypeScript · Browser extension · Claude · Playwright · Supabase</div>
+              <div class="lks"><a href="#">Chrome Web Store ↗</a></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Driftwood -->
+        <article class="pcard" data-mark="teal">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 240 130">
+              <text x="22" y="20" class="ill-t">model</text>
+              <rect x="22" y="28" width="30" height="20" rx="4" class="ill-card" stroke-width="1.5"/>
+              <rect x="70" y="28" width="30" height="20" rx="4" class="ill-card" stroke-width="1.5"/>
+              <rect x="46" y="66" width="30" height="20" rx="4" class="ill-card" stroke-width="1.5"/>
+              <path d="M52 38h18M37 48l18 18M85 48l-18 18" class="ill-line" stroke-width="1.5" fill="none"/>
+              <text x="140" y="20" class="ill-t">real</text>
+              <rect x="140" y="28" width="30" height="20" rx="4" class="ill-card" stroke-width="1.5"/>
+              <rect x="188" y="28" width="30" height="20" rx="4" class="ill-card" stroke-width="1.5"/>
+              <rect x="164" y="66" width="30" height="20" rx="4" class="ill-m" opacity=".9"/>
+              <path d="M170 38h18M155 48l18 18" class="ill-line" stroke-width="1.5" fill="none"/>
+              <path d="M203 48l-18 18" class="ill-ms" stroke-width="2" stroke-dasharray="3 3" fill="none"/>
+              <rect x="70" y="100" width="100" height="22" rx="11" class="ill-card" stroke-width="1.5"/>
+              <text x="82" y="115" class="ill-tm">⇄ pull request</text>
+            </svg>
+          </div>
+          <div class="pbody">
+            <span class="meta">Developer tool · for platform teams</span>
+            <div class="trow"><h3 class="pname">Driftwood</h3><span class="status">beta</span></div>
+            <p class="one">An architecture model that's checked against the real infrastructure.</p>
+            <div class="acts"><a class="btn" href="#">Open Driftwood ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts. It also draws a Terraform plan on its pull request, before anything is applied.</p>
+              <div><div class="k">Built with</div>TypeScript · Terraform · Graphviz (WASM) · Node</div>
+              <div class="lks"><a href="#">npm ↗</a><a href="#">Source ↗</a></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card -->
+        <article class="pcard">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 240 130">
+              <rect x="20" y="14" width="200" height="104" rx="8" class="term"/>
+              <circle cx="32" cy="24" r="3" fill="#ff5f57"/><circle cx="42" cy="24" r="3" fill="#febc2e"/><circle cx="52" cy="24" r="3" fill="#28c840"/>
+              <text x="32" y="48" class="ill-onterm">$ npx brignano</text>
+              <rect x="32" y="58" width="120" height="10" rx="2" class="ill-m"/>
+              <rect x="32" y="72" width="90" height="10" rx="2" class="ill-m" opacity=".6"/>
+              <text x="32" y="100" class="ill-onterm" opacity=".75">› Copy email   › Save vCard</text>
+            </svg>
+          </div>
+          <div class="pbody">
+            <span class="meta">Terminal app · for developers</span>
+            <div class="trow"><h3 class="pname">Card</h3><span class="status live">live</span></div>
+            <p class="one">A business card you open in a terminal by typing npx brignano.</p>
+            <div class="acts"><a class="btn" href="#">Run it ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>An interactive terminal business card, run with npx brignano. Gradient ASCII intro, live GitHub stats fetched on a 1.5-second leash so it never hangs, and quick actions to copy my email, open my socials or save a vCard.</p>
+              <div><div class="k">Built with</div>Node · TypeScript · npm</div>
+              <div class="lks"><a href="#">Source ↗</a></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Breakeven -->
+        <article class="pcard">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 240 130">
+              <g transform="rotate(-8 50 60)"><rect x="26" y="22" width="44" height="62" rx="5" class="ill-card" stroke-width="1.5"/><text x="34" y="42" class="ill-tm" style="font-size:14px">A♠</text></g>
+              <g transform="rotate(6 90 60)"><rect x="62" y="24" width="44" height="62" rx="5" class="ill-card" stroke-width="1.5"/><text x="70" y="44" class="ill-tm" style="font-size:14px">K♠</text></g>
+              <text x="128" y="34" class="ill-t">need</text>
+              <rect x="128" y="40" width="90" height="8" rx="4" class="ill-soft"/><rect x="128" y="40" width="26" height="8" rx="4" fill="var(--slate)"/>
+              <text x="128" y="66" class="ill-t">have</text>
+              <rect x="128" y="72" width="90" height="8" rx="4" class="ill-soft"/><rect x="128" y="72" width="44" height="8" rx="4" class="ill-m"/>
+              <rect x="128" y="94" width="50" height="22" rx="11" class="ill-m"/>
+              <text x="141" y="109" class="ill-onterm" style="font-weight:600">Call</text>
+            </svg>
+          </div>
+          <div class="pbody">
+            <span class="meta">Desktop app · for poker players</span>
+            <div class="trow"><h3 class="pname">Breakeven</h3><span class="status live">live</span></div>
+            <p class="one">A poker calculator that says call or fold, then reviews your hands after a session.</p>
+            <div class="acts"><a class="btn" href="#">Download ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>Know the price of every call. A desktop pot-odds and equity calculator for Texas Hold'em: enter the pot and the bet, optionally your cards and the board, and it shows the equity you need, the equity you have from 5,000 simulated hands, your outs and the cards that hurt you, then a call-or-fold verdict. Leave it running and it tracks your PokerStars hands from the files PokerStars saves, so after a session you can price-check every call and fold and see how loose or aggressive each player at your tables is. Windows and Mac downloads, nothing to install.</p>
+              <div><div class="k">Built with</div>Python · Tkinter · PyInstaller · GitHub Actions</div>
+              <div class="lks"><a href="#">Source ↗</a></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- HostStats -->
+        <article class="pcard">
+          <div class="cover" aria-hidden="true">
+            <svg viewBox="0 0 240 130">
+              <rect x="20" y="12" width="200" height="108" rx="8" class="ill-card" stroke-width="1.5"/>
+              <text x="34" y="32" class="ill-t">Earnings by month</text>
+              <line x1="34" y1="104" x2="206" y2="104" class="ill-line" stroke-width="1.5"/>
+              <rect x="40" y="78" width="14" height="26" rx="2" class="ill-m" opacity=".45"/>
+              <rect x="62" y="66" width="14" height="38" rx="2" class="ill-m" opacity=".45"/>
+              <rect x="84" y="58" width="14" height="46" rx="2" class="ill-m" opacity=".45"/>
+              <rect x="106" y="70" width="14" height="34" rx="2" class="ill-m" opacity=".45"/>
+              <rect x="128" y="50" width="14" height="54" rx="2" class="ill-m" opacity=".45"/>
+              <rect x="150" y="44" width="14" height="60" rx="2" class="ill-m"/>
+              <rect x="172" y="62" width="14" height="42" rx="2" class="ill-m" opacity=".45"/>
+            </svg>
+          </div>
+          <div class="pbody">
+            <span class="meta">Web app · for Airbnb hosts</span>
+            <div class="trow"><h3 class="pname">HostStats</h3><span class="status live">live</span></div>
+            <p class="one">Turns Airbnb booking exports into charts, and your files never leave the browser.</p>
+            <div class="acts"><a class="btn" href="#">Open HostStats ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>Airbnb hosts upload their CSV exports and get occupancy, booking trends and earnings back as charts. Every file is parsed in the browser: no account, no upload, and no server that could leak a year of someone's bookings.</p>
+              <div><div class="k">Built with</div>Next.js · TypeScript · Cloudflare Workers · Tailwind</div>
+              <div class="lks"><a href="#">Source ↗</a></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section class="sec2">
+        <h2 class="h2">How the work gets made</h2>
+        <p class="sub">The setup underneath the projects above, public because the write-ups are useful.</p>
+        <div class="rows">
+          <div class="row">
+            <span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="4"/><rect x="13" y="13" width="8" height="8" rx="1"/><path d="M14 4h6v6"/></svg></span>
+            <div class="trow"><h3 class="pname">Design</h3><span class="status">beta</span></div>
+            <p class="one">The colours, type and parts every site here is built from.</p>
+            <div class="acts"><a class="btn" href="#">See it live ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>The token system every other surface here is built on. Three colour layers so no colour does two jobs: brand for identity, one interactive hue for every control, conventional hues for state. Every token and component has a live preview in light and dark, and DECISIONS.md records why each value is what it is.</p>
+              <div><div class="k">Built with</div>CSS · Design tokens · npm</div>
+              <div class="lks"><a href="#">npm ↗</a><a href="#">Source ↗</a></div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17l6-5-6-5"/><path d="M12 19h8"/></svg></span>
+            <div class="trow"><h3 class="pname">AI Tools</h3><span class="status">beta</span></div>
+            <p class="one">One setup for my AI coding agents, installed the same way on every machine.</p>
+            <div class="acts"><a class="btn" href="#">Source ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>One source of truth for my AI-agent setup: context, slash commands, output styles, permissions and MCP servers, symlinked into place by an installer so every machine I work on behaves the same way.</p>
+              <div><div class="k">Built with</div>Shell · PowerShell · Claude Code · MCP</div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="glyph" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></span>
+            <div class="trow"><h3 class="pname">Homelab</h3><span class="status">beta</span></div>
+            <p class="one">A mini PC at home that runs my servers and local AI models.</p>
+            <div class="acts"><a class="btn" href="#">Source ↗</a><button class="more" type="button" aria-expanded="false">Details <span class="chev">▾</span></button></div>
+            <div class="details">
+              <p>A mini PC running Proxmox, Docker and Tailscale, with Prometheus and Grafana for metrics and Ollama plus Open WebUI for local inference. Documented well enough that I could rebuild the whole thing from the repo.</p>
+              <div><div class="k">Built with</div>Proxmox · Docker · Tailscale · Prometheus · Grafana · Ollama</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div class="foot">Copyright © Anthony Brignano 2026</div>
+  </div>
+</template>
+
+<script>
+(function () {
+  var tpl = document.getElementById('page');
+  var phone = document.getElementById('phone-screen');
+  var desk = document.getElementById('desk-screen');
+  phone.append(tpl.content.cloneNode(true));
+  desk.append(tpl.content.cloneNode(true));
+
+  var fits = document.querySelectorAll('.fit');
+  function fit() {
+    fits.forEach(function (f) {
+      var full = +f.dataset.w, scr = f.firstElementChild;
+      var s = Math.min(1, (f.clientWidth || full) / full);
+      scr.style.transform = 'scale(' + s + ')';
+      f.style.height = Math.ceil(scr.offsetHeight * s) + 'px';
+    });
+  }
+  if (window.ResizeObserver) fits.forEach(function (f) { new ResizeObserver(fit).observe(f); new ResizeObserver(fit).observe(f.firstElementChild); });
+  window.addEventListener('resize', fit);
+
+  document.querySelectorAll('.pg .more').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var card = b.closest('.pcard, .row');
+      var open = !card.classList.contains('open');
+      card.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', String(open));
+      b.firstChild.textContent = open ? 'Less ' : 'Details ';
+      requestAnimationFrame(fit);
+    });
+  });
+
+  var fPhone = document.getElementById('f-phone'), fDesk = document.getElementById('f-desk');
+  var showBtns = document.querySelectorAll('[data-show]');
+  function show(w) {
+    fPhone.hidden = w === 'desk'; fDesk.hidden = w === 'phone';
+    showBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === w)); });
+    requestAnimationFrame(fit);
+  }
+  showBtns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show); }); });
+  show(window.innerWidth < 760 ? 'phone' : 'both');
+
+  var thBtns = document.querySelectorAll('[data-th]');
+  function theme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    thBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.th === t)); });
+  }
+  thBtns.forEach(function (b) { b.addEventListener('click', function () { theme(b.dataset.th); }); });
+  var dark = false; try { dark = matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
+  theme(dark ? 'dark' : 'light');
+})();
+</script>
+
+</body></html>

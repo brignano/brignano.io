@@ -386,3 +386,30 @@ html[data-chat-open] #scroll-to-top {
     display: none !important;
   }
 }
+
+/* Project cards on /projects ──────────────────────────────────────────────
+   The picture sits on a faint field of the product's mark, the same mix as
+   the product-page stage (`--pp-stage` in @brignano/design product-page.css),
+   so a product looks the same on its card and its page. `data-mark` on the
+   card picks the hue; without one it is the family amber. The mark only
+   draws the picture and its ground, never text, links or state (DESIGN.md
+   §3). Replace with the shared card stage once brignano/design#164 ships. */
+.project-stage {
+  background: color-mix(in srgb, var(--mark-current) 8%, var(--card));
+}
+.project-art .a-card { fill: var(--card); stroke: var(--line-strong); }
+.project-art .a-line { stroke: var(--line-strong); fill: none; }
+.project-art .a-soft { fill: var(--n-200); }
+.project-art .a-slate { fill: var(--slate); }
+.project-art .a-mark { fill: var(--mark-current); }
+.project-art .a-mark-stroke { stroke: var(--mark-current); fill: none; }
+.project-art .a-term { fill: var(--device); }
+.project-art text { font-family: var(--mono); font-size: 10px; }
+.project-art .a-t { fill: var(--ink-soft); }
+.project-art .a-tm { fill: var(--mark-current); font-weight: 600; }
+/* Text on a solid mark fill: the mark is deep in light and pale in dark,
+   so --n-0 (white, then near-black) reads on it in both. */
+.project-art .a-on { fill: var(--n-0); }
+/* Text on the terminal: --device stays dark in both themes, so its text is
+   the lightest neutral in each. */
+.project-art .a-on-term { fill: light-dark(var(--n-0), var(--n-900)); }
