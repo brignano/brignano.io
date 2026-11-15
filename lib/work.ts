@@ -1,4 +1,4 @@
-// Case studies for /work. The content lives here, not in a CMS: three
+// Case studies, listed on /notes with the posts (lib/notes.ts). The content lives here, not in a CMS: three
 // write-ups that change a few times a year do not need one, and keeping them
 // in code means the same integrity rules that govern the hero metrics
 // (docs/tsd-site-modernization.md §5.7) govern these. Every number below is

@@ -300,7 +300,7 @@ Optional:
 ## 📄 Pages
 
 - `/` - Home page
-- `/work` - Case studies (`lib/work.ts`), one page per study at `/work/<slug>`
+- `/notes` - Case studies (`lib/work.ts`) and posts (`content/blog/posts/`) in one list with an All / Case studies / Posts filter (`?show=`); each at `/notes/<slug>`. `/work` and `/blog` redirect here
 - `/coding` - Coding Activity (WakaTime tiles + GitHub contribution calendar)
 - `/resume` - Resume page
 - `/sitemap.xml` - Generated sitemap

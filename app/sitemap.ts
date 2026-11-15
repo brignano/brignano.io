@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/blog";
+import { noteHref } from "@/lib/notes-path";
 import { caseStudies } from "@/lib/work";
 
 export const dynamic = "force-static";
@@ -16,17 +17,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     { url: baseUrl, changeFrequency: "monthly", priority: 1 },
-    { url: `${baseUrl}/work`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${baseUrl}/notes`, changeFrequency: "weekly", priority: 0.9 },
     ...caseStudies.map((c) => ({
-      url: `${baseUrl}/work/${c.slug}`,
+      url: `${baseUrl}${noteHref(c.slug)}`,
       changeFrequency: "yearly" as const,
       priority: 0.8,
     })),
-    { url: `${baseUrl}/blog`, changeFrequency: "weekly", priority: 0.8 },
     ...(await getAllPosts())
       .filter((p) => p.published)
       .map((p) => ({
-        url: `${baseUrl}/blog/${p.slug}`,
+        url: `${baseUrl}${noteHref(p.slug)}`,
         lastModified: p.updated ?? p.date,
         changeFrequency: "yearly" as const,
         priority: 0.7,

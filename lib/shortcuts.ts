@@ -17,11 +17,10 @@ export const SEQUENCE_TIMEOUT_MS = 1500;
 
 export const PAGE_SHORTCUTS = [
   { key: "h", label: "Home", href: "/" },
-  { key: "w", label: "Work", href: "/work" },
   { key: "p", label: "Projects", href: "/projects" },
-  { key: "b", label: "Blog", href: "/blog" },
   { key: "r", label: "Resume", href: "/resume" },
   { key: "c", label: "Coding", href: "/coding" },
+  { key: "n", label: "Notes", href: "/notes" },
 ] as const;
 
 export type ShortcutGroup = {

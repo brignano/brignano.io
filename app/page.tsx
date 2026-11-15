@@ -13,6 +13,7 @@ import {
   SITE_ROLE,
   SITE_TAGLINE,
 } from "@/lib/constants";
+import { noteHref } from "@/lib/notes-path";
 import { caseStudies } from "@/lib/work";
 import { event } from "@/lib/gtag";
 
@@ -213,7 +214,7 @@ export default function Home() {
         {/* The homepage is four sections: who (hero), work, side projects,
             and a sign-off. It used to be nine, and said "4,000+" six times.
             Anything deeper has a page of its own: the full role on /resume,
-            the stories on /work, the commit feed and contribution graph on
+            the stories on /notes, the commit feed and contribution graph on
             /coding. Before adding a section here, check it says something the
             other three don't. Wireframe: proposals/wireframes/home-digest.html. */}
 
@@ -244,7 +245,7 @@ export default function Home() {
             {caseStudies.map((study) => (
               <li key={study.slug}>
                 <Link
-                  href={`/work/${study.slug}`}
+                  href={noteHref(study.slug)}
                   className="group flex h-full flex-col gap-1.5 bg-card border border-line rounded-xl p-5 md:p-6 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
                 >
                   <p className="font-display uppercase tracking-[0.18em] text-[10px] text-slate">

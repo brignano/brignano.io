@@ -1,0 +1,542 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work And Posts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* @brignano/design tokens.css, inlined (comments stripped) */
+
+:root {
+  color-scheme: light dark;
+}
+[data-theme='light'] {
+  color-scheme: light;
+}
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root {
+  --n-0: light-dark(#ffffff, #0d0d0f);
+  --n-25: light-dark(#fafafb, #131316);
+  --n-50: light-dark(#f3f3f4, #17171a);
+  --n-100: light-dark(#ececee, #202024); 
+  --n-200: light-dark(#e1e1e4, #2a2a2f); 
+  --n-300: light-dark(#cbcbce, #3a3a41); 
+  --n-400: light-dark(#a9a9ae, #55555e);
+  --n-500: light-dark(#8a8a8f, #8b8b93); 
+  --n-600: light-dark(#6b6b73, #9c9ca4); 
+  --n-700: light-dark(#52525b, #a8a8b0); 
+  --n-800: light-dark(#33333a, #d0d0d5);
+  --n-900: light-dark(#111114, #f2f2f4); 
+  --bg: light-dark(#fafafb, #0d0d0f); 
+  --card: light-dark(#ffffff, #17171a); 
+  --surface-hover: var(--n-100);
+  --surface-active: var(--n-200);
+  --surface-sticky: light-dark(color-mix(in srgb, #ffffff 92%, transparent), color-mix(in srgb, #0d0d0f 92%, transparent)); 
+  --ink: var(--n-900);
+  --ink-soft: var(--n-700);
+  --slate: light-dark(#6b6b73, #8b8b93); 
+  --line: var(--n-100);
+  --line-soft: var(--n-50);
+  --line-strong: var(--n-300); 
+  --line-control: light-dark(#8a8a8f, #6b6b73);
+  --on-dark: light-dark(#fafafb, #0d0d0f); 
+  --device: light-dark(#111114, #3a3a41); 
+  --i: light-dark(#076bd3, #0371e0);
+  --i-ink: light-dark(#0159b5, #6ba5f3);
+  --i-hover: light-dark(#014a97, #0062c7);
+  --i-ink-hover: light-dark(#014a97, #98c4ff);
+  --i-pressed: light-dark(#003e82, #0553a6);
+  --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #0371e0 20%, transparent));
+  --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #0371e0 44%, transparent));
+  --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #0371e0 30%, transparent));
+  --on-i: light-dark(#ffffff, #ffffff);
+  --danger-fill: light-dark(#a4442c, #be563c);
+  --danger-fill-hover: light-dark(#8a3722, #ad472e);
+  --danger-fill-pressed: light-dark(#8a3722, #9d381e);
+  --on-danger: light-dark(#ffffff, #ffffff);
+  --i-disabled-bg: var(--n-200);
+  --i-disabled-ink: var(--n-400);
+  --success: light-dark(#2f6b4f, #6fbf95);
+  --success-ink: light-dark(#245740, #8fd4ae);
+  --attention: light-dark(#b4741f, #e0a44f); 
+  --attention-ink: light-dark(#8a5714, #e0a44f); 
+  --danger: light-dark(#a4442c, #e07a5f);
+  --danger-ink: light-dark(#8a3722, #ec9880);
+  --info: var(--i);
+  --info-ink: var(--i-ink);
+  --success-surface: light-dark(color-mix(in srgb, #2f6b4f 12%, transparent), color-mix(in srgb, #6fbf95 20%, transparent));
+  --attention-surface: light-dark(color-mix(in srgb, #b4741f 12%, transparent), color-mix(in srgb, #e0a44f 20%, transparent));
+  --danger-surface: light-dark(color-mix(in srgb, #a4442c 12%, transparent), color-mix(in srgb, #e07a5f 20%, transparent));
+  --info-surface: var(--i-surface);
+  --success-line: light-dark(color-mix(in srgb, #2f6b4f 32%, transparent), color-mix(in srgb, #6fbf95 44%, transparent));
+  --attention-line: light-dark(color-mix(in srgb, #b4741f 32%, transparent), color-mix(in srgb, #e0a44f 44%, transparent));
+  --danger-line: light-dark(color-mix(in srgb, #a4442c 32%, transparent), color-mix(in srgb, #e07a5f 44%, transparent));
+  --info-line: var(--i-line);
+  --diff-added: var(--success);
+  --diff-added-ink: var(--success-ink);
+  --diff-added-surface: var(--success-surface);
+  --diff-changed: var(--i);
+  --diff-changed-ink: var(--i-ink);
+  --diff-changed-surface: var(--i-surface);
+  --diff-removed: var(--danger);
+  --diff-removed-ink: var(--danger-ink);
+  --diff-removed-surface: var(--danger-surface);
+  --code-surface: var(--bg);
+  --code-ink: var(--ink);
+  --code-keyword: var(--i-ink);
+  --code-string: var(--ink-soft);
+  --code-comment: var(--slate);
+  --code-highlight: var(--i-surface);
+  --mark: light-dark(#b4741f, #e0a44f);
+  --mark-ink: light-dark(#8a5714, #e0a44f); 
+  --mark-teal: light-dark(#0e7c86, #4cc0cb);
+  --mark-violet: light-dark(#7148c9, #a990f2);
+  --mark-magenta: light-dark(#b1366f, #ea7fb0);
+  --mark-current: var(--mark);
+  --forest: var(--success);
+  --forest-deep: var(--success-ink);
+  --larch: var(--attention);
+  --larch-deep: light-dark(#8a5714, #f0bd74);
+  --rust: var(--danger);
+  --rust-deep: var(--danger-ink);
+  --gold: var(--slate);
+  --sans: 'Geist', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --display: var(--sans);
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-heavy: 800;
+  --leading-display: 1.15;
+  --leading-title: 1.3;
+  --leading-ui: 1.4;
+  --leading-body: 1.6;
+  --tracking-title: -0.01em;
+  --tracking-display: -0.025em;
+  --tracking-caps: 0.08em;
+  --z-raised: 1;
+  --z-sticky: 10;
+  --z-float: 20;
+  --z-skip: 30;
+  --z-toast: 40;
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+  --radius-sm: 6px;
+  --radius-control: 8px; 
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow-1: 0 1px 2px light-dark(rgba(17, 17, 17, 0.04), rgba(0, 0, 0, 0.45));
+  --shadow-2:
+    0 2px 8px light-dark(rgba(17, 17, 17, 0.07), transparent),
+    0 2px 10px light-dark(transparent, rgba(0, 0, 0, 0.55));
+  --shadow-3:
+    0 8px 24px light-dark(rgba(17, 17, 17, 0.10), transparent),
+    0 10px 28px light-dark(transparent, rgba(0, 0, 0, 0.65));
+  --scrim: light-dark(rgba(17, 17, 17, 0.55), rgba(0, 0, 0, 0.68));
+  --shadow: var(--shadow-1); 
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 600ms;
+}
+:root {
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --section-gap: var(--s6);
+  --measure: 780px;
+}
+@media (pointer: coarse) {
+  :root:not(.tier-marketing) {
+    --text-xs: 0.75rem;
+  }
+}
+.tier-marketing {
+  --display: 'Silkscreen', var(--mono);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: clamp(2.75rem, 1rem + 4.5vw, 4rem); 
+  --section-gap: var(--s9);
+  --measure: 68ch;
+}
+[data-mark='teal'] {
+  --mark-current: var(--mark-teal);
+}
+[data-mark='violet'] {
+  --mark-current: var(--mark-violet);
+}
+[data-mark='magenta'] {
+  --mark-current: var(--mark-magenta);
+}
+::selection {
+  background: var(--i-selection);
+}
+:root {
+  accent-color: var(--i);
+}
+@media print {
+  :root,
+  [data-theme] {
+    color-scheme: light;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+</style>
+</head><body>
+<style>
+:root { color-scheme: light dark; }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+a { color: var(--i-ink); }
+.doc { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 56px; }
+.col { max-width: 68ch; display: grid; gap: 14px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); margin: 0; }
+h1.title { font-size: clamp(30px, 5vw, 44px); line-height: 1.08; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h2.h { font-size: 24px; line-height: 1.2; letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.lede { font-size: 18px; color: var(--ink-soft); margin: 0; }
+p { margin: 0; }
+.muted { color: var(--ink-soft); }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-soft); }
+ul.plain b { color: var(--ink); }
+
+.names { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.name { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: grid; gap: 6px; align-content: start; }
+.name.rec { border-color: var(--i-line); box-shadow: 0 0 0 1px var(--i-line) inset; }
+.name .nm { font-size: 26px; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.name .badge { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--i-ink); border: 1px solid var(--i-line); border-radius: 999px; padding: 1px 8px; font-weight: 500; }
+.name p { color: var(--ink-soft); font-size: 15px; }
+.name .k { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--slate); margin-top: 4px; }
+
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+td code { font-family: var(--mono); font-size: 13px; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.seg-ctl { display: inline-flex; border: 1px solid var(--line-control); border-radius: 10px; padding: 3px; gap: 3px; background: var(--card); }
+.seg-ctl button { font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--ink-soft); padding: 6px 12px; border-radius: 7px; cursor: pointer; min-height: 32px; }
+.seg-ctl button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg-ctl button:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; }
+.ctl-label { font-size: 13px; color: var(--slate); margin-right: 6px; }
+
+.frames { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.frame { display: grid; gap: 8px; min-width: 0; }
+.frame-phone { flex: 0 1 390px; min-width: 0; max-width: 390px; }
+.frame-desk { flex: 1 1 520px; min-width: 0; }
+.flabel { font-family: var(--mono); font-size: 12px; color: var(--slate); }
+.screen { container-type: inline-size; background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
+.fit { overflow: hidden; border-radius: var(--radius); }
+.fit > .screen { transform-origin: top left; }
+.frame-phone .screen { width: 390px; }
+.frame-desk .screen { width: 1280px; }
+
+/* ── The proposed merged page. px sizes describe the real page at the
+   frame's width. @container, not @media. ── */
+.pg { --gut: 24px; font-size: 16px; line-height: 1.6; }
+.pg .nav { display: flex; justify-content: space-between; align-items: center; height: 60px; border-bottom: 1px solid var(--line); padding-inline: var(--gut); }
+.pg .logo { font-weight: 800; letter-spacing: -.04em; font-size: 18px; }
+.pg .links { display: none; gap: 28px; color: var(--ink-soft); font-size: 15px; }
+.pg .links .on { color: var(--ink); border-bottom: 2px solid var(--ink); }
+.pg .icons { display: flex; gap: 8px; }
+.pg .ico { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-size: 13px; color: var(--slate); }
+.pg main { padding: 40px var(--gut) 48px; max-width: 880px; }
+.pg .ph1 { font-size: 36px; line-height: 1.1; letter-spacing: -.02em; margin: 0 0 10px; }
+.pg .intro { color: var(--ink-soft); font-size: 17px; max-width: 52ch; margin-bottom: 24px; }
+
+/* Filter: plain text tabs with a count, not a segmented pill, to stay as
+   quiet as the text-link actions on /projects. */
+.pg .filter { display: flex; gap: 22px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.pg .filter button { font: inherit; font-size: 15px; background: none; border: 0; padding: 8px 0 10px; color: var(--ink-soft); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; min-height: 44px; }
+.pg .filter button .n { color: var(--slate); font-variant-numeric: tabular-nums; margin-left: 4px; font-size: 13px; }
+.pg .filter button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); font-weight: 600; }
+.pg .filter button:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; }
+
+.pg ol { list-style: none; margin: 0; padding: 0; }
+.pg li.e { border-bottom: 1px solid var(--line); padding: 20px 0; display: grid; gap: 6px; }
+.pg li.e[hidden] { display: none; }
+.pg .meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13.5px; color: var(--slate); }
+.pg .tag { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .12em; border-radius: 999px; padding: 1px 8px; white-space: nowrap; border: 1px solid var(--line-strong); color: var(--slate); }
+.pg .tag.cs { border-color: var(--i-line); color: var(--i-ink); }
+.pg .et { font-size: 20px; line-height: 1.3; font-weight: 650; letter-spacing: -.01em; margin: 0; color: var(--ink); }
+.pg .ed { color: var(--ink-soft); font-size: 15.5px; line-height: 1.5; }
+.pg .draft { opacity: .55; }
+.pg .wfnote { font-family: var(--mono); font-size: 10.5px; color: var(--attention-ink); text-transform: uppercase; letter-spacing: .1em; }
+.pg .after { margin-top: 28px; font-size: 14px; color: var(--slate); }
+.pg .after a { color: var(--i-ink); }
+.pg .foot { border-top: 1px solid var(--line); padding: 20px var(--gut); font-size: 12px; color: var(--slate); }
+
+@container (min-width: 900px) {
+  .pg { --gut: 80px; }
+  .pg .links { display: flex; }
+  .pg .icons .menu { display: none; }
+  .pg main { padding-top: 72px; max-width: 960px; }
+  .pg .ph1 { font-size: 48px; }
+  /* Desktop: tag and date sit in a left column, the words on the right. */
+  .pg li.e { grid-template-columns: 170px 1fr; column-gap: 32px; padding: 24px 0; }
+  .pg li.e .meta { grid-row: span 2; flex-direction: column; align-items: flex-start; gap: 6px; padding-top: 4px; }
+  .pg .et { font-size: 22px; }
+}
+</style>
+
+<div class="doc">
+  <section class="col">
+    <p class="eyebrow">Wireframe · /work + /blog</p>
+    <h1 class="title">One page for the case studies and the posts</h1>
+    <p class="lede">Today /work has three case studies and /blog has one post, and both read like long write-ups. This folds them into one list. Each entry has a small tag saying what it is, and a filter at the top lets a recruiter see just the case studies.</p>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-name">
+    <h2 class="h" id="h-name">What to call it</h2>
+    <p class="muted" style="max-width:68ch">Round two. "Work" and "Blog" are out: Work reads as a third professional page next to Projects and Resume, and Blog buries the case studies. These names say "things I wrote down while doing the work", which covers both kinds. Use the <b>Name</b> switch above the frames to see each one in place. The page sits last in the nav, after the professional pages.</p>
+    <div class="names">
+      <div class="name">
+        <div class="nm">Field notes</div>
+        <p>Notes from doing the work, at the job or at home. It fits a migration write-up and a homelab post equally, and feels like you rather than a section of a CV. Address: /notes.</p>
+      </div>
+      <div class="name rec">
+        <div class="nm">Notes <span class="badge">Chosen for now</span></div>
+        <p>The plain version of the same idea. Andy Matuschak calls his public notes "working notes". Safe, a little generic.</p>
+      </div>
+      <div class="name">
+        <div class="nm">Logbook</div>
+        <p>Matches how you already work (the homelab's setup log). Charming, but it hints at short dated entries more than long write-ups. Simon Willison's "TIL" is the same flavour.</p>
+      </div>
+      <div class="name">
+        <div class="nm">Journal</div>
+        <p>Warm and personal, but it can read as a diary, which undersells the case studies.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-wf">
+    <h2 class="h" id="h-wf">Proposed page</h2>
+    <p class="muted" style="max-width:68ch">Try the filter inside either frame. The three faded entries are the posts being drafted in the other thread, with working titles, so you can see the page once they land; they only appear on the live site after you approve each post.</p>
+    <div class="controls">
+      <div><span class="ctl-label">Name</span>
+        <div class="seg-ctl" role="group" aria-label="Page name">
+          <button type="button" data-nm="Field notes">Field notes</button>
+          <button type="button" data-nm="Notes">Notes</button>
+          <button type="button" data-nm="Logbook">Logbook</button>
+          <button type="button" data-nm="Journal">Journal</button>
+        </div>
+      </div>
+      <div><span class="ctl-label">Show</span>
+        <div class="seg-ctl" role="group" aria-label="Frames to show">
+          <button type="button" data-show="both">Both</button>
+          <button type="button" data-show="phone">Phone</button>
+          <button type="button" data-show="desk">Desktop</button>
+        </div>
+      </div>
+      <div><span class="ctl-label">Theme</span>
+        <div class="seg-ctl" role="group" aria-label="Theme">
+          <button type="button" data-th="light">Light</button>
+          <button type="button" data-th="dark">Dark</button>
+        </div>
+      </div>
+    </div>
+    <div class="frames" id="frames">
+      <div class="frame frame-phone" id="f-phone"><span class="flabel">Phone · 390px</span><div class="fit" data-w="390"><div class="screen" id="phone-screen"></div></div></div>
+      <div class="frame frame-desk" id="f-desk"><span class="flabel">Desktop · 1280px, scaled to fit</span><div class="fit" data-w="1280"><div class="screen" id="desk-screen"></div></div></div>
+    </div>
+  </section>
+
+  <section class="col" aria-labelledby="h-why">
+    <h2 class="h" id="h-why">Choices behind it</h2>
+    <ul class="plain">
+      <li><b>A list, not cards.</b> Case studies and posts are both things you read, so they share one quiet list like today's blog page. The big case-study cards stay on the home page, where they sell.</li>
+      <li><b>Case studies first under "All".</b> They have no dates, and they're what a recruiter came for. Posts follow, newest first, with date and reading time.</li>
+      <li><b>The filter is three text tabs with counts</b>, the same weight as the text links on /projects. Picking one updates the address (<code>/notes?show=case-studies</code>), so you can send a recruiter a link that opens on the case studies alone.</li>
+      <li><b>The tag is the only colour.</b> "Case study" gets the interactive blue outline, "Post" stays grey. No icons or pictures.</li>
+      <li><b>The nav drops to four links</b>, with this page last, after the professional ones. The home page's "Work" section keeps its name and its cards link to the case studies at their new address.</li>
+      <li><b>RSS stays at /rss.xml</b> and still lists posts only, linking to their new addresses.</li>
+    </ul>
+    <p class="muted"><b>Considered and dropped:</b> two sections on one page (that's the two pages stacked, the overlap stays); a dropdown filter (hides the choice); putting case studies in the RSS feed (they rarely change, and feed readers expect posts).</p>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-urls">
+    <h2 class="h" id="h-urls">Old addresses keep working</h2>
+    <p class="muted" style="max-width:68ch">Permanent redirects, so links already shared, search results and RSS readers all land in the right place. Shown for "Notes" at /notes; with another name, only the new side changes.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Old</th><th>New</th></tr></thead>
+        <tbody>
+          <tr><td><code>/work</code></td><td><code>/notes?show=case-studies</code></td></tr>
+          <tr><td><code>/work/&lt;case-study&gt;</code></td><td><code>/notes/&lt;case-study&gt;</code></td></tr>
+          <tr><td><code>/blog</code></td><td><code>/notes?show=posts</code></td></tr>
+          <tr><td><code>/blog/&lt;post&gt;</code></td><td><code>/notes/&lt;post&gt;</code></td></tr>
+          <tr><td><code>/rss.xml</code></td><td>unchanged, with new post links</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="col" aria-labelledby="h-next">
+    <h2 class="h" id="h-next">What happens next</h2>
+    <p class="muted">Pick a name and say OK, or tell me what to change. Then I build it as one PR in brignano.io: the merged list page, posts served under the new address with the post layout unchanged, the redirects, the nav and sitemap updates, and this file committed under proposals/wireframes/. Case study and post pages themselves don't change.</p>
+  </section>
+</div>
+
+<template id="page">
+  <div class="pg">
+    <div class="nav">
+      <span class="logo">A|B</span>
+      <span class="links"><span>Projects</span><span>Resume</span><span>Coding</span><span class="on js-navname">Notes</span></span>
+      <span class="icons"><span class="ico" aria-hidden="true">☀</span><span class="ico menu" aria-hidden="true">≡</span></span>
+    </div>
+    <main>
+      <h1 class="ph1 js-name">Notes</h1>
+      <p class="intro">Case studies from my job building a developer platform, and posts about what I build on the side. Nothing here is stated that isn't documented. <a href="#">RSS</a></p>
+
+      <div class="filter" role="group" aria-label="Show">
+        <button type="button" data-f="all" aria-pressed="true">All<span class="n">7</span></button>
+        <button type="button" data-f="cs" aria-pressed="false">Case studies<span class="n">3</span></button>
+        <button type="button" data-f="post" aria-pressed="false">Posts<span class="n">4</span></button>
+      </div>
+
+      <ol>
+        <li class="e" data-k="cs">
+          <div class="meta"><span class="tag cs">Case study</span><span>The Hartford</span></div>
+          <h2 class="et">ATLAS: one platform for 4,000+ engineers</h2>
+          <p class="ed">A CLI, a desktop agent and IDE extensions that put onboarding, builds, policy and AI tooling in one place. Next: one pipeline system in place of seven.</p>
+        </li>
+        <li class="e" data-k="cs">
+          <div class="meta"><span class="tag cs">Case study</span><span>The Hartford</span></div>
+          <h2 class="et">Onboarding: a laptop that's ready to build</h2>
+          <p class="ed">A new engineer's laptop now goes from unboxed to building in hours. The 40+ day wait from hire to first commit is the target; that result is still being measured.</p>
+        </li>
+        <li class="e" data-k="cs">
+          <div class="meta"><span class="tag cs">Case study</span><span>The Hartford</span></div>
+          <h2 class="et">10,000+ repositories to GitHub Enterprise Cloud</h2>
+          <p class="ed">Every active repository moved to the cloud in waves ordered by impact, with thousands of engineers shipping the whole time.</p>
+        </li>
+        <li class="e draft" data-k="post">
+          <div class="meta"><span class="tag">Post</span><span>Drafting</span><span class="wfnote">working title</span></div>
+          <h2 class="et">From 40 days to hours: what onboarding taught me</h2>
+          <p class="ed">The story behind the onboarding case study, told as a post.</p>
+        </li>
+        <li class="e draft" data-k="post">
+          <div class="meta"><span class="tag">Post</span><span>Drafting</span><span class="wfnote">working title</span></div>
+          <h2 class="et">Building a design system for one</h2>
+          <p class="ed">Why a personal site got tokens, components and releases.</p>
+        </li>
+        <li class="e draft" data-k="post">
+          <div class="meta"><span class="tag">Post</span><span>Drafting</span><span class="wfnote">working title</span></div>
+          <h2 class="et">What the homelab taught me</h2>
+          <p class="ed">The lessons since the first homelab post.</p>
+        </li>
+        <li class="e" data-k="post">
+          <div class="meta"><span class="tag">Post</span><span>Oct 25, 2026 · 8 min</span></div>
+          <h2 class="et">Building my homelab: from a wiped mini PC to running the house</h2>
+          <p class="ed">How one 16 GB mini PC became a Proxmox homelab with local AI, real certificates, a Discord assistant and the house's DNS.</p>
+        </li>
+      </ol>
+
+      <p class="after">The short version of each case study is on <a href="#">my resume</a>. The long version is a conversation: <a href="#">hi@brignano.io</a>.</p>
+    </main>
+    <div class="foot">Copyright © Anthony Brignano 2026</div>
+  </div>
+</template>
+
+<script>
+(function () {
+  var tpl = document.getElementById('page');
+  var phone = document.getElementById('phone-screen');
+  var desk = document.getElementById('desk-screen');
+  phone.append(tpl.content.cloneNode(true));
+  desk.append(tpl.content.cloneNode(true));
+
+  var fits = document.querySelectorAll('.fit');
+  function fit() {
+    fits.forEach(function (f) {
+      var full = +f.dataset.w, scr = f.firstElementChild;
+      var s = Math.min(1, (f.clientWidth || full) / full);
+      scr.style.transform = 'scale(' + s + ')';
+      f.style.height = Math.ceil(scr.offsetHeight * s) + 'px';
+    });
+  }
+  if (window.ResizeObserver) fits.forEach(function (f) { new ResizeObserver(fit).observe(f); new ResizeObserver(fit).observe(f.firstElementChild); });
+  window.addEventListener('resize', fit);
+
+  document.querySelectorAll('.pg').forEach(function (pg) {
+    var btns = pg.querySelectorAll('.filter button');
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        btns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+        pg.querySelectorAll('li.e').forEach(function (li) {
+          li.hidden = b.dataset.f !== 'all' && li.dataset.k !== b.dataset.f;
+        });
+        requestAnimationFrame(fit);
+      });
+    });
+  });
+
+  var nmBtns = document.querySelectorAll('[data-nm]');
+  function name(n) {
+    document.querySelectorAll('.js-name').forEach(function (e) { e.textContent = n; });
+    document.querySelectorAll('.pg .links').forEach(function (l) {
+      l.innerHTML = '<span>Projects</span><span>Resume</span><span>Coding</span><span class="on">' + n + '</span>';
+    });
+    nmBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.nm === n)); });
+  }
+  nmBtns.forEach(function (b) { b.addEventListener('click', function () { name(b.dataset.nm); }); });
+  name('Notes');
+
+  var fPhone = document.getElementById('f-phone'), fDesk = document.getElementById('f-desk');
+  var showBtns = document.querySelectorAll('[data-show]');
+  function show(w) {
+    fPhone.hidden = w === 'desk'; fDesk.hidden = w === 'phone';
+    showBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === w)); });
+    requestAnimationFrame(fit);
+  }
+  showBtns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show); }); });
+  show(window.innerWidth < 760 ? 'phone' : 'both');
+
+  var thBtns = document.querySelectorAll('[data-th]');
+  function theme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    thBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.th === t)); });
+  }
+  thBtns.forEach(function (b) { b.addEventListener('click', function () { theme(b.dataset.th); }); });
+  var dark = false; try { dark = matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
+  theme(dark ? 'dark' : 'light');
+})();
+</script>
+
+</body></html>
