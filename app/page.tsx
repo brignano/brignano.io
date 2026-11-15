@@ -311,7 +311,7 @@ export default function Home() {
                       </span>
                     </span>
                     <span className="block mt-1 text-sm text-ink-soft leading-relaxed">
-                      {project.blurb ?? project.description}
+                      {project.blurb}
                     </span>
                   </>
                 );

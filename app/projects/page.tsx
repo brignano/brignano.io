@@ -41,17 +41,15 @@ export default function Projects() {
             Projects
           </h1>
           <p className="text-ink-soft text-lg">
-            Things I build for myself, mostly to scratch my own itch. They share
-            a design system, a toolchain, and a habit of writing down why each
-            decision went the way it did.
+            Things I build on my own time. Open any one for the details.
           </p>
         </header>
 
-        <section className="mb-16 md:mb-24">
+        <section className="mb-12 md:mb-16">
           {/* Headings must descend in order for assistive tech; the cards are
               h3s, so the grid needs an h2 even though it shows no title. */}
           <h2 className="sr-only">Products</h2>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 lg:gap-6 items-start">
             {products.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
@@ -59,17 +57,17 @@ export default function Projects() {
         </section>
 
         {practice.length > 0 && (
-          <section>
+          <section className="pt-8 md:pt-10 border-t border-line">
             <h2 className="font-sans text-2xl sm:text-3xl font-bold tracking-tight mb-2">
               How the work gets made
             </h2>
-            <p className="text-ink-soft mb-8 max-w-2xl">
-              Not products — the setup underneath everything above. Public
-              because the write-ups are the useful part.
+            <p className="text-ink-soft mb-6 max-w-2xl">
+              The setup underneath the projects above, public because the
+              write-ups are useful.
             </p>
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 lg:gap-4 items-start">
               {practice.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
+                <ProjectCard key={project.slug} project={project} variant="row" />
               ))}
             </div>
           </section>

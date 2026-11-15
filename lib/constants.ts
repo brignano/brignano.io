@@ -244,14 +244,24 @@ export type ProjectStatus = "live" | "beta" | "proof of concept";
  *  separate groups so the second kind doesn't dilute the first. */
 export type ProjectKind = "product" | "practice";
 
+/** A product's own colour from @brignano/design (DESIGN.md §3). Only a
+ *  product with its own product page gets one; the rest draw in the family
+ *  amber. It tints the card picture and nothing else. */
+export type ProjectMark = "teal" | "violet" | "magenta";
+
 export type Project = {
-  /** Stable key: React list key, analytics label, and the detail-page route
-   *  segment if the project ever earns one. */
+  /** Stable key: React list key, analytics label, the picture on /projects,
+   *  and the detail-page route segment if the project ever earns one. */
   slug: string;
   title: string;
+  /** The full story. On /projects it sits behind the card's Details button. */
   description: string;
-  /** One plain sentence for the homepage card. Featured projects need one. */
-  blurb?: string;
+  /** One plain sentence: what it does, in words a non-engineer follows. The
+   *  homepage card and /projects show it first. */
+  blurb: string;
+  /** What it is and who it's for, e.g. "Desktop app · for poker players". */
+  meta: string;
+  mark?: ProjectMark;
   tech: string[];
   status: ProjectStatus;
   kind: ProjectKind;
@@ -339,6 +349,8 @@ export const projects: Project[] = [
     description:
       "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one starts as a free preview on a brignano.io subdomain, then moves to the business's own domain, whether that's the URL they already have or a new one, so the site carries their brand. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
     blurb: "Websites small businesses can update themselves, with a free preview first.",
+    meta: "Websites · for small businesses",
+    mark: "magenta",
     tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
     status: "live",
     kind: "product",
@@ -353,6 +365,8 @@ export const projects: Project[] = [
     description:
       "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A Chrome extension highlights each thing to click and says in plain words what to do. Record a guide by doing the task once, share it with a link, or browse the guide library. App teams can embed the same engine and check every guide in CI.",
     blurb: "Step-by-step help on any website, from a Chrome extension.",
+    meta: "Chrome extension · for anyone",
+    mark: "violet",
     tech: ["TypeScript", "Browser extension", "Claude", "Playwright", "Supabase"],
     status: "live",
     kind: "product",
@@ -373,6 +387,8 @@ export const projects: Project[] = [
     description:
       "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts. It also draws a Terraform plan on its pull request, before anything is applied.",
     blurb: "An architecture model that's checked against the real infrastructure.",
+    meta: "Developer tool · for platform teams",
+    mark: "teal",
     tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
     status: "beta",
     kind: "product",
@@ -388,6 +404,8 @@ export const projects: Project[] = [
     title: "Card",
     description:
       "An interactive terminal business card, run with npx brignano. Gradient ASCII intro, live GitHub stats fetched on a 1.5-second leash so it never hangs, and quick actions to copy my email, open my socials or save a vCard.",
+    blurb: "A business card you open in a terminal by typing npx brignano.",
+    meta: "Terminal app · for developers",
     tech: ["Node", "TypeScript", "npm"],
     status: "live",
     kind: "product",
@@ -401,6 +419,8 @@ export const projects: Project[] = [
     title: "Breakeven",
     description:
       "Know the price of every call. A desktop pot-odds and equity calculator for Texas Hold'em: enter the pot and the bet, optionally your cards and the board, and it shows the equity you need, the equity you have from 5,000 simulated hands, your outs and the cards that hurt you — then a call-or-fold verdict. Leave it running and it tracks your PokerStars hands from the files PokerStars saves, so after a session you can price-check every call and fold and see how loose or aggressive each player at your tables is. Windows and Mac downloads, nothing to install.",
+    blurb: "A poker calculator that says call or fold, then reviews your hands after a session.",
+    meta: "Desktop app · for poker players",
     tech: ["Python", "Tkinter", "PyInstaller", "GitHub Actions"],
     status: "live",
     kind: "product",
@@ -414,6 +434,8 @@ export const projects: Project[] = [
     title: "HostStats",
     description:
       "Airbnb hosts upload their CSV exports and get occupancy, booking trends and earnings back as charts. Every file is parsed in the browser — no account, no upload, and no server that could leak a year of someone's bookings.",
+    blurb: "Turns Airbnb booking exports into charts, and your files never leave the browser.",
+    meta: "Web app · for Airbnb hosts",
     tech: ["Next.js", "TypeScript", "Cloudflare Workers", "Tailwind"],
     status: "live",
     kind: "product",
@@ -427,6 +449,8 @@ export const projects: Project[] = [
     title: "Design",
     description:
       "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. Every token and component has a live preview in light and dark, and DECISIONS.md records why each value is what it is.",
+    blurb: "The colours, type and parts every site here is built from.",
+    meta: "Design system",
     tech: ["CSS", "Design tokens", "npm"],
     status: "beta",
     kind: "practice",
@@ -441,6 +465,8 @@ export const projects: Project[] = [
     title: "AI Tools",
     description:
       "One source of truth for my AI-agent setup — context, slash commands, output styles, permissions and MCP servers — symlinked into place by an installer so every machine I work on behaves the same way.",
+    blurb: "One setup for my AI coding agents, installed the same way on every machine.",
+    meta: "Agent setup",
     tech: ["Shell", "PowerShell", "Claude Code", "MCP"],
     status: "beta",
     kind: "practice",
@@ -451,6 +477,8 @@ export const projects: Project[] = [
     title: "Homelab",
     description:
       "A mini PC running Proxmox, Docker and Tailscale, with Prometheus and Grafana for metrics and Ollama plus Open WebUI for local inference. Documented well enough that I could rebuild the whole thing from the repo.",
+    blurb: "A mini PC at home that runs my servers and local AI models.",
+    meta: "Home server",
     tech: ["Proxmox", "Docker", "Tailscale", "Prometheus", "Grafana", "Ollama"],
     status: "beta",
     kind: "practice",
