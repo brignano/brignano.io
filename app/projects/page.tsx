@@ -49,7 +49,7 @@ export default function Projects() {
           {/* Headings must descend in order for assistive tech; the cards are
               h3s, so the grid needs an h2 even though it shows no title. */}
           <h2 className="sr-only">Products</h2>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 lg:gap-6 items-start">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 lg:gap-6">
             {products.map((project) => (
               <ProjectCard key={project.slug} project={project} />
             ))}
@@ -65,7 +65,7 @@ export default function Projects() {
               The setup underneath the projects above, public because the
               write-ups are useful.
             </p>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 lg:gap-4 items-start">
+            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3 lg:gap-4">
               {practice.map((project) => (
                 <ProjectCard key={project.slug} project={project} variant="row" />
               ))}

@@ -29,16 +29,32 @@ function track(project: Project, link: string) {
   event("project_link_clicked", { project: project.slug, link });
 }
 
-// Every status is the same quiet outline, so the pictures carry the page's
-// colour. "Live" keeps a small green dot: the one status a visitor can act on
-// today, and the word always ships with it (DESIGN.md §3).
+// Status reads at a glance: live is a solid green pill (success, "settled":
+// you can use it today), beta a plain outline with a hollow dot (still
+// changing), proof of concept amber (attention). The word always ships with the
+// colour, so it is never the only signal (DESIGN.md §3).
+const STATUS: Record<Project["status"], { pill: string; dot: string }> = {
+  live: {
+    pill: "border-success-line bg-success-surface text-success-ink font-medium",
+    dot: "bg-success",
+  },
+  beta: {
+    pill: "border-line-strong text-slate",
+    dot: "border-[1.5px] border-slate",
+  },
+  "proof of concept": {
+    pill: "border-attention-line bg-attention-surface text-attention-ink font-medium",
+    dot: "bg-attention",
+  },
+};
+
 function Status({ status }: { status: Project["status"] }) {
-  const live = status === "live";
+  const { pill, dot } = STATUS[status];
   return (
     <span
-      className={`shrink-0 inline-flex items-center gap-1.5 font-mono uppercase tracking-[0.12em] text-[10.5px] leading-none rounded-full border border-line-strong text-slate px-2 py-1`}
+      className={`shrink-0 inline-flex items-center gap-1.5 font-mono uppercase tracking-[0.12em] text-[10.5px] leading-none rounded-full border px-2 py-1 ${pill}`}
     >
-      {live && <span className="h-1.5 w-1.5 rounded-full bg-success" aria-hidden="true" />}
+      <span className={`h-1.5 w-1.5 rounded-full ${dot}`} aria-hidden="true" />
       {status}
     </span>
   );
@@ -58,7 +74,7 @@ export default function ProjectCard({
   const row = variant === "row";
 
   const actions = (
-    <div className="flex flex-wrap items-center gap-x-5 gap-y-1 mt-1">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-1 mt-auto pt-1">
       {primary && (
         <a
           href={primary.url}
@@ -125,9 +141,9 @@ export default function ProjectCard({
 
   if (row) {
     return (
-      <article className="grid grid-cols-[44px_1fr] gap-x-3.5 gap-y-1 bg-card border border-line rounded-xl px-4 py-3.5">
+      <article className="h-full grid grid-cols-[44px_1fr] grid-rows-[auto_1fr_auto_auto] gap-x-3.5 gap-y-1 bg-card border border-line rounded-xl px-4 py-3.5">
         <span
-          className="row-span-3 h-11 w-11 rounded-[10px] grid place-items-center project-stage text-mark"
+          className="row-span-3 self-start h-11 w-11 rounded-[10px] grid place-items-center project-stage text-mark"
           aria-hidden="true"
         >
           <Glyph className="h-[22px] w-[22px]" />
@@ -146,12 +162,12 @@ export default function ProjectCard({
   return (
     <article
       data-mark={project.mark}
-      className="bg-card border border-line rounded-xl overflow-hidden shadow-sm transition-colors hover:border-line-strong"
+      className="h-full flex flex-col bg-card border border-line rounded-xl overflow-hidden shadow-sm transition-colors hover:border-line-strong"
     >
-      <div className="project-stage h-[150px] md:h-[190px] grid place-items-center overflow-hidden border-b border-line">
+      <div className="shrink-0 project-stage h-[150px] md:h-[190px] grid place-items-center overflow-hidden border-b border-line">
         <ProjectArt slug={project.slug} />
       </div>
-      <div className="px-[18px] pt-4 pb-[18px] grid gap-1.5">
+      <div className="flex-1 flex flex-col px-[18px] pt-4 pb-[18px] gap-1.5">
         <span className="font-mono uppercase tracking-[0.04em] text-[11.5px] text-slate">
           {project.meta}
         </span>
