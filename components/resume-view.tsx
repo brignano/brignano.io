@@ -551,6 +551,9 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             </section>
           )}
 
+          {/* Side projects get one line, not a section: /projects has the
+              full write-ups and the PDF leaves them out, so a second set of
+              descriptions here would only drift. */}
           {projects && projects.length > 0 && (
             <section
               id="projects"
@@ -558,53 +561,34 @@ export default function ResumeView({ data }: { data: ResumeData }) {
               className="resume-projects scroll-mt-28"
             >
               <SectionHeading id="projects">Projects</SectionHeading>
-              <p className="text-sm text-slate">
-                Things I build on my own time
-              </p>
-              <ul className="mt-4 border-t border-line lg:grid lg:grid-cols-2 lg:gap-x-8">
-                {projects.map((project) => (
-                  <li
-                    key={project.name}
-                    className="py-3.5 border-b border-line flex flex-col gap-0.5"
-                  >
-                    <h3 className="text-base font-semibold">{project.name}</h3>
-                    <p className="text-[14.5px] leading-relaxed text-ink-soft">
-                      {project.description}
-                    </p>
-                    {(project.url || project.github) && (
-                      <p className="mt-1 flex gap-4 text-sm" data-print-hide>
-                        {project.url && (
-                          <a
-                            href={project.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-interactive-ink hover:underline"
-                          >
-                            Visit ↗
-                          </a>
-                        )}
-                        {project.github && (
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-interactive-ink hover:underline"
-                          >
-                            GitHub ↗
-                          </a>
-                        )}
-                      </p>
+              <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
+                On the side, I build{" "}
+                {projects.map((project, i) => (
+                  <span key={project.name}>
+                    {i > 0 && (i === projects.length - 1 ? " and " : ", ")}
+                    {project.url || project.github ? (
+                      <a
+                        href={project.url ?? project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-ink underline decoration-line-strong underline-offset-2 hover:text-interactive-ink"
+                      >
+                        {project.name}
+                      </a>
+                    ) : (
+                      project.name
                     )}
-                  </li>
+                  </span>
                 ))}
-              </ul>
-              <a
-                href="/projects"
-                className="mt-3.5 inline-block text-sm text-interactive-ink hover:underline"
-                data-print-hide
-              >
-                All projects →
-              </a>
+                .{" "}
+                <a
+                  href="/projects"
+                  className="text-interactive-ink hover:underline whitespace-nowrap"
+                  data-print-hide
+                >
+                  See all projects →
+                </a>
+              </p>
             </section>
           )}
 
