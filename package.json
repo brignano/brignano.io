@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "check:fold": "node scripts/fold-check.mjs"
+    "check:fold": "node scripts/fold-check.mjs",
+    "check:og": "node scripts/og-check.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.1.0",

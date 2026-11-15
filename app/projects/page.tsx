@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import ProjectCard from "@/components/project-card";
-import { projects } from "@/lib/constants";
+import { PROJECTS_LEAD, projects } from "@/lib/constants";
 
 const TITLE = "Projects — Anthony Brignano";
 const DESCRIPTION =
@@ -41,7 +41,7 @@ export default function Projects() {
             Projects
           </h1>
           <p className="text-ink-soft text-lg">
-            Things I build on my own time. Open any one for the details.
+            {PROJECTS_LEAD} Open any one for the details.
           </p>
         </header>
 

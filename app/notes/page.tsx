@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
 import NotesList from "@/components/notes-list";
+import { NOTES_LEAD } from "@/lib/constants";
 import { getNotes, NOTES_LABEL, NOTES_PATH } from "@/lib/notes";
 
 const TITLE = `${NOTES_LABEL} — Anthony Brignano`;
@@ -45,8 +46,7 @@ export default async function Notes() {
             {NOTES_LABEL}
           </h1>
           <p className="text-ink-soft text-lg">
-            Case studies from my job building a developer platform, and posts
-            about what I build on the side. Nothing here is stated that
+            {NOTES_LEAD} Nothing here is stated that
             isn&apos;t documented.{" "}
             <a href="/rss.xml" className="underline text-interactive-ink">
               RSS

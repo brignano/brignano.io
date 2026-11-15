@@ -10,6 +10,7 @@ import {
   featuredProjects,
   heroMetrics,
   SITE_NAME,
+  SITE_LOCATION,
   SITE_ROLE,
   SITE_TAGLINE,
 } from "@/lib/constants";
@@ -104,13 +105,13 @@ export default function Home() {
                 className="w-32 h-32 rounded-full object-cover border border-line"
               />
               <p className="mt-4 font-semibold">{SITE_NAME}</p>
-              <p className="text-sm text-slate">Connecticut</p>
+              <p className="text-sm text-slate">{SITE_LOCATION}</p>
               <dl className="mt-5 pt-5 border-t border-line w-full">
                 <dd className="text-3xl font-bold tracking-tight">
                   <CountUp value={heroMetrics[0].value} />
                 </dd>
                 <dt className="text-sm text-slate mt-1">
-                  engineers on the platform
+                  {heroMetrics[0].label}
                 </dt>
               </dl>
             </div>
