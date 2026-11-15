@@ -30,7 +30,7 @@
       ]
     },
     {
-      "source": "/(opengraph-image|twitter-image)",
+      "source": "/((?:.*/)?(?:opengraph-image|twitter-image))",
       "headers": [
         {
           "key": "Content-Type",

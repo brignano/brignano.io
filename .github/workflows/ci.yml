@@ -1,7 +1,7 @@
 name: CI
 
 # Every pull request runs the same gate: lint, a
-# production build, Lighthouse against the site's own budgets, and a fold
+# production build, a share-card check, Lighthouse against the site's own budgets, and a fold
 # check that screenshots the first screen of each page at phone and desktop
 # width in both themes. A dependency bump or a copy change cannot quietly
 # regress performance, accessibility, or the mobile fold without turning
@@ -41,6 +41,16 @@ jobs:
       # No secrets on purpose: the build must succeed on a fork PR with none,
       # and the pages must render their fallbacks (not errors) without them.
       - run: npm run build
+
+      # Every page ships its own share card, drawn from the page's own data
+      # (lib/og-card.tsx). Fails when a page has none or borrows a parent's.
+      - run: npm run check:og
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: og-cards
+          path: og-cards
+          retention-days: 14
 
       # Everything the audit jobs need to `next start` without rebuilding.
       - uses: actions/upload-artifact@v4

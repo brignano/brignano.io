@@ -14,7 +14,7 @@ import CodingHero, {
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
 import ContributionGraph from "@/components/contribution-graph";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
-import { nowBuilding } from "@/lib/constants";
+import { CODING_HEADING, nowBuilding } from "@/lib/constants";
 import { fetchLatestPublicCommit, LatestCommit } from "@/lib/github";
 import LocalTime from "../../components/local-time";
 
@@ -245,7 +245,7 @@ export default async function Page() {
           data-aos-once="true"
           className="font-sans text-4xl font-bold tracking-tight"
         >
-          Coding Activity
+          {CODING_HEADING}
         </h1>
         <div
           data-aos="fade-up"

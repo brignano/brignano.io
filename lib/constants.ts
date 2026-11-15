@@ -18,6 +18,15 @@ export const SITE_TAGLINE = "I build the platforms thousands of engineers ship o
 // card reproduces the landing-page fold, and the two drifted apart last time
 // this string only existed inside app/page.tsx.
 export const SITE_ROLE = "Senior Staff Software Engineer · The Hartford";
+// The lead line of /projects and /notes. Here rather than inline in the pages
+// because each page's share card (opengraph-image.tsx) draws the same line.
+export const PROJECTS_LEAD = "Things I build on my own time.";
+export const NOTES_LEAD =
+  "Case studies from my job building a developer platform, and posts about what I build on the side.";
+export const CODING_HEADING = "Coding Activity";
+
+// Shown under the name in the hero's photo card, and on the home share card.
+export const SITE_LOCATION = "Connecticut";
 const SITE_TITLE = "Anthony Brignano — I build platforms engineers ship on";
 // Meta description: kept ~155 chars so Google doesn't truncate (it trims
 // around 150–160 in results).

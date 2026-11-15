@@ -55,3 +55,6 @@ next-env.d.ts
 # fold-check screenshots (scripts/fold-check.mjs)
 /fold-screenshots
 /.lighthouseci
+
+# share-card copies (scripts/og-check.mjs)
+/og-cards
