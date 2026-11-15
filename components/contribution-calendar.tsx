@@ -27,6 +27,11 @@ interface ContributionCalendarProps {
   totalLabel?: string;
   /** Keep only the most recent N week columns (see `weeksThatFit`). */
   maxWeeks?: number;
+  /**
+   * Shrink to the container when it is narrower than the grid, instead of
+   * overflowing it. Never grows past the grid's own size.
+   */
+  fluid?: boolean;
 }
 
 function parseDate(iso: string) {
@@ -59,6 +64,7 @@ export default function ContributionCalendar({
   showLegend = true,
   totalLabel = "{{count}} contributions in {{year}}",
   maxWeeks,
+  fluid = false,
 }: ContributionCalendarProps) {
   const { days, year, total } = data;
   if (days.length === 0) return null;
@@ -123,7 +129,8 @@ export default function ContributionCalendar({
         viewBox={`0 0 ${width} ${height}`}
         role="img"
         aria-label={footer}
-        className="block max-w-none"
+        className={fluid ? "block h-auto w-full" : "block max-w-none"}
+        style={fluid ? { maxWidth: width } : undefined}
       >
         {monthLabels.map(({ col, label }) => (
           <text

@@ -60,3 +60,42 @@ export async function fetchContributions(
   if (!res.ok) throw new Error(`Contributions API ${res.status}`);
   return parseContributions(await res.json(), year);
 }
+
+export interface RecentContributions {
+  total: number;
+  days: ContributionDay[];
+}
+
+const DAY_MS = 86_400_000;
+
+/**
+ * The latest `weeks` whole weeks (Sunday to today), stitched across the turn
+ * of the year from the per-year API. The window opens on a Sunday so the grid
+ * starts on a full column, and stops at `today` so the right edge is this week
+ * rather than the empty rest of the year.
+ */
+export async function fetchRecentContributions(
+  username: string,
+  weeks: number,
+  init?: RequestInit,
+  now = new Date()
+): Promise<RecentContributions> {
+  const today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  const thisSunday = today - new Date(today).getUTCDay() * DAY_MS;
+  const start = thisSunday - (weeks - 1) * 7 * DAY_MS;
+  const startIso = new Date(start).toISOString().slice(0, 10);
+  const todayIso = new Date(today).toISOString().slice(0, 10);
+
+  const firstYear = new Date(start).getUTCFullYear();
+  const lastYear = now.getUTCFullYear();
+  const years: number[] = [];
+  for (let y = firstYear; y <= lastYear; y++) years.push(y);
+
+  const results = await Promise.all(
+    years.map((y) => fetchContributions(username, y, init))
+  );
+  const days = results
+    .flatMap((r) => r.days)
+    .filter((d) => d.date >= startIso && d.date <= todayIso);
+  return { total: days.reduce((sum, d) => sum + d.count, 0), days };
+}
