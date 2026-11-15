@@ -564,9 +564,8 @@ export default async function Page() {
           className="mt-6"
         >
           <ContributionGraph
-            buttonSize="large"
             title="Contribution Graph"
-            description={"GitHub contribution activity by year."}
+            description="Public GitHub activity over the last six months."
             showDisclaimer={true}
           />
         </div>
