@@ -132,9 +132,13 @@ export const caseStudies: CaseStudy[] = [
       headline: "Self-service setup for every new engineer",
       line: "I lead the technical delivery of cutting the wait from hire to first commit. The rollout is underway.",
     },
-    title: "Onboarding: 40+ days to hours",
+    // The title used to read "40+ days to hours", which paired two different
+    // measures. The 40+ days is hire to first commit; "hours" is one machine,
+    // unboxed to building. The hire-to-first-commit result is still being
+    // measured, so the title promises no before-and-after until it lands.
+    title: "Onboarding: a laptop that's ready to build",
     eyebrow: "Case study · Developer experience",
-    lede: "A CEO-sponsored initiative to make a new engineer's setup at The Hartford self-service. A laptop now arrives with the platform on it and goes from unboxed to building in hours, against a 40+ day baseline from hire to first commit.",
+    lede: "A CEO-sponsored initiative to make a new engineer's setup at The Hartford self-service. A laptop now arrives with the platform on it and goes from unboxed to building in hours. The goal is to cut the 40+ day wait from hire to first commit; that result is still being measured.",
     description:
       "How The Hartford made engineer onboarding self-service: browser walkthroughs, a desktop agent and one build command get a new machine productive in hours.",
     facts: [
