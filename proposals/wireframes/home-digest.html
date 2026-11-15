@@ -1,0 +1,628 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home Page Rethink</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* @brignano/design tokens.css, inlined (comments stripped) */
+
+:root {
+  color-scheme: light dark;
+}
+[data-theme='light'] {
+  color-scheme: light;
+}
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root {
+  --n-0: light-dark(#ffffff, #0d0d0f);
+  --n-25: light-dark(#fafafb, #131316);
+  --n-50: light-dark(#f3f3f4, #17171a);
+  --n-100: light-dark(#ececee, #202024); 
+  --n-200: light-dark(#e1e1e4, #2a2a2f); 
+  --n-300: light-dark(#cbcbce, #3a3a41); 
+  --n-400: light-dark(#a9a9ae, #55555e);
+  --n-500: light-dark(#8a8a8f, #8b8b93); 
+  --n-600: light-dark(#6b6b73, #9c9ca4); 
+  --n-700: light-dark(#52525b, #a8a8b0); 
+  --n-800: light-dark(#33333a, #d0d0d5);
+  --n-900: light-dark(#111114, #f2f2f4); 
+  --bg: light-dark(#fafafb, #0d0d0f); 
+  --card: light-dark(#ffffff, #17171a); 
+  --surface-hover: var(--n-100);
+  --surface-active: var(--n-200);
+  --surface-sticky: light-dark(color-mix(in srgb, #ffffff 92%, transparent), color-mix(in srgb, #0d0d0f 92%, transparent)); 
+  --ink: var(--n-900);
+  --ink-soft: var(--n-700);
+  --slate: light-dark(#6b6b73, #8b8b93); 
+  --line: var(--n-100);
+  --line-soft: var(--n-50);
+  --line-strong: var(--n-300); 
+  --line-control: light-dark(#8a8a8f, #6b6b73);
+  --on-dark: light-dark(#fafafb, #0d0d0f); 
+  --device: light-dark(#111114, #3a3a41); 
+  --i: light-dark(#076bd3, #0371e0);
+  --i-ink: light-dark(#0159b5, #6ba5f3);
+  --i-hover: light-dark(#014a97, #0062c7);
+  --i-ink-hover: light-dark(#014a97, #98c4ff);
+  --i-pressed: light-dark(#003e82, #0553a6);
+  --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #0371e0 20%, transparent));
+  --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #0371e0 44%, transparent));
+  --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #0371e0 30%, transparent));
+  --on-i: light-dark(#ffffff, #ffffff);
+  --danger-fill: light-dark(#a4442c, #be563c);
+  --danger-fill-hover: light-dark(#8a3722, #ad472e);
+  --danger-fill-pressed: light-dark(#8a3722, #9d381e);
+  --on-danger: light-dark(#ffffff, #ffffff);
+  --i-disabled-bg: var(--n-200);
+  --i-disabled-ink: var(--n-400);
+  --success: light-dark(#2f6b4f, #6fbf95);
+  --success-ink: light-dark(#245740, #8fd4ae);
+  --attention: light-dark(#b4741f, #e0a44f); 
+  --attention-ink: light-dark(#8a5714, #e0a44f); 
+  --danger: light-dark(#a4442c, #e07a5f);
+  --danger-ink: light-dark(#8a3722, #ec9880);
+  --info: var(--i);
+  --info-ink: var(--i-ink);
+  --success-surface: light-dark(color-mix(in srgb, #2f6b4f 12%, transparent), color-mix(in srgb, #6fbf95 20%, transparent));
+  --attention-surface: light-dark(color-mix(in srgb, #b4741f 12%, transparent), color-mix(in srgb, #e0a44f 20%, transparent));
+  --danger-surface: light-dark(color-mix(in srgb, #a4442c 12%, transparent), color-mix(in srgb, #e07a5f 20%, transparent));
+  --info-surface: var(--i-surface);
+  --success-line: light-dark(color-mix(in srgb, #2f6b4f 32%, transparent), color-mix(in srgb, #6fbf95 44%, transparent));
+  --attention-line: light-dark(color-mix(in srgb, #b4741f 32%, transparent), color-mix(in srgb, #e0a44f 44%, transparent));
+  --danger-line: light-dark(color-mix(in srgb, #a4442c 32%, transparent), color-mix(in srgb, #e07a5f 44%, transparent));
+  --info-line: var(--i-line);
+  --diff-added: var(--success);
+  --diff-added-ink: var(--success-ink);
+  --diff-added-surface: var(--success-surface);
+  --diff-changed: var(--i);
+  --diff-changed-ink: var(--i-ink);
+  --diff-changed-surface: var(--i-surface);
+  --diff-removed: var(--danger);
+  --diff-removed-ink: var(--danger-ink);
+  --diff-removed-surface: var(--danger-surface);
+  --code-surface: var(--bg);
+  --code-ink: var(--ink);
+  --code-keyword: var(--i-ink);
+  --code-string: var(--ink-soft);
+  --code-comment: var(--slate);
+  --code-highlight: var(--i-surface);
+  --mark: light-dark(#b4741f, #e0a44f);
+  --mark-ink: light-dark(#8a5714, #e0a44f); 
+  --mark-teal: light-dark(#0e7c86, #4cc0cb);
+  --mark-violet: light-dark(#7148c9, #a990f2);
+  --mark-magenta: light-dark(#b1366f, #ea7fb0);
+  --mark-current: var(--mark);
+  --forest: var(--success);
+  --forest-deep: var(--success-ink);
+  --larch: var(--attention);
+  --larch-deep: light-dark(#8a5714, #f0bd74);
+  --rust: var(--danger);
+  --rust-deep: var(--danger-ink);
+  --gold: var(--slate);
+  --sans: 'Geist', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --display: var(--sans);
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-heavy: 800;
+  --leading-display: 1.15;
+  --leading-title: 1.3;
+  --leading-ui: 1.4;
+  --leading-body: 1.6;
+  --tracking-title: -0.01em;
+  --tracking-display: -0.025em;
+  --tracking-caps: 0.08em;
+  --z-raised: 1;
+  --z-sticky: 10;
+  --z-float: 20;
+  --z-skip: 30;
+  --z-toast: 40;
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+  --radius-sm: 6px;
+  --radius-control: 8px; 
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow-1: 0 1px 2px light-dark(rgba(17, 17, 17, 0.04), rgba(0, 0, 0, 0.45));
+  --shadow-2:
+    0 2px 8px light-dark(rgba(17, 17, 17, 0.07), transparent),
+    0 2px 10px light-dark(transparent, rgba(0, 0, 0, 0.55));
+  --shadow-3:
+    0 8px 24px light-dark(rgba(17, 17, 17, 0.10), transparent),
+    0 10px 28px light-dark(transparent, rgba(0, 0, 0, 0.65));
+  --scrim: light-dark(rgba(17, 17, 17, 0.55), rgba(0, 0, 0, 0.68));
+  --shadow: var(--shadow-1); 
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 600ms;
+}
+:root {
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --section-gap: var(--s6);
+  --measure: 780px;
+}
+@media (pointer: coarse) {
+  :root:not(.tier-marketing) {
+    --text-xs: 0.75rem;
+  }
+}
+.tier-marketing {
+  --display: 'Silkscreen', var(--mono);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: clamp(2.75rem, 1rem + 4.5vw, 4rem); 
+  --section-gap: var(--s9);
+  --measure: 68ch;
+}
+[data-mark='teal'] {
+  --mark-current: var(--mark-teal);
+}
+[data-mark='violet'] {
+  --mark-current: var(--mark-violet);
+}
+[data-mark='magenta'] {
+  --mark-current: var(--mark-magenta);
+}
+::selection {
+  background: var(--i-selection);
+}
+:root {
+  accent-color: var(--i);
+}
+@media print {
+  :root,
+  [data-theme] {
+    color-scheme: light;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+</style>
+<style>
+/* Layout: a reading column for the critique, then full-width frames that hold
+   the same page twice (390px phone, 1280px desktop scaled to fit). */
+:root { color-scheme: light dark; }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+a { color: var(--i-ink, var(--i)); }
+.doc { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 56px; }
+.col { max-width: 68ch; display: grid; gap: 14px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); margin: 0; }
+h1.title { font-size: clamp(30px, 5vw, 44px); line-height: 1.08; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h2.h { font-size: 24px; line-height: 1.2; letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.lede { font-size: 18px; color: var(--ink-soft); margin: 0; }
+p { margin: 0; }
+.muted { color: var(--ink-soft); }
+
+/* Findings */
+.findings { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.finding { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: grid; gap: 6px; align-content: start; }
+.finding .num { font-size: 30px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.finding p { color: var(--ink-soft); font-size: 15px; }
+
+/* Map table */
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+td:first-child { font-weight: 600; white-space: nowrap; }
+td .tag { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--line-strong); margin-right: 6px; color: var(--ink-soft); white-space: nowrap; }
+td .tag.keep { border-color: var(--success-line, var(--line-strong)); color: var(--success-ink, var(--ink)); background: var(--success-surface, transparent); }
+td .tag.move { border-color: var(--info-line, var(--line-strong)); color: var(--info-ink, var(--ink)); background: var(--info-surface, transparent); }
+td .tag.cut { border-color: var(--danger-line, var(--line-strong)); color: var(--danger-ink, var(--ink)); background: var(--danger-surface, transparent); }
+
+/* Scroll-length comparison, drawn to scale (1px : 10px of page) */
+.scale { display: flex; gap: 28px; align-items: flex-end; flex-wrap: wrap; }
+.stack { display: grid; gap: 6px; justify-items: start; }
+.stack .bar { width: 112px; display: flex; flex-direction: column; border: 1px solid var(--line-strong); border-radius: 6px; overflow: hidden; background: var(--card); }
+.stack .seg { border-bottom: 1px solid var(--line); font-size: 10px; line-height: 1.1; padding: 2px 5px; color: var(--slate); overflow: hidden; }
+.stack .seg:last-child { border-bottom: 0; }
+.stack .seg.hot { background: var(--surface-active); color: var(--ink-soft); }
+.stack .cap { font-size: 13px; color: var(--ink-soft); }
+.stack .cap b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.screens { position: relative; }
+
+/* Frame controls */
+.controls { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.seg-ctl { display: inline-flex; border: 1px solid var(--line-control); border-radius: 10px; padding: 3px; gap: 3px; background: var(--card); }
+.seg-ctl button { font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--ink-soft); padding: 6px 12px; border-radius: 7px; cursor: pointer; }
+.seg-ctl button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg-ctl button:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; }
+.ctl-label { font-size: 13px; color: var(--slate); margin-right: 6px; }
+
+.frames { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.frame { display: grid; gap: 8px; min-width: 0; }
+.frame-phone { flex: 0 1 390px; min-width: 0; max-width: 390px; }
+.frame-desk { flex: 1 1 520px; min-width: 0; }
+.flabel { font-family: var(--mono); font-size: 12px; color: var(--slate); }
+.screen {
+  container-type: inline-size; background: var(--bg); color: var(--ink);
+  border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden;
+}
+.fit { overflow: hidden; border-radius: var(--radius); }
+.fit > .screen { transform-origin: top left; }
+.frame-phone .screen { width: 390px; }
+.frame-desk .screen { width: 1280px; }
+
+/* ── The proposed home page. Sizes in px: they describe the real page at
+   the frame's width, not this document's. @container, not @media. ── */
+.pg { --gut: 20px; font-size: 16px; line-height: 1.6; }
+.pg .wrap { padding-inline: var(--gut); }
+.pg .nav { display: flex; justify-content: space-between; align-items: center; height: 60px; border-bottom: 1px solid var(--line); padding-inline: var(--gut); }
+.pg .logo { font-weight: 800; letter-spacing: -.04em; font-size: 18px; }
+.pg .links { display: none; gap: 28px; color: var(--ink-soft); font-size: 15px; }
+.pg .icons { display: flex; gap: 8px; }
+.pg .ico { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-size: 13px; color: var(--slate); }
+.pg .hero { padding-block: 36px 40px; display: grid; gap: 18px; }
+.pg .who { display: flex; gap: 14px; align-items: center; }
+.pg .avatar { width: 56px; height: 56px; border-radius: 50%; border: 1px dashed var(--line-control); display: grid; place-items: center; font-family: var(--mono); font-size: 9px; color: var(--slate); text-align: center; flex: none; }
+.pg .who b { display: block; font-size: 17px; }
+.pg .who span { font-size: 13px; color: var(--slate); }
+.pg h1 { font-size: 38px; line-height: 1.05; letter-spacing: -.025em; margin: 0; text-wrap: balance; }
+.pg .sub { color: var(--ink-soft); font-size: 16px; max-width: 34em; }
+.pg .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+.pg .btn { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 600; font-size: 15px; padding: 11px 18px; border-radius: 10px; border: 1.5px solid var(--line-control); background: var(--card); color: var(--ink); }
+.pg .btn.primary { background: var(--i); border-color: var(--i); color: var(--on-i); }
+.pg .herocard { display: none; }
+.pg .socials { display: none; gap: 18px; font-size: 14px; color: var(--ink-soft); }
+.pg .socials span { border-bottom: 1px solid var(--line-strong); }
+
+.pg section.sec { padding-block: 36px; border-top: 1px solid var(--line); display: grid; gap: 18px; }
+.pg .sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.pg h2 { font-size: 24px; line-height: 1.15; letter-spacing: -.015em; margin: 0; }
+.pg .more { font-size: 14px; color: var(--i-ink, var(--i)); white-space: nowrap; }
+.pg .intro { color: var(--ink-soft); font-size: 15px; margin-top: -8px; }
+
+.pg .cards { display: grid; gap: 12px; }
+.pg .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 6px; align-content: start; }
+.pg .card .k { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); }
+.pg .card .big { font-size: 30px; font-weight: 750; letter-spacing: -.025em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.pg .card .what { font-size: 14px; color: var(--ink-soft); line-height: 1.4; }
+.pg .card h3 { font-size: 17px; line-height: 1.3; margin: 6px 0 0; }
+.pg .card p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+.pg .card .go { font-size: 14px; color: var(--i-ink, var(--i)); margin-top: 4px; }
+.pg .also { font-size: 15px; color: var(--ink-soft); }
+.pg .also b { color: var(--ink); font-weight: 600; }
+
+.pg .proj { display: grid; gap: 10px; }
+.pg .prow { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.pg .prow b { font-size: 16px; }
+.pg .prow .pill { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--success-ink, var(--slate)); border: 1px solid var(--line-strong); border-radius: 999px; padding: 1px 7px; align-self: center; }
+.pg .prow p { grid-column: 1 / -1; font-size: 14px; color: var(--ink-soft); line-height: 1.45; }
+
+.pg .closer { display: grid; gap: 20px; padding-block: 40px 44px; border-top: 1px solid var(--line); }
+.pg .photo { border: 1px dashed var(--line-control); border-radius: 12px; display: grid; place-items: center; text-align: center; padding: 10px; font-family: var(--mono); font-size: 11px; color: var(--slate); background: var(--card); }
+.pg .photo.one { aspect-ratio: 4 / 3; }
+.pg .photos3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pg .photos3 .photo { aspect-ratio: 4 / 5; font-size: 10px; }
+.pg .closer h2 { font-size: 32px; }
+.pg .closer p { color: var(--ink-soft); }
+.pg .contactline { font-size: 14px; color: var(--slate); }
+.pg .foot { border-top: 1px solid var(--line); padding-block: 22px; font-size: 12px; color: var(--slate); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.pg [data-variant] { display: none; }
+.v-one .pg [data-variant="one"], .v-three .pg [data-variant="three"] { display: grid; }
+
+@container (min-width: 900px) {
+  .pg { --gut: 64px; font-size: 17px; }
+  .pg .nav { height: 72px; }
+  .pg .links { display: flex; }
+  .pg .hero { grid-template-columns: minmax(0, 1fr) 280px; gap: 22px 64px; padding-block: 72px 80px; align-items: center; }
+  .pg .hero > .copy { display: grid; gap: 22px; }
+  .pg .hero .who .avatar { display: none; }
+  .pg h1 { font-size: 60px; }
+  .pg .sub { font-size: 19px; }
+  .pg .herocard { display: grid; justify-items: center; gap: 6px; text-align: center; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .pg .herocard .avatar { width: 128px; height: 128px; font-size: 11px; }
+  .pg .herocard .n { font-size: 34px; font-weight: 750; letter-spacing: -.02em; margin-top: 10px; padding-top: 14px; border-top: 1px solid var(--line); width: 100%; }
+  .pg .herocard small { color: var(--slate); font-size: 13px; }
+  .pg .socials { display: flex; }
+  .pg section.sec { padding-block: 64px; gap: 24px; }
+  .pg h2 { font-size: 34px; }
+  .pg .cards { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pg .card { padding: 24px; }
+  .pg .card .big { font-size: 40px; }
+  .pg .proj { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pg .closer { grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
+  .pg .closer h2 { font-size: 52px; }
+}
+@container (max-width: 899px) { .pg .hero > .copy { display: grid; gap: 18px; } }
+@media (prefers-reduced-motion: no-preference) { .seg-ctl button { transition: background .15s, color .15s; } }
+</style>
+
+<div class="doc">
+
+  <header class="col">
+    <p class="eyebrow">brignano.io · home page review</p>
+    <h1 class="title">Make the home page one short story</h1>
+    <p class="lede">You're right that it feels like a lot. The page isn't too long because you have too much to say. It's long because it says the same few things five times, and every section gets the same giant heading, so nothing tells a reader what matters.</p>
+    <p class="muted">My recommendation: cut the home page from nine sections to four. Lead with who you are, show three pieces of work you're proud of, then your side projects, then a warm sign-off with one good photo. Everything that's cut already has a better home on /resume, /work or /coding, so nothing is lost. On a phone the page drops from about 12 screens to about 3½.</p>
+  </header>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-wrong">
+    <h2 class="h" id="h-wrong">What I found</h2>
+    <p class="muted" style="max-width:68ch">Measured on the current main branch at 390px and 1440px wide.</p>
+    <div class="findings">
+      <div class="finding"><span class="num">12 screens</span><p>That's how far you scroll on a phone (10,410px, about 1,160 words). Desktop is about 8.5 screens. Most personal sites people actually finish are 3 to 5.</p></div>
+      <div class="finding"><span class="num">“4,000+” × 6</span><p>The same claim appears six times. "40+ days" appears four times, "one command builds any project" twice, the status page twice. Highlights and Current Role say nearly the same thing back to back, so the second one reads as a re-run.</p></div>
+      <div class="finding"><span class="num">9 sections</span><p>Each has the same 36 to 48px heading and the same tall padding, so the page has no rhythm. Hero, About, Life, Highlights, Role, Work, Projects, Open source and Contact all look equally important, so a reader can't skim.</p></div>
+      <div class="finding"><span class="num">Tap to decode</span><p>Highlights needs a "tap any tag to see what it means" note. If a section needs a glossary, it's written for the wrong reader to be on the home page. Your case studies say the same things in plain words.</p></div>
+      <div class="finding"><span class="num">6 photo tiles</span><p>Why they don't land: they take a full phone screen (more than the hero on desktop), but the one-word captions say less than the sentence above them. Hiking, Traveling and Exploring look alike. It reads like a gallery, not like you.</p></div>
+      <div class="finding"><span class="num">3 audiences, mixed</span><p>Family content sits between About and Highlights, recruiter content is split across three sections, and engineer-only content (commit feed, contribution graph, stack list) is spread through the bottom half.</p></div>
+    </div>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-map">
+    <h2 class="h" id="h-map">Where each section goes</h2>
+    <p class="muted" style="max-width:68ch">Keep the person-first hero from October. Fold the four work sections into one, and give the personal side a better spot than a grid.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Today</th><th>Proposal</th></tr></thead>
+        <tbody>
+          <tr><td>Hero</td><td><span class="tag keep">Keep</span>Same headline, face and two buttons. The paragraph gets one plain sentence instead of three.</td></tr>
+          <tr><td>About Me</td><td><span class="tag move">Merge</span>The idea goes in the hero sentence. Hackathons, mentoring and the CCSU board become one line under the work cards.</td></tr>
+          <tr><td>Outside of work</td><td><span class="tag move">Merge</span>Six tiles become one strong photo (or three) inside the sign-off, written in your voice. The photos stay in the repo for a future About page.</td></tr>
+          <tr><td>Highlights</td><td><span class="tag cut">Cut</span>The tags, glossary and four cards repeat Current Role. Their best facts move into the work cards.</td></tr>
+          <tr><td>Now building + latest commit</td><td><span class="tag move">Move</span>To /coding, where engineers already go for this.</td></tr>
+          <tr><td>Current Role</td><td><span class="tag move">Move</span>The six bullets, metrics and "stack behind it" already live on /resume and in the ATLAS case study. Home links there.</td></tr>
+          <tr><td>Selected work</td><td><span class="tag keep">Keep</span>Becomes the main work section: three cards, each with one number and one plain sentence.</td></tr>
+          <tr><td>Projects</td><td><span class="tag keep">Keep</span>The same three, as shorter cards with one line each.</td></tr>
+          <tr><td>Open-source activity</td><td><span class="tag move">Move</span>To /coding. A link stays on the projects section.</td></tr>
+          <tr><td>Say hello</td><td><span class="tag keep">Keep</span>Absorbs the personal side, so the page ends on you rather than a button.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-scale">
+    <h2 class="h" id="h-scale">Phone scroll, to scale</h2>
+    <p class="muted" style="max-width:68ch">Each bar is the full page at 390px wide, 1px for every 25px of page. Shaded blocks are the ones that leave home.</p>
+    <div class="scale" id="scale"></div>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-wf">
+    <h2 class="h" id="h-wf">Proposed home page</h2>
+    <p class="muted" style="max-width:68ch">Real copy from the site, rewritten shorter. Dashed boxes are photos. Try both sign-off options; that choice is yours.</p>
+    <div class="controls">
+      <div><span class="ctl-label">Show</span>
+        <div class="seg-ctl" role="group" aria-label="Frames to show">
+          <button type="button" id="show-both" data-show="both">Both</button>
+          <button type="button" id="show-phone" data-show="phone">Phone</button>
+          <button type="button" id="show-desk" data-show="desk">Desktop</button>
+        </div>
+      </div>
+      <div><span class="ctl-label">Sign-off photo</span>
+        <div class="seg-ctl" role="group" aria-label="Sign-off photo option">
+          <button type="button" id="var-one" data-var="one">One photo</button>
+          <button type="button" id="var-three" data-var="three">Three photos</button>
+        </div>
+      </div>
+    </div>
+    <div class="frames v-one" id="frames">
+      <div class="frame frame-phone" id="f-phone"><span class="flabel">Phone · 390px</span><div class="fit" data-w="390"><div class="screen" id="phone-screen"></div></div></div>
+      <div class="frame frame-desk" id="f-desk"><span class="flabel">Desktop · 1280px, scaled to fit</span><div class="fit" data-w="1280"><div class="screen" id="desk-screen"></div></div></div>
+    </div>
+  </section>
+
+  <section class="col" aria-labelledby="h-next">
+    <h2 class="h" id="h-next">What happens next</h2>
+    <p class="muted">Say OK (or tell me what to change) and I'll build it as one PR in brignano.io for you to review. Before cutting anything, the PR checks that each moved piece really is on its new page: the Current Role bullets on /resume, Now building and the contribution graph on /coding. Anything missing moves there in the same PR. The holiday decorations keep their current rules.</p>
+    <p class="muted">Not in this proposal: changing the nav, the other pages, or the site's look. If you later want the photo grid back, a short /about page is the natural home for it.</p>
+  </section>
+</div>
+
+<template id="page">
+  <div class="pg">
+    <div class="nav">
+      <span class="logo">A|B</span>
+      <span class="links"><span>Work</span><span>Projects</span><span>Blog</span><span>Resume</span><span>Coding</span></span>
+      <span class="icons"><span class="ico" aria-hidden="true">☀</span><span class="ico menu" aria-hidden="true">≡</span></span>
+    </div>
+
+    <div class="wrap">
+      <div class="hero">
+        <div class="copy">
+          <div class="who">
+            <span class="avatar">Head-<br>shot</span>
+            <div><b>Hi, I'm Anthony.</b><span>Senior Staff Software Engineer at The Hartford</span></div>
+          </div>
+          <h1>I build the platforms thousands of engineers ship on.</h1>
+          <p class="sub">Think of it as the factory, not the products that roll off it: the shared tools that help engineers ship software faster and more safely.</p>
+          <div class="ctas"><span class="btn primary">Resume ▤</span><span class="btn">Get in touch ✉</span></div>
+          <div class="socials"><span>LinkedIn</span><span>GitHub</span><span>Email</span></div>
+        </div>
+        <div class="herocard">
+          <span class="avatar">Headshot</span>
+          <b>Anthony Brignano</b>
+          <small>Connecticut</small>
+          <span class="n">4,000+</span>
+          <small>engineers on the platform</small>
+        </div>
+      </div>
+
+      <section class="sec">
+        <div class="sec-head"><h2>Work I'm proud of</h2><span class="more">Resume →</span></div>
+        <p class="intro">Three projects from The Hartford, each with the full story one tap away.</p>
+        <div class="cards">
+          <div class="card">
+            <span class="k">Developer platform</span>
+            <span class="big">2,000+</span>
+            <span class="what">devices run the desktop agent I designed and built</span>
+            <h3>ATLAS: one place to build</h3>
+            <p>Setup, builds and AI tools in one app, instead of a wiki, a browser and a terminal.</p>
+            <span class="go">Read the story →</span>
+          </div>
+          <div class="card">
+            <span class="k">Onboarding</span>
+            <span class="big">40+ days → hours</span>
+            <span class="what">from hire to first commit</span>
+            <h3>Self-service setup</h3>
+            <p>A new engineer's machine arrives ready to build, without a stack of access requests.</p>
+            <span class="go">Read the story →</span>
+          </div>
+          <div class="card">
+            <span class="k">Migration</span>
+            <span class="big">10,000+</span>
+            <span class="what">code repositories moved to GitHub Enterprise Cloud</span>
+            <h3>A company-wide migration</h3>
+            <p>Moved in waves, in under 12 months, while thousands of engineers kept shipping.</p>
+            <span class="go">Read the story →</span>
+          </div>
+        </div>
+        <p class="also"><b>Beyond the platform,</b> I lead our enterprise hackathons, mentor in the Leadership Development Program, and sit on CCSU's Computer Science Industry Advisory Board.</p>
+      </section>
+
+      <section class="sec">
+        <div class="sec-head"><h2>On the side</h2><span class="more">All projects →</span></div>
+        <div class="proj">
+          <div class="prow"><b>Sites</b><span class="pill">Live</span><p>Websites small businesses can update themselves, with a free preview first.</p></div>
+          <div class="prow"><b>Guidebook</b><span class="pill">Live</span><p>Step-by-step help on any website, from a Chrome extension.</p></div>
+          <div class="prow"><b>Driftwood</b><span class="pill">Beta</span><p>An architecture model that's checked against the real infrastructure.</p></div>
+        </div>
+        <p class="also">More of what I build in public is on <span class="more" style="font-size:inherit">my coding page →</span></p>
+      </section>
+    </div>
+
+    <div class="wrap">
+      <div class="closer">
+        <div class="photo one" data-variant="one">Photo: one favourite, e.g. hiking below the larches</div>
+        <div class="photos3" data-variant="three"><div class="photo">Climbing</div><div class="photo">Snow­boarding</div><div class="photo">Hiking</div></div>
+        <div style="display:grid;gap:16px">
+          <p class="k" style="font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin:0">Off the clock</p>
+          <h2>Say hello.</h2>
+          <p>When I'm not working I'm usually outside: climbing, snowboarding through the trees, or hiking somewhere with a view, camera in hand. Want to talk platforms or AI, or swap snowboarding stories? I'd love to hear from you.</p>
+          <div class="ctas"><span class="btn primary">Get in touch ✉</span></div>
+          <p class="contactline">hi@brignano.io · LinkedIn · GitHub</p>
+        </div>
+      </div>
+      <div class="foot"><span>© Anthony Brignano 2026</span><span>Keyboard shortcuts ?</span></div>
+    </div>
+  </div>
+</template>
+
+<script>
+(function () {
+  var tpl = document.getElementById('page');
+  var phone = document.getElementById('phone-screen');
+  var desk = document.getElementById('desk-screen');
+  phone.append(tpl.content.cloneNode(true));
+  desk.append(tpl.content.cloneNode(true));
+
+  var fits = document.querySelectorAll('.fit');
+  function fitDesk() {
+    fits.forEach(function (fit) {
+      var full = +fit.dataset.w, scr = fit.firstElementChild;
+      var s = Math.min(1, (fit.clientWidth || full) / full);
+      scr.style.transform = 'scale(' + s + ')';
+      fit.style.height = Math.ceil(scr.offsetHeight * s) + 'px';
+    });
+  }
+  if (window.ResizeObserver) fits.forEach(function (f) { new ResizeObserver(fitDesk).observe(f); });
+  window.addEventListener('resize', fitDesk);
+
+  var frames = document.getElementById('frames');
+  var fPhone = document.getElementById('f-phone');
+  var fDesk = document.getElementById('f-desk');
+  var showBtns = document.querySelectorAll('[data-show]');
+  function show(which) {
+    fPhone.hidden = which === 'desk';
+    fDesk.hidden = which === 'phone';
+    showBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === which)); });
+    requestAnimationFrame(fitDesk);
+  }
+  showBtns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show); }); });
+  show(window.innerWidth < 760 ? 'phone' : 'both');
+
+  var varBtns = document.querySelectorAll('[data-var]');
+  function variant(v) {
+    frames.classList.toggle('v-one', v === 'one');
+    frames.classList.toggle('v-three', v === 'three');
+    varBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.var === v)); });
+    requestAnimationFrame(fitDesk);
+  }
+  varBtns.forEach(function (b) { b.addEventListener('click', function () { variant(b.dataset.var); }); });
+  variant('one');
+
+  // Scroll-length bars. Today's heights are measured from the live layout at
+  // 390px; the proposal's are measured from the phone frame above.
+  var today = [
+    ['Header', 151], ['Hero', 724], ['About', 742, 1], ['Outside of work', 982, 1],
+    ['Highlights', 1380, 1], ['Current Role', 1806, 1], ['Selected work', 1593],
+    ['Projects', 1592], ['Open source', 588, 1], ['Say hello', 631], ['Footer', 222]
+  ];
+  function bar(title, rows) {
+    var total = rows.reduce(function (a, r) { return a + r[1]; }, 0);
+    var el = document.createElement('div'); el.className = 'stack';
+    var b = document.createElement('div'); b.className = 'bar';
+    rows.forEach(function (r) {
+      var s = document.createElement('div');
+      s.className = 'seg' + (r[2] ? ' hot' : '');
+      s.style.height = Math.max(2, Math.round(r[1] / 25)) + 'px';
+      s.textContent = r[1] >= 300 ? r[0] : '';
+      s.title = r[0] + ': ' + r[1] + 'px';
+      b.append(s);
+    });
+    var cap = document.createElement('div'); cap.className = 'cap';
+    cap.innerHTML = '<b>' + title + '</b><br>' + total.toLocaleString() + 'px · ' + (total / 844).toFixed(1) + ' screens';
+    el.append(b, cap);
+    return el;
+  }
+  function drawScale() {
+    var root = phone.querySelector('.pg');
+    var parts = [
+      ['Header', root.querySelector('.nav')], ['Hero', root.querySelector('.hero')],
+      ['Work', root.querySelectorAll('.sec')[0]], ['Side projects', root.querySelectorAll('.sec')[1]],
+      ['Say hello', root.querySelector('.closer')], ['Footer', root.querySelector('.foot')]
+    ];
+    var rows = parts.map(function (p) { return [p[0], Math.round(p[1].getBoundingClientRect().height)]; });
+    var sc = document.getElementById('scale');
+    sc.textContent = '';
+    sc.append(bar('Today', today), bar('Proposed', rows));
+  }
+  var wasHidden = fPhone.hidden; fPhone.hidden = false;
+  drawScale();
+  fPhone.hidden = wasHidden;
+  fitDesk();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fitDesk(); });
+})();
+</script>
+</html>

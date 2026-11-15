@@ -30,11 +30,29 @@ export interface CaseStudy {
   stack: string[];
   /** 150–160 characters for search results. */
   description: string;
+  /** The homepage card: one number, what it counts, and one plain sentence.
+   *  Written for someone who has never heard of CI/CD; the case study carries
+   *  the detail. Each card should use a different number, so the homepage
+   *  never says the same thing twice. */
+  home: {
+    kicker: string;
+    stat: string;
+    statLabel: string;
+    title: string;
+    line: string;
+  };
 }
 
 export const caseStudies: CaseStudy[] = [
   {
     slug: "atlas-developer-platform",
+    home: {
+      kicker: "Developer platform",
+      stat: "2,000+",
+      statLabel: "devices run the desktop agent I designed and built",
+      title: "ATLAS: one place to build",
+      line: "Setup, builds and AI tools in one app, instead of a wiki, a browser and a terminal.",
+    },
     title: "ATLAS: one platform for 4,000+ engineers",
     eyebrow: "Case study · Developer platform",
     lede: "The Hartford's developer platform is a CLI, a desktop agent and IDE extensions that put onboarding, builds, policy, telemetry and AI tooling in one place for 4,000+ engineers. The next step is one build and pipeline system in place of seven.",
@@ -112,6 +130,13 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "self-service-developer-onboarding",
+    home: {
+      kicker: "Onboarding",
+      stat: "Hours",
+      statLabel: "to get a new engineer building, down from 40+ days",
+      title: "Self-service setup",
+      line: "A new engineer's machine arrives ready to build, without a stack of access requests.",
+    },
     title: "Onboarding: 40+ days to hours",
     eyebrow: "Case study · Developer experience",
     lede: "A CEO-sponsored initiative to make a new engineer's setup at The Hartford self-service. A laptop now arrives with the platform on it and goes from unboxed to building in hours, against a 40+ day baseline from hire to first commit.",
@@ -202,6 +227,13 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: "github-enterprise-cloud-migration",
+    home: {
+      kicker: "Migration",
+      stat: "10,000+",
+      statLabel: "code repositories moved to GitHub Enterprise Cloud",
+      title: "A company-wide migration",
+      line: "Moved in waves, in under 12 months, while thousands of engineers kept shipping.",
+    },
     title: "10,000+ repositories to GitHub Enterprise Cloud",
     eyebrow: "Case study · Source control",
     lede: "Every active repository at The Hartford moved from a self-hosted GitHub Enterprise Server to GitHub Enterprise Cloud, in waves ordered by impact, with thousands of engineers shipping the whole time.",
