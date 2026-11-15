@@ -23,7 +23,7 @@ export const SITE_ROLE = "Senior Staff Software Engineer · The Hartford";
 export const PROJECTS_LEAD = "Things I build on my own time.";
 export const NOTES_LEAD =
   "Case studies from my job building a developer platform, and posts about what I build on the side.";
-export const CODING_HEADING = "Coding Activity";
+export const CODING_HEADING = "Time in the editor";
 
 // Shown under the name in the hero's photo card, and on the home share card.
 export const SITE_LOCATION = "Connecticut";

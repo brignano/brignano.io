@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import ContributionCalendar from "@/components/contribution-calendar";
-import DisclaimerLink from "@/components/github-disclaimer-link";
 import { fetchRecentContributions } from "@/lib/contributions";
 
 /** About six months: 26 week columns, the newest ending today. */
@@ -11,17 +10,14 @@ const WINDOW_LABEL = "the last 6 months";
 const REVALIDATE_SECONDS = 60 * 60;
 
 // Two sizes of the same grid, swapped with CSS so the page ships no
-// JavaScript for it. The phone size is 282px wide, which fits a 375px screen
-// inside the card's padding; `fluid` shrinks it a little on anything smaller,
-// so it never scrolls sideways.
+// JavaScript for it. The phone grid is 282px wide and the wide one 493px;
+// `fluid` shrinks either to its column when that is narrower, so the graph
+// never scrolls sideways.
 const PHONE = { blockSize: 8, blockMargin: 2, fontSize: 10 };
 const WIDE = { blockSize: 14, blockMargin: 4, fontSize: 12 };
 
 interface ContributionGraphProps {
   username?: string;
-  title?: string;
-  description?: string;
-  showDisclaimer?: boolean;
 }
 
 /**
@@ -33,9 +29,6 @@ interface ContributionGraphProps {
  */
 export default async function ContributionGraph({
   username = "brignano",
-  title,
-  description,
-  showDisclaimer = false,
 }: ContributionGraphProps) {
   const recent = await fetchRecentContributions(username, WEEKS_SHOWN, {
     next: { revalidate: REVALIDATE_SECONDS },
@@ -58,8 +51,13 @@ export default async function ContributionGraph({
           totalLabel={totalLabel}
         />
       </div>
-      <div className="hidden sm:inline-block">
-        <ContributionCalendar data={data} {...WIDE} totalLabel={totalLabel} />
+      <div className="hidden sm:block max-w-[493px]">
+        <ContributionCalendar
+          data={data}
+          {...WIDE}
+          fluid
+          totalLabel={totalLabel}
+        />
       </div>
     </>
   ) : (
@@ -68,20 +66,5 @@ export default async function ContributionGraph({
     </p>
   );
 
-  return (
-    <div className="bg-card border border-line p-5 sm:p-8 rounded-lg w-full">
-      {title && (
-        <h3 className="font-sans text-2xl font-bold tracking-tight mb-2">
-          {title}
-        </h3>
-      )}
-      {description && <p className="text-sm text-slate mb-4">{description}</p>}
-      <div className="min-h-[120px] py-2">{body}</div>
-      {showDisclaimer && (
-        <div className="w-full mt-3 text-sm text-slate italic">
-          View more information on <DisclaimerLink />.
-        </div>
-      )}
-    </div>
-  );
+  return <div className="min-h-[120px]">{body}</div>;
 }

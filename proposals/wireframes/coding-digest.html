@@ -1,0 +1,622 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coding Page Rethink</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* @brignano/design tokens.css, inlined (comments stripped) */
+
+:root {
+  color-scheme: light dark;
+}
+[data-theme='light'] {
+  color-scheme: light;
+}
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+:root {
+  --n-0: light-dark(#ffffff, #0d0d0f);
+  --n-25: light-dark(#fafafb, #131316);
+  --n-50: light-dark(#f3f3f4, #17171a);
+  --n-100: light-dark(#ececee, #202024); 
+  --n-200: light-dark(#e1e1e4, #2a2a2f); 
+  --n-300: light-dark(#cbcbce, #3a3a41); 
+  --n-400: light-dark(#a9a9ae, #55555e);
+  --n-500: light-dark(#8a8a8f, #8b8b93); 
+  --n-600: light-dark(#6b6b73, #9c9ca4); 
+  --n-700: light-dark(#52525b, #a8a8b0); 
+  --n-800: light-dark(#33333a, #d0d0d5);
+  --n-900: light-dark(#111114, #f2f2f4); 
+  --bg: light-dark(#fafafb, #0d0d0f); 
+  --card: light-dark(#ffffff, #17171a); 
+  --surface-hover: var(--n-100);
+  --surface-active: var(--n-200);
+  --surface-sticky: light-dark(color-mix(in srgb, #ffffff 92%, transparent), color-mix(in srgb, #0d0d0f 92%, transparent)); 
+  --ink: var(--n-900);
+  --ink-soft: var(--n-700);
+  --slate: light-dark(#6b6b73, #8b8b93); 
+  --line: var(--n-100);
+  --line-soft: var(--n-50);
+  --line-strong: var(--n-300); 
+  --line-control: light-dark(#8a8a8f, #6b6b73);
+  --on-dark: light-dark(#fafafb, #0d0d0f); 
+  --device: light-dark(#111114, #3a3a41); 
+  --i: light-dark(#076bd3, #0371e0);
+  --i-ink: light-dark(#0159b5, #6ba5f3);
+  --i-hover: light-dark(#014a97, #0062c7);
+  --i-ink-hover: light-dark(#014a97, #98c4ff);
+  --i-pressed: light-dark(#003e82, #0553a6);
+  --i-surface: light-dark(color-mix(in srgb, #076bd3 12%, transparent), color-mix(in srgb, #0371e0 20%, transparent));
+  --i-line: light-dark(color-mix(in srgb, #076bd3 32%, transparent), color-mix(in srgb, #0371e0 44%, transparent));
+  --i-selection: light-dark(color-mix(in srgb, #076bd3 26%, transparent), color-mix(in srgb, #0371e0 30%, transparent));
+  --on-i: light-dark(#ffffff, #ffffff);
+  --danger-fill: light-dark(#a4442c, #be563c);
+  --danger-fill-hover: light-dark(#8a3722, #ad472e);
+  --danger-fill-pressed: light-dark(#8a3722, #9d381e);
+  --on-danger: light-dark(#ffffff, #ffffff);
+  --i-disabled-bg: var(--n-200);
+  --i-disabled-ink: var(--n-400);
+  --success: light-dark(#2f6b4f, #6fbf95);
+  --success-ink: light-dark(#245740, #8fd4ae);
+  --attention: light-dark(#b4741f, #e0a44f); 
+  --attention-ink: light-dark(#8a5714, #e0a44f); 
+  --danger: light-dark(#a4442c, #e07a5f);
+  --danger-ink: light-dark(#8a3722, #ec9880);
+  --info: var(--i);
+  --info-ink: var(--i-ink);
+  --success-surface: light-dark(color-mix(in srgb, #2f6b4f 12%, transparent), color-mix(in srgb, #6fbf95 20%, transparent));
+  --attention-surface: light-dark(color-mix(in srgb, #b4741f 12%, transparent), color-mix(in srgb, #e0a44f 20%, transparent));
+  --danger-surface: light-dark(color-mix(in srgb, #a4442c 12%, transparent), color-mix(in srgb, #e07a5f 20%, transparent));
+  --info-surface: var(--i-surface);
+  --success-line: light-dark(color-mix(in srgb, #2f6b4f 32%, transparent), color-mix(in srgb, #6fbf95 44%, transparent));
+  --attention-line: light-dark(color-mix(in srgb, #b4741f 32%, transparent), color-mix(in srgb, #e0a44f 44%, transparent));
+  --danger-line: light-dark(color-mix(in srgb, #a4442c 32%, transparent), color-mix(in srgb, #e07a5f 44%, transparent));
+  --info-line: var(--i-line);
+  --diff-added: var(--success);
+  --diff-added-ink: var(--success-ink);
+  --diff-added-surface: var(--success-surface);
+  --diff-changed: var(--i);
+  --diff-changed-ink: var(--i-ink);
+  --diff-changed-surface: var(--i-surface);
+  --diff-removed: var(--danger);
+  --diff-removed-ink: var(--danger-ink);
+  --diff-removed-surface: var(--danger-surface);
+  --code-surface: var(--bg);
+  --code-ink: var(--ink);
+  --code-keyword: var(--i-ink);
+  --code-string: var(--ink-soft);
+  --code-comment: var(--slate);
+  --code-highlight: var(--i-surface);
+  --mark: light-dark(#b4741f, #e0a44f);
+  --mark-ink: light-dark(#8a5714, #e0a44f); 
+  --mark-teal: light-dark(#0e7c86, #4cc0cb);
+  --mark-violet: light-dark(#7148c9, #a990f2);
+  --mark-magenta: light-dark(#b1366f, #ea7fb0);
+  --mark-current: var(--mark);
+  --forest: var(--success);
+  --forest-deep: var(--success-ink);
+  --larch: var(--attention);
+  --larch-deep: light-dark(#8a5714, #f0bd74);
+  --rust: var(--danger);
+  --rust-deep: var(--danger-ink);
+  --gold: var(--slate);
+  --sans: 'Geist', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  --display: var(--sans);
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-heavy: 800;
+  --leading-display: 1.15;
+  --leading-title: 1.3;
+  --leading-ui: 1.4;
+  --leading-body: 1.6;
+  --tracking-title: -0.01em;
+  --tracking-display: -0.025em;
+  --tracking-caps: 0.08em;
+  --z-raised: 1;
+  --z-sticky: 10;
+  --z-float: 20;
+  --z-skip: 30;
+  --z-toast: 40;
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 24px;
+  --s6: 32px; --s7: 48px; --s8: 64px; --s9: 96px;
+  --radius-sm: 6px;
+  --radius-control: 8px; 
+  --radius: 12px;
+  --radius-lg: 18px;
+  --shadow-1: 0 1px 2px light-dark(rgba(17, 17, 17, 0.04), rgba(0, 0, 0, 0.45));
+  --shadow-2:
+    0 2px 8px light-dark(rgba(17, 17, 17, 0.07), transparent),
+    0 2px 10px light-dark(transparent, rgba(0, 0, 0, 0.55));
+  --shadow-3:
+    0 8px 24px light-dark(rgba(17, 17, 17, 0.10), transparent),
+    0 10px 28px light-dark(transparent, rgba(0, 0, 0, 0.65));
+  --scrim: light-dark(rgba(17, 17, 17, 0.55), rgba(0, 0, 0, 0.68));
+  --shadow: var(--shadow-1); 
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur: 250ms;
+  --dur-slow: 600ms;
+}
+:root {
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --section-gap: var(--s6);
+  --measure: 780px;
+}
+@media (pointer: coarse) {
+  :root:not(.tier-marketing) {
+    --text-xs: 0.75rem;
+  }
+}
+.tier-marketing {
+  --display: 'Silkscreen', var(--mono);
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: clamp(2.75rem, 1rem + 4.5vw, 4rem); 
+  --section-gap: var(--s9);
+  --measure: 68ch;
+}
+[data-mark='teal'] {
+  --mark-current: var(--mark-teal);
+}
+[data-mark='violet'] {
+  --mark-current: var(--mark-violet);
+}
+[data-mark='magenta'] {
+  --mark-current: var(--mark-magenta);
+}
+::selection {
+  background: var(--i-selection);
+}
+:root {
+  accent-color: var(--i);
+}
+@media print {
+  :root,
+  [data-theme] {
+    color-scheme: light;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+</style>
+<style>
+/* @brignano/design tokens.chart.css */
+/* ─────────────────────────────────────────────────────────────────────────
+   tokens.chart.css — the categorical palette for data visualisation.
+
+   WHY THIS IS A SEPARATE FILE FROM THE BRAND ACCENT
+   -------------------------------------------------
+   A chart's colours do a different job from a brand's colours, so they are
+   not derived from the mark and they are not the state hues.
+
+     mark (--mark)             identity. One hue. "This is Anthony."
+     state (--success/…)       state. RESERVED — never a series colour.
+     categorical (this file)   IDENTITY OF A SERIES. Needs 8 hues that a
+                               human can tell apart at a glance, including
+                               the ~8% of men with a colour-vision
+                               deficiency.
+
+   Trying to derive eight distinguishable series hues from one amber gives
+   you eight ambers nobody can separate. Charts genuinely need the range —
+   the constraint is separability, not restraint.
+
+   THESE VALUES ARE VALIDATED, NOT CHOSEN BY EYE
+   ----------------------------------------------
+   Values are light-dark(<light>, <dark>), one declaration each.
+   Both modes pass every hard gate of the six-check colour formula:
+
+     lightness band     PASS  (all 8 inside the mode's band)
+     chroma floor       PASS  (all 8 >= 0.1)
+     CVD separation     PASS  worst adjacent dE 9.1 light / 8.4 dark  (>=8)
+     normal-vision      PASS  worst adjacent dE 19.6 light / 19.3 dark (>=15)
+     contrast           light: slots 3, 4, 5 sit below 3:1 — see RELIEF below
+                        dark:  all 8 clear 3:1
+
+   The ORDER is the colourblind-safety mechanism, not decoration. Slots are
+   assigned in fixed order and NEVER cycled. Re-ordering silently breaks the
+   adjacent-pair separation the gates above measure. If you change anything
+   here, re-run the validator on both modes before shipping.
+
+   RULES OF USE
+   ------------
+   - Fixed order, never cycled. A 9th series is not a generated hue: fold it
+     into "Other", facet into small multiples, or cut it. (`stats-pie.tsx`
+     already does this correctly — top 8 + "Other".)
+   - Colour follows the ENTITY, never its rank. A filter that changes the
+     series count must not repaint the survivors. Map name -> slot once.
+   - RELIEF: on light mode, slots 3/4/5 fall below 3:1 against the surface.
+     That is legal only with visible direct labels or a table view — which
+     the donut's centre readout and the legend already provide. Do not use
+     those three as the ONLY signal for a mark with no label.
+   - Never colour-alone: >=2 series always carries a legend, and <=4 are also
+     direct-labelled.
+   - Text wears text tokens (--ink / --ink-soft / --slate), never the series
+     colour. A coloured mark beside a label carries the identity.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --chart-surface: var(--card);
+
+  --chart-1: light-dark(#2a78d6, #3987e5); /* blue    */
+  --chart-2: light-dark(#eb6834, #d95926); /* orange  */
+  --chart-3: light-dark(#1baf7a, #199e70); /* aqua    — relief required (2.74:1) */
+  --chart-4: light-dark(#eda100, #c98500); /* yellow  — relief required (2.11:1) */
+  --chart-5: light-dark(#e87ba4, #d55181); /* magenta — relief required (2.62:1) */
+  --chart-6: #008300; /* green — same in both */
+  --chart-7: light-dark(#4a3aa7, #9085e9); /* violet  */
+  --chart-8: light-dark(#e34948, #e66767); /* red     */
+
+  /* Everything past slot 8 aggregates here. Deliberately neutral: "Other"
+     is not an entity, so it does not earn a hue. */
+  --chart-other: var(--slate);
+
+  /* Axes, gridlines and the ring behind overlapping marks. Recessive by
+     design — the data is the ink, the frame is not. */
+  --chart-grid: var(--line);
+  --chart-axis: var(--slate);
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SEQUENTIAL — one hue, light to dark, for CONTINUOUS MAGNITUDE.
+   Not categorical. Use when the thing being coloured is "how much", not
+   "which one": the GitHub contribution heatmap, a density map, a calendar.
+
+   Rules that differ from the categorical palette above:
+     - ONE hue. Never a rainbow — a rainbow implies categories where there
+       are only degrees.
+     - Lightness must be MONOTONIC. Verified in OKLCH: light L 0.888 ->
+       0.487 descending, dark L 0.380 -> 0.808 ascending, every adjacent
+       step separated by dL >= 0.107.
+     - `--seq-0` is NEUTRAL on purpose. Zero contributions is not a small
+       amount of the hue, it is the absence of a value — colouring it a pale
+       blue would claim data that isn't there.
+
+   The hue is cobalt, the same family as --i. That is intentional: a
+   magnitude ramp is informational, the same register as a link, and giving
+   it its own hue would add a meaning the system doesn't need.
+   ───────────────────────────────────────────────────────────────────────── */
+  --seq-0: var(--line);
+  --seq-1: light-dark(#c6dcfb, #014084);
+  --seq-2: light-dark(#87b5f3, #015cbb);
+  --seq-3: #2885f5;
+  --seq-4: light-dark(#015cbb, #98c3fe);
+}
+
+</style>
+</head><body>
+<style>
+:root { color-scheme: light dark; }
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 64px;
+}
+a { color: var(--i-ink); }
+.doc { max-width: 1320px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 56px; }
+.col { max-width: 68ch; display: grid; gap: 14px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); margin: 0; }
+h1.title { font-size: clamp(30px, 5vw, 44px); line-height: 1.08; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+h2.h { font-size: 24px; line-height: 1.2; letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+.lede { font-size: 18px; color: var(--ink-soft); margin: 0; }
+p { margin: 0; }
+.muted { color: var(--ink-soft); }
+ul.plain { margin: 0; padding-left: 20px; display: grid; gap: 6px; color: var(--ink-soft); }
+ul.plain b { color: var(--ink); }
+
+.findings { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.finding { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: grid; gap: 6px; align-content: start; }
+.finding .num { font-size: 30px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.finding p { color: var(--ink-soft); font-size: 15px; }
+
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+td:first-child { font-weight: 600; white-space: nowrap; }
+
+.controls { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.seg-ctl { display: inline-flex; border: 1px solid var(--line-control); border-radius: 10px; padding: 3px; gap: 3px; background: var(--card); }
+.seg-ctl button { font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--ink-soft); padding: 6px 12px; border-radius: 7px; cursor: pointer; min-height: 32px; }
+.seg-ctl button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.seg-ctl button:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; }
+.ctl-label { font-size: 13px; color: var(--slate); margin-right: 6px; }
+
+.frames { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+.frame { display: grid; gap: 8px; min-width: 0; }
+.frame-phone { flex: 0 1 390px; min-width: 0; max-width: 390px; }
+.frame-desk { flex: 1 1 520px; min-width: 0; }
+.flabel { font-family: var(--mono); font-size: 12px; color: var(--slate); }
+.screen { container-type: inline-size; background: var(--bg); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden; }
+.fit { overflow: hidden; border-radius: var(--radius); }
+.fit > .screen { transform-origin: top left; }
+.frame-phone .screen { width: 390px; }
+.frame-desk .screen { width: 1280px; }
+
+/* ── The proposed /coding page. px sizes describe the real page at the
+   frame's width. @container, not @media. ── */
+.pg { --gut: 20px; font-size: 16px; line-height: 1.6; }
+.pg .nav { display: flex; justify-content: space-between; align-items: center; height: 60px; border-bottom: 1px solid var(--line); padding-inline: var(--gut); }
+.pg .logo { font-weight: 800; letter-spacing: -.04em; font-size: 18px; }
+.pg .links { display: none; gap: 28px; color: var(--ink-soft); font-size: 15px; }
+.pg .links .on { color: var(--ink); border-bottom: 2px solid var(--ink); }
+.pg .icons { display: flex; gap: 8px; }
+.pg .ico { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-size: 13px; color: var(--slate); }
+.pg .wrap { padding: 36px var(--gut) 48px; display: grid; gap: 40px; }
+.pg .eb { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--slate); }
+.pg .ph1 { font-size: 34px; line-height: 1.1; letter-spacing: -.02em; margin: 4px 0 0; }
+.pg .h2 { font-size: 22px; line-height: 1.2; letter-spacing: -.01em; margin: 0; }
+.pg .ssub { font-size: 14px; color: var(--slate); }
+.pg .shead { display: grid; gap: 2px; margin-bottom: 14px; }
+.pg .cols { display: grid; gap: 40px; }
+
+/* Hero: one number, one line, three facts */
+.pg .hero { display: grid; gap: 10px; }
+.pg .big { font-size: 52px; font-weight: 700; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; margin-top: 14px; }
+.pg .big small { font-size: 20px; font-weight: 600; letter-spacing: 0; color: var(--ink-soft); margin-left: 6px; }
+.pg .lede { color: var(--ink-soft); font-size: 16.5px; max-width: 58ch; }
+.pg .facts { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 14.5px; color: var(--ink-soft); margin-top: 4px; }
+.pg .facts b { color: var(--ink); font-weight: 600; }
+.pg .now { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 14.5px; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line); }
+.pg .now .mono { width: 100%; }
+.pg .now a { color: var(--ink); font-weight: 600; text-decoration: underline dotted var(--line-strong); text-underline-offset: 4px; }
+.pg .now span.d { color: var(--slate); }
+.pg .mono { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--slate); }
+
+/* Languages: top five bars, the rest behind a link */
+.pg .bars { display: grid; gap: 12px; }
+.pg .bar { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 15px; }
+.pg .bar .t { color: var(--slate); font-variant-numeric: tabular-nums; font-size: 14px; }
+.pg .bar .track { grid-column: 1 / -1; height: 8px; border-radius: 4px; background: var(--seq-0, var(--line)); overflow: hidden; }
+.pg .bar .fill { height: 100%; border-radius: 4px; background: var(--seq-3, var(--i)); }
+.pg .bar.extra { display: none; }
+.pg .bars.open .bar.extra { display: grid; }
+.pg .tl { display: inline-flex; align-items: center; gap: 5px; min-height: 40px; font: inherit; font-size: 14.5px; color: var(--i-ink); background: none; border: 0; padding: 0; cursor: pointer; margin-top: 4px; }
+.pg .tl:focus-visible { outline: 2px solid var(--i); outline-offset: 2px; border-radius: 4px; }
+
+/* GitHub: last commit as one row, then the graph */
+.pg .commit { display: grid; gap: 2px; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+.pg .commit .s { font-size: 15.5px; font-weight: 600; line-height: 1.4; }
+.pg .commit .m { font-size: 13.5px; color: var(--slate); display: flex; flex-wrap: wrap; gap: 2px 10px; }
+.pg .commit .m a { color: var(--ink-soft); }
+.pg .add { color: var(--success-ink, green); } .pg .del { color: var(--danger-ink, crimson); }
+.pg .graph { display: grid; grid-template-columns: repeat(26, 1fr); grid-auto-flow: column; grid-template-rows: repeat(7, auto); gap: 2px; max-width: 282px; }
+.pg .graph i { aspect-ratio: 1; border-radius: 2px; background: var(--seq-0, var(--line)); }
+.pg .graph i.l1 { background: var(--seq-1); } .pg .graph i.l2 { background: var(--seq-2); } .pg .graph i.l3 { background: var(--seq-3); } .pg .graph i.l4 { background: var(--seq-4); }
+.pg .gfoot { font-size: 12.5px; color: var(--ink-soft); margin-top: 8px; }
+.pg .credits { font-size: 13px; color: var(--slate); }
+.pg .credits a { color: var(--ink-soft); }
+.pg .foot { border-top: 1px solid var(--line); padding: 20px var(--gut); font-size: 12px; color: var(--slate); }
+
+@container (min-width: 900px) {
+  .pg { --gut: 80px; }
+  .pg .links { display: flex; }
+  .pg .icons .menu { display: none; }
+  .pg .wrap { padding-top: 64px; gap: 56px; }
+  .pg .ph1 { font-size: 40px; }
+  .pg .heroRow { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 64px; align-items: end; }
+  .pg .now { border-top: 0; padding-top: 0; flex-direction: column; gap: 6px; }
+  .pg .big { font-size: 72px; }
+  .pg .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+  .pg .graph { max-width: 495px; gap: 4px; }
+  .pg .h2 { font-size: 24px; }
+}
+</style>
+
+<div class="doc">
+  <section class="col">
+    <p class="eyebrow">Wireframe · /coding</p>
+    <h1 class="title">Make the coding page easy to digest</h1>
+    <p class="lede">One big number with one confident line under it, your top five languages, and a GitHub section that is one commit row plus the six-month graph from PR #350. The cards that only describe your setup go, and so does the paragraph that apologises for the numbers.</p>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-now">
+    <h2 class="h" id="h-now">What makes it hard to read today</h2>
+    <div class="findings">
+      <div class="finding"><span class="num">7 cards</span><p>stacked one after another: the hero, languages, editors, operating systems, activity types, last commit and the contribution graph. All of them have the same weight, so nothing says what matters.</p></div>
+      <div class="finding"><span class="num">2 apologies</span><p>open the page. The hero says GitHub "shows only a few hundred commits", then a second paragraph explains why the hours have slowed. That's the first thing a visitor reads.</p></div>
+      <div class="finding"><span class="num">3 setup cards</span><p>Editors, Operating Systems and Activity Types describe your tools, not your work. A recruiter or a friend learns nothing from them.</p></div>
+      <div class="finding"><span class="num">1 big commit card</span><p>Last commit takes a whole card: a button, the full commit body, the SHA, the file count, an avatar and your username. It's one fact.</p></div>
+    </div>
+  </section>
+
+  <section class="col" style="max-width:none" aria-labelledby="h-wf">
+    <h2 class="h" id="h-wf">Proposed page</h2>
+    <p class="muted" style="max-width:68ch">Numbers and the commit are <b>made-up samples</b>: the live page fills them from WakaTime and GitHub. Tap <b>Show all languages</b> to see what sits behind the link. On desktop the hero sits on one row with "Now building" beside it, and Languages and GitHub sit side by side.</p>
+    <div class="controls">
+      <div><span class="ctl-label">Show</span>
+        <div class="seg-ctl" role="group" aria-label="Frames to show">
+          <button type="button" data-show="both">Both</button>
+          <button type="button" data-show="phone">Phone</button>
+          <button type="button" data-show="desk">Desktop</button>
+        </div>
+      </div>
+      <div><span class="ctl-label">Theme</span>
+        <div class="seg-ctl" role="group" aria-label="Theme">
+          <button type="button" data-th="light">Light</button>
+          <button type="button" data-th="dark">Dark</button>
+        </div>
+      </div>
+    </div>
+    <div class="frames" id="frames">
+      <div class="frame frame-phone" id="f-phone"><span class="flabel">Phone · 390px</span><div class="fit" data-w="390"><div class="screen" id="phone-screen"></div></div></div>
+      <div class="frame frame-desk" id="f-desk"><span class="flabel">Desktop · 1280px, scaled to fit</span><div class="fit" data-w="1280"><div class="screen" id="desk-screen"></div></div></div>
+    </div>
+  </section>
+
+  <section class="col" aria-labelledby="h-why">
+    <h2 class="h" id="h-why">Choices behind it</h2>
+    <ul class="plain">
+      <li><b>One number, said plainly.</b> The WakaTime total stays the headline. Under it is one line: tracked since Dec 2020 across every machine, and most of it is private work that never reaches GitHub. That's the same fact as the old "tip of the iceberg" copy, said without defending it.</li>
+      <li><b>Three facts in a row.</b> Daily average, best day and tracking-since become one line of text instead of a labelled stat strip.</li>
+      <li><b>"Now building" moves up</b> into the hero, so the page says what you're working on before it shows any charts.</li>
+      <li><b>Top five languages.</b> Bars with hours, and "Show all languages" opens the rest. No pie chart.</li>
+      <li><b>Editors, Operating Systems and Activity Types are removed.</b> They're still on your WakaTime profile, which the credits line links to.</li>
+      <li><b>Last commit is one row:</b> the subject, the repo, how long ago and the +/− count, linking to the commit. The commit body, SHA chip, avatar and "Browse files" button go.</li>
+      <li><b>The graph is PR #350's six months</b>, with no card around it, under the commit.</li>
+      <li><b>Cards become plain sections</b> with 22–24px headings, matching home, projects and resume.</li>
+    </ul>
+    <p class="muted"><b>One question for you:</b> the hero now says "These days much of my coding happens alongside AI agents like Claude Code, so editor hours tell less of the story." I left it out of the wireframe to keep the opening confident. Keep it, or drop it?</p>
+    <p class="muted"><b>Considered and dropped:</b> replacing the WakaTime total with a "last 30 days" number (it would show the same slowdown the AI line explains), and a chart of hours per year (more charts, not fewer).</p>
+  </section>
+
+  <section class="col" aria-labelledby="h-next">
+    <h2 class="h" id="h-next">What happens next</h2>
+    <p class="muted">Say OK, or tell me what to change. Then I build it as one PR in brignano.io, touching app/coding/page.tsx and the components/stats files, with this file committed under proposals/wireframes/. The share card stays as it is.</p>
+  </section>
+</div>
+
+<template id="page">
+<div class="pg">
+  <div class="nav"><span class="logo">A|B</span>
+    <span class="links"><span>Home</span><span>Projects</span><span>Resume</span><span class="on">Coding</span><span>Notes</span></span>
+    <span class="icons"><span class="ico">◐</span><span class="ico menu">≡</span></span></div>
+  <div class="wrap">
+    <section class="hero">
+      <span class="eb">Coding</span>
+      <h1 class="ph1">Time in the editor</h1>
+      <div class="heroRow">
+        <div>
+          <div class="big">3,412<small>hours</small></div>
+          <p class="lede" style="margin-top:12px">Tracked by WakaTime since Dec 2020, across every machine. Most of it is private work that never reaches GitHub.</p>
+          <div class="facts"><span><b>2 hrs 41 mins</b> a day on average</span><span>Best day <b>11 hrs 8 mins</b> (Mar 4, 2024)</span></div>
+        </div>
+        <div class="now">
+          <span class="mono">Now building</span>
+          <span><a href="#">Homelab</a> <span class="d">Proxmox · Docker · Tailscale</span></span>
+          <span><a href="#">Local-LLM routing</a> <span class="d">Ollama · Open WebUI</span></span>
+          <span><a href="#">AI-native tooling</a> <span class="d">Claude Code</span></span>
+        </div>
+      </div>
+    </section>
+
+    <div class="cols">
+      <section>
+        <div class="shead"><h2 class="h2">Languages</h2><span class="ssub">Hours in the editor, all time</span></div>
+        <div class="bars">
+          <div class="bar"><span>TypeScript</span><span class="t">1,120 hrs</span><span class="track"><span class="fill" style="width:100%;display:block"></span></span></div>
+          <div class="bar"><span>Java</span><span class="t">760 hrs</span><span class="track"><span class="fill" style="width:68%;display:block"></span></span></div>
+          <div class="bar"><span>Python</span><span class="t">410 hrs</span><span class="track"><span class="fill" style="width:37%;display:block"></span></span></div>
+          <div class="bar"><span>YAML</span><span class="t">290 hrs</span><span class="track"><span class="fill" style="width:26%;display:block"></span></span></div>
+          <div class="bar"><span>Markdown</span><span class="t">205 hrs</span><span class="track"><span class="fill" style="width:18%;display:block"></span></span></div>
+          <div class="bar extra"><span>Bash</span><span class="t">140 hrs</span><span class="track"><span class="fill" style="width:12%;display:block"></span></span></div>
+          <div class="bar extra"><span>JSON</span><span class="t">120 hrs</span><span class="track"><span class="fill" style="width:11%;display:block"></span></span></div>
+          <div class="bar extra"><span>CSS</span><span class="t">95 hrs</span><span class="track"><span class="fill" style="width:8%;display:block"></span></span></div>
+          <div class="bar extra"><span>Other</span><span class="t">272 hrs</span><span class="track"><span class="fill" style="width:24%;display:block"></span></span></div>
+        </div>
+        <button class="tl tog" type="button" aria-expanded="false">Show all languages</button>
+      </section>
+
+      <section>
+        <div class="shead"><h2 class="h2">On GitHub</h2><span class="ssub">The public part</span></div>
+        <a class="commit" href="#" style="color:inherit;text-decoration:none">
+          <span class="mono" style="margin-bottom:2px">Last commit</span>
+          <span class="s">Show a rolling six months of GitHub contributions on /coding</span>
+          <span class="m"><span>brignano/brignano.io</span><span>2 hours ago</span><span><span class="add">+71</span> <span class="del">−113</span></span></span>
+        </a>
+        <div class="graph" id="graph"></div>
+        <div class="gfoot">522 contributions in the last 6 months</div>
+      </section>
+    </div>
+
+    <p class="credits">Editor time from <a href="#">WakaTime</a>. Commits and contributions from <a href="#">GitHub</a>.</p>
+  </div>
+  <div class="foot">© Anthony Brignano</div>
+</div>
+</template>
+
+<script>
+(function () {
+  var tpl = document.getElementById('page');
+  var phone = document.getElementById('phone-screen');
+  var desk = document.getElementById('desk-screen');
+  phone.append(tpl.content.cloneNode(true));
+  desk.append(tpl.content.cloneNode(true));
+
+  // Sample graph cells, the same in both frames.
+  var cells = '';
+  for (var i = 0; i < 26 * 7; i++) {
+    var h = (i * 2654435761) % 97, lv = h < 55 ? 0 : Math.min(4, Math.ceil((h - 54) / 11));
+    cells += '<i class="l' + lv + '"></i>';
+  }
+  document.querySelectorAll('.pg .graph').forEach(function (g) { g.innerHTML = cells; });
+
+  var fits = document.querySelectorAll('.fit');
+  function fit() {
+    fits.forEach(function (f) {
+      var full = +f.dataset.w, scr = f.firstElementChild;
+      var s = Math.min(1, (f.clientWidth || full) / full);
+      scr.style.transform = 'scale(' + s + ')';
+      f.style.height = Math.ceil(scr.offsetHeight * s) + 'px';
+    });
+  }
+  if (window.ResizeObserver) fits.forEach(function (f) { new ResizeObserver(fit).observe(f); new ResizeObserver(fit).observe(f.firstElementChild); });
+  window.addEventListener('resize', fit);
+
+  document.querySelectorAll('.pg .tog').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var bars = b.previousElementSibling;
+      var open = !bars.classList.contains('open');
+      bars.classList.toggle('open', open);
+      b.setAttribute('aria-expanded', String(open));
+      b.textContent = open ? 'Show top five' : 'Show all languages';
+      requestAnimationFrame(fit);
+    });
+  });
+
+  var fPhone = document.getElementById('f-phone'), fDesk = document.getElementById('f-desk');
+  var showBtns = document.querySelectorAll('[data-show]');
+  function show(w) {
+    fPhone.hidden = w === 'desk'; fDesk.hidden = w === 'phone';
+    showBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.show === w)); });
+    requestAnimationFrame(fit);
+  }
+  showBtns.forEach(function (b) { b.addEventListener('click', function () { show(b.dataset.show); }); });
+  show(window.innerWidth < 760 ? 'phone' : 'both');
+
+  var thBtns = document.querySelectorAll('[data-th]');
+  function theme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    thBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.th === t)); });
+  }
+  thBtns.forEach(function (b) { b.addEventListener('click', function () { theme(b.dataset.th); }); });
+  var dark = false; try { dark = matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
+  theme(dark ? 'dark' : 'light');
+})();
+</script>
+
+</body></html>
