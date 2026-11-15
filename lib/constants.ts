@@ -250,6 +250,8 @@ export type Project = {
   slug: string;
   title: string;
   description: string;
+  /** One plain sentence for the homepage card. Featured projects need one. */
+  blurb?: string;
   tech: string[];
   status: ProjectStatus;
   kind: ProjectKind;
@@ -291,85 +293,13 @@ export const heroMetrics: HeroMetric[] = [
   { value: "13,000+", label: "repositories tracked" },
 ];
 
-export interface Achievement {
-  outcome: string;
-  // Plain-language line under the headline: says what it means for real people
-  // before the skill pills show the tech (TSD §5.7 — lead human, keep the
-  // jargon as a receipt, not the explanation).
-  detail: string;
-  skills: string[];
-}
-
-// Tier 1 — outcome cards with skill pills (TSD §5.5b). Each leads with a
-// quantified outcome and carries the tech underneath. Public claims about a
-// named employer: 4,000+ is engineers on the platform today, 1,000+ is 90-day
-// adopters, no forecasts stated as fact, no SLAs, no incident numbers
-// (TSD §5.7 integrity rules).
-export const achievements: Achievement[] = [
-  {
-    outcome: "One place for 4,000+ engineers to build",
-    detail:
-      "Before, everyone set up their tools differently — slow and easy to break. Now it's one shared, consistent setup.",
-    skills: ["GitHub Enterprise", "Custom CLI", "IDE Extensions"],
-  },
-  {
-    outcome: "1,000+ engineers chose it in the first 90 days",
-    detail:
-      "New tools inside big companies usually get ignored. This one caught on fast.",
-    skills: ["Desktop App", "Self-service onboarding"],
-  },
-  {
-    outcome: "One command builds any project",
-    detail:
-      "The same result on every laptop, with no fiddly setup to do per project. Remote builds on platform compute are next.",
-    skills: ["CI/CD", "Base-image registry", "Containers"],
-  },
-  {
-    outcome: "The platform watches its own tools — live",
-    detail:
-      "Usage dashboards and a status page anyone can subscribe to, so a problem shows up before the tickets do. AI assistants can read it too.",
-    skills: ["MCP", "AWS", "DynamoDB"],
-  },
-];
-
-// Plain-language definitions for the skill pills, surfaced on click so a
-// non-technical reader can decode a buzzword without the page assuming it
-// (TSD §5.7 voice: explain the term, don't lead with it). One jargon-free
-// sentence each; every skill used in `achievements` must have an entry.
-export const glossary: Record<string, string> = {
-  "GitHub Enterprise":
-    "GitHub's business edition — where a company privately stores and collaborates on all its code.",
-  "Custom CLI":
-    "A command-line tool (you type commands instead of clicking) built specifically for our engineers.",
-  "IDE Extensions":
-    "Add-ons for the code editor engineers use all day, so the platform's features live right where they work.",
-  "Desktop App":
-    "A normal installable app that puts the platform's tools in one window.",
-  "Self-service onboarding":
-    "New engineers get themselves set up on their own — no waiting on a person or a ticket.",
-  "CI/CD":
-    "The automated assembly line that tests new code and ships it — short for Continuous Integration / Continuous Delivery.",
-  "Base-image registry":
-    "A shared library of pre-built starting points, so every project begins from the same trusted setup.",
-  Containers:
-    "Lightweight, self-contained boxes that package software so it runs the same on any machine.",
-  MCP:
-    "Model Context Protocol — a common way for AI assistants to plug into tools and data.",
-  AWS:
-    "Amazon Web Services — Amazon's cloud, where the software actually runs.",
-  DynamoDB:
-    "A fast cloud database from Amazon for storing and looking up data at scale.",
-  Snowflake:
-    "A cloud data warehouse — a huge, queryable store for analyzing large amounts of data.",
-};
-
 export interface NowItem {
   label: string;
   detail: string;
   href?: string;
 }
 
-// Tier 2 — "Now" momentum strip (TSD §5.5b): hands-on, current personal work.
+// The "Now building" strip on /coding: hands-on, current personal work.
 export const nowBuilding: NowItem[] = [
   {
     label: "Homelab",
@@ -385,60 +315,6 @@ export const nowBuilding: NowItem[] = [
     label: "AI-native tooling",
     detail: "Claude Code",
     href: "https://www.github.com/brignano/ai-tools",
-  },
-];
-
-export interface LifePhoto {
-  src: string;
-  alt: string;
-  caption: string;
-  // CSS object-position, so the crop keeps the person in frame.
-  position: string;
-}
-
-// The "Outside of work" grid on the homepage: keep it a multiple of 6 so it
-// fills both the 2-column phone grid and the 3-column desktop one. Photos live in public/life/,
-// resized to 1200px and stripped of EXIF (no GPS) before they're committed.
-// Give a replacement photo a new filename: browsers cache these hard, so
-// reusing a name can keep showing the old picture.
-// One photo per interest; captions name the interest, never a place unless
-// Anthony gives it.
-export const lifePhotos: LifePhoto[] = [
-  {
-    src: "/life/climbing.jpg",
-    alt: "Anthony grinning at the camera after a climb, chalky fingers scraped up",
-    caption: "Climbing",
-    position: "50% 40%",
-  },
-  {
-    src: "/life/snowboarding-trees.jpg",
-    alt: "Anthony standing in deep snow among the trees, holding his snowboard",
-    caption: "Snowboarding",
-    position: "45% 55%",
-  },
-  {
-    src: "/life/hiking.jpg",
-    alt: "Anthony on a trail below rocky peaks and golden larches",
-    caption: "Hiking",
-    position: "52% 50%",
-  },
-  {
-    src: "/life/exploring.jpg",
-    alt: "Anthony on a rock above a turquoise mountain lake, peaks behind",
-    caption: "Traveling",
-    position: "50% 35%",
-  },
-  {
-    src: "/life/canyon.jpg",
-    alt: "Anthony with a camera, looking up through an orange slot canyon",
-    caption: "Photography",
-    position: "50% 55%",
-  },
-  {
-    src: "/life/trail.jpg",
-    alt: "Anthony on a wooded trail, smiling behind a small toad on his hand",
-    caption: "Exploring",
-    position: "50% 40%",
   },
 ];
 
@@ -462,6 +338,7 @@ export const projects: Project[] = [
     title: "Sites",
     description:
       "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one starts as a free preview on a brignano.io subdomain, then moves to the business's own domain, whether that's the URL they already have or a new one, so the site carries their brand. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
+    blurb: "Websites small businesses can update themselves, with a free preview first.",
     tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
     status: "live",
     kind: "product",
@@ -475,6 +352,7 @@ export const projects: Project[] = [
     title: "Guidebook",
     description:
       "Step-by-step help on any website, for anyone — a developer picking up a new tool, a team onboarding new hires, or someone learning a computer for the first time. A Chrome extension highlights each thing to click and says in plain words what to do. Record a guide by doing the task once, share it with a link, or browse the guide library. App teams can embed the same engine and check every guide in CI.",
+    blurb: "Step-by-step help on any website, from a Chrome extension.",
     tech: ["TypeScript", "Browser extension", "Claude", "Playwright", "Supabase"],
     status: "live",
     kind: "product",
@@ -494,6 +372,7 @@ export const projects: Project[] = [
     title: "Driftwood",
     description:
       "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts. It also draws a Terraform plan on its pull request, before anything is applied.",
+    blurb: "An architecture model that's checked against the real infrastructure.",
     tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
     status: "beta",
     kind: "product",

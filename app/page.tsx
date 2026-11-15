@@ -3,19 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { DocumentTextIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
-import HomeContributions from "@/components/home-contributions";
-import HighlightCard from "@/components/highlight-card";
 import CountUp from "@/components/count-up";
-import LatestCommit from "@/components/latest-commit";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
-import ProjectCard from "@/components/project-card";
-import CaseStudyCard from "@/components/case-study-card";
 import {
   socialLinks,
-  achievements,
-  nowBuilding,
   featuredProjects,
-  lifePhotos,
   heroMetrics,
   SITE_NAME,
   SITE_ROLE,
@@ -87,10 +79,9 @@ export default function Home() {
                 data-aos-delay={180}
                 className="text-base sm:text-lg text-ink-soft mb-5 sm:mb-8 lg:mb-6 max-w-xl leading-relaxed"
               >
-                That means the shared tools and automation engineers rely on to
-                ship software — faster, safer, and more consistently. Think of
-                it as the factory, not the products that roll off it.
-                Increasingly, with AI baked right in.
+                Think of it as the factory, not the products that roll off it:
+                the shared tools that help engineers ship software faster and
+                more safely.
               </p>
             </div>
 
@@ -219,301 +210,85 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section
-          id="about"
-          className="py-16 md:py-24"
-          data-aos="fade-up"
-          data-aos-duration={800}
-        >
-          <h2 className="font-sans text-3xl sm:text-4xl mb-8 font-bold tracking-tight">
-            About Me
-          </h2>
-          <div className="max-w-3xl space-y-4 text-base sm:text-lg text-ink-soft leading-relaxed">
-            <p>
-              I design and scale the systems big engineering teams build on —
-              easy to operate, hard to break, and built to grow with the teams
-              that use them.
-            </p>
-            <p>
-              In practice, that means taking the slow, repetitive, mistake-prone
-              parts of building software and making them automatic and safe —
-              the behind-the-scenes plumbing most people never see but every
-              engineer relies on. Increasingly, that means building AI directly
-              into those everyday tools.
-            </p>
-            <p>
-              Beyond the platform, I lead our enterprise hackathons, mentor
-              emerging leaders as a rotation manager and career coach in the
-              company&apos;s Leadership Development Program, and serve on the
-              Central Connecticut State University (CCSU) Computer Science
-              Industry Advisory Board.
-            </p>
-          </div>
-        </section>
+        {/* The homepage is four sections: who (hero), work, side projects,
+            and a sign-off. It used to be nine, and said "4,000+" six times.
+            Anything deeper has a page of its own: the full role on /resume,
+            the stories on /work, the commit feed and contribution graph on
+            /coding. Before adding a section here, check it says something the
+            other three don't. Wireframe: proposals/wireframes/home-digest.html. */}
 
-        {/* Outside of work — the part of the page for people who searched
-            the name rather than the job title. Early on purpose: friends,
-            family and dates shouldn't have to scroll past case studies to
-            find it. Photos and captions come from lib/constants.ts. */}
+        {/* Work: one card per case study, each with its own number so no claim
+            repeats. Card copy is `home` in lib/work.ts. */}
         <section
-          id="life"
-          className="py-16 md:py-24"
+          id="work"
+          className="py-10 md:py-16 border-t border-line"
           data-aos="fade-up"
           data-aos-duration={800}
         >
-          <h2 className="font-sans text-3xl sm:text-4xl mb-4 font-bold tracking-tight">
-            Outside of work
-          </h2>
-          <p className="max-w-3xl text-base sm:text-lg text-ink-soft leading-relaxed mb-8">
-            You&apos;ll usually find me outside: climbing, snowboarding through
-            the trees, hiking somewhere with a view, or out with my camera.
+          <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-2">
+            <h2 className="font-sans text-2xl md:text-4xl font-bold tracking-tight">
+              Work I&apos;m proud of
+            </h2>
+            <Link
+              href="/resume"
+              className="text-sm text-interactive-ink hover:underline"
+            >
+              Resume →
+            </Link>
+          </div>
+          <p className="text-ink-soft mb-6 md:mb-8">
+            Three projects from The Hartford, each with the full story one tap
+            away.
           </p>
-          <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
-            {lifePhotos.map((photo) => (
-              <li
-                key={photo.src}
-                className="relative aspect-[4/5] md:aspect-square overflow-hidden rounded-lg border border-line bg-card"
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  sizes="(min-width: 768px) 33vw, 50vw"
-                  className="object-cover"
-                  style={{ objectPosition: photo.position }}
-                />
-                <span className="absolute bottom-2 left-2 rounded-md bg-black/55 px-2 py-0.5 text-xs font-medium text-white">
-                  {photo.caption}
-                </span>
+          <ul className="grid md:grid-cols-3 grid-cols-1 gap-3 md:gap-4">
+            {caseStudies.map((study) => (
+              <li key={study.slug}>
+                <Link
+                  href={`/work/${study.slug}`}
+                  className="group flex h-full flex-col gap-1.5 bg-card border border-line rounded-xl p-5 md:p-6 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                >
+                  <p className="font-display uppercase tracking-[0.18em] text-[10px] text-slate">
+                    {study.home.kicker}
+                  </p>
+                  <p className="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-ink">
+                    {study.home.stat}
+                  </p>
+                  <p className="text-sm text-ink-soft leading-snug">
+                    {study.home.statLabel}
+                  </p>
+                  <h3 className="mt-2 text-lg font-semibold text-ink group-hover:text-interactive-ink transition-colors">
+                    {study.home.title}
+                  </h3>
+                  <p className="text-sm text-ink-soft leading-relaxed">
+                    {study.home.line}
+                  </p>
+                  <span className="mt-auto pt-2 text-sm text-interactive-ink">
+                    Read the story →
+                  </span>
+                </Link>
               </li>
             ))}
           </ul>
-        </section>
-
-        {/* Highlights — outcome cards + "Now" strip (TSD §5.5b) */}
-        <section id="highlights" className="py-16 md:py-24">
-          <h2
-            data-aos="fade-up"
-            data-aos-duration={600}
-            className="font-sans text-3xl sm:text-4xl mb-3 font-bold tracking-tight"
-          >
-            Highlights
-          </h2>
-          <p
-            data-aos="fade-up"
-            data-aos-duration={600}
-            className="text-sm text-slate mb-8"
-          >
-            New to the jargon? Tap any tag to see what it means in plain
-            English.
+          <p className="mt-6 max-w-3xl text-ink-soft leading-relaxed">
+            <span className="font-semibold text-ink">Beyond the platform,</span>{" "}
+            I lead our enterprise hackathons, mentor in the Leadership
+            Development Program, and sit on CCSU&apos;s Computer Science
+            Industry Advisory Board.
           </p>
-
-          {/* Tier 1 — quantified outcomes with tappable skill pills that reveal
-              a plain-language definition (components/highlight-card.tsx). */}
-          <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
-            {achievements.map((achievement, index) => (
-              <HighlightCard
-                key={index}
-                achievement={achievement}
-                index={index}
-              />
-            ))}
-          </div>
-
-          {/* Tier 2 — what I'm building now */}
-          <div
-            data-aos="fade-up"
-            data-aos-duration={600}
-            className="mt-8 pt-6 border-t border-line"
-          >
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              <p className="font-display uppercase tracking-[0.18em] text-[11px] text-slate">
-                Now building
-              </p>
-              <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft">
-                {nowBuilding.map((item) => {
-                  const label = (
-                    <span className="font-medium text-ink">{item.label}</span>
-                  );
-                  return (
-                    <li key={item.label}>
-                      {item.href ? (
-                        <a
-                          href={item.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group inline-flex items-center gap-1 underline decoration-dotted decoration-line-strong underline-offset-4 hover:decoration-interactive-ink focus-visible:decoration-interactive-ink transition-colors"
-                        >
-                          {label}
-                          <span
-                            aria-hidden="true"
-                            className="text-[11px] text-slate transition-transform group-hover:translate-x-0.5"
-                          >
-                            ↗
-                          </span>
-                        </a>
-                      ) : (
-                        label
-                      )}{" "}
-                      <span className="text-slate">{item.detail}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-            <LatestCommit />
-          </div>
         </section>
 
-        {/* Work Experience (Current Position Only) */}
-        <section
-          id="role"
-          className="py-16 md:py-24"
-          data-aos="fade-up"
-          data-aos-duration={800}
-        >
-          <div className="max-w-3xl">
-            <h2 className="font-sans text-3xl sm:text-4xl mb-4 font-bold tracking-tight">
-              Current Role
-            </h2>
-            <h3 className="text-2xl font-semibold mb-2">
-              Senior Staff Software Engineer — Enterprise Platform Engineering
-            </h3>
-            <p className="text-lg text-ink-soft mb-4 leading-relaxed">
-              I&apos;m a technical lead on The Hartford&apos;s developer
-              platform — the one place 4,000+ engineers go to build, ship, and
-              run their software, on its way to the full 8,000-engineer
-              organization.
-            </p>
-            <p className="text-base text-ink-soft mb-6 leading-relaxed">
-              I make a lot of the day-to-day technical calls, and I keep the
-              platform running, scaling, and getting better while new
-              capabilities come online alongside it. The goal: automatic,
-              reliable, and secure by default — so engineers hit fewer
-              roadblocks and spend more time on the work that matters.
-            </p>
-            {/* The platform's scale, moved here from the hero: meaningful to
-                engineers and recruiters, noise to everyone else. */}
-            <dl className="flex flex-wrap gap-x-8 gap-y-4 mb-6">
-              {heroMetrics.map((metric) => (
-                <div key={metric.label} className="flex flex-col">
-                  <dd className="text-2xl font-bold tracking-tight">
-                    <CountUp value={metric.value} />
-                  </dd>
-                  <dt className="text-sm text-slate mt-1">{metric.label}</dt>
-                </div>
-              ))}
-            </dl>
-            <ul className="space-y-3 mb-6">
-              {[
-                "Leading a CEO-sponsored push to make new-engineer setup self-service — the platform already gets a fresh machine productive in hours, down from a 40+ day wait, as it rolls out team-wide.",
-                "One consistent set of tools — a command-line app, a desktop app, and editor add-ons — that 1,000+ engineers adopted in the first 90 days.",
-                "One command builds any project, the same way on every laptop, with nothing to set up per project. Running that same build on platform compute instead of the laptop is in progress.",
-                "Live insight into the platform's own tools: usage dashboards, and a public health status page anyone can subscribe to.",
-                "AI help built right in — ready-to-use skills and assistants that plug into the platform's own data.",
-                "Keeping the automated build-test-release systems running reliably across thousands of projects.",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="relative pl-5 text-ink-soft leading-relaxed before:content-['—'] before:absolute before:left-0 before:text-slate"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-
-            {/* Depth on demand — the dense toolchain lives behind one click so
-                the bullets above stay readable for non-specialists, while
-                engineers who want the stack can expand it. */}
-            <details className="group mb-6 rounded-lg border border-line bg-card/60 px-5 py-4 [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-medium">
-                <span>The stack behind it</span>
-                <span
-                  aria-hidden="true"
-                  className="font-display text-[10px] uppercase tracking-[0.14em] text-interactive-ink transition-transform group-open:rotate-180"
-                >
-                  ▾
-                </span>
-              </summary>
-              <p className="mt-3 border-t border-dashed border-line pt-3 text-sm text-ink-soft leading-relaxed">
-                Under the hood: a real-time event pipeline (AWS, DynamoDB) with
-                a Snowflake feed, in progress, for ML analysis of developer pain
-                points; observability through Splunk and Dynatrace; and an
-                end-to-end CI/CD and DevSecOps toolchain — Jenkins, GitHub
-                Actions, Harness, AWS CodePipeline, Nexus, SonarQube, Checkmarx
-                — supporting 95,000+ pipelines, with a unified pipeline model
-                designed to consolidate them onto platform tooling. AI features
-                ship as MCP-based skills.
-              </p>
-            </details>
-
-            <p className="text-sm text-ink-soft mb-4">
-              <span className="font-medium text-ink">Prior:</span> migrated
-              10,000+ code repositories to GitHub Enterprise Cloud (
-              <Link
-                href="/work/github-enterprise-cloud-migration"
-                className="underline text-interactive-ink"
-              >
-                case study
-              </Link>
-              ); recognized with the 2023 Enterprise Tech Data &amp; Cyber Award
-              for the enterprise GitHub Actions implementation.
-            </p>
-            <p className="text-sm text-slate">
-              For my full career history, see{" "}
-              <Link href="/resume" className="underline text-interactive-ink">
-                my resume
-              </Link>
-              .
-            </p>
-          </div>
-        </section>
-
-        {/* Selected work — the case studies. The highest-signal thing on
-            the page for a hiring manager: how the work was done, not just
-            that it was. Cards come from lib/work.ts. */}
-        <section
-          id="work"
-          className="py-16 md:py-24"
-          data-aos="fade-up"
-          data-aos-duration={800}
-        >
-          <div className="flex flex-wrap items-baseline justify-between gap-4 mb-3">
-            <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">
-              Selected work
-            </h2>
-            <Link
-              href="/work"
-              className="text-sm text-interactive-ink hover:underline"
-            >
-              About these write-ups →
-            </Link>
-          </div>
-          <p className="text-sm text-slate mb-8 max-w-2xl">
-            The problem, the constraints, what I built, and what changed.
-            Nothing stated that isn&apos;t documented and current.
-          </p>
-          <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-            {caseStudies.map((study) => (
-              <CaseStudyCard key={study.slug} study={study} />
-            ))}
-          </div>
-        </section>
-
-        {/* Projects — homepage shows only the featured few and hands off to
-            /projects for the full list. Keeping one array in constants.ts as the
-            source of truth means adding a project never touches this file. */}
+        {/* Side projects: the featured three, one line each. The full cards
+            live on /projects. */}
         {featuredProjects.length > 0 && (
           <section
             id="projects"
-            className="py-16 md:py-24"
+            className="py-10 md:py-16 border-t border-line"
             data-aos="fade-up"
-            data-aos-duration={1000}
+            data-aos-duration={800}
           >
-            <div className="flex flex-wrap items-baseline justify-between gap-4 mb-8">
-              <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight">
-                Projects
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-6 md:mb-8">
+              <h2 className="font-sans text-2xl md:text-4xl font-bold tracking-tight">
+                On the side
               </h2>
               <Link
                 href="/projects"
@@ -522,68 +297,97 @@ export default function Home() {
                 All projects →
               </Link>
             </div>
-            <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-6">
-              {featuredProjects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
+            <ul className="grid md:grid-cols-3 grid-cols-1 gap-3 md:gap-4">
+              {featuredProjects.map((project) => {
+                const link = project.links?.[0];
+                const body = (
+                  <>
+                    <span className="flex items-center justify-between gap-3">
+                      <span className="font-semibold text-ink group-hover:text-interactive-ink transition-colors">
+                        {project.title}
+                      </span>
+                      <span className="font-display uppercase tracking-[0.14em] text-[10px] text-slate border border-line-strong rounded-full px-2 py-0.5">
+                        {project.status}
+                      </span>
+                    </span>
+                    <span className="block mt-1 text-sm text-ink-soft leading-relaxed">
+                      {project.blurb ?? project.description}
+                    </span>
+                  </>
+                );
+                const cls =
+                  "group block h-full bg-card border border-line rounded-xl px-5 py-4 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink";
+                return (
+                  <li key={project.slug}>
+                    {link ? (
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={cls}
+                        onClick={() => {
+                          event("project_link_clicked", {
+                            project: project.slug,
+                            link: link.label,
+                            location: "home",
+                            transport_type: "beacon",
+                          });
+                        }}
+                      >
+                        {body}
+                      </a>
+                    ) : (
+                      <div className={cls}>{body}</div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+            <p className="mt-6 text-ink-soft">
+              More of what I build in public is on{" "}
+              <Link href="/coding" className="underline text-interactive-ink">
+                my coding page
+              </Link>
+              .
+            </p>
           </section>
         )}
 
-        {/* Open-source activity — calm real-data preview that funnels to /coding */}
-        <section
-          id="open-source"
-          className="py-16 md:py-24"
-          data-aos="fade-up"
-          data-aos-duration={800}
-        >
-          <h2 className="font-sans text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            Open-source activity
-          </h2>
-          {/* Lead with evergreen substance so the section reads strong even when
-              recent public activity is bursty/quiet (the grid is supporting
-              texture, not the whole story). */}
-          <div className="flex flex-wrap items-baseline gap-x-7 gap-y-2 mb-6 text-sm text-ink-soft">
-            <span>
-              <span className="font-semibold text-ink">30+</span> public
-              repositories
-            </span>
-            <span>
-              Building in public since{" "}
-              <span className="font-semibold text-ink">2014</span>
-            </span>
-          </div>
-          <div className="bg-card/70 backdrop-blur-sm border border-line rounded-xl p-6 sm:p-8">
-            <HomeContributions username="brignano" />
-          </div>
-          <p className="text-sm text-slate mt-4">
-            For more detailed information, see{" "}
-            <Link href="/coding" className="underline text-interactive-ink">
-              my coding activity
-            </Link>
-            .
-          </p>
-        </section>
-
-        {/* Contact — a standalone full-height finale (TSD §5.1). */}
+        {/* Sign-off: the personal side lives here now, one photo and a few
+            words in Anthony's voice, rather than a grid of tiles. The photo
+            is his pick (Nov 2026). Captions and copy state only what he gave. */}
         <section
           id="contact"
-          className="min-h-[70vh] flex flex-col justify-center border-t border-line mt-8"
+          className="py-12 md:py-20 border-t border-line grid md:grid-cols-2 gap-8 md:gap-14 items-center"
           data-aos="fade-up"
           data-aos-duration={800}
         >
-          <h2 className="font-sans text-4xl sm:text-5xl lg:text-6xl mb-6 font-bold tracking-tight">
-            Say hello.
-          </h2>
-          <p className="text-ink-soft mb-10 max-w-2xl text-lg leading-relaxed">
-            Whether you want to talk shop about platforms, developer experience,
-            or AI, swap climbing and snowboarding stories, or just say hi,
-            I&apos;d love to hear from you.
-          </p>
+          <div className="relative aspect-[4/5] md:aspect-[3/4] max-h-[34rem] w-full overflow-hidden rounded-xl border border-line bg-card">
+            <Image
+              src="/life/exploring.jpg"
+              alt="Anthony on a rock above a turquoise mountain lake, peaks behind"
+              fill
+              sizes="(min-width: 768px) 45vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: "50% 35%" }}
+            />
+          </div>
           <div>
+            <p className="font-display uppercase tracking-[0.18em] text-[11px] text-slate mb-3">
+              Off the clock
+            </p>
+            <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl mb-5 font-bold tracking-tight">
+              Say hello.
+            </h2>
+            <p className="text-ink-soft mb-8 max-w-xl text-lg leading-relaxed">
+              When I&apos;m not working I&apos;m usually outside: climbing,
+              snowboarding through the trees, or hiking somewhere with a view,
+              camera in hand. Want to talk platforms or AI, or swap
+              snowboarding stories? I&apos;d love to hear from you.
+            </p>
             <a
               href="mailto:hi@brignano.io"
-              className="inline-flex items-center px-8 py-4 bg-interactive hover:bg-interactive-hover text-on-interactive font-bold text-lg rounded-lg transition-colors duration-200"
+              className="inline-flex items-center px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold text-lg rounded-lg transition-colors duration-200"
               onClick={() => {
                 event("cta_clicked", {
                   cta: "contact_bottom",
@@ -595,6 +399,7 @@ export default function Home() {
               <EnvelopeIcon className="w-5 h-5 mr-2" aria-hidden="true" />
               Get in touch
             </a>
+            <p className="mt-4 text-sm text-slate">hi@brignano.io</p>
           </div>
         </section>
       </main>

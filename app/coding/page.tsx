@@ -14,6 +14,7 @@ import CodingHero, {
 import WakaTimeDisclaimer from "../../components/stats/wakatime-disclaimer";
 import ContributionGraph from "@/components/contribution-graph";
 import BreadcrumbSchema from "@/components/breadcrumb-schema";
+import { nowBuilding } from "@/lib/constants";
 import { fetchLatestPublicCommit, LatestCommit } from "@/lib/github";
 import LocalTime from "../../components/local-time";
 
@@ -347,6 +348,39 @@ export default async function Page() {
             Everything above is tracked privately by WakaTime. Here&apos;s the
             part that shows up on GitHub.
           </p>
+        </div>
+
+        {/* Now building: current hands-on work, moved here from the homepage
+            in Nov 2026 so the homepage stays readable for non-engineers. */}
+        <div
+          data-aos="fade-up"
+          data-aos-duration="700"
+          data-aos-once="true"
+          data-aos-delay="290"
+          className="mt-6 flex flex-wrap items-baseline gap-x-6 gap-y-2"
+        >
+          <p className="font-display uppercase tracking-[0.18em] text-[11px] text-slate">
+            Now building
+          </p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft">
+            {nowBuilding.map((item) => (
+              <li key={item.label}>
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-ink underline decoration-dotted decoration-line-strong underline-offset-4 hover:decoration-interactive-ink"
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <span className="font-medium text-ink">{item.label}</span>
+                )}{" "}
+                <span className="text-slate">{item.detail}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Last Commit Tile (server-rendered, styled like other coding tiles) */}
