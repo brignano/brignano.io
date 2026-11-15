@@ -29,18 +29,14 @@ function track(project: Project, link: string) {
   event("project_link_clicked", { project: project.slug, link });
 }
 
-// "live" is the only status in colour: it's the one a visitor can act on
-// today. Beta stays neutral so blue keeps meaning "you can click this"
-// (DESIGN.md §3). The word always ships with the colour.
+// Every status is the same quiet outline, so the pictures carry the page's
+// colour. "Live" keeps a small green dot: the one status a visitor can act on
+// today, and the word always ships with it (DESIGN.md §3).
 function Status({ status }: { status: Project["status"] }) {
   const live = status === "live";
   return (
     <span
-      className={`shrink-0 inline-flex items-center gap-1.5 font-mono uppercase tracking-[0.12em] text-[10.5px] leading-none rounded-full border px-2 py-1 ${
-        live
-          ? "border-success-line bg-success-surface text-success-ink"
-          : "border-line-strong text-slate"
-      }`}
+      className={`shrink-0 inline-flex items-center gap-1.5 font-mono uppercase tracking-[0.12em] text-[10.5px] leading-none rounded-full border border-line-strong text-slate px-2 py-1`}
     >
       {live && <span className="h-1.5 w-1.5 rounded-full bg-success" aria-hidden="true" />}
       {status}
@@ -62,14 +58,14 @@ export default function ProjectCard({
   const row = variant === "row";
 
   const actions = (
-    <div className="flex flex-wrap items-center gap-2 mt-2">
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-1 mt-1">
       {primary && (
         <a
           href={primary.url}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => track(project, primary.label)}
-          className="inline-flex items-center gap-1.5 min-h-9 pointer-coarse:min-h-11 px-3.5 rounded-lg bg-interactive text-on-interactive text-sm font-semibold hover:bg-interactive-hover transition-colors"
+          className="inline-flex items-center gap-1 min-h-9 pointer-coarse:min-h-11 text-sm font-semibold text-interactive-ink hover:text-interactive-ink-hover hover:underline underline-offset-4"
         >
           {primary.label}
           <ArrowUpRightIcon className="h-3.5 w-3.5" strokeWidth={2.5} aria-hidden="true" />
@@ -83,7 +79,7 @@ export default function ProjectCard({
           if (!open) event("project_details_opened", { project: project.slug });
           setOpen(!open);
         }}
-        className="inline-flex items-center gap-1.5 min-h-9 pointer-coarse:min-h-11 px-3 rounded-lg border border-line-control text-sm text-ink hover:bg-surface-hover transition-colors"
+        className="inline-flex items-center gap-1 min-h-9 pointer-coarse:min-h-11 text-sm text-ink-soft hover:text-ink transition-colors"
       >
         {open ? "Less" : "Details"}
         <ChevronDownIcon
