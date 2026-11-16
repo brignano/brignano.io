@@ -42,10 +42,10 @@ export const siteMetadata: Metadata = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   icons: {
-    icon: [
-      { url: "/favicon.svg" },
-      { url: "/favicon-dark.svg", media: "(prefers-color-scheme: dark)" },
-    ],
+    // The A|B tile from @brignano/design (logo/tile.svg): one look in both
+    // themes, so no dark variant. Named icon.svg, not favicon.svg, because
+    // vercel.json caches the icon as immutable and the old mark lived there.
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     // Apple surfaces (share sheet, iMessage previews, home-screen bookmarks)
     // ignore SVG favicons and want a PNG apple-touch-icon.
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],

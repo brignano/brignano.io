@@ -25,6 +25,7 @@ import { ImageResponse } from "next/og";
 import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { MARK } from "@brignano/design/logo/paths.mjs";
 import { SITE_NAME } from "@/lib/constants";
 
 export const OG_SIZE = { width: 1200, height: 630 };
@@ -64,11 +65,10 @@ function darkTokens(names: readonly string[]): Record<string, string> {
 
 const T = darkTokens(["--bg", "--card", "--line", "--ink", "--slate", "--mark"]);
 
-// The monogram, verbatim from public/favicon.svg. --mark is the one colour the
-// system spends on being recognisable, and tokens.css reserves it for a drawn
-// mark, so the monogram is the only amber on any card.
-const MONOGRAM_PATH =
-  "M1.5 11V6.5C1.5 5.39543 2.39543 4.5 3.5 4.5C4.60457 4.5 5.5 5.39543 5.5 6.5V11M1.5 8.5H5.5M12 7.5H9.5M12 7.5C12.8284 7.5 13.5 6.82843 13.5 6C13.5 5.17157 12.8284 4.5 12 4.5H9.5V7.5M12 7.5C12.8284 7.5 13.5 8.17157 13.5 9C13.5 9.82843 12.8284 10.5 12 10.5H9.5V7.5M7.5 1V14";
+// The A|B logo from @brignano/design (DESIGN.md §5, "The logo"): the letters
+// in ink and only the bar in --mark, the one colour the system spends on being
+// recognisable, so the bar is the only amber on any card.
+const LOGO_HEIGHT = 36;
 
 export interface OgCardProps {
   /** The page's address, drawn top right after the domain ("/notes"). */
@@ -133,8 +133,13 @@ export async function ogCard({
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <svg width={46} height={46} viewBox="0 0 15 15" fill="none">
-            <path d={MONOGRAM_PATH} stroke={T["--mark"]} strokeWidth={1} />
+          <svg
+            width={(LOGO_HEIGHT * MARK.width) / MARK.height}
+            height={LOGO_HEIGHT}
+            viewBox={MARK.viewBox}
+          >
+            <path d={MARK.letters} fill={T["--ink"]} />
+            <path d={MARK.bar} fill={T["--mark"]} />
           </svg>
           <div
             style={{

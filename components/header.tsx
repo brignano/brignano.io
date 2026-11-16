@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useSyncExternalStore } from "react";
-import Image from "next/image";
+import Logo from "@/components/logo";
 import { usePathname } from "next/navigation";
 import {
   Bars3Icon,
@@ -158,17 +158,7 @@ export default function Header() {
         className={`max-w-6xl mx-auto flex items-center justify-between gap-x-4 relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}
       >
         <Link href="/" className="cursor-pointer shrink-0">
-          <span className="sr-only">Anthony Brignano</span>
-          {/* Absolute path: a relative `favicon.svg` resolved against the
-              current directory, so it 404ed on the first nested route
-              (/notes/<slug>). */}
-          <Image
-            alt="icon"
-            src="/favicon.svg"
-            className="h-8 w-auto invert-0 dark:invert"
-            width={35}
-            height={35}
-          />
+          <Logo className="h-7 w-auto" />
         </Link>
         {/* Centered on large screens via absolute positioning; between `sm`
             and `lg` it sits in the flex row between the logo and the toggles. */}
