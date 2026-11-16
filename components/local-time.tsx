@@ -2,9 +2,12 @@
 
 import { useEffect, useState } from "react";
 
-type Props = { iso?: string | null };
+type Props = { iso?: string | null; className?: string };
 
-export default function LocalTime({ iso }: Props) {
+export default function LocalTime({
+  iso,
+  className = "ml-2 text-xs text-slate",
+}: Props) {
   // Hooks must be called unconditionally (Rules of Hooks).
   const [now, setNow] = useState(() => Date.now());
 
@@ -35,7 +38,7 @@ export default function LocalTime({ iso }: Props) {
   });
 
   return (
-    <time dateTime={iso} title={title} className="ml-2 text-xs text-slate">
+    <time dateTime={iso} title={title} className={className}>
       {relative}
     </time>
   );

@@ -25,6 +25,8 @@ export interface WakaTimeAllTimeStats {
     total_seconds: number;
   } | null;
   human_readable_total_including_other_language?: string;
+  total_seconds_including_other_language?: number;
+  total_seconds?: number;
   human_readable_daily_average_including_other_language?: string;
   human_readable_daily_average?: string;
   human_readable_range?: string;
