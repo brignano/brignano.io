@@ -228,7 +228,7 @@ export default async function Page() {
           data-aos-duration="600"
           data-aos-once="true"
         >
-          <p className="font-display uppercase tracking-[0.18em] text-[11px] text-slate">
+          <p className="eyebrow">
             Coding
           </p>
           <h1 className="mt-1 font-sans text-4xl sm:text-5xl font-bold tracking-tight">
@@ -304,7 +304,7 @@ export default async function Page() {
                  `self-start` so its tap area is its text, not the whole row
                  out to where the chat button floats. */
               <div className="mb-5 flex min-w-0 flex-col gap-0.5 break-words border-y border-line py-3">
-                <p className="font-display uppercase tracking-[0.18em] text-[11px] text-slate">
+                <p className="eyebrow">
                   Last commit
                 </p>
                 <a

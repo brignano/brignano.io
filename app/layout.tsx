@@ -1,4 +1,4 @@
-import { Geist, IBM_Plex_Mono, Silkscreen } from "next/font/google";
+import { Geist, IBM_Plex_Mono } from "next/font/google";
 import Script from "next/script";
 import type { Metadata } from "next";
 import ThemeSync from "@/components/theme-sync";
@@ -26,13 +26,6 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
-});
-
-const silkscreen = Silkscreen({
-  variable: "--font-silkscreen",
-  subsets: ["latin"],
-  weight: "400",
   display: "swap",
 });
 
@@ -69,7 +62,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geist.variable} ${plexMono.variable} ${silkscreen.variable} tier-marketing`}
+      className={`${geist.variable} ${plexMono.variable} tier-marketing`}
     >
       <head>
         {/*

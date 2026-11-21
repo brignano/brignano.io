@@ -32,7 +32,7 @@ function NowBuilding({ items }: { items: NowItem[] }) {
   if (items.length === 0) return null;
   return (
     <div className="flex flex-col gap-1.5 border-t border-line pt-4 text-[0.95rem] lg:border-t-0 lg:pt-0">
-      <p className="font-display uppercase tracking-[0.18em] text-[11px] text-slate">
+      <p className="eyebrow">
         Now building
       </p>
       <ul className="flex flex-col gap-1.5">
