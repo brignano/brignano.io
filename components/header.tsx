@@ -173,7 +173,7 @@ export default function Header() {
           <button
             aria-label="Toggle Theme"
             onClick={() => toggleTheme()}
-            className="shrink-0 bg-card text-ink-soft hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full p-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+            className="btn btn-icon shrink-0 rounded-full bg-card text-ink-soft hover:bg-surface-hover hover:text-interactive-ink"
           >
             {isDarkMode ? (
               <MoonIcon className="size-5 cursor-pointer" />
@@ -186,7 +186,7 @@ export default function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             onClick={() => setMenuOpenOn(menuOpen ? null : pathname)}
-            className="sm:hidden bg-card text-ink-soft hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full p-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+            className="btn btn-icon sm:hidden rounded-full bg-card text-ink-soft hover:bg-surface-hover hover:text-interactive-ink"
           >
             {menuOpen ? (
               <XMarkIcon className="size-5" />

@@ -383,7 +383,7 @@ export default function ChatWidget() {
                     key={s}
                     type="button"
                     onClick={() => send(s, true)}
-                    className="cursor-pointer text-xs px-3 py-1.5 rounded-full border border-line-strong text-ink hover:bg-surface-hover focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                    className="chip"
                   >
                     {s}
                   </button>
@@ -418,7 +418,7 @@ export default function ChatWidget() {
             <label htmlFor="chat-input" className="sr-only">
               Your question
             </label>
-            <div className="flex-1 flex flex-col gap-1">
+            <div className="field flex-1">
               <textarea
                 id="chat-input"
                 ref={inputRef}
@@ -429,8 +429,9 @@ export default function ChatWidget() {
                 onKeyDown={onKeyDown}
                 placeholder="Ask a question…"
                 aria-describedby={input.length >= COUNTER_FROM ? "chat-input-count" : undefined}
-                // 16px on phones: iOS Safari zooms the page into smaller inputs.
-                className="w-full resize-none field-sizing-content min-h-9 max-h-28 rounded-xl border border-line-control bg-bg px-3 py-2 text-[16px] sm:text-sm text-ink placeholder:text-ink-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                // .field sets the box and a 16px font (iOS Safari zooms into
+                // smaller inputs); this keeps it one line that grows to five.
+                className="resize-none field-sizing-content min-h-10 max-h-28"
               />
               {input.length >= COUNTER_FROM && (
                 <p id="chat-input-count" className="text-xs text-ink-soft text-right">
@@ -446,7 +447,7 @@ export default function ChatWidget() {
                 type="button"
                 onClick={stop}
                 aria-label="Stop"
-                className="cursor-pointer shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-interactive text-on-interactive hover:bg-interactive-hover focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+                className="btn btn-primary btn-icon shrink-0"
               >
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <rect x="5" y="5" width="14" height="14" rx="2" />
@@ -458,7 +459,7 @@ export default function ChatWidget() {
                 type="submit"
                 disabled={!input.trim()}
                 aria-label="Send"
-                className="cursor-pointer shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-xl bg-interactive text-on-interactive hover:bg-interactive-hover disabled:opacity-40 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink"
+                className="btn btn-primary btn-icon shrink-0"
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M13 6l6 6-6 6" />

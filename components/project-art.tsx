@@ -123,7 +123,7 @@ export default function ProjectArt({ slug }: { slug: string }) {
   return (
     <svg
       viewBox="0 0 240 130"
-      className="project-art block w-[82%] max-w-[300px] h-auto max-h-[86%]"
+      className="project-art block w-[82%] max-w-[300px] h-auto max-h-[86%] p-0"
       aria-hidden="true"
       focusable="false"
     >

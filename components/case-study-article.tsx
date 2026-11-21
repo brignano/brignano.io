@@ -87,7 +87,7 @@ export default function CaseStudyArticle({ study }: { study: CaseStudy }) {
               {study.stack.map((item) => (
                 <li
                   key={item}
-                  className="text-xs px-2.5 py-1 rounded-full border border-line-strong text-ink-soft"
+                  className="pill"
                 >
                   {item}
                 </li>

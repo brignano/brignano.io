@@ -311,7 +311,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleDownloadPDF}
-              className="inline-flex h-10 items-center justify-center px-5 bg-interactive text-on-interactive font-semibold rounded-lg hover:bg-interactive-hover transition-colors duration-200 lg:basis-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+              className="btn btn-primary lg:basis-full"
             >
               View PDF
             </a>

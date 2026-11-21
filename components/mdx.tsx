@@ -22,7 +22,7 @@ function Callout({
   children: React.ReactNode;
 }) {
   return (
-    <aside className="not-prose my-8 rounded-xl border border-line bg-card px-5 py-4 text-base text-ink-soft leading-relaxed">
+    <aside className="not-article my-8 rounded-xl border border-line bg-card px-5 py-4 text-base text-ink-soft leading-relaxed">
       {title && <p className="font-semibold text-ink mb-1">{title}</p>}
       <div className="space-y-3">{children}</div>
     </aside>

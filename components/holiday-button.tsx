@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ToggleEvent } from "react";
 import { SparklesIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { HOLIDAY_INFO } from "@/lib/holiday-info";
 import { useHoliday } from "@/lib/use-holiday";
@@ -22,9 +22,8 @@ const SEEN = "holiday-greeted";
  */
 export default function HolidayButton() {
   const { holiday, off, toggle } = useHoliday();
-  const [open, setOpen] = useState(false);
   const [fresh, setFresh] = useState(false);
-  const root = useRef<HTMLDivElement>(null);
+  const button = useRef<HTMLButtonElement>(null);
 
   const key = holiday ? `${holiday.id}-${new Date().getFullYear()}` : "";
 
@@ -41,9 +40,20 @@ export default function HolidayButton() {
     setFresh(true);
   }, [holiday, key]);
 
-  const close = () => setOpen(false);
-  const show = () => {
-    setOpen(true);
+  // A native popover (design's .popover): the browser handles Escape, a click
+  // outside and aria-expanded on the button. Opening it clears the dot.
+  // Browsers without CSS anchor positioning place it from the button's box.
+  const onToggle = (e: ToggleEvent<HTMLDivElement>) => {
+    if (e.newState !== "open") return;
+    if (!CSS.supports("position-area: block-end") && button.current) {
+      const r = button.current.getBoundingClientRect();
+      const panel = e.currentTarget;
+      panel.style.setProperty("--popover-top", `${r.bottom}px`);
+      panel.style.setProperty(
+        "--popover-left",
+        `${Math.max(16, Math.min(r.right - panel.offsetWidth, window.innerWidth - panel.offsetWidth - 16))}px`,
+      );
+    }
     setFresh(false);
     try {
       localStorage.setItem(SEEN, key);
@@ -52,30 +62,15 @@ export default function HolidayButton() {
     }
   };
 
-  useEffect(() => {
-    if (!open) return;
-    const away = (e: PointerEvent) => {
-      if (!root.current?.contains(e.target as Node)) close();
-    };
-    const esc = (e: KeyboardEvent) => e.key === "Escape" && close();
-    document.addEventListener("pointerdown", away);
-    document.addEventListener("keydown", esc);
-    return () => {
-      document.removeEventListener("pointerdown", away);
-      document.removeEventListener("keydown", esc);
-    };
-  }, [open]);
-
   if (!holiday) return null;
   const info = HOLIDAY_INFO[holiday.id];
   return (
-    <div ref={root} className="shrink-0 sm:relative">
+    <div className="shrink-0">
       <button
+        ref={button}
         type="button"
-        aria-expanded={open}
-        aria-controls="holiday-panel"
-        onClick={() => (open ? close() : show())}
-        className={`flex h-9 shrink-0 items-center gap-1.5 bg-card hover:bg-surface-hover hover:text-interactive-ink border border-line rounded-full pl-2 pr-3 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"}`}
+        popoverTarget="holiday-panel"
+        className={`btn shrink-0 gap-1.5 rounded-full bg-card pl-2 pr-3 hover:bg-surface-hover hover:text-interactive-ink ${off ? "text-ink-soft" : "text-interactive-ink"}`}
       >
         <span className="relative shrink-0">
           <SparklesIcon className="size-5 cursor-pointer" />
@@ -94,10 +89,11 @@ export default function HolidayButton() {
       </button>
       <div
         id="holiday-panel"
+        popover="auto"
         role="group"
         aria-label={`About the ${holiday.label} decorations`}
-        // The panel stays mounted so it can shrink back into the button.
-        className={`absolute inset-x-6 top-full mt-3 origin-top-right sm:inset-x-auto sm:right-0 sm:w-80 rounded-xl border border-line bg-card p-4 text-sm text-ink shadow-lg transition-[opacity,transform,visibility] duration-200 ease-out motion-reduce:transition-none ${open ? "visible scale-100 opacity-100" : "invisible scale-50 opacity-0"}`}
+        onToggle={onToggle}
+        className="popover w-80 p-4 text-sm"
       >
         <div className="flex items-start gap-2">
           <SparklesIcon className="mt-0.5 size-5 shrink-0 text-interactive-ink" />
@@ -107,7 +103,8 @@ export default function HolidayButton() {
           <button
             type="button"
             aria-label="Close"
-            onClick={close}
+            popoverTarget="holiday-panel"
+            popoverTargetAction="hide"
             className="shrink-0 cursor-pointer rounded-sm text-ink-soft hover:text-ink focus-visible:ring-2 focus-visible:ring-interactive-ink"
           >
             <XMarkIcon className="size-5" />
@@ -127,19 +124,15 @@ export default function HolidayButton() {
           </p>
         )}
         <div className="mt-3 flex items-center justify-between gap-3 border-t border-line pt-3">
-          <span id="holiday-switch-label">Decorations</span>
-          <button
-            type="button"
+          <label htmlFor="holiday-switch">Decorations</label>
+          <input
+            id="holiday-switch"
+            type="checkbox"
             role="switch"
-            aria-checked={!off}
-            aria-labelledby="holiday-switch-label"
-            onClick={toggle}
-            className={`relative h-6 w-11 shrink-0 cursor-pointer rounded-full border border-line transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-interactive-ink ${off ? "bg-surface-hover" : "bg-interactive-ink"}`}
-          >
-            <span
-              className={`absolute left-0.5 top-0.5 size-4.5 rounded-full bg-card shadow transition-transform motion-reduce:transition-none ${off ? "translate-x-0" : "translate-x-5"}`}
-            />
-          </button>
+            className="switch"
+            checked={!off}
+            onChange={toggle}
+          />
         </div>
       </div>
     </div>

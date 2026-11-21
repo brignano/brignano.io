@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { CheckCircleIcon } from "@heroicons/react/20/solid";
 
 interface ToastProps {
   message: string;
@@ -8,28 +9,33 @@ interface ToastProps {
   onDismiss: () => void;
 }
 
+// Design's .toast-success. It fades in on its own (@starting-style); to leave
+// it sets data-leaving and is taken out once that transition ends, or after
+// 200ms, whichever comes first (DESIGN.md §14, toast).
 export default function Toast({ message, duration = 3000, onDismiss }: ToastProps) {
-  const [visible, setVisible] = useState(false);
+  const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    const fadeDuration = 300;
-    const hideDelay = Math.max(0, duration - fadeDuration);
-    // Trigger fade-in on next frame
-    const show = requestAnimationFrame(() => setVisible(true));
-    const hide = setTimeout(() => setVisible(false), hideDelay);
-    const dismiss = setTimeout(onDismiss, duration);
-    return () => {
-      cancelAnimationFrame(show);
-      clearTimeout(hide);
-      clearTimeout(dismiss);
-    };
-  }, [duration, onDismiss]);
+    const leave = setTimeout(() => setLeaving(true), duration);
+    return () => clearTimeout(leave);
+  }, [duration]);
+
+  useEffect(() => {
+    if (!leaving) return;
+    const gone = setTimeout(onDismiss, 200);
+    return () => clearTimeout(gone);
+  }, [leaving, onDismiss]);
 
   return (
     <div
-      className={`relative z-50 px-5 py-3 rounded-lg shadow-lg text-sm font-medium transition-all duration-300 bg-card text-ink border border-line ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}`}
+      className="toast toast-success"
+      data-leaving={leaving ? "" : undefined}
+      onTransitionEnd={() => leaving && onDismiss()}
     >
-      {message}
+      <CheckCircleIcon aria-hidden="true" />
+      <div className="toast-content">
+        <p className="toast-title">{message}</p>
+      </div>
     </div>
   );
 }

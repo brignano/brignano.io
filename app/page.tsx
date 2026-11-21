@@ -136,7 +136,7 @@ export default function Home() {
               >
                 <Link
                   href="/resume"
-                  className="inline-flex items-center px-4 sm:px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold rounded-lg transition-colors duration-200 md:flex-shrink-0"
+                  className="btn btn-lg btn-primary md:flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", {
                       cta: "resume",
@@ -147,7 +147,7 @@ export default function Home() {
                 >
                   Resume
                   <DocumentTextIcon
-                    className="ml-2 w-4 h-4"
+                    className="w-4 h-4"
                     aria-hidden="true"
                   />
                 </Link>
@@ -155,7 +155,7 @@ export default function Home() {
                     engineers-only page on the site. Email works for everyone. */}
                 <a
                   href="mailto:hi@brignano.io"
-                  className="inline-flex items-center px-4 sm:px-6 py-3 border-2 border-line-strong hover:border-interactive-ink font-semibold rounded-lg transition-all duration-200 md:flex-shrink-0"
+                  className="btn btn-lg btn-secondary md:flex-shrink-0"
                   onClick={() => {
                     event("cta_clicked", {
                       cta: "contact",
@@ -165,7 +165,7 @@ export default function Home() {
                   }}
                 >
                   Get in touch
-                  <EnvelopeIcon className="ml-2 w-4 h-4" aria-hidden="true" />
+                  <EnvelopeIcon className="w-4 h-4" aria-hidden="true" />
                 </a>
               </div>
 
@@ -247,7 +247,7 @@ export default function Home() {
               <li key={study.slug}>
                 <Link
                   href={noteHref(study.slug)}
-                  className="group flex h-full flex-col gap-1.5 bg-card border border-line rounded-xl p-5 md:p-6 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                  className="group flex h-full flex-col gap-1.5 card p-5 md:p-6 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
                 >
                   <p className="eyebrow">
                     {study.home.kicker}
@@ -312,7 +312,7 @@ export default function Home() {
                   </>
                 );
                 const cls =
-                  "group block h-full bg-card border border-line rounded-xl px-5 py-4 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink";
+                  "group block h-full card px-5 py-4 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink";
                 return (
                   <li key={project.slug}>
                     {link ? (
@@ -383,7 +383,7 @@ export default function Home() {
             </p>
             <a
               href="mailto:hi@brignano.io"
-              className="inline-flex items-center px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold text-lg rounded-lg transition-colors duration-200"
+              className="btn btn-lg btn-primary"
               onClick={() => {
                 event("cta_clicked", {
                   cta: "contact_bottom",
@@ -392,7 +392,7 @@ export default function Home() {
                 });
               }}
             >
-              <EnvelopeIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+              <EnvelopeIcon className="w-5 h-5" aria-hidden="true" />
               Get in touch
             </a>
             <p className="mt-4 text-sm text-slate">hi@brignano.io</p>
