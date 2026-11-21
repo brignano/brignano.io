@@ -53,7 +53,7 @@ he spent years as the engineer the platform was supposed to serve.
 ## How he works
 
 - Writes down why decisions went the way they did — his projects keep
-  decision logs, and his design system has a DECISIONS.md.
+  decision logs, and his design system keeps a numbered record for each decision.
 - Prefers honest numbers: the figures on his site are current and documented,
   and he would rather understate than oversell.
 - Builds for himself first, to scratch a real itch, then shares what's useful.
