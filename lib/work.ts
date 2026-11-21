@@ -1,7 +1,7 @@
 // Case studies, listed on /notes with the posts (lib/notes.ts). The content lives here, not in a CMS: three
 // write-ups that change a few times a year do not need one, and keeping them
 // in code means the same integrity rules that govern the hero metrics
-// (docs/tsd-site-modernization.md §5.7) govern these. Every number below is
+// (proposals/site-modernization.md §5.7) govern these. Every number below is
 // one that already appears on the resume or the homepage; nothing is stated
 // that is not documented and current, and where a figure does not exist yet
 // the text says so instead of inventing one.

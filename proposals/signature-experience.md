@@ -1,3 +1,5 @@
+Status: parked
+
 # TSD: brignano.io Signature Homepage Experience ("The Trail")
 
 | | |
@@ -7,7 +9,7 @@
 | **Date** | 2026-06-08 |
 | **Repos** | `brignano.io` (app only) |
 | **Target release** | v4.0 (signature experience) |
-| **Related** | [tsd-site-modernization.md](./tsd-site-modernization.md) (evolves §10.2 motif, reuses §10.3 accent, builds on §5.1 animation system) · [tsd-blog.md](./tsd-blog.md) |
+| **Related** | [site-modernization.md](./site-modernization.md) (evolves §10.2 motif, reuses §10.3 accent, builds on §5.1 animation system) · [blog.md](./blog.md) |
 
 ---
 
