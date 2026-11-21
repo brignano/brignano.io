@@ -1,4 +1,4 @@
-/** What a post's frontmatter must say. Mirrors docs/tsd-blog.md §5.1. */
+/** What a post's frontmatter must say. Mirrors proposals/blog.md §5.1. */
 export interface PostFrontmatter {
   title: string;
   /** Used for <meta name="description"> and the index excerpt. */

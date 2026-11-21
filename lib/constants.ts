@@ -457,7 +457,7 @@ export const projects: Project[] = [
     slug: "design",
     title: "Design",
     description:
-      "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. Every token and component has a live preview in light and dark, and DECISIONS.md records why each value is what it is.",
+      "The token system every other surface here is built on. Three colour layers so no colour does two jobs — brand for identity, one interactive hue for every control, conventional hues for state. Every token and component has a live preview in light and dark, and a decision log records why each value is what it is.",
     blurb: "The colours, type and parts every site here is built from.",
     meta: "Design system",
     tech: ["CSS", "Design tokens", "npm"],
