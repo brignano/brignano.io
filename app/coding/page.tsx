@@ -300,7 +300,9 @@ export default async function Page() {
             {latestCommit && (
               /* `break-words` + `min-w-0`: a commit subject can carry an
                  unbreakable token (a long path) that would otherwise make
-                 the page scroll sideways on a phone. */
+                 the page scroll sideways on a phone. The subject link is
+                 `self-start` so its tap area is its text, not the whole row
+                 out to where the chat button floats. */
               <div className="mb-5 flex min-w-0 flex-col gap-0.5 break-words border-y border-line py-3">
                 <p className="font-display uppercase tracking-[0.18em] text-[11px] text-slate">
                   Last commit
@@ -309,7 +311,7 @@ export default async function Page() {
                   href={String(latestCommit.url)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold text-ink hover:underline"
+                  className="self-start font-semibold text-ink hover:underline"
                 >
                   {commitSubject || shortSha(latestCommit.sha)}
                 </a>
