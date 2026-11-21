@@ -1,3 +1,5 @@
+Status: shipped · PR #290
+
 # TSD: brignano.io Blog (file-based MDX)
 
 | | |
@@ -7,7 +9,7 @@
 | **Date** | 2026-06-08 |
 | **Repos** | `brignano.io` (app only) |
 | **Target release** | v3.1 (additive — new `/blog` route) |
-| **Related** | [tsd-site-modernization.md](./tsd-site-modernization.md) §9 (Work/case-studies — separate, content-heavy effort) |
+| **Related** | [site-modernization.md](./site-modernization.md) §9 (Work/case-studies — separate, content-heavy effort) |
 
 ---
 

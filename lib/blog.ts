@@ -4,7 +4,7 @@ import { cache } from "react";
 import { load as parseYaml } from "js-yaml";
 import type { Post, PostFrontmatter } from "@/types/blog";
 
-// The content source for posts, listed on /notes (docs/tsd-blog.md §5.6). Pages, the sitemap
+// The content source for posts, listed on /notes (proposals/blog.md §5.6). Pages, the sitemap
 // and the RSS feed only ever call getAllPosts() and getPostBySlug(); nothing
 // else knows where posts live. That is what lets the source move to the
 // private brignano/blog repo later as a change to this file alone.
