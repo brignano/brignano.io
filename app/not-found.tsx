@@ -45,9 +45,9 @@ export default function NotFound() {
         <div className="flex flex-wrap gap-3 sm:gap-4 items-center mb-10">
           <Link
             href="/"
-            className="inline-flex items-center px-4 sm:px-6 py-3 bg-interactive hover:bg-interactive-hover text-on-interactive font-semibold rounded-lg transition-colors duration-200"
+            className="btn btn-lg btn-primary"
           >
-            <ArrowLeftIcon className="mr-2 w-4 h-4" aria-hidden="true" />
+            <ArrowLeftIcon className="w-4 h-4" aria-hidden="true" />
             Back to home
           </Link>
         </div>
@@ -58,7 +58,7 @@ export default function NotFound() {
             <li key={d.href}>
               <Link
                 href={d.href}
-                className="block h-full bg-card/70 backdrop-blur-sm border border-line rounded-xl px-5 py-4 transition-colors hover:border-line-strong"
+                className="block h-full card bg-card/70 backdrop-blur-sm px-5 py-4 transition-colors hover:border-line-strong"
               >
                 <span className="block font-semibold text-ink">{d.label}</span>
                 <span className="block text-sm text-slate mt-1">{d.blurb}</span>

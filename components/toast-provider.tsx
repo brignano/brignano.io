@@ -46,8 +46,11 @@ export default function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div aria-live="polite" aria-atomic="false">
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 items-center pointer-events-none">
+      {/* Design's toast region: in the page from the start, empty, so the
+          live region hears what is added to it. Centred at every width, not
+          bottom-right, where the chat button sits. */}
+      <div className="toast-region min-[40rem]:left-5 min-[40rem]:items-center">
+        <div className="toast-list" role="status">
           {toasts.map((toast) => (
             <Toast
               key={toast.id}

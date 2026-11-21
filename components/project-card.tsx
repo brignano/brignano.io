@@ -29,35 +29,18 @@ function track(project: Project, link: string) {
   event("project_link_clicked", { project: project.slug, link });
 }
 
-// Status reads at a glance: live is a solid green pill (success, "settled":
-// you can use it today), beta a plain outline with a hollow dot (still
-// changing), proof of concept amber (attention). The word always ships with the
-// colour, so it is never the only signal (DESIGN.md §3).
-const STATUS: Record<Project["status"], { pill: string; dot: string }> = {
-  live: {
-    pill: "border-success-line bg-success-surface text-success-ink font-medium",
-    dot: "bg-success",
-  },
-  beta: {
-    pill: "border-line-strong text-slate",
-    dot: "border-[1.5px] border-slate",
-  },
-  "proof of concept": {
-    pill: "border-attention-line bg-attention-surface text-attention-ink font-medium",
-    dot: "bg-attention",
-  },
+// Status reads at a glance, on design's .pill: live is success (you can use
+// it today), proof of concept attention, beta the neutral pill (still
+// changing). The word always ships with the colour, so it is never the only
+// signal (DESIGN.md §3).
+const STATUS: Record<Project["status"], string> = {
+  live: "pill pill-success",
+  beta: "pill",
+  "proof of concept": "pill pill-attention",
 };
 
 function Status({ status }: { status: Project["status"] }) {
-  const { pill, dot } = STATUS[status];
-  return (
-    <span
-      className={`shrink-0 inline-flex items-center gap-1.5 font-mono uppercase tracking-[0.12em] text-[10.5px] leading-none rounded-full border px-2 py-1 ${pill}`}
-    >
-      <span className={`h-1.5 w-1.5 rounded-full ${dot}`} aria-hidden="true" />
-      {status}
-    </span>
-  );
+  return <span className={`shrink-0 ${STATUS[status]}`}>{status}</span>;
 }
 
 export default function ProjectCard({
@@ -141,12 +124,12 @@ export default function ProjectCard({
 
   if (row) {
     return (
-      <article className="h-full grid grid-cols-[44px_1fr] grid-rows-[auto_1fr_auto_auto] gap-x-3.5 gap-y-1 bg-card border border-line rounded-xl px-4 py-3.5">
+      <article className="h-full grid grid-cols-[44px_1fr] grid-rows-[auto_1fr_auto_auto] gap-x-3.5 gap-y-1 card px-4 py-3.5">
         <span
-          className="row-span-3 self-start h-11 w-11 rounded-[10px] grid place-items-center project-stage text-mark"
+          className="row-span-3 self-start h-11 w-11 rounded-[10px] grid place-items-center card-stage text-mark"
           aria-hidden="true"
         >
-          <Glyph className="h-[22px] w-[22px]" />
+          <Glyph className="h-[22px] w-[22px] p-0" />
         </span>
         <div className="flex items-center justify-between gap-3">
           <h3 className="text-[17px] font-bold tracking-tight text-ink">{project.title}</h3>
@@ -162,9 +145,9 @@ export default function ProjectCard({
   return (
     <article
       data-mark={project.mark}
-      className="h-full flex flex-col bg-card border border-line rounded-xl overflow-hidden shadow-sm transition-colors hover:border-line-strong"
+      className="h-full flex flex-col card p-0 gap-0 transition-colors hover:border-line-strong"
     >
-      <div className="shrink-0 project-stage h-[150px] md:h-[190px] grid place-items-center overflow-hidden border-b border-line">
+      <div className="shrink-0 card-stage h-[150px] md:h-[190px] grid place-items-center overflow-hidden border-b border-line">
         <ProjectArt slug={project.slug} />
       </div>
       <div className="flex-1 flex flex-col px-[18px] pt-4 pb-[18px] gap-1.5">

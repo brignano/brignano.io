@@ -1,3 +1,9 @@
+/* Cascade order: the design system's components sit between Tailwind's base
+   and its utilities, so a utility (mt-4, w-full) still wins over a .btn or a
+   .pill without !important. Declared before anything is imported, because the
+   first mention of a layer fixes its place (DESIGN.md §11). */
+@layer theme, base, brignano.components, components, utilities;
+
 @import "tailwindcss";
 
 /* ── Design system ──────────────────────────────────────────────────────
@@ -9,9 +15,16 @@
 @import "@brignano/design/tokens.css";
 @import "@brignano/design/tokens.chart.css";
 @import "@brignano/design/tailwind.css";
+/* controls.css is components.css without its layout primitives (.container,
+   .grid, .stack …), whose names Tailwind already owns. */
+@import "@brignano/design/controls.css";
 @import "./holiday.css";
 
-@plugin "@tailwindcss/typography";
+/* Typography renamed from `prose` to `article`: components.css has its own
+   .prose (brignano/design#67), and the two would style the same posts. */
+@plugin "@tailwindcss/typography" {
+  className: article;
+}
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -39,23 +52,6 @@
    until design#142 ships. */
 .tier-marketing {
   --display: var(--sans);
-}
-
-/* The design system's eyebrow, copied from components.css (.eyebrow) because
-   this site doesn't load that file yet. In Tailwind's components layer so
-   spacing utilities such as mb-3 still win over its margin: 0. Drop it when
-   brignano.io#326 imports components.css. */
-@layer components {
-  .eyebrow {
-    margin: 0;
-    font-family: var(--mono);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    line-height: var(--leading-ui);
-    letter-spacing: var(--tracking-caps);
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
 }
 
 /* The page background belongs to the ROOT element, not just <body>.
@@ -176,9 +172,9 @@ html {
 }
 
 /* Blog posts ─────────────────────────────────────────────────────────────
-   `prose` (@tailwindcss/typography) does the typesetting; `.prose-post`
+   `article` (@tailwindcss/typography, renamed above) does the typesetting; `.prose-post`
    points its colours at the design tokens, which already switch with the
-   theme, so there is no `dark:prose-invert` to keep in step with them. */
+   theme, so there is no `dark:article-invert` to keep in step with them. */
 .prose-post {
   --tw-prose-body: var(--ink-soft);
   --tw-prose-headings: var(--ink);
@@ -432,19 +428,10 @@ html[data-chat-open] #scroll-to-top {
 }
 
 /* Project cards on /projects ──────────────────────────────────────────────
-   The picture sits on a faint field of the product's mark: a copy of
-   `.card-media.card-stage` from @brignano/design 0.11 (DESIGN.md §3, "On a
-   card that stands for a product, the stage"), the same 8% mix as the
-   product-page hero stage. `data-mark` on the card picks the hue; without one
-   it is the family amber. The mark draws the picture and its ground only,
-   never text, links or state.
-   It is a copy because this site doesn't load components.css yet: that file's
-   `.grid` and `.container` would restyle Tailwind's utilities of the same
-   name. Drop this rule for `.card-stage` when brignano.io#326 adopts the
-   shared components. */
-.project-stage {
-  background-color: color-mix(in srgb, var(--mark-current) 8%, transparent);
-}
+   The picture sits on `.card-stage` from @brignano/design, a faint field of
+   the product's mark (DESIGN.md §3). `data-mark` on the card picks the hue;
+   without one it is the family amber. The mark draws the picture and its
+   ground only, never text, links or state. The art below draws in tokens. */
 .project-art .a-card { fill: var(--card); stroke: var(--line-strong); }
 .project-art .a-line { stroke: var(--line-strong); fill: none; }
 .project-art .a-soft { fill: var(--n-200); }

@@ -97,7 +97,7 @@ export default function PostArticle({ post }: { post: Post }) {
                 {post.tags.map((tag) => (
                   <li
                     key={tag}
-                    className="text-xs px-2.5 py-1 rounded-full border border-line-strong text-ink-soft"
+                    className="pill"
                   >
                     {tag}
                   </li>
@@ -106,7 +106,7 @@ export default function PostArticle({ post }: { post: Post }) {
             )}
           </header>
 
-          <div className="prose prose-post border-t border-line pt-10">
+          <div className="article prose-post border-t border-line pt-10">
             <MDXRemote
               source={post.body}
               components={mdxComponents}
