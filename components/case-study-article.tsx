@@ -41,7 +41,7 @@ export default function CaseStudyArticle({ study }: { study: CaseStudy }) {
       />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16 pb-12">
         <article className="max-w-3xl">
-          <p className="font-display uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-3 sm:mb-5">
+          <p className="eyebrow mb-3 sm:mb-5">
             {study.eyebrow}
           </p>
           <h1 className="font-sans font-bold tracking-tight text-4xl sm:text-5xl mb-5 leading-[1.05]">

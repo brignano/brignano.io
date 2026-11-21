@@ -63,7 +63,7 @@ function darkTokens(names: readonly string[]): Record<string, string> {
   return Object.fromEntries(names.map((n) => [n, resolve(n)]));
 }
 
-const T = darkTokens(["--bg", "--card", "--line", "--ink", "--slate", "--mark"]);
+const T = darkTokens(["--bg", "--card", "--line", "--ink", "--ink-soft", "--slate", "--mark"]);
 
 // The A|B logo from @brignano/design (DESIGN.md §5, "The logo"): the letters
 // in ink and only the bar in --mark, the one colour the system spends on being
@@ -73,7 +73,7 @@ const LOGO_HEIGHT = 36;
 export interface OgCardProps {
   /** The page's address, drawn top right after the domain ("/notes"). */
   path?: string;
-  /** Small Silkscreen line above the headline. Uppercased here. */
+  /** Small mono eyebrow above the headline (.eyebrow). Uppercased here. */
   eyebrow: string;
   /** The page's own headline, word for word. */
   title: string;
@@ -99,13 +99,13 @@ export async function ogCard({
   subtitle,
   aside,
 }: OgCardProps): Promise<ImageResponse> {
-  const [geistRegular, geistBold, silkscreen] = await Promise.all([
+  const [geistRegular, geistBold, plexMedium] = await Promise.all([
     readFile(join(process.cwd(), "assets/fonts/Geist-Regular.ttf")),
     readFile(join(process.cwd(), "assets/fonts/Geist-Bold.ttf")),
-    // Silkscreen is the marketing tier's display face (tokens.css --display).
-    // next/font serves it as woff2, which satori cannot parse, so the TTF is
-    // committed next to Geist for these build-time renders.
-    readFile(join(process.cwd(), "assets/fonts/Silkscreen-Regular.ttf")),
+    // The eyebrow is the design system's .eyebrow: IBM Plex Mono at 500.
+    // next/font serves woff2, which satori cannot parse, so the TTFs are
+    // committed for these build-time renders.
+    readFile(join(process.cwd(), "assets/fonts/IBMPlexMono-Medium.ttf")),
   ]);
   const size = titleSize(title, Boolean(aside));
 
@@ -179,10 +179,11 @@ export async function ogCard({
           <div
             style={{
               display: "flex",
-              fontFamily: "Silkscreen",
+              fontFamily: "IBM Plex Mono",
+              fontWeight: 500,
               fontSize: 18,
-              letterSpacing: 3.2,
-              color: T["--slate"],
+              letterSpacing: 18 * 0.08, // --tracking-caps
+              color: T["--ink-soft"],
             }}
           >
             {eyebrow.toUpperCase()}
@@ -221,7 +222,7 @@ export async function ogCard({
       fonts: [
         { name: "Geist", data: geistRegular, weight: 400, style: "normal" },
         { name: "Geist", data: geistBold, weight: 700, style: "normal" },
-        { name: "Silkscreen", data: silkscreen, weight: 400, style: "normal" },
+        { name: "IBM Plex Mono", data: plexMedium, weight: 500, style: "normal" },
       ],
     }
   );

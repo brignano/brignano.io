@@ -31,7 +31,7 @@ export default function NotFound() {
   return (
     <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16">
       <section className="fold-fit flex flex-col justify-center">
-        <p className="font-display uppercase tracking-[0.18em] text-[11px] sm:text-xs text-slate mb-3 sm:mb-5">
+        <p className="eyebrow mb-3 sm:mb-5">
           404 · Page not found
         </p>
         <h1 className="font-sans font-bold tracking-tight text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-6 leading-[1.05] max-w-2xl">

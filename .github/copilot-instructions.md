@@ -129,8 +129,8 @@ implementation: the "Wireframes before build" rule in brignano/ai-tools
 
 ### Fonts
 
-- Loaded with `next/font/google` in `app/layout.tsx`: Geist (body and headings), IBM Plex Mono (code and data), Silkscreen (display accent)
-- Font variables: `--font-geist`, `--font-plex-mono`, `--font-silkscreen`, mapped onto the design tokens `--sans`, `--mono` and `--display` in `app/globals.css`
+- Loaded with `next/font/google` in `app/layout.tsx`: Geist (body and headings) and IBM Plex Mono (code, data and `.eyebrow` labels)
+- Font variables: `--font-geist` and `--font-plex-mono`, mapped onto the design tokens `--sans` and `--mono` in `app/globals.css`
 
 ### Static Export
 

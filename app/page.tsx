@@ -249,7 +249,7 @@ export default function Home() {
                   href={noteHref(study.slug)}
                   className="group flex h-full flex-col gap-1.5 bg-card border border-line rounded-xl p-5 md:p-6 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
                 >
-                  <p className="font-display uppercase tracking-[0.18em] text-[10px] text-slate">
+                  <p className="eyebrow">
                     {study.home.kicker}
                   </p>
                   <h3 className="mt-1 text-xl md:text-2xl font-bold tracking-tight leading-snug text-ink text-balance group-hover:text-interactive-ink transition-colors">
@@ -302,7 +302,7 @@ export default function Home() {
                       <span className="font-semibold text-ink group-hover:text-interactive-ink transition-colors">
                         {project.title}
                       </span>
-                      <span className="font-display uppercase tracking-[0.14em] text-[10px] text-slate border border-line-strong rounded-full px-2 py-0.5">
+                      <span className="font-mono font-medium uppercase tracking-[0.08em] text-xs text-slate border border-line-strong rounded-full px-2 py-0.5">
                         {project.status}
                       </span>
                     </span>
@@ -369,7 +369,7 @@ export default function Home() {
             />
           </div>
           <div>
-            <p className="font-display uppercase tracking-[0.18em] text-[11px] text-slate mb-3">
+            <p className="eyebrow mb-3">
               Off the clock
             </p>
             <h2 className="font-sans text-4xl md:text-5xl lg:text-6xl mb-5 font-bold tracking-tight">
