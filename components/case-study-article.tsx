@@ -41,6 +41,20 @@ export default function CaseStudyArticle({ study }: { study: CaseStudy }) {
       />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16 pb-12">
         <article className="max-w-3xl">
+          <nav aria-label="Breadcrumb" className="mb-6 text-sm">
+            <ol className="flex items-center gap-2 font-mono text-slate">
+              <li>
+                <Link
+                  href={NOTES_PATH}
+                  className="text-interactive-ink hover:underline inline-block pointer-coarse:py-2.5"
+                >
+                  ← {NOTES_LABEL}
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li aria-current="page">Case study</li>
+            </ol>
+          </nav>
           <p className="eyebrow mb-3 sm:mb-5">
             {study.eyebrow}
           </p>
@@ -95,23 +109,34 @@ export default function CaseStudyArticle({ study }: { study: CaseStudy }) {
             </ul>
           </section>
 
-          <footer className="border-t border-line pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-            <p className="text-sm text-slate max-w-md">
-              Want the longer version, or the parts that do not belong on a
-              public page?{" "}
-              <a
-                href="mailto:hi@brignano.io"
-                className="underline text-interactive-ink"
-              >
-                hi@brignano.io
-              </a>
-            </p>
+          <footer className="border-t border-line pt-8 flex flex-col gap-6">
             <Link
               href={noteHref(next.slug)}
-              className="text-sm text-interactive-ink hover:underline shrink-0"
+              className="group grid gap-1 rounded-xl border border-line bg-card px-5 py-4 sm:px-6 sm:py-5 hover:border-line-strong transition-colors focus-visible:ring-2 focus-visible:ring-interactive-ink"
             >
-              Next: {next.title} →
+              <span className="eyebrow">Next story</span>
+              <span className="text-ink font-semibold text-lg tracking-tight group-hover:underline underline-offset-4 decoration-1">
+                {next.title} →
+              </span>
             </Link>
+            <p className="text-sm text-slate flex flex-wrap gap-x-4 gap-y-2">
+              <Link
+                href={NOTES_PATH}
+                className="text-interactive-ink hover:underline"
+              >
+                ← All {NOTES_LABEL.toLowerCase()}
+              </Link>
+              <span>
+                Want the longer version, or the parts that do not belong on a
+                public page?{" "}
+                <a
+                  href="mailto:hi@brignano.io"
+                  className="underline text-interactive-ink"
+                >
+                  hi@brignano.io
+                </a>
+              </span>
+            </p>
           </footer>
         </article>
       </main>
