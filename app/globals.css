@@ -94,13 +94,14 @@ html {
   /* Sticky header (py-6 + its tallest child + the 1px rule ≈ 87px, rounded up
      to 5.5rem so drift up there only ever makes the hero shorter, never taller
      than the fold) + the header/<main> margin, which collapses to the larger
-     of header `mb-10` and main `mt-16`. */
-  --fold-offset: calc(5.5rem + 4rem);
+     of header `mb-10` and main `mt-16`. The now bar under the header adds
+     2.25rem (one line of text-xs plus py-2.5 and its rule). */
+  --fold-offset: calc(5.5rem + 2.25rem + 4rem);
 }
 @media (min-width: 64rem) {
   /* lg: the collapsed margin becomes the header's `mb-28`, which now wins. */
   :root {
-    --fold-offset: calc(5.5rem + 7rem);
+    --fold-offset: calc(5.5rem + 2.25rem + 7rem);
   }
 }
 .fold-fit {
@@ -229,6 +230,12 @@ html {
    order too. */
 html[data-chat-open] #scroll-to-top {
   display: none;
+}
+
+/* Headings are ink, not the body grey they used to inherit: the page's
+   loudest line should be its darkest. A utility on a heading still wins. */
+@layer base {
+  h1, h2, h3 { color: var(--ink); }
 }
 
 @media print {

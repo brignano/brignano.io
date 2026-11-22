@@ -160,7 +160,7 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-30 text-sm py-6 md:px-16 px-6 border-b border-line bg-bg/80 backdrop-blur-md lg:mb-28 mb-10 transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:translate-y-0 ${hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"}`}
+      className={`sticky top-0 z-30 text-sm py-6 md:px-16 px-6 border-b border-line bg-bg/80 backdrop-blur-md transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:translate-y-0 ${hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"}`}
     >
       <div
         className={`max-w-6xl mx-auto flex items-center justify-between gap-x-4 relative transform transition-all duration-500 ease-out ${animateHeader ? "translate-y-0 opacity-100" : "-translate-y-3 opacity-0"}`}
