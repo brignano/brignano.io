@@ -9,7 +9,6 @@ import {
   socialLinks,
   featuredProjects,
   heroMetrics,
-  SITE_NAME,
   SITE_LOCATION,
   SITE_ROLE,
   SITE_TAGLINE,
@@ -58,7 +57,7 @@ export default function Home() {
                   width={64}
                   height={64}
                   priority
-                  className="lg:hidden w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border border-line"
+                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border border-line"
                 />
                 <div>
                   <p className="text-base sm:text-lg font-semibold text-ink">
@@ -87,34 +86,31 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Right-hand card at `lg`: the face, and the one number anyone
-                can read. The pipeline and repository counts are real but mean
-                nothing outside engineering, so they moved to Current Role. */}
-            <div
+            {/* Beside the headline at `lg` (under the buttons below it): a
+                few plain facts set as annotations, not a card. The headshot
+                card that used to sit here repeated the photo next to the
+                name; the face now stays by "Hi, I'm Anthony" at every size.
+                Wireframe: proposals/wireframes/the-cursor.html. */}
+            <dl
               data-aos="fade-up"
               data-aos-duration={600}
               data-aos-delay={260}
-              className="hidden lg:flex flex-col items-center text-center lg:col-start-2 lg:row-start-1 lg:row-span-2 rounded-lg border border-line bg-card p-6 shadow-1"
+              className="order-last lg:order-none grid grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-4 lg:gap-y-5 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-end lg:border-l lg:border-line lg:pl-7 pt-2 lg:pt-0"
             >
-              <Image
-                src="/headshot.jpeg"
-                alt={`Photo of ${SITE_NAME}`}
-                width={128}
-                height={128}
-                priority
-                className="w-32 h-32 rounded-full object-cover border border-line"
-              />
-              <p className="mt-4 font-semibold">{SITE_NAME}</p>
-              <p className="text-sm text-slate">{SITE_LOCATION}</p>
-              <dl className="mt-5 pt-5 border-t border-line w-full">
-                <dd className="text-3xl font-bold tracking-tight">
-                  <CountUp value={heroMetrics[0].value} />
-                </dd>
-                <dt className="text-sm text-slate mt-1">
-                  {heroMetrics[0].label}
-                </dt>
-              </dl>
-            </div>
+              {[
+                { value: <CountUp value={heroMetrics[0].value} />, label: heroMetrics[0].label },
+                { value: "2,000+", label: "devices run the desktop app I built" },
+                { value: SITE_LOCATION, label: "where I'm based" },
+                { value: "Off the clock", label: "climbing, snowboarding" },
+              ].map((fact) => (
+                <div key={fact.label} className="flex flex-col-reverse">
+                  <dt className="font-mono text-xs text-slate mt-1">{fact.label}</dt>
+                  <dd className="text-xl lg:text-2xl font-bold tracking-tight text-ink">
+                    {fact.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
 
             <div className="lg:col-start-1 lg:row-start-2">
               {/* Primary CTAs — one filled, one outline (TSD §5.3) */}
@@ -242,23 +238,28 @@ export default function Home() {
             Three projects from The Hartford, each with the full story one tap
             away.
           </p>
-          <ul className="grid md:grid-cols-3 grid-cols-1 gap-3 md:gap-4">
+          {/* One list style across the site (home, /notes): a row per
+              story with its area, the outcome and the link. Cards are kept
+              for things with a picture (/projects). */}
+          <ul className="border-t border-line-strong">
             {caseStudies.map((study) => (
-              <li key={study.slug}>
+              <li key={study.slug} className="border-b border-line">
                 <Link
                   href={noteHref(study.slug)}
-                  className="group flex h-full flex-col gap-1.5 card p-5 md:p-6 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+                  className="group grid gap-1 py-4 md:py-6 md:grid-cols-[12rem_minmax(0,1fr)_auto] md:gap-x-8 md:items-baseline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
                 >
-                  <p className="eyebrow">
+                  <span className="font-mono text-xs text-slate">
                     {study.home.kicker}
-                  </p>
-                  <h3 className="mt-1 text-xl md:text-2xl font-bold tracking-tight leading-snug text-ink text-balance group-hover:text-interactive-ink transition-colors">
-                    {study.home.headline}
-                  </h3>
-                  <p className="text-sm text-ink-soft leading-relaxed">
-                    {study.home.line}
-                  </p>
-                  <span className="mt-auto pt-2 text-sm text-interactive-ink">
+                  </span>
+                  <span>
+                    <span className="block text-lg md:text-2xl font-semibold tracking-tight leading-snug text-ink text-balance group-hover:underline underline-offset-4 decoration-1">
+                      {study.home.headline}
+                    </span>
+                    <span className="block mt-1 text-sm text-ink-soft leading-relaxed">
+                      {study.home.line}
+                    </span>
+                  </span>
+                  <span className="text-sm text-interactive-ink md:text-right whitespace-nowrap">
                     Read the story →
                   </span>
                 </Link>
@@ -293,13 +294,13 @@ export default function Home() {
                 All projects →
               </Link>
             </div>
-            <ul className="grid md:grid-cols-3 grid-cols-1 gap-3 md:gap-4">
+            <ul className="border-t border-line-strong">
               {featuredProjects.map((project) => {
                 const link = project.links?.[0];
                 const body = (
                   <>
-                    <span className="flex items-center justify-between gap-3">
-                      <span className="font-semibold text-ink group-hover:text-interactive-ink transition-colors">
+                    <span className="flex items-center gap-3">
+                      <span className="text-lg font-semibold tracking-tight text-ink group-hover:underline underline-offset-4 decoration-1">
                         {project.title}
                       </span>
                       <span className="font-mono font-medium uppercase tracking-[0.08em] text-xs text-slate border border-line-strong rounded-full px-2 py-0.5">
@@ -309,12 +310,17 @@ export default function Home() {
                     <span className="block mt-1 text-sm text-ink-soft leading-relaxed">
                       {project.blurb}
                     </span>
+                    {link && (
+                      <span className="block mt-2 md:mt-0 md:col-start-2 md:row-start-1 md:row-span-2 md:self-center text-sm text-interactive-ink whitespace-nowrap">
+                        {link.label} ↗
+                      </span>
+                    )}
                   </>
                 );
                 const cls =
-                  "group block h-full card px-5 py-4 transition-colors hover:border-line-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink";
+                  "group block md:grid md:grid-cols-[minmax(0,1fr)_auto] md:gap-x-8 py-4 md:py-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm";
                 return (
-                  <li key={project.slug}>
+                  <li key={project.slug} className="border-b border-line">
                     {link ? (
                       <a
                         href={link.url}

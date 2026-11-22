@@ -108,8 +108,8 @@ export default function NotesList({ entries }: { entries: NoteEntry[] }) {
               href={entry.href}
               className="group grid gap-y-1.5 py-5 md:grid-cols-[10rem_1fr] md:gap-x-8 md:py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink rounded-sm"
             >
-              <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm text-slate md:row-span-2 md:flex-col md:items-start md:pt-1">
-                <span className="pill">
+              <p className="flex flex-wrap items-center gap-x-2.5 gap-y-1 font-mono text-xs text-slate md:row-span-2 md:flex-col md:items-start md:pt-1.5">
+                <span className="text-ink-soft">
                   {TAG_LABEL[entry.kind]}
                 </span>
                 {entry.kind === "case-study" ? (
@@ -124,7 +124,7 @@ export default function NotesList({ entries }: { entries: NoteEntry[] }) {
                   </span>
                 )}
               </p>
-              <h3 className="text-xl sm:text-[22px] font-semibold tracking-tight leading-snug text-ink group-hover:text-interactive-ink transition-colors">
+              <h3 className="text-xl sm:text-[22px] font-semibold tracking-tight leading-snug text-ink group-hover:underline underline-offset-4 decoration-1">
                 {entry.title}
               </h3>
               <p className="text-ink-soft leading-relaxed">{entry.summary}</p>
