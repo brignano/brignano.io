@@ -6,6 +6,7 @@ import HolidayTheme from "@/components/holiday-theme";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import KeepGoing from "@/components/keep-going";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GA_MEASUREMENT_ID } from "@/lib/gtag";
 import { siteMetadata, socialLinks } from "@/lib/constants";
@@ -173,6 +174,7 @@ export default function RootLayout({
           <Header />
           <ScrollReveal />
           {children}
+          <KeepGoing />
           <Footer />
         </ToastProvider>
         <ScrollToTop />

@@ -72,6 +72,20 @@ export default function PostArticle({ post }: { post: Post }) {
       />
       <main className="max-w-7xl mx-auto md:px-16 px-6 lg:mt-24 mt-16 pb-12">
         <article className="max-w-3xl">
+          <nav aria-label="Breadcrumb" className="mb-6 text-sm">
+            <ol className="flex items-center gap-2 font-mono text-slate">
+              <li>
+                <Link
+                  href={`${NOTES_PATH}?show=posts`}
+                  className="text-interactive-ink hover:underline inline-block pointer-coarse:py-2.5"
+                >
+                  ← {NOTES_LABEL}
+                </Link>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li aria-current="page">Post</li>
+            </ol>
+          </nav>
           <header className="mb-10">
             <p className="text-sm text-slate mb-4">
               <time dateTime={post.date}>{formatPostDate(post.date)}</time> ·{" "}

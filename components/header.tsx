@@ -121,6 +121,9 @@ export default function Header() {
   const links = (variant: "inline" | "menu") =>
     PAGES.map((page) => {
       const isActive = currentPage === page;
+      // On a page under this one (a case study under /notes) the item still
+      // shows as current, but stays a link: it's the way back to the list.
+      const isExact = pathname === `/${page}`;
       const label = page.charAt(0).toUpperCase() + page.slice(1);
       // In the menu each link is a full-width row, a 44px tap target.
       const shape =
@@ -129,7 +132,7 @@ export default function Header() {
           : "text-sm sm:text-base border-b-2 pb-1";
       return (
         <li key={page}>
-          {isActive ? (
+          {isActive && isExact ? (
             <span
               className={`${shape} text-ink font-medium cursor-default border-interactive-ink`}
               aria-current="page"
@@ -141,7 +144,12 @@ export default function Header() {
             <Link
               href={`/${page}`}
               onClick={closeMenu}
-              className={`${shape} text-ink-soft hover:text-ink cursor-pointer border-transparent transition-colors`}
+              aria-current={isActive ? "true" : undefined}
+              className={`${shape} cursor-pointer transition-colors ${
+                isActive
+                  ? "text-ink font-medium border-interactive-ink"
+                  : "text-ink-soft hover:text-ink border-transparent"
+              }`}
             >
               {label}
             </Link>
