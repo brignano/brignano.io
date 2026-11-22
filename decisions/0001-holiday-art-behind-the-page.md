@@ -1,6 +1,6 @@
 # ADR-0001: Holiday art sits behind the page and nothing floats
 
-**Status:** accepted · 2026-11-08 · PR #328
+**Status:** superseded by [ADR-0005](0005-holiday-is-a-greeting.md) · accepted 2026-11-08 · PR #328
 
 ## Context
 
