@@ -16,6 +16,8 @@ export type Range = { start: Date; end: Date };
 export type Holiday = {
   id: string;
   label: string;
+  /** What the now bar says while it's on. Defaults to "Happy <label>". */
+  greeting?: string;
   /** Every window (inclusive) the theme shows in, for the given year. */
   windows: (year: number) => Range[];
 };
@@ -120,6 +122,7 @@ export const HOLIDAYS: readonly Holiday[] = [
     // Deliberately generic: lights and snow, no tree, cross or other symbol.
     id: "winter",
     label: "Winter holidays",
+    greeting: "Happy holidays",
     windows: (y) => [{ start: day(y, 11, 15), end: day(y, 11, 25) }],
   },
   {
@@ -189,6 +192,7 @@ export const HOLIDAYS: readonly Holiday[] = [
   {
     id: "eid-al-fitr",
     label: "Eid al-Fitr",
+    greeting: "Eid Mubarak",
     windows: (y) =>
       inCalendar(
         y,
@@ -213,6 +217,7 @@ export const HOLIDAYS: readonly Holiday[] = [
   {
     id: "eid-al-adha",
     label: "Eid al-Adha",
+    greeting: "Eid Mubarak",
     windows: (y) =>
       inCalendar(
         y,

@@ -18,7 +18,6 @@
 /* controls.css is components.css without its layout primitives (.container,
    .grid, .stack …), whose names Tailwind already owns. */
 @import "@brignano/design/controls.css";
-@import "./holiday.css";
 
 /* Typography renamed from `prose` to `article`: components.css has its own
    .prose (brignano/design#67), and the two would style the same posts. */

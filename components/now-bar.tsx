@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import HolidayGreeting from "@/components/holiday-greeting";
 import LocalTime from "@/components/local-time";
 import { nowBuilding } from "@/lib/constants";
+import { useHoliday } from "@/lib/use-holiday";
 
 // One quiet line under the header with live facts: Anthony's local time, his
 // latest public commit and what he's building. It gives the site a pulse
@@ -34,6 +36,10 @@ function useConnecticutTime() {
 
 export default function NowBar() {
   const now = useConnecticutTime();
+  // On a phone there's room for two items: during a holiday the greeting
+  // takes the commit's place.
+  const { holiday, off } = useHoliday();
+  const greeting = Boolean(holiday && !off);
   const [commit, setCommit] = useState<Commit | null>(null);
 
   useEffect(() => {
@@ -55,14 +61,14 @@ export default function NowBar() {
 
   return (
     <div data-print-hide className="border-b border-line font-mono text-xs text-slate md:px-16 px-6 lg:mb-28 mb-10">
-      <p className="max-w-6xl mx-auto py-2.5 flex items-center gap-x-5 gap-y-1 whitespace-nowrap overflow-hidden">
+      <div className="max-w-6xl mx-auto py-2.5 flex items-center gap-x-5 gap-y-1 whitespace-nowrap overflow-hidden">
         {/* The time is only known on the client; until then the line holds its
             height so nothing below it moves. */}
         <span className={time ? undefined : "invisible"}>
           <span className="text-ink-soft">{time ?? "12:00 PM"}</span> in Connecticut
         </span>
         {commit && (
-          <span>
+          <span className={greeting ? "hidden sm:inline" : undefined}>
             last commit{" "}
             {commit.url ? (
               <a
@@ -79,6 +85,7 @@ export default function NowBar() {
             {commit.repo && <span className="hidden lg:inline"> · {commit.repo}</span>}
           </span>
         )}
+        <HolidayGreeting />
         <span className="hidden md:inline">
           building{" "}
           {nowBuilding.map((n, i) => (
@@ -88,7 +95,7 @@ export default function NowBar() {
             </span>
           ))}
         </span>
-      </p>
+      </div>
     </div>
   );
 }

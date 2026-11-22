@@ -9,7 +9,8 @@ not here.
 
 | ADR | Decision | Date |
 |---|---|---|
-| [0001](0001-holiday-art-behind-the-page.md) | Holiday art sits behind the page and nothing floats | 2026-11-08 |
+| [0001](0001-holiday-art-behind-the-page.md) | Holiday art sits behind the page and nothing floats (superseded by 0005) | 2026-11-08 |
 | [0002](0002-home-page-is-four-sections.md) | The home page is four sections | 2026-11-15 |
 | [0003](0003-one-notes-list.md) | Case studies and posts share one list at /notes | 2026-11-15 |
 | [0004](0004-every-page-has-its-own-share-card.md) | Every page has its own share card, drawn from its own data | 2026-11-15 |
+| [0005](0005-holiday-is-a-greeting.md) | A holiday is a greeting, not decorations | 2026-11-22 |

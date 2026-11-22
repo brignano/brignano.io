@@ -11,7 +11,6 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { setTheme } from "@/lib/theme";
-import HolidayButton from "@/components/holiday-button";
 
 // Nav is inline from `sm` up. Below that, five words plus the monogram and the
 // theme toggle measured 371px even at gap-x-2.5: the page scrolled sideways on
@@ -102,13 +101,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Tell the page when the header is tucked away, so things hung from its
-  // bottom edge (the holiday garlands, app/holiday.css) can follow it up.
-  const tucked = hidden && !menuOpen;
-  useEffect(() => {
-    document.documentElement.toggleAttribute("data-header-hidden", tucked);
-  }, [tucked]);
-
   useEffect(() => {
     if (!menuOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -177,7 +169,6 @@ export default function Header() {
           <ul className="flex items-center gap-x-8">{links("inline")}</ul>
         </nav>
         <div className="flex items-center gap-x-2 shrink-0">
-          <HolidayButton />
           <button
             aria-label="Toggle Theme"
             onClick={() => toggleTheme()}
