@@ -16,8 +16,12 @@ export type Range = { start: Date; end: Date };
 export type Holiday = {
   id: string;
   label: string;
-  /** What the now bar says while it's on. Defaults to "Happy <label>". */
+  /** What the bar says while it's on. Defaults to "Happy <label>!". */
   greeting?: string;
+  /** Shown beside the greeting. Decorative: hidden from screen readers. */
+  emoji: string;
+  /** A short, warm line after the greeting (hidden on narrow phones). */
+  note: string;
   /** Every window (inclusive) the theme shows in, for the given year. */
   windows: (year: number) => Range[];
 };
@@ -116,19 +120,25 @@ export const HOLIDAYS: readonly Holiday[] = [
     // through the weekend after.
     id: "thanksgiving",
     label: "Thanksgiving",
+    emoji: "🦃",
+    note: "Hope your plate's full.",
     windows: (y) => [around(nthWeekday(y, 10, 4, 4), 7, 3)],
   },
   {
     // Deliberately generic: lights and snow, no tree, cross or other symbol.
     id: "winter",
     label: "Winter holidays",
-    greeting: "Happy holidays",
+    greeting: "Happy holidays!",
+    emoji: "❄️",
+    note: "Wishing you a cozy, bright one.",
     windows: (y) => [{ start: day(y, 11, 15), end: day(y, 11, 25) }],
   },
   {
     // Eight nights from 25 Kislev.
     id: "hanukkah",
     label: "Hanukkah",
+    emoji: "🕎",
+    note: "Wishing you eight bright nights.",
     windows: (y) =>
       inCalendar(
         y,
@@ -143,17 +153,23 @@ export const HOLIDAYS: readonly Holiday[] = [
     // Seven days, Dec 26 – Jan 1.
     id: "kwanzaa",
     label: "Kwanzaa",
+    emoji: "🕯️",
+    note: "Wishing you a joyful week with family.",
     windows: (y) => [{ start: day(y, 11, 26), end: day(y + 1, 0, 1) }],
   },
   {
     // Spans the year boundary: Dec 26 of `y` through Jan 2 of `y + 1`.
     id: "new-year",
     label: "New Year",
+    emoji: "🎉",
+    note: "Here's to a great year ahead.",
     windows: (y) => [{ start: day(y, 11, 26), end: day(y + 1, 0, 2) }],
   },
   {
     id: "lunar-new-year",
     label: "Lunar New Year",
+    emoji: "🧧",
+    note: "Wishing you luck and good food all year.",
     // Through the Lantern Festival, 15 days in.
     windows: (y) =>
       inCalendar(
@@ -168,11 +184,15 @@ export const HOLIDAYS: readonly Holiday[] = [
   {
     id: "valentines",
     label: "Valentine's Day",
+    emoji: "❤️",
+    note: "Go tell someone you love them.",
     windows: (y) => [{ start: day(y, 1, 7), end: day(y, 1, 14) }],
   },
   {
     id: "holi",
     label: "Holi",
+    emoji: "🎨",
+    note: "Hope your day is full of color.",
     windows: (y) => {
       const d = fromTable(HOLI, y);
       return d ? [around(d, 2, 1)] : [];
@@ -182,17 +202,23 @@ export const HOLIDAYS: readonly Holiday[] = [
     // 3/14, 3.14.
     id: "pi-day",
     label: "Pi Day",
+    emoji: "🥧",
+    note: "A perfectly good excuse for pie.",
     windows: (y) => [{ start: day(y, 2, 12), end: day(y, 2, 14) }],
   },
   {
     id: "st-patricks",
     label: "St. Patrick's Day",
+    emoji: "☘️",
+    note: "Hope you're wearing green.",
     windows: (y) => [{ start: day(y, 2, 10), end: day(y, 2, 17) }],
   },
   {
     id: "eid-al-fitr",
     label: "Eid al-Fitr",
-    greeting: "Eid Mubarak",
+    greeting: "Eid Mubarak!",
+    emoji: "🌙",
+    note: "Wishing you and your family a joyful Eid.",
     windows: (y) =>
       inCalendar(
         y,
@@ -207,17 +233,23 @@ export const HOLIDAYS: readonly Holiday[] = [
     // Western Easter: the week leading up to it through Easter Monday.
     id: "easter",
     label: "Easter",
+    emoji: "🐣",
+    note: "Hope your day is a sweet one.",
     windows: (y) => [around(easter(y), 7, 1)],
   },
   {
     id: "earth-day",
     label: "Earth Day",
+    emoji: "🌎",
+    note: "A good day to get outside.",
     windows: (y) => [{ start: day(y, 3, 15), end: day(y, 3, 22) }],
   },
   {
     id: "eid-al-adha",
     label: "Eid al-Adha",
-    greeting: "Eid Mubarak",
+    greeting: "Eid Mubarak!",
+    emoji: "🌙",
+    note: "Wishing you a blessed Eid with the people you love.",
     windows: (y) =>
       inCalendar(
         y,
@@ -231,33 +263,47 @@ export const HOLIDAYS: readonly Holiday[] = [
   {
     id: "pride",
     label: "Pride Month",
+    greeting: "Happy Pride!",
+    emoji: "🏳️‍🌈",
+    note: "Love is love.",
     windows: (y) => [{ start: day(y, 5, 1), end: day(y, 5, 30) }],
   },
   {
     id: "juneteenth",
     label: "Juneteenth",
+    emoji: "✊🏾",
+    note: "Celebrating freedom today.",
     windows: (y) => [{ start: day(y, 5, 15), end: day(y, 5, 19) }],
   },
   {
     id: "independence-day",
     label: "Fourth of July",
+    emoji: "🎆",
+    note: "Enjoy the cookout and the fireworks.",
     windows: (y) => [{ start: day(y, 5, 28), end: day(y, 6, 5) }],
   },
   {
     id: "halloween",
     label: "Halloween",
+    emoji: "🎃",
+    note: "Hope you get the good candy.",
     windows: (y) => [{ start: day(y, 9, 17), end: day(y, 9, 31) }],
   },
   {
     // Oct 31 – Nov 2. Marigolds, candles and cut-paper banners.
     id: "dia-de-muertos",
     label: "Día de Muertos",
+    greeting: "¡Feliz Día de Muertos!",
+    emoji: "🌼",
+    note: "Remembering the people we love.",
     windows: (y) => [{ start: day(y, 9, 31), end: day(y, 10, 2) }],
   },
   {
     // Five days of the festival of lights.
     id: "diwali",
     label: "Diwali",
+    emoji: "🪔",
+    note: "Wishing you light and joy.",
     windows: (y) => {
       const d = fromTable(DIWALI, y);
       return d ? [around(d, 2, 3)] : [];
