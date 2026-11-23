@@ -42,10 +42,11 @@ export const siteMetadata: Metadata = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   icons: {
-    // The ab tile from @brignano/design (logo/tile.svg): one look in both
-    // themes, so no dark variant. vercel.json caches the icon as immutable, so
-    // a new mark takes a new file name (icon-ab.svg; the A|B one was icon.svg).
-    icon: [{ url: "/icon-ab.svg", type: "image/svg+xml" }],
+    // The bare ab logo from @brignano/design (logo/favicon.svg): no tile, a
+    // transparent ground, dark on a light tab bar and light on a dark one.
+    // vercel.json caches it as immutable, so a new mark takes a new file name.
+    // The tile (icon-ab.svg) stays for the manifest's home-screen icon.
+    icon: [{ url: "/favicon-ab.svg", type: "image/svg+xml" }],
     // Apple surfaces (share sheet, iMessage previews, home-screen bookmarks)
     // ignore SVG favicons and want a PNG apple-touch-icon.
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],

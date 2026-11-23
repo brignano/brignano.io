@@ -43,7 +43,7 @@
       ]
     },
     {
-      "source": "/icon-ab.svg",
+      "source": "/(icon-ab|favicon-ab).svg",
       "headers": [
         {
           "key": "Cache-Control",
