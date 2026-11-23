@@ -1,8 +1,8 @@
 import { MARK } from "@brignano/design/logo/paths.mjs";
 
 /**
- * The A|B logo from @brignano/design (DESIGN.md §5, "The logo"), inlined so
- * it follows the site theme: the letters take --ink and the bar takes the
+ * The ab logo from @brignano/design (DESIGN.md §5, "The logo"), inlined so
+ * it follows the site theme: the letters take --ink and the cursor takes the
  * mark in force. Size it by height; the width follows.
  */
 export default function Logo({ className }: { className?: string }) {
