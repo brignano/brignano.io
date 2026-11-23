@@ -2,20 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { NOTES_PATH } from "@/lib/notes-path";
+import { nextPage } from "@/lib/pages";
 
-// One link at the end of each top-level page to the next useful one, so no
-// page is a dead end. Home doesn't need one (it links everywhere already), and
-// a case study or post ends with its own next story.
-const NEXT: Record<string, { href: string; kicker: string; title: string }> = {
-  "/projects": { href: "/coding", kicker: "Next: Coding", title: "What I'm building right now" },
-  "/resume": { href: NOTES_PATH, kicker: "Next: Notes", title: "The stories behind these roles" },
-  "/coding": { href: "/projects", kicker: "Next: Projects", title: "The things that came out of it" },
-  [NOTES_PATH]: { href: "/#contact", kicker: "Next: Say hello", title: "Questions about any of these? Get in touch" },
-};
-
+// One link at the end of each top-level page to the next one in nav order, so
+// no page is a dead end. Home doesn't need one (it links everywhere already),
+// and a case study or post ends with its own next story.
 export default function KeepGoing() {
-  const next = NEXT[usePathname() ?? ""];
+  const next = nextPage(usePathname() ?? "");
   if (!next) return null;
   return (
     <nav
