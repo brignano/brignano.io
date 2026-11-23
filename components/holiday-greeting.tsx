@@ -5,18 +5,19 @@ import { HOLIDAY_INFO } from "@/lib/holiday-info";
 import { useHoliday } from "@/lib/use-holiday";
 
 /**
- * The whole holiday theme now: one greeting in the now bar ("Happy
- * Thanksgiving") while a holiday is on. It used to be edge art, a garland
+ * The whole holiday theme now: one greeting in the bar under the header
+ * ("Happy Thanksgiving") while a holiday is on; the bar's close button hides it
+ * (ADR-0006). It used to be edge art, a garland
  * and a header button; that read as an add-on and took the best spot in the
  * header for something people use once (wireframe: the-cursor.html, #358).
  *
- * The greeting opens a small popover with a line on what the holiday is, a
- * link to read more, and a way to hide the greeting, remembered per holiday
+ * The greeting opens a small popover with a line on what the holiday is and a
+ * link to read more. Closing the bar is remembered per holiday
  * (lib/use-holiday.ts), so hiding one doesn't silence the next. Nothing opens
  * or moves on its own. Preview any holiday with `?holiday=<id>`.
  */
 export default function HolidayGreeting() {
-  const { holiday, off, toggle } = useHoliday();
+  const { holiday, off } = useHoliday();
   const button = useRef<HTMLButtonElement>(null);
 
   if (!holiday || off) return null;
@@ -34,7 +35,7 @@ export default function HolidayGreeting() {
       panel.style.setProperty("--popover-top", `${r.bottom + 6}px`);
       panel.style.setProperty(
         "--popover-left",
-        `${Math.max(16, Math.min(r.left, window.innerWidth - panel.offsetWidth - 16))}px`,
+        `${Math.max(16, Math.min(r.left, window.innerWidth - panel.offsetWidth - 16))}px`
       );
     }
   };
@@ -59,8 +60,8 @@ export default function HolidayGreeting() {
       >
         <p className="font-semibold text-ink">{holiday.label}</p>
         {info && <p className="mt-1 text-ink-soft">{info.about}</p>}
-        <p className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-          {info && (
+        {info && (
+          <p className="mt-3">
             <a
               href={info.url}
               target="_blank"
@@ -69,17 +70,8 @@ export default function HolidayGreeting() {
             >
               More about {holiday.label} ↗
             </a>
-          )}
-          <button
-            type="button"
-            popoverTarget="holiday-panel"
-            popoverTargetAction="hide"
-            onClick={toggle}
-            className="cursor-pointer text-interactive-ink hover:underline rounded-sm focus-visible:ring-2 focus-visible:ring-interactive-ink"
-          >
-            Hide this greeting
-          </button>
-        </p>
+          </p>
+        )}
       </div>
     </>
   );

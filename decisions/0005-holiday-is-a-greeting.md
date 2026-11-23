@@ -1,6 +1,6 @@
 # ADR-0005: A holiday is a greeting, not decorations
 
-**Status:** accepted · 2026-11-22 · wireframe #358
+**Status:** accepted · 2026-11-22 · wireframe #358 · amended by [ADR-0006](0006-holiday-only-bar.md)
 **Supersedes:** [ADR-0001](0001-holiday-art-behind-the-page.md)
 
 ## Context
