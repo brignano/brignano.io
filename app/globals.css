@@ -167,7 +167,7 @@ html {
    design system generates (`text-interactive-ink`, `bg-interactive`, `bg-card`),
    so there is one name per job instead of a local alias per job. */
 :focus-visible {
-  outline: 2px solid var(--i-ink);
+  outline: 2px solid var(--action-ink);
   outline-offset: 2px;
 }
 
@@ -179,7 +179,7 @@ html {
   --tw-prose-body: var(--ink-soft);
   --tw-prose-headings: var(--ink);
   --tw-prose-lead: var(--ink-soft);
-  --tw-prose-links: var(--i-ink);
+  --tw-prose-links: var(--action-ink);
   --tw-prose-bold: var(--ink);
   --tw-prose-counters: var(--slate);
   --tw-prose-bullets: var(--line-strong);
@@ -440,7 +440,7 @@ html[data-chat-open] #scroll-to-top {
    ground only, never text, links or state. The art below draws in tokens. */
 .project-art .a-card { fill: var(--card); stroke: var(--line-strong); }
 .project-art .a-line { stroke: var(--line-strong); fill: none; }
-.project-art .a-soft { fill: var(--n-200); }
+.project-art .a-soft { fill: var(--neutral-200); }
 .project-art .a-slate { fill: var(--slate); }
 .project-art .a-mark { fill: var(--mark-current); }
 .project-art .a-mark-stroke { stroke: var(--mark-current); fill: none; }
@@ -449,8 +449,8 @@ html[data-chat-open] #scroll-to-top {
 .project-art .a-t { fill: var(--ink-soft); }
 .project-art .a-tm { fill: var(--mark-current); font-weight: 600; }
 /* Text on a solid mark fill: the mark is deep in light and pale in dark,
-   so --n-0 (white, then near-black) reads on it in both. */
-.project-art .a-on { fill: var(--n-0); }
+   so --neutral-0 (white, then near-black) reads on it in both. */
+.project-art .a-on { fill: var(--neutral-0); }
 /* Text on the terminal: --device stays dark in both themes, so its text is
    the lightest neutral in each. */
-.project-art .a-on-term { fill: light-dark(var(--n-0), var(--n-900)); }
+.project-art .a-on-term { fill: light-dark(var(--neutral-0), var(--neutral-900)); }
