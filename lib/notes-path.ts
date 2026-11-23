@@ -4,7 +4,7 @@
 //
 // The page name is still being decided, so the visible label lives here
 // alone. Renaming the address too means moving app/notes/ and updating the
-// redirects in next.config.ts, PAGES in components/header.tsx and the scripts
+// redirects in next.config.ts, PAGES in lib/pages.ts and the scripts
 // that list routes (fold-check, lighthouserc).
 //
 // No server-only imports here, so client components (the home page) can use

@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { setTheme } from "@/lib/theme";
+import { PAGES } from "@/lib/pages";
 
 // Nav is inline from `sm` up. Below that, five words plus the monogram and the
 // theme toggle measured 371px even at gap-x-2.5: the page scrolled sideways on
@@ -18,9 +19,8 @@ import { setTheme } from "@/lib/theme";
 // phones get a menu button that drops the links into the header itself, not a
 // slide-in drawer with an overlay. "Home" is not a link here: the monogram is.
 // Notes (case studies and posts, once /work and /blog) sits last, after the
-// professional pages. Its label is the path segment capitalised, so renaming
-// it is a change to this list and app/notes/ (see lib/notes.ts).
-const PAGES = ["projects", "resume", "coding", "notes"] as const;
+// professional pages. The list and its order live in lib/pages.ts, shared with
+// the "Next" card at the foot of each page.
 
 // Don't start hiding until the header has scrolled its own height away, and
 // ignore deltas smaller than this so momentum jitter and iOS rubber-band
@@ -111,12 +111,12 @@ export default function Header() {
   }, [menuOpen]);
 
   const links = (variant: "inline" | "menu") =>
-    PAGES.map((page) => {
+    PAGES.map(({ path, label }) => {
+      const page = path.slice(1);
       const isActive = currentPage === page;
       // On a page under this one (a case study under /notes) the item still
       // shows as current, but stays a link: it's the way back to the list.
-      const isExact = pathname === `/${page}`;
-      const label = page.charAt(0).toUpperCase() + page.slice(1);
+      const isExact = pathname === path;
       // In the menu each link is a full-width row, a 44px tap target.
       const shape =
         variant === "menu"
@@ -134,7 +134,7 @@ export default function Header() {
             </span>
           ) : (
             <Link
-              href={`/${page}`}
+              href={path}
               onClick={closeMenu}
               aria-current={isActive ? "true" : undefined}
               className={`${shape} cursor-pointer transition-colors ${
