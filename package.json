@@ -12,7 +12,7 @@
     "check:og": "node scripts/og-check.mjs"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^1.8.0",
+    "@anthropic-ai/sdk": "^1.11.0",
     "@brignano/design": "^0.17.0",
     "@headlessui/react": "^2.2.10",
     "@heroicons/react": "^2.2.0",
@@ -36,8 +36,8 @@
     "@types/react-dom": "^19",
     "eslint": "^10.13.0",
     "eslint-config-next": "^16.4.6",
-    "playwright": "^1.65.0",
-    "postcss": "^8.5.32",
+    "playwright": "^1.65.1",
+    "postcss": "^8.5.33",
     "prettier": "^3",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"
