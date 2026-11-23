@@ -14,3 +14,4 @@ not here.
 | [0003](0003-one-notes-list.md) | Case studies and posts share one list at /notes | 2026-11-15 |
 | [0004](0004-every-page-has-its-own-share-card.md) | Every page has its own share card, drawn from its own data | 2026-11-15 |
 | [0005](0005-holiday-is-a-greeting.md) | A holiday is a greeting, not decorations | 2026-11-22 |
+| [0006](0006-holiday-only-bar.md) | The bar under the header is for holidays only | 2026-11-23 |
