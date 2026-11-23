@@ -6,8 +6,8 @@ import { useHoliday } from "@/lib/use-holiday";
 
 /**
  * The whole holiday theme now: one greeting in the bar under the header
- * ("Happy Thanksgiving") while a holiday is on; the bar's close button hides it
- * (ADR-0006). It used to be edge art, a garland
+ * ("Happy Thanksgiving! 🦃 Hope your plate's full.") while a holiday is on;
+ * the bar's close button hides it (ADR-0006). It used to be edge art, a garland
  * and a header button; that read as an add-on and took the best spot in the
  * header for something people use once (wireframe: the-cursor.html, #358).
  *
@@ -22,7 +22,7 @@ export default function HolidayGreeting() {
 
   if (!holiday || off) return null;
   const info = HOLIDAY_INFO[holiday.id];
-  const greeting = holiday.greeting ?? `Happy ${holiday.label}`;
+  const greeting = holiday.greeting ?? `Happy ${holiday.label}!`;
 
   // A native popover (design's .popover): the browser handles Escape, a
   // click outside and aria-expanded. Browsers without CSS anchor positioning
@@ -46,9 +46,17 @@ export default function HolidayGreeting() {
         ref={button}
         type="button"
         popoverTarget="holiday-panel"
-        className="cursor-pointer text-ink-soft hover:text-ink underline decoration-dotted decoration-[var(--mark-current)] decoration-2 underline-offset-[3px] rounded-sm focus-visible:ring-2 focus-visible:ring-interactive-ink pointer-coarse:py-2.5"
+        className="group cursor-pointer text-left text-ink rounded-sm focus-visible:ring-2 focus-visible:ring-interactive-ink pointer-coarse:py-2.5"
       >
-        {greeting}
+        <span className="font-semibold underline decoration-dotted decoration-attention decoration-2 underline-offset-4 group-hover:decoration-solid">
+          {greeting}
+        </span>
+        <span aria-hidden="true" className="ml-1.5">
+          {holiday.emoji}
+        </span>
+        <span className="hidden sm:inline ml-2 text-ink-soft">
+          {holiday.note}
+        </span>
       </button>
       <div
         id="holiday-panel"

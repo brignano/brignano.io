@@ -21,5 +21,6 @@ once. The idea was still the most human thing on the site.
 
 ## Consequences
 
-Adding a holiday is a date window, a line in lib/holiday-info.ts and,
-if "Happy <label>" doesn't fit, a greeting. No drawing.
+Adding a holiday is a date window, a line in lib/holiday-info.ts, an emoji
+and a short warm note (#373) and, if "Happy <label>!" doesn't fit, a
+greeting. No drawing.
