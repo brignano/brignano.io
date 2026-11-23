@@ -65,9 +65,9 @@ function darkTokens(names: readonly string[]): Record<string, string> {
 
 const T = darkTokens(["--bg", "--card", "--line", "--ink", "--ink-soft", "--slate", "--mark"]);
 
-// The A|B logo from @brignano/design (DESIGN.md §5, "The logo"): the letters
-// in ink and only the bar in --mark, the one colour the system spends on being
-// recognisable, so the bar is the only amber on any card.
+// The ab logo from @brignano/design (DESIGN.md §5, "The logo"): the letters
+// in ink and only the cursor in --mark, the one colour the system spends on being
+// recognisable, so the cursor is the only amber on any card.
 const LOGO_HEIGHT = 36;
 
 export interface OgCardProps {
