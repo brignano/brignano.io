@@ -298,11 +298,13 @@ export default async function Page() {
             <p className="mt-0.5 mb-4 text-sm text-slate">The public part</p>
 
             {latestCommit && (
-              /* `break-words` + `min-w-0`: a commit subject can carry an
-                 unbreakable token (a long path) that would otherwise make
+              /* A commit subject can carry an unbreakable token (a merge
+                 commit's long branch name, a path) that would otherwise make
                  the page scroll sideways on a phone. The subject link is
                  `self-start` so its tap area is its text, not the whole row
-                 out to where the chat button floats. */
+                 out to where the chat button floats; that sizes it to its
+                 min-content width, so it needs `wrap-anywhere`, not
+                 `break-words`, for the long token to count as breakable. */
               <div className="mb-5 flex min-w-0 flex-col gap-0.5 break-words border-y border-line py-3">
                 <p className="eyebrow">
                   Last commit
@@ -311,7 +313,7 @@ export default async function Page() {
                   href={String(latestCommit.url)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="self-start font-semibold text-ink hover:underline"
+                  className="self-start font-semibold text-ink wrap-anywhere hover:underline"
                 >
                   {commitSubject || shortSha(latestCommit.sha)}
                 </a>
