@@ -4,12 +4,12 @@ This is a personal portfolio website built with Next.js 16, React 19, and Tailwi
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 with App Router and static export (`output: "export"`)
+- **Framework**: Next.js 16 with App Router. Pages are prerendered; `/api/chat` runs as a Vercel function
 - **UI Library**: React 19
 - **Styling**: TailwindCSS 4 with dark mode support via `class` strategy
 - **Language**: TypeScript with strict mode enabled
 - **Package Manager**: npm
-- **Deployment**: Vercel (static export to `out/` directory)
+- **Deployment**: Vercel (see `AGENTS.md` for the hosting map)
 
 ## Project Structure
 
@@ -82,7 +82,7 @@ implementation: the "Wireframes before build" rule in brignano/ai-tools
 ### Images
 
 - Use Next.js `Image` component from `next/image`
-- Images are unoptimized due to static export (`images.unoptimized: true`)
+- Images are served as-is (`images.unoptimized: true`)
 - Always provide `alt`, `width`, and `height` attributes
 
 ### Analytics
@@ -102,8 +102,8 @@ implementation: the "Wireframes before build" rule in brignano/ai-tools
 ### Available Scripts
 
 - `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build for production (static export to `out/`)
-- `npm run start` - Start Next.js production server (not used for static exports)
+- `npm run build` - Build for production
+- `npm run start` - Start the Next.js production server
 - `npm run lint` - Run ESLint
 
 ### Environment Setup
@@ -132,12 +132,10 @@ implementation: the "Wireframes before build" rule in brignano/ai-tools
 - Loaded with `next/font/google` in `app/layout.tsx`: Geist (body and headings) and IBM Plex Mono (code, data and `.eyebrow` labels)
 - Font variables: `--font-geist` and `--font-plex-mono`, mapped onto the design tokens `--sans` and `--mono` in `app/globals.css`
 
-### Static Export
+### Rendering
 
-- Next.js is configured for static export (`output: "export"`)
-- No server-side rendering or API routes
-- All pages are pre-rendered at build time
-- Dynamic features requiring a server are disabled
+- Pages are prerendered at build time
+- The only server code is the chat assistant's `/api/chat` route, which runs as a Vercel function
 
 ### Structured Data
 
@@ -153,12 +151,11 @@ implementation: the "Wireframes before build" rule in brignano/ai-tools
 ## Deployment
 
 - Automatic deployment to Vercel on push
-- Static files exported to `out/` directory
 - GitHub Actions workflow for setup steps
 
 ## Important Notes
 
-- This is a **static export** - avoid features that require a server
+- Pages are prerendered; keep server code to the chat route
 - Always check browser API availability before use
 - Print functionality is important for resume page
 - Responsive design is critical - test mobile and desktop

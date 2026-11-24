@@ -189,7 +189,7 @@ provider dashboards.
 
 | Concern | Where | Notes |
 |---|---|---|
-| **Hosting** | Vercel | Static Next.js export (`output: "export"`), auto-deployed on push to `main`. Headers and CSP in [`vercel.json`](vercel.json). |
+| **Hosting** | Vercel | Next.js on Vercel (prerendered pages plus the `/api/chat` function), auto-deployed on push to `main`. Headers and CSP in [`vercel.json`](vercel.json). |
 | **DNS** | Cloudflare (free) | `brignano.io` and `anthonybrignano.com`. **All records are DNS-only (grey cloud)** — proxying breaks Vercel's certificate issuance. |
 | **Email** | Cloudflare Email Routing | `hi@brignano.io` forwards to Gmail. SPF, DKIM and DMARC configured. |
 | **Registration** | AWS Route 53 Domains | Registration only — nameservers point at Cloudflare. |
