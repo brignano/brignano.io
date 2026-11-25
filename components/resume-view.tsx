@@ -368,10 +368,11 @@ export default function ResumeView({ data }: { data: ResumeData }) {
               ref={contentsButton}
               type="button"
               popoverTarget="resume-contents"
-              className="btn btn-secondary lg:hidden"
+              title="Contents"
+              aria-label="Contents"
+              className={`${secondary} lg:hidden`}
             >
               <ListBulletIcon className="h-5 w-5" aria-hidden="true" />
-              Contents
             </button>
             <nav
               ref={contentsPanel}
