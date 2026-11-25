@@ -1,7 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { ChevronDownIcon, ShareIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef, useState } from "react";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ShareIcon,
+} from "@heroicons/react/24/outline";
 import type { Experience, ResumeData } from "@/types/resume";
 import { groupExperienceByCompany } from "@/lib/experience";
 import { GitHubIcon, LinkedinIcon } from "@/lib/social-icons";
@@ -125,10 +129,11 @@ function RoleCard({
       <span
         aria-hidden="true"
         data-print-hide
-        className={`absolute -left-[22px] top-[19px] h-[11px] w-[11px] rounded-full border-2 ${current
-          ? "border-interactive-ink bg-interactive-ink"
-          : "border-line-strong bg-bg"
-          }`}
+        className={`absolute -left-[22px] top-[19px] h-[11px] w-[11px] rounded-full border-2 ${
+          current
+            ? "border-interactive-ink bg-interactive-ink"
+            : "border-line-strong bg-bg"
+        }`}
       />
       <div className="role-card bg-card border border-line rounded-lg px-4 py-3.5 sm:px-6 sm:py-5 flex flex-col gap-1">
         <DateRange start={job.startDate} end={job.endDate} />
@@ -229,14 +234,13 @@ export default function ResumeView({ data }: { data: ResumeData }) {
 
   // Each card toggles independently, and opening one only grows that card,
   // so nothing above a tapped card moves.
-  const toggle =
-    (setter: typeof setOpenRoles) => (index: number) =>
-      setter((prev) => {
-        const next = new Set(prev);
-        if (next.has(index)) next.delete(index);
-        else next.add(index);
-        return next;
-      });
+  const toggle = (setter: typeof setOpenRoles) => (index: number) =>
+    setter((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
+      return next;
+    });
   const toggleRole = toggle(setOpenRoles);
   const toggleLead = toggle(setOpenLeads);
 
@@ -261,23 +265,66 @@ export default function ResumeView({ data }: { data: ResumeData }) {
     projects: !!projects?.length,
   };
 
+  // "On this page" on a phone: a row under the buttons, and once that row has
+  // scrolled away a small pill pinned bottom-left that names the section you
+  // are in and opens the same list, so you can change sections from anywhere.
+  const contentsButton = useRef<HTMLButtonElement>(null);
+  const contentsPill = useRef<HTMLButtonElement>(null);
+  const contentsPanel = useRef<HTMLElement>(null);
+  const [rowGone, setRowGone] = useState(false);
+  const [current, setCurrent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const row = contentsButton.current;
+    if (!row) return;
+    // Bottom is checked too, so the pill stays off while the row is on screen.
+    const io = new IntersectionObserver(
+      ([entry]) =>
+        setRowGone(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      { threshold: 0 }
+    );
+    io.observe(row);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const els = SECTIONS.map((x) => document.getElementById(x.id)).filter(
+      (el): el is HTMLElement => !!el
+    );
+    // A section counts as current once its top passes the upper third.
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setCurrent(e.target.id);
+        }
+      },
+      { rootMargin: "-20% 0px -70% 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  const onContentsToggle = (e: React.ToggleEvent<HTMLElement>) => {
+    if (e.newState !== "open") return;
+    if (CSS.supports("position-area: block-end")) return;
+    const opener = rowGone ? contentsPill.current : contentsButton.current;
+    if (!opener) return;
+    const r = opener.getBoundingClientRect();
+    const panel = e.currentTarget;
+    panel.style.setProperty(
+      "--popover-top",
+      rowGone ? `${r.top - panel.offsetHeight - 6}px` : `${r.bottom + 6}px`
+    );
+    panel.style.setProperty(
+      "--popover-left",
+      `${Math.max(16, Math.min(r.left, window.innerWidth - panel.offsetWidth - 16))}px`
+    );
+  };
+  const currentLabel = SECTIONS.find((x) => x.id === current)?.label;
+
   // Secondary actions: round icon buttons on a phone, where four labelled
   // buttons wrapped GitHub onto a line of its own; quiet text links beside
   // the pinned sidebar on desktop, where there is room for the words.
-  const contentsButton = useRef<HTMLButtonElement>(null);
-  const contentsPanel = useRef<HTMLElement>(null);
-  const onContentsToggle = (e: React.ToggleEvent<HTMLElement>) => {
-    if (e.newState !== "open") return;
-    if (!CSS.supports("position-area: block-end") && contentsButton.current) {
-      const r = contentsButton.current.getBoundingClientRect();
-      const panel = e.currentTarget;
-      panel.style.setProperty("--popover-top", `${r.bottom + 6}px`);
-      panel.style.setProperty(
-        "--popover-left",
-        `${Math.max(16, Math.min(r.left, window.innerWidth - panel.offsetWidth - 16))}px`
-      );
-    }
-  };
   const secondary =
     "group inline-flex items-center justify-center gap-1 h-10 w-10 rounded-full border border-line-strong text-slate hover:text-ink hover:border-interactive-ink transition-colors cursor-pointer lg:h-auto lg:w-auto lg:min-h-10 lg:border-0 lg:rounded-sm lg:text-sm lg:text-interactive-ink lg:hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink";
 
@@ -389,13 +436,28 @@ export default function ResumeView({ data }: { data: ResumeData }) {
                   key={s.id}
                   href={`#${s.id}`}
                   onClick={() => contentsPanel.current?.hidePopover()}
-                  className="menu-item"
+                  aria-current={s.id === current ? "location" : undefined}
+                  className={`menu-item ${s.id === current ? "font-semibold" : ""}`}
                 >
                   {s.label}
                 </a>
               ))}
             </div>
           </nav>
+          {rowGone && (
+            <button
+              ref={contentsPill}
+              type="button"
+              popoverTarget="resume-contents"
+              data-print-hide
+              aria-label="On this page"
+              style={{ boxShadow: "var(--shadow-2)" }}
+              className="lg:hidden fixed bottom-6 left-6 z-30 flex min-h-11 max-w-[calc(100vw-7.5rem)] cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-card px-4 text-sm text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+            >
+              <span className="truncate">{currentLabel ?? "On this page"}</span>
+              <ChevronUpIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </button>
+          )}
           <nav
             aria-label="On this page"
             data-print-hide
@@ -641,7 +703,9 @@ export default function ResumeView({ data }: { data: ResumeData }) {
 
           {certifications && certifications.length > 0 && (
             <section aria-labelledby="certifications-heading">
-              <SectionHeading id="certifications">Certifications</SectionHeading>
+              <SectionHeading id="certifications">
+                Certifications
+              </SectionHeading>
               <ul className="mt-4 border-t border-line">
                 {certifications.map((cert, index) => (
                   <li
