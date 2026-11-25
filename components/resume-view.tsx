@@ -272,8 +272,10 @@ export default function ResumeView({ data }: { data: ResumeData }) {
       <BreadcrumbSchema items={RESUME_BREADCRUMBS} />
       <main className="resume-layout max-w-7xl mx-auto md:px-16 px-6 pb-16 lg:grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-x-16 lg:items-start">
         {/* Hero: pinned on the left on desktop, the top of the page on a
-            phone. */}
-        <aside className="lg:row-span-2 lg:sticky lg:top-28 flex flex-col gap-2.5">
+            phone. It is pinned at the spot it already sits at, so it never
+            slides up to a lower pin while the header hides. On a short screen
+            the pin rises just enough to keep the whole column visible. */}
+        <aside className="lg:row-span-2 lg:sticky lg:top-[clamp(7rem,calc(100svh-34rem),var(--fold-offset))] flex flex-col gap-2.5">
           <p className="font-mono text-xs uppercase tracking-[0.1em] text-slate">
             Resume
           </p>
