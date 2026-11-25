@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { ChevronDownIcon, ListBulletIcon, ShareIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, ShareIcon } from "@heroicons/react/24/outline";
 import type { Experience, ResumeData } from "@/types/resume";
 import { groupExperienceByCompany } from "@/lib/experience";
 import { GitHubIcon, LinkedinIcon } from "@/lib/social-icons";
@@ -364,38 +364,38 @@ export default function ResumeView({ data }: { data: ResumeData }) {
                 <span className="sr-only lg:not-sr-only">GitHub ↗</span>
               </a>
             )}
-            <button
-              ref={contentsButton}
-              type="button"
-              popoverTarget="resume-contents"
-              title="Contents"
-              aria-label="Contents"
-              className={`${secondary} lg:hidden`}
-            >
-              <ListBulletIcon className="h-5 w-5" aria-hidden="true" />
-            </button>
-            <nav
-              ref={contentsPanel}
-              id="resume-contents"
-              popover="auto"
-              aria-label="On this page"
-              onToggle={onContentsToggle}
-              className="popover lg:hidden"
-            >
-              <div className="menu">
-                {SECTIONS.filter((s) => sectionShown[s.id]).map((s) => (
-                  <a
-                    key={s.id}
-                    href={`#${s.id}`}
-                    onClick={() => contentsPanel.current?.hidePopover()}
-                    className="menu-item"
-                  >
-                    {s.label}
-                  </a>
-                ))}
-              </div>
-            </nav>
           </div>
+          <button
+            ref={contentsButton}
+            type="button"
+            popoverTarget="resume-contents"
+            data-print-hide
+            className="lg:hidden mt-3 flex min-h-11 w-full cursor-pointer items-center justify-between border-y border-line py-2 font-mono text-xs uppercase tracking-[0.08em] text-slate hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+          >
+            On this page
+            <ChevronDownIcon className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <nav
+            ref={contentsPanel}
+            id="resume-contents"
+            popover="auto"
+            aria-label="On this page"
+            onToggle={onContentsToggle}
+            className="popover lg:hidden w-[calc(100vw-3rem)] max-w-none"
+          >
+            <div className="menu">
+              {SECTIONS.filter((s) => sectionShown[s.id]).map((s) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  onClick={() => contentsPanel.current?.hidePopover()}
+                  className="menu-item"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </nav>
           <nav
             aria-label="On this page"
             data-print-hide
