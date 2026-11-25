@@ -338,7 +338,8 @@ export const nowBuilding: NowItem[] = [
   },
 ];
 
-// Ordered most-compelling first (HostStats, a side project built for a family
+// Ordered most-compelling first (Driftwood, Guidebook and Breakeven lead and are
+// the three on the homepage; HostStats, a side project built for a family
 // member, sits last among the products; Design sits with the practice
 // entries because it is the setup underneath the products, not one of them): /projects renders this array as-is and the
 // homepage takes the `featured` ones. Adding a project is one entry here.
@@ -354,20 +355,23 @@ export const nowBuilding: NowItem[] = [
 // previews on workers.dev stay private, so never link those.
 export const projects: Project[] = [
   {
-    slug: "sites",
-    title: "Sites",
+    slug: "driftwood",
+    title: "Driftwood",
     description:
-      "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one starts as a free preview on a brignano.io subdomain, then moves to the business's own domain, whether that's the URL they already have or a new one, so the site carries their brand. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
-    blurb: "Websites small businesses can update themselves, with a free preview first.",
-    meta: "Websites · for small businesses",
-    mark: "magenta",
-    tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
-    status: "live",
+      "Diagrams of how a company's systems fit together go out of date the day after they're drawn. Driftwood keeps the diagram as a file in git and checks it against what is really running. When the two stop matching, it opens a pull request with the fix instead of leaving a picture nobody trusts. It also draws the effect of a Terraform change on the pull request, before anything is applied.",
+    blurb: "Keeps your system diagrams honest by checking them against what is really running.",
+    meta: "Developer tool · for platform teams",
+    mark: "teal",
+    tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
+    status: "beta",
     kind: "product",
-    // Featured over HostStats: it is live with real clients, so it is the
-    // most operational thing on the list.
+    // Leads the homepage: it is the strongest idea here.
     featured: true,
-    links: [{ label: "Get a free preview", url: "https://sites.brignano.io" }],
+    links: [
+      { label: "Open Driftwood", url: "https://driftwood.brignano.io" },
+      { label: "npm", url: "https://www.npmjs.com/package/@brignano/driftwood" },
+      { label: "Source", url: "https://github.com/brignano/driftwood" },
+    ],
   },
   {
     slug: "guidebook",
@@ -380,8 +384,7 @@ export const projects: Project[] = [
     tech: ["TypeScript", "Browser extension", "Claude", "Playwright", "Supabase"],
     status: "live",
     kind: "product",
-    // Featured over the terminal card: an AI-native tool is the stronger
-    // claim on a homepage whose hero says AI is being built into the tools.
+    // Second on the homepage: an AI-native tool backs the hero's claim.
     featured: true,
     links: [
       { label: "Try the demo", url: "https://guidebook.brignano.io" },
@@ -392,22 +395,35 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "driftwood",
-    title: "Driftwood",
+    slug: "breakeven",
+    title: "Breakeven",
     description:
-      "A versioned architecture model that lives in git and gets checked continuously against real infrastructure. When the model and reality diverge, the divergence arrives as a pull request instead of as a diagram nobody trusts. It also draws a Terraform plan on its pull request, before anything is applied.",
-    blurb: "An architecture model that's checked against the real infrastructure.",
-    meta: "Developer tool · for platform teams",
-    mark: "teal",
-    tech: ["TypeScript", "Terraform", "Graphviz (WASM)", "Node"],
-    status: "beta",
+      "Know the price of every call. A desktop pot-odds and equity calculator for Texas Hold'em: enter the pot and the bet, optionally your cards and the board, and it shows the equity you need, the equity you have from 5,000 simulated hands, your outs and the cards that hurt you — then a call-or-fold verdict. Leave it running and it tracks your PokerStars hands from the files PokerStars saves, so after a session you can price-check every call and fold and see how loose or aggressive each player at your tables is. Windows and Mac downloads, nothing to install.",
+    blurb: "A poker calculator that says call or fold, then reviews your hands after a session.",
+    meta: "Desktop app · for poker players",
+    tech: ["Python", "Tkinter", "PyInstaller", "GitHub Actions"],
+    status: "live",
     kind: "product",
+    // Third on the homepage: it is live and public, with downloads that work.
     featured: true,
     links: [
-      { label: "Open Driftwood", url: "https://driftwood.brignano.io" },
-      { label: "npm", url: "https://www.npmjs.com/package/@brignano/driftwood" },
-      { label: "Source", url: "https://github.com/brignano/driftwood" },
+      { label: "See Breakeven", url: "https://breakeven.brignano.io" },
+      { label: "Download", url: "https://github.com/brignano/breakeven/releases/latest" },
+      { label: "Source", url: "https://github.com/brignano/breakeven" },
     ],
+  },
+  {
+    slug: "sites",
+    title: "Sites",
+    description:
+      "A better website you can update yourself. Clean, fast sites for local businesses that work on every phone and show up on Google. Each one starts as a free preview on a brignano.io subdomain, then moves to the business's own domain, whether that's the URL they already have or a new one, so the site carries their brand. Owners log in to change their hours, photos or words, and the site updates about a minute later.",
+    blurb: "Websites small businesses can update themselves, with a free preview first.",
+    meta: "Websites · for small businesses",
+    mark: "magenta",
+    tech: ["Cloudflare Workers", "JavaScript", "YAML", "Cloudflare Access"],
+    status: "live",
+    kind: "product",
+    links: [{ label: "Get a free preview", url: "https://sites.brignano.io" }],
   },
   {
     slug: "card",
@@ -422,21 +438,6 @@ export const projects: Project[] = [
     links: [
       { label: "Run it", url: "https://www.npmjs.com/package/brignano" },
       { label: "Source", url: "https://github.com/brignano/card" },
-    ],
-  },
-  {
-    slug: "breakeven",
-    title: "Breakeven",
-    description:
-      "Know the price of every call. A desktop pot-odds and equity calculator for Texas Hold'em: enter the pot and the bet, optionally your cards and the board, and it shows the equity you need, the equity you have from 5,000 simulated hands, your outs and the cards that hurt you — then a call-or-fold verdict. Leave it running and it tracks your PokerStars hands from the files PokerStars saves, so after a session you can price-check every call and fold and see how loose or aggressive each player at your tables is. Windows and Mac downloads, nothing to install.",
-    blurb: "A poker calculator that says call or fold, then reviews your hands after a session.",
-    meta: "Desktop app · for poker players",
-    tech: ["Python", "Tkinter", "PyInstaller", "GitHub Actions"],
-    status: "live",
-    kind: "product",
-    links: [
-      { label: "Download", url: "https://github.com/brignano/breakeven/releases/latest" },
-      { label: "Source", url: "https://github.com/brignano/breakeven" },
     ],
   },
   {
