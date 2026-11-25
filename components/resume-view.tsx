@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChevronDownIcon, ShareIcon } from "@heroicons/react/24/outline";
 import type { Experience, ResumeData } from "@/types/resume";
 import { groupExperienceByCompany } from "@/lib/experience";
@@ -264,6 +264,20 @@ export default function ResumeView({ data }: { data: ResumeData }) {
   // Secondary actions: round icon buttons on a phone, where four labelled
   // buttons wrapped GitHub onto a line of its own; quiet text links beside
   // the pinned sidebar on desktop, where there is room for the words.
+  const contentsButton = useRef<HTMLButtonElement>(null);
+  const contentsPanel = useRef<HTMLElement>(null);
+  const onContentsToggle = (e: React.ToggleEvent<HTMLElement>) => {
+    if (e.newState !== "open") return;
+    if (!CSS.supports("position-area: block-end") && contentsButton.current) {
+      const r = contentsButton.current.getBoundingClientRect();
+      const panel = e.currentTarget;
+      panel.style.setProperty("--popover-top", `${r.bottom + 6}px`);
+      panel.style.setProperty(
+        "--popover-left",
+        `${Math.max(16, Math.min(r.left, window.innerWidth - panel.offsetWidth - 16))}px`
+      );
+    }
+  };
   const secondary =
     "group inline-flex items-center justify-center gap-1 h-10 w-10 rounded-full border border-line-strong text-slate hover:text-ink hover:border-interactive-ink transition-colors cursor-pointer lg:h-auto lg:w-auto lg:min-h-10 lg:border-0 lg:rounded-sm lg:text-sm lg:text-interactive-ink lg:hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink";
 
@@ -351,6 +365,37 @@ export default function ResumeView({ data }: { data: ResumeData }) {
               </a>
             )}
           </div>
+          <button
+            ref={contentsButton}
+            type="button"
+            popoverTarget="resume-contents"
+            data-print-hide
+            className="lg:hidden mt-3 flex min-h-11 w-full cursor-pointer items-center justify-between border-y border-line py-2 font-mono text-xs uppercase tracking-[0.08em] text-slate hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
+          >
+            On this page
+            <ChevronDownIcon className="h-4 w-4" aria-hidden="true" />
+          </button>
+          <nav
+            ref={contentsPanel}
+            id="resume-contents"
+            popover="auto"
+            aria-label="On this page"
+            onToggle={onContentsToggle}
+            className="popover lg:hidden w-[calc(100vw-3rem)] max-w-none"
+          >
+            <div className="menu">
+              {SECTIONS.filter((s) => sectionShown[s.id]).map((s) => (
+                <a
+                  key={s.id}
+                  href={`#${s.id}`}
+                  onClick={() => contentsPanel.current?.hidePopover()}
+                  className="menu-item"
+                >
+                  {s.label}
+                </a>
+              ))}
+            </div>
+          </nav>
           <nav
             aria-label="On this page"
             data-print-hide
