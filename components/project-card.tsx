@@ -12,6 +12,7 @@ import {
 import type { Project } from "@/lib/constants";
 import { event } from "@/lib/gtag";
 import ProjectArt from "@/components/project-art";
+import ProjectStatus from "@/components/project-status";
 
 // Scannable first, detailed on request: a picture of what it does, what it is
 // and who it's for, one sentence and one action. The full description, the
@@ -27,20 +28,6 @@ const GLYPHS: Record<string, typeof CubeIcon> = {
 
 function track(project: Project, link: string) {
   event("project_link_clicked", { project: project.slug, link });
-}
-
-// Status reads at a glance, on design's .pill: live is success (you can use
-// it today), proof of concept attention, beta the neutral pill (still
-// changing). The word always ships with the colour, so it is never the only
-// signal (DESIGN.md §3).
-const STATUS: Record<Project["status"], string> = {
-  live: "pill pill-success",
-  beta: "pill",
-  "proof of concept": "pill pill-attention",
-};
-
-function Status({ status }: { status: Project["status"] }) {
-  return <span className={`shrink-0 ${STATUS[status]}`}>{status}</span>;
 }
 
 export default function ProjectCard({
@@ -133,7 +120,7 @@ export default function ProjectCard({
         </span>
         <div className="flex items-center justify-between gap-3">
           <h3 className="text-[17px] font-bold tracking-tight text-ink">{project.title}</h3>
-          <Status status={project.status} />
+          <ProjectStatus status={project.status} />
         </div>
         <p className="text-[14.5px] leading-normal text-ink-soft">{project.blurb}</p>
         <div>{actions}</div>
@@ -156,7 +143,7 @@ export default function ProjectCard({
         </span>
         <div className="flex items-center justify-between gap-3">
           <h3 className="text-[21px] font-bold tracking-tight text-ink">{project.title}</h3>
-          <Status status={project.status} />
+          <ProjectStatus status={project.status} />
         </div>
         <p className="text-[15.5px] leading-normal text-ink-soft">{project.blurb}</p>
         {actions}

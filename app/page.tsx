@@ -16,6 +16,7 @@ import {
 import { noteHref } from "@/lib/notes-path";
 import { caseStudies } from "@/lib/work";
 import { event } from "@/lib/gtag";
+import ProjectStatus from "@/components/project-status";
 
 const HOME_BREADCRUMBS = [
   {
@@ -303,9 +304,7 @@ export default function Home() {
                       <span className="text-lg font-semibold tracking-tight text-ink group-hover:underline underline-offset-4 decoration-1">
                         {project.title}
                       </span>
-                      <span className="font-mono font-medium uppercase tracking-[0.08em] text-xs text-slate border border-line-strong rounded-full px-2 py-0.5">
-                        {project.status}
-                      </span>
+                      <ProjectStatus status={project.status} />
                     </span>
                     <span className="block mt-1 text-sm text-ink-soft leading-relaxed">
                       {project.blurb}
