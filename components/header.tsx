@@ -53,6 +53,7 @@ export default function Header() {
   // The path the menu was opened on. Navigating changes the path, which closes
   // the menu without an effect to reset it.
   const [menuOpenOn, setMenuOpenOn] = useState<string | null>(null);
+  const headerEl = useRef<HTMLElement>(null);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
   const pathname = usePathname();
@@ -100,6 +101,23 @@ export default function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Tell sticky bars on a page how much of the top the header covers, so they
+  // slide up with it when it hides and sit just below it when it shows.
+  useEffect(() => {
+    const root = document.documentElement;
+    const apply = () =>
+      root.style.setProperty(
+        "--site-header-h",
+        hidden && !menuOpen ? "0px" : `${headerEl.current?.offsetHeight ?? 0}px`
+      );
+    apply();
+    window.addEventListener("resize", apply);
+    return () => {
+      window.removeEventListener("resize", apply);
+      root.style.removeProperty("--site-header-h");
+    };
+  }, [hidden, menuOpen]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -152,6 +170,7 @@ export default function Header() {
 
   return (
     <header
+      ref={headerEl}
       className={`sticky top-0 z-30 text-sm py-6 md:px-16 px-6 border-b border-line bg-bg/80 backdrop-blur-md transition-transform duration-300 ease-out motion-reduce:transition-none motion-reduce:translate-y-0 ${hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"}`}
     >
       <div

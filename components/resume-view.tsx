@@ -1,11 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  ShareIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronDownIcon, ShareIcon } from "@heroicons/react/24/outline";
 import type { Experience, ResumeData } from "@/types/resume";
 import { groupExperienceByCompany } from "@/lib/experience";
 import { GitHubIcon, LinkedinIcon } from "@/lib/social-icons";
@@ -265,27 +261,11 @@ export default function ResumeView({ data }: { data: ResumeData }) {
     projects: !!projects?.length,
   };
 
-  // "On this page" on a phone: a row under the buttons, and once that row has
-  // scrolled away a small pill pinned bottom-left that names the section you
-  // are in and opens the same list, so you can change sections from anywhere.
-  const contentsButton = useRef<HTMLButtonElement>(null);
-  const contentsPill = useRef<HTMLButtonElement>(null);
-  const contentsPanel = useRef<HTMLElement>(null);
-  const [rowGone, setRowGone] = useState(false);
+  // "On this page" on a phone: a sticky bar of section chips under the header.
+  // The current section is highlighted and the bar scrolls sideways to keep it
+  // in view, so you can change sections from anywhere on the page.
+  const chipBar = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState<string | null>(null);
-
-  useEffect(() => {
-    const row = contentsButton.current;
-    if (!row) return;
-    // Bottom is checked too, so the pill stays off while the row is on screen.
-    const io = new IntersectionObserver(
-      ([entry]) =>
-        setRowGone(!entry.isIntersecting && entry.boundingClientRect.top < 0),
-      { threshold: 0 }
-    );
-    io.observe(row);
-    return () => io.disconnect();
-  }, []);
 
   useEffect(() => {
     const els = SECTIONS.map((x) => document.getElementById(x.id)).filter(
@@ -304,23 +284,15 @@ export default function ResumeView({ data }: { data: ResumeData }) {
     return () => io.disconnect();
   }, []);
 
-  const onContentsToggle = (e: React.ToggleEvent<HTMLElement>) => {
-    if (e.newState !== "open") return;
-    if (CSS.supports("position-area: block-end")) return;
-    const opener = rowGone ? contentsPill.current : contentsButton.current;
-    if (!opener) return;
-    const r = opener.getBoundingClientRect();
-    const panel = e.currentTarget;
-    panel.style.setProperty(
-      "--popover-top",
-      rowGone ? `${r.top - panel.offsetHeight - 6}px` : `${r.bottom + 6}px`
-    );
-    panel.style.setProperty(
-      "--popover-left",
-      `${Math.max(16, Math.min(r.left, window.innerWidth - panel.offsetWidth - 16))}px`
-    );
-  };
-  const currentLabel = SECTIONS.find((x) => x.id === current)?.label;
+  useEffect(() => {
+    const bar = chipBar.current;
+    const chip = bar?.querySelector<HTMLElement>('[aria-current="location"]');
+    if (!bar || !chip) return;
+    bar.scrollTo({
+      left: chip.offsetLeft - (bar.clientWidth - chip.clientWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [current]);
 
   // Secondary actions: round icon buttons on a phone, where four labelled
   // buttons wrapped GitHub onto a line of its own; quiet text links beside
@@ -412,52 +384,6 @@ export default function ResumeView({ data }: { data: ResumeData }) {
               </a>
             )}
           </div>
-          <button
-            ref={contentsButton}
-            type="button"
-            popoverTarget="resume-contents"
-            data-print-hide
-            className="lg:hidden mt-3 flex min-h-11 w-full cursor-pointer items-center justify-between border-y border-line py-2 font-mono text-xs uppercase tracking-[0.08em] text-slate hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
-          >
-            On this page
-            <ChevronDownIcon className="h-4 w-4" aria-hidden="true" />
-          </button>
-          <nav
-            ref={contentsPanel}
-            id="resume-contents"
-            popover="auto"
-            aria-label="On this page"
-            onToggle={onContentsToggle}
-            className="popover lg:hidden w-[calc(100vw-3rem)] max-w-none"
-          >
-            <div className="menu">
-              {SECTIONS.filter((s) => sectionShown[s.id]).map((s) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  onClick={() => contentsPanel.current?.hidePopover()}
-                  aria-current={s.id === current ? "location" : undefined}
-                  className={`menu-item ${s.id === current ? "font-semibold" : ""}`}
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div>
-          </nav>
-          {rowGone && (
-            <button
-              ref={contentsPill}
-              type="button"
-              popoverTarget="resume-contents"
-              data-print-hide
-              aria-label="On this page"
-              style={{ boxShadow: "var(--shadow-2)" }}
-              className="lg:hidden fixed bottom-6 left-6 z-30 flex min-h-11 max-w-[calc(100vw-7.5rem)] cursor-pointer items-center gap-2 rounded-full border border-line-strong bg-card px-4 text-sm text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
-            >
-              <span className="truncate">{currentLabel ?? "On this page"}</span>
-              <ChevronUpIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
-            </button>
-          )}
           <nav
             aria-label="On this page"
             data-print-hide
@@ -478,6 +404,30 @@ export default function ResumeView({ data }: { data: ResumeData }) {
           </nav>
         </aside>
 
+        {/* Phones: section chips that stay under the header. Sticky inside
+            <main>, so it holds for the whole page; --site-header-h (set by the
+            header) keeps it just below the header while that is showing. */}
+        <div
+          ref={chipBar}
+          data-print-hide
+          className="lg:hidden sticky top-[var(--site-header-h,0px)] z-20 -mx-6 mt-6 flex gap-2 overflow-x-auto border-b border-line bg-bg/90 px-6 py-2.5 backdrop-blur-md transition-[top] duration-300 ease-out motion-reduce:transition-none md:-mx-16 md:px-16 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {SECTIONS.filter((x) => sectionShown[x.id]).map((x) => (
+            <a
+              key={x.id}
+              href={`#${x.id}`}
+              aria-current={x.id === current ? "location" : undefined}
+              className={`inline-flex min-h-9 shrink-0 items-center rounded-full border px-3.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink ${
+                x.id === current
+                  ? "border-interactive-ink font-semibold text-interactive-ink"
+                  : "border-line-strong text-ink-soft hover:text-ink"
+              }`}
+            >
+              {x.label}
+            </a>
+          ))}
+        </div>
+
         {/* The summary opens the page: no heading, body size. */}
         <p className="resume-summary mt-6 lg:mt-0 lg:col-start-2 max-w-[62ch] text-[16.5px] lg:text-lg leading-relaxed text-ink-soft">
           {summary}
@@ -488,7 +438,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="experience"
               aria-labelledby="experience-heading"
-              className="scroll-mt-28"
+              className="scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="experience">Experience</SectionHeading>
               {/* Roles are grouped under one header per employer — see
@@ -540,7 +490,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="leadership"
               aria-labelledby="leadership-heading"
-              className="scroll-mt-28"
+              className="scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="leadership">
                 Leadership &amp; community
@@ -595,7 +545,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="skills"
               aria-labelledby="skills-heading"
-              className="scroll-mt-28"
+              className="scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="skills">Skills</SectionHeading>
               <dl className="skill-list mt-4 border-t border-line">
@@ -622,7 +572,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="education"
               aria-labelledby="education-heading"
-              className="scroll-mt-28"
+              className="scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="education">Education</SectionHeading>
               <ul className="mt-4 border-t border-line">
@@ -667,7 +617,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="projects"
               aria-labelledby="projects-heading"
-              className="resume-projects scroll-mt-28"
+              className="resume-projects scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="projects">Projects</SectionHeading>
               <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
