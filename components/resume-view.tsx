@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDownIcon, ShareIcon } from "@heroicons/react/24/outline";
 import type { Experience, ResumeData } from "@/types/resume";
 import { groupExperienceByCompany } from "@/lib/experience";
@@ -125,10 +125,11 @@ function RoleCard({
       <span
         aria-hidden="true"
         data-print-hide
-        className={`absolute -left-[22px] top-[19px] h-[11px] w-[11px] rounded-full border-2 ${current
-          ? "border-interactive-ink bg-interactive-ink"
-          : "border-line-strong bg-bg"
-          }`}
+        className={`absolute -left-[22px] top-[19px] h-[11px] w-[11px] rounded-full border-2 ${
+          current
+            ? "border-interactive-ink bg-interactive-ink"
+            : "border-line-strong bg-bg"
+        }`}
       />
       <div className="role-card bg-card border border-line rounded-lg px-4 py-3.5 sm:px-6 sm:py-5 flex flex-col gap-1">
         <DateRange start={job.startDate} end={job.endDate} />
@@ -229,14 +230,13 @@ export default function ResumeView({ data }: { data: ResumeData }) {
 
   // Each card toggles independently, and opening one only grows that card,
   // so nothing above a tapped card moves.
-  const toggle =
-    (setter: typeof setOpenRoles) => (index: number) =>
-      setter((prev) => {
-        const next = new Set(prev);
-        if (next.has(index)) next.delete(index);
-        else next.add(index);
-        return next;
-      });
+  const toggle = (setter: typeof setOpenRoles) => (index: number) =>
+    setter((prev) => {
+      const next = new Set(prev);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
+      return next;
+    });
   const toggleRole = toggle(setOpenRoles);
   const toggleLead = toggle(setOpenLeads);
 
@@ -261,23 +261,42 @@ export default function ResumeView({ data }: { data: ResumeData }) {
     projects: !!projects?.length,
   };
 
+  // "On this page" on a phone: a sticky bar of section chips under the header.
+  // The current section is highlighted and the bar scrolls sideways to keep it
+  // in view, so you can change sections from anywhere on the page.
+  const chipBar = useRef<HTMLDivElement>(null);
+  const [current, setCurrent] = useState<string | null>(null);
+
+  useEffect(() => {
+    const els = SECTIONS.map((x) => document.getElementById(x.id)).filter(
+      (el): el is HTMLElement => !!el
+    );
+    // A section counts as current once its top passes the upper third.
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setCurrent(e.target.id);
+        }
+      },
+      { rootMargin: "-20% 0px -70% 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const bar = chipBar.current;
+    const chip = bar?.querySelector<HTMLElement>('[aria-current="location"]');
+    if (!bar || !chip) return;
+    bar.scrollTo({
+      left: chip.offsetLeft - (bar.clientWidth - chip.clientWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [current]);
+
   // Secondary actions: round icon buttons on a phone, where four labelled
   // buttons wrapped GitHub onto a line of its own; quiet text links beside
   // the pinned sidebar on desktop, where there is room for the words.
-  const contentsButton = useRef<HTMLButtonElement>(null);
-  const contentsPanel = useRef<HTMLElement>(null);
-  const onContentsToggle = (e: React.ToggleEvent<HTMLElement>) => {
-    if (e.newState !== "open") return;
-    if (!CSS.supports("position-area: block-end") && contentsButton.current) {
-      const r = contentsButton.current.getBoundingClientRect();
-      const panel = e.currentTarget;
-      panel.style.setProperty("--popover-top", `${r.bottom + 6}px`);
-      panel.style.setProperty(
-        "--popover-left",
-        `${Math.max(16, Math.min(r.left, window.innerWidth - panel.offsetWidth - 16))}px`
-      );
-    }
-  };
   const secondary =
     "group inline-flex items-center justify-center gap-1 h-10 w-10 rounded-full border border-line-strong text-slate hover:text-ink hover:border-interactive-ink transition-colors cursor-pointer lg:h-auto lg:w-auto lg:min-h-10 lg:border-0 lg:rounded-sm lg:text-sm lg:text-interactive-ink lg:hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink";
 
@@ -365,37 +384,6 @@ export default function ResumeView({ data }: { data: ResumeData }) {
               </a>
             )}
           </div>
-          <button
-            ref={contentsButton}
-            type="button"
-            popoverTarget="resume-contents"
-            data-print-hide
-            className="lg:hidden mt-3 flex min-h-11 w-full cursor-pointer items-center justify-between border-y border-line py-2 font-mono text-xs uppercase tracking-[0.08em] text-slate hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink"
-          >
-            On this page
-            <ChevronDownIcon className="h-4 w-4" aria-hidden="true" />
-          </button>
-          <nav
-            ref={contentsPanel}
-            id="resume-contents"
-            popover="auto"
-            aria-label="On this page"
-            onToggle={onContentsToggle}
-            className="popover lg:hidden w-[calc(100vw-3rem)] max-w-none"
-          >
-            <div className="menu">
-              {SECTIONS.filter((s) => sectionShown[s.id]).map((s) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
-                  onClick={() => contentsPanel.current?.hidePopover()}
-                  className="menu-item"
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div>
-          </nav>
           <nav
             aria-label="On this page"
             data-print-hide
@@ -416,6 +404,30 @@ export default function ResumeView({ data }: { data: ResumeData }) {
           </nav>
         </aside>
 
+        {/* Phones: section chips that stay under the header. Sticky inside
+            <main>, so it holds for the whole page; --site-header-h (set by the
+            header) keeps it just below the header while that is showing. */}
+        <div
+          ref={chipBar}
+          data-print-hide
+          className="lg:hidden sticky top-[var(--site-header-h,0px)] z-20 -mx-6 mt-6 flex gap-2 overflow-x-auto border-b border-line bg-bg/90 px-6 py-2.5 backdrop-blur-md transition-[top] duration-300 ease-out motion-reduce:transition-none md:-mx-16 md:px-16 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {SECTIONS.filter((x) => sectionShown[x.id]).map((x) => (
+            <a
+              key={x.id}
+              href={`#${x.id}`}
+              aria-current={x.id === current ? "location" : undefined}
+              className={`inline-flex min-h-9 shrink-0 items-center rounded-full border px-3.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-interactive-ink ${
+                x.id === current
+                  ? "border-interactive-ink font-semibold text-interactive-ink"
+                  : "border-line-strong text-ink-soft hover:text-ink"
+              }`}
+            >
+              {x.label}
+            </a>
+          ))}
+        </div>
+
         {/* The summary opens the page: no heading, body size. */}
         <p className="resume-summary mt-6 lg:mt-0 lg:col-start-2 max-w-[62ch] text-[16.5px] lg:text-lg leading-relaxed text-ink-soft">
           {summary}
@@ -426,7 +438,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="experience"
               aria-labelledby="experience-heading"
-              className="scroll-mt-28"
+              className="scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="experience">Experience</SectionHeading>
               {/* Roles are grouped under one header per employer — see
@@ -478,7 +490,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="leadership"
               aria-labelledby="leadership-heading"
-              className="scroll-mt-28"
+              className="scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="leadership">
                 Leadership &amp; community
@@ -533,7 +545,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="skills"
               aria-labelledby="skills-heading"
-              className="scroll-mt-28"
+              className="scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="skills">Skills</SectionHeading>
               <dl className="skill-list mt-4 border-t border-line">
@@ -560,7 +572,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="education"
               aria-labelledby="education-heading"
-              className="scroll-mt-28"
+              className="scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="education">Education</SectionHeading>
               <ul className="mt-4 border-t border-line">
@@ -605,7 +617,7 @@ export default function ResumeView({ data }: { data: ResumeData }) {
             <section
               id="projects"
               aria-labelledby="projects-heading"
-              className="resume-projects scroll-mt-28"
+              className="resume-projects scroll-mt-28 max-lg:scroll-mt-36"
             >
               <SectionHeading id="projects">Projects</SectionHeading>
               <p className="mt-2 text-[15px] leading-relaxed text-ink-soft">
@@ -641,7 +653,9 @@ export default function ResumeView({ data }: { data: ResumeData }) {
 
           {certifications && certifications.length > 0 && (
             <section aria-labelledby="certifications-heading">
-              <SectionHeading id="certifications">Certifications</SectionHeading>
+              <SectionHeading id="certifications">
+                Certifications
+              </SectionHeading>
               <ul className="mt-4 border-t border-line">
                 {certifications.map((cert, index) => (
                   <li
